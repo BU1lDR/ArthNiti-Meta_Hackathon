@@ -1,0 +1,35 @@
+{
+  "base": {
+    "url": "https://github.com/BU1lDR/ArthNiti.git",
+    "commit": "e4708306cab10c53d54ef651dc61d1ca093cd5e6",
+    "tree": "061243de83b9336f551ea4655d952e85b0d79232"
+  },
+  "added": [
+    "backend/app/core/spend.py",
+    "backend/tests/test_network_guard.py",
+    "backend/tests/test_spend_cap.py",
+    "backend/tests/test_talk_fake_backend.py",
+    "tools/verify/talk_fake_backend.py"
+  ],
+  "patched": [
+    ".gitignore",
+    "backend/app/api/routes/intake.py",
+    "backend/app/core/meta_client.py",
+    "backend/app/core/settings.py",
+    "backend/app/main.py",
+    "backend/app/services/intake_service.py",
+    "backend/app/smoke_meta.py",
+    "backend/tests/conftest.py",
+    "backend/tests/intake_fixtures.py",
+    "backend/tests/test_intake_routes.py",
+    "backend/tests/test_intake_service.py",
+    "backend/tests/test_intake_settings.py",
+    "backend/tests/test_meta_client.py",
+    "backend/tests/test_smoke_meta.py"
+  ],
+  "removed": [],
+  "result": {
+    "devCommit": "260c996f0deee00b11c6aec94760954432fb5817",
+    "tree": "7f3335c938da23c28b90fcad2947518a5315cf6d"
+  }
+}

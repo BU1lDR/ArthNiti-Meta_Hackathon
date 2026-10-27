@@ -1,0 +1,9 @@
+diff --git a/backend/app/api/routes/intake.py b/backend/app/api/routes/intake.py
+index e397c07..df981b1 100644
+--- a/backend/app/api/routes/intake.py
++++ b/backend/app/api/routes/intake.py
+@@ -130 +130,3 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+-            transcript = await run_in_threadpool(client.transcribe, wav, intake.LANGUAGES[language], asr_model)
++            transcript = await run_in_threadpool(
++                client.transcribe, wav, intake.LANGUAGES[language], asr_model, intake.SPEECH_KEYWORDS
++            )

@@ -1,0 +1,62 @@
+diff --git a/backend/app/smoke_meta.py b/backend/app/smoke_meta.py
+index 366ea75..c2367f5 100644
+--- a/backend/app/smoke_meta.py
++++ b/backend/app/smoke_meta.py
+@@ -8,0 +9,9 @@ logs: the only text sent here is the samples below. It never prints the key.
++Each chat line ends with the token counts Meta reports for that call (in, how
++many of those were cached, out, how many of those were reasoning), which is how
++to see whether MAX_COMPLETION_TOKENS is sized right and the prompt cache works.
++
++Every call is charged to the spend cap (core/spend.py) before it is sent, the
++same cap the app uses (ARTHNITI_AI_SPEND_CAP_USD, ARTHNITI_AI_SPEND_FILE), and
++the run prints what it recorded. Those figures are upper estimates made before
++the calls, not Meta's bill: Meta's own figure is on the Usage page of its
++dashboard, and comparing the two is how to see how high the estimates run.
+@@ -23,0 +33 @@ from app.core.settings import SettingsError, load_settings
++from app.core.spend import SpendCap
+@@ -66 +76,13 @@ def _read(client, model, language, text):
+-    return bool(answers), f"{len(answers)} answers kept, {result['ignored']} ignored. {shown}"
++    return bool(answers), f"{len(answers)} answers kept, {result['ignored']} ignored. {shown}  [{_tokens(client.last_usage)}]"
++
++
++def _tokens(usage):
++    """What Meta says a chat call used. A figure it left out prints as ?, and a zero as 0."""
++
++    if "prompt_tokens" not in usage or "completion_tokens" not in usage:
++        return "tokens: not reported"
++
++    return (
++        f"tokens: {usage['prompt_tokens']} in ({usage.get('cached_tokens', '?')} cached), "
++        f"{usage['completion_tokens']} out ({usage.get('reasoning_tokens', '?')} reasoning)"
++    )
+@@ -70 +92 @@ def _hear(client, model, wav):
+-    transcript = client.transcribe(wav, SPOKEN, model)
++    transcript = client.transcribe(wav, SPOKEN, model, intake.SPEECH_KEYWORDS)
+@@ -116 +138,7 @@ def main(argv=None):
+-    names = ("MODEL_API_KEY", "ARTHNITI_AI_MODEL", "ARTHNITI_AI_ASR_MODEL")
++    names = (
++        "MODEL_API_KEY",
++        "ARTHNITI_AI_MODEL",
++        "ARTHNITI_AI_ASR_MODEL",
++        "ARTHNITI_AI_SPEND_CAP_USD",
++        "ARTHNITI_AI_SPEND_FILE",
++    )
+@@ -138 +166,8 @@ def main(argv=None):
+-    client = MetaClient(settings.model_api_key, timeout=60, keep_detail=True)
++    try:
++        spend = SpendCap(settings.ai_spend_file, settings.ai_spend_cap_usd)
++    except ValueError as error:
++        print(f"Cannot start: {error}", file=sys.stderr)
++        return 2
++
++    client = MetaClient(settings.model_api_key, spend=spend, timeout=60, keep_detail=True)
++    before = spend.spent_usd()
+@@ -140,0 +176 @@ def main(argv=None):
++    print(f"Spend cap ${settings.ai_spend_cap_usd:.2f}; ${before:.4f} already recorded in {settings.ai_spend_file}")
+@@ -146,0 +183,6 @@ def main(argv=None):
++    after = spend.spent_usd()
++    print(
++        f"Recorded by this run: ${after - before:.4f}. Recorded in all: ${after:.4f} of ${settings.ai_spend_cap_usd:.2f}. "
++        "These are upper estimates; the Usage page on Meta's dashboard has the real figure."
++    )
++

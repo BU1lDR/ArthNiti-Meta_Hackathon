@@ -1,0 +1,23 @@
+diff --git a/backend/app/main.py b/backend/app/main.py
+index a92c0ef..db3746d 100644
+--- a/backend/app/main.py
++++ b/backend/app/main.py
+@@ -20,0 +21 @@ from app.core.settings import load_settings
++from app.core.spend import SpendCap
+@@ -172 +173,2 @@ def _log_startup(settings, routers):
+-            "in all. docs/PROCESSOR_SCHEDULE.md lists what that adds for the "
++            "in all, and at most $%.2f of billing in all (the total is kept in "
++            "%s). docs/PROCESSOR_SCHEDULE.md lists what that adds for the "
+@@ -176,0 +179,2 @@ def _log_startup(settings, routers):
++            settings.ai_spend_cap_usd,
++            settings.ai_spend_file,
+@@ -199 +203,3 @@ def create_app(settings=None, model_client=None):
+-        model_client = MetaClient(settings.model_api_key)
++        # A ledger that cannot be used stops the start here and not the first call.
++        spend = SpendCap(settings.ai_spend_file, settings.ai_spend_cap_usd)
++        model_client = MetaClient(settings.model_api_key, spend=spend)
+@@ -226 +232,3 @@ def create_app(settings=None, model_client=None):
+-    # the frontend sends: GET and POST with a JSON body.
++    # the frontend sends: GET and POST with a JSON body, or with a WAV
++    # recording for the helper. Both set Content-Type, which is why a browser
++    # asks first.

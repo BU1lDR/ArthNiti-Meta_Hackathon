@@ -1,0 +1,8 @@
+diff --git a/.gitignore b/.gitignore
+index 5a0dd50..028ccaf 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -60,0 +61,3 @@ screenshots/
++
++# ---- The model helper spend ledger (core/spend.py): the owner's running total, never committed ----
++backend/.ai_spend

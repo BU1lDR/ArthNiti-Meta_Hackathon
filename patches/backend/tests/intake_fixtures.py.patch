@@ -1,0 +1,31 @@
+diff --git a/backend/tests/intake_fixtures.py b/backend/tests/intake_fixtures.py
+index 0edfa03..de0eb10 100644
+--- a/backend/tests/intake_fixtures.py
++++ b/backend/tests/intake_fixtures.py
+@@ -9,0 +10 @@ import io
++import tempfile
+@@ -10,0 +12 @@ import wave
++from pathlib import Path
+@@ -15 +17,10 @@ KEY = "LLM_1234567_" + "q" * 24
+-AI_ON = {"ARTHNITI_AI_ENABLED": "true", "MODEL_API_KEY": KEY}
++# A test that builds the app without a fake model gets a real spend ledger. This
++# one is in a folder of its own, removed when the run ends, so that no test
++# reads or writes the owner's real ledger in the backend folder.
++_LEDGER_FOLDER = tempfile.TemporaryDirectory(prefix="arthniti-test-ledger-")
++
++AI_ON = {
++    "ARTHNITI_AI_ENABLED": "true",
++    "MODEL_API_KEY": KEY,
++    "ARTHNITI_AI_SPEND_FILE": str(Path(_LEDGER_FOLDER.name) / "ledger"),
++}
+@@ -25,0 +37,5 @@ class FakeModel:
++        # What the real client keeps of the last chat reply's token counts.
++        self.last_usage = {}
++        # The words the last speech call asked the model to favour. Kept apart
++        # from `calls`, whose entries many tests unpack.
++        self.keywords = ()
+@@ -27 +43 @@ class FakeModel:
+-    def transcribe(self, wav, language, model):
++    def transcribe(self, wav, language, model, keywords=()):
+@@ -28,0 +45 @@ class FakeModel:
++        self.keywords = keywords
