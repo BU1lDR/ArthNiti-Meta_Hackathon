@@ -29,6 +29,8 @@
     "backend/app/api/routes/intake.py",
     "backend/app/core/meta_client.py",
     "backend/app/core/settings.py",
+    "backend/app/data/market_data.json",
+    "backend/app/data/market_data.provenance.json",
     "backend/app/main.py",
     "backend/app/services/intake_service.py",
     "backend/app/smoke_meta.py",
@@ -53,11 +55,13 @@
     "frontend/src/pages/LocationPage.jsx",
     "frontend/src/pages/ProfilePage.jsx",
     "frontend/src/services/api.js",
-    "tools/README.md"
+    "tools/README.md",
+    "tools/market-crosswalk.json",
+    "tools/verify/market-lib-test.mjs"
   ],
   "removed": [],
   "result": {
-    "devCommit": "f9b8dc23964be2c901cf367d8889386f2dd91634",
-    "tree": "3a753df13901524d24406cb133593a77efd44c0f"
+    "devCommit": "aafcda44d4baf0b03fe5db8ccc48820e3a5f5cc4",
+    "tree": "711231020c805e2ea296bdaf5d78cdf430ceb7ba"
   }
 }

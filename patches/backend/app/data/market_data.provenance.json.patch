@@ -1,0 +1,171 @@
+diff --git a/backend/app/data/market_data.provenance.json b/backend/app/data/market_data.provenance.json
+index 347d152..db2e5ac 100644
+--- a/backend/app/data/market_data.provenance.json
++++ b/backend/app/data/market_data.provenance.json
+@@ -2 +2 @@
+-  "fetched_at": "2026-09-24T16:59:11+05:30",
++  "fetched_at": "2026-10-27T18:16:29+05:30",
+@@ -4 +4 @@
+-  "crosswalk_version": 1,
++  "crosswalk_version": 2,
+@@ -10,2 +10,2 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Lucknow"
++      "state": "Tamil Nadu",
++      "district": "Coimbatore"
+@@ -14,2 +14,38 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Varanasi"
++      "state": "Telangana",
++      "district": "Warangal"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore"
++    },
++    {
++      "state": "Bihar",
++      "district": "Gaya"
++    },
++    {
++      "state": "Punjab",
++      "district": "Ludhiana"
+@@ -20,2 +56,92 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Lucknow",
++      "state": "Tamil Nadu",
++      "district": "Coimbatore",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Tamil Nadu",
++      "district": "Coimbatore",
++      "source": "udyam"
++    },
++    {
++      "state": "Telangana",
++      "district": "Warangal",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Telangana",
++      "district": "Warangal",
++      "source": "udyam"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur",
++      "source": "udyam"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam",
++      "source": "udyam"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru",
++      "source": "udyam"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia",
++      "source": "udyam"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur",
++      "source": "udyam"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore",
++      "source": "udyam"
++    },
++    {
++      "state": "Bihar",
++      "district": "Gaya",
+@@ -25,2 +151,2 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Lucknow",
++      "state": "Bihar",
++      "district": "Gaya",
+@@ -30,2 +156,2 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Varanasi",
++      "state": "Punjab",
++      "district": "Ludhiana",
+@@ -35,2 +161,2 @@
+-      "state": "Uttar Pradesh",
+-      "district": "Varanasi",
++      "state": "Punjab",
++      "district": "Ludhiana",
+@@ -42,2 +168,2 @@
+-    "wholesale_price_per_kg": 6,
+-    "registered_units": 14
++    "wholesale_price_per_kg": 34,
++    "registered_units": 91
