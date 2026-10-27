@@ -34,7 +34,6 @@
     ".gitignore",
     "CLAUDE.md",
     "DATA_SOURCES.md",
-    "OUR_MVP.md",
     "README.md",
     "backend/app/api/routes/intake.py",
     "backend/app/core/meta_client.py",
@@ -78,9 +77,11 @@
     "tools/market-crosswalk.json",
     "tools/verify/market-lib-test.mjs"
   ],
-  "removed": [],
+  "removed": [
+    "OUR_MVP.md"
+  ],
   "result": {
-    "devCommit": "48a923631b1ec41de748bc2f10c25fddad580f39",
-    "tree": "0f4aa6a6e4052dbfe46718be17f251b28e8eb3fe"
+    "devCommit": "fea5739fcf5537ae418a944124bef7a52ebc379e",
+    "tree": "9376c4198c78a00e6add3aec8d8e3809c3deb041"
   }
 }
