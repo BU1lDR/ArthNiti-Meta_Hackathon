@@ -22,6 +22,10 @@
   "patched": [
     ".github/workflows/ci.yml",
     ".gitignore",
+    "CLAUDE.md",
+    "DATA_SOURCES.md",
+    "OUR_MVP.md",
+    "README.md",
     "backend/app/api/routes/intake.py",
     "backend/app/core/meta_client.py",
     "backend/app/core/settings.py",
@@ -35,6 +39,10 @@
     "backend/tests/test_intake_settings.py",
     "backend/tests/test_meta_client.py",
     "backend/tests/test_smoke_meta.py",
+    "docs/ENGINEERING_HISTORY.md",
+    "docs/HACKATHON.md",
+    "docs/PROCESSOR_SCHEDULE.md",
+    "docs/frontend_integration.md",
     "frontend/.env.example",
     "frontend/src/App.jsx",
     "frontend/src/config/deployment.js",
@@ -44,11 +52,12 @@
     "frontend/src/pages/FinancePage.jsx",
     "frontend/src/pages/LocationPage.jsx",
     "frontend/src/pages/ProfilePage.jsx",
-    "frontend/src/services/api.js"
+    "frontend/src/services/api.js",
+    "tools/README.md"
   ],
   "removed": [],
   "result": {
-    "devCommit": "d42f84dc0cd7a8fdb9ad70929f9066b35c23d473",
-    "tree": "eb861fd22e9e2d4b3a67c6f3d47a4e55b2741dc4"
+    "devCommit": "f9b8dc23964be2c901cf367d8889386f2dd91634",
+    "tree": "3a753df13901524d24406cb133593a77efd44c0f"
   }
 }
