@@ -1,20 +1,26 @@
 diff --git a/backend/app/core/meta_client.py b/backend/app/core/meta_client.py
-index e282ffa..65c8db8 100644
+index e282ffa..9822f11 100644
 --- a/backend/app/core/meta_client.py
 +++ b/backend/app/core/meta_client.py
-@@ -11,0 +12,5 @@ and a two-part form post do not justify adding one.
+@@ -12,2 +12,9 @@ and a two-part form post do not justify adding one.
+-The wire format follows Meta's documentation. It has not been checked against
+-the live API; `python -m app.smoke_meta`, run with a real key, does that.
 +Every call is charged to a spend cap (core/spend.py) before it is sent, at a
 +price that is too high rather than too low, and a client cannot be built
 +without one. A call that fails after it was sent is charged all the same,
 +because Meta may have billed it.
 +
-@@ -24,0 +30 @@ import json
++The wire format follows Meta's documentation, and `python -m app.smoke_meta` has
++run against the live API (the owner, 27 Oct 2026): the chat and speech calls were
++accepted. The speech call has only heard one second of silence. What was seen is in
++docs/HACKATHON.md section 4.
+@@ -24,0 +32 @@ import json
 +import math
-@@ -56 +62,2 @@ _SECONDS = re.compile(r"[0-9]{1,9}")
+@@ -56 +64,2 @@ _SECONDS = re.compile(r"[0-9]{1,9}")
 -# is not the shape documented).
 +# is not the shape documented), spend_cap (our own ceiling refused the call, and
 +# nothing was sent).
-@@ -63,0 +71,56 @@ _KIND_BY_STATUS = {
+@@ -63,0 +73,56 @@ _KIND_BY_STATUS = {
 +# Dollars per million tokens, (input, output), from Meta's price list as read on
 +# 26 Oct 2026. A model that is not listed is charged as the dearest one, so a
 +# model that is new or misspelt can only look dearer than it is.
@@ -71,51 +77,51 @@ index e282ffa..65c8db8 100644
 +
 +    return {name: count for name, count in found.items() if count is not None}
 +
-@@ -131 +194 @@ class MetaClient:
+@@ -131 +196 @@ class MetaClient:
 -    def __init__(self, api_key: str, base_url: str = DEFAULT_BASE_URL, timeout: float = 30, keep_detail: bool = False):
 +    def __init__(self, api_key: str, *, spend, base_url: str = DEFAULT_BASE_URL, timeout: float = 30, keep_detail: bool = False):
-@@ -138,0 +202,4 @@ class MetaClient:
+@@ -138,0 +204,4 @@ class MetaClient:
 +        # Anything with charge(usd) will do, which lets a test pass a fake.
 +        if not callable(getattr(spend, "charge", None)):
 +            raise ValueError("A spend cap is required: spend must have a charge(usd) method.")
 +
-@@ -139,0 +207 @@ class MetaClient:
+@@ -139,0 +209 @@ class MetaClient:
 +        self._spend = spend
-@@ -145,0 +214,5 @@ class MetaClient:
+@@ -145,0 +216,5 @@ class MetaClient:
 +        # The token counts Meta reported for the last chat call (see _usage), or
 +        # {}. ponytail: one slot for every thread, so under concurrent calls it
 +        # holds whichever finished last. Only the smoke script reads it, and it
 +        # makes its calls one at a time.
 +        self.last_usage = {}
-@@ -150 +223,4 @@ class MetaClient:
+@@ -150 +225,4 @@ class MetaClient:
 -    def _post(self, path: str, body: bytes, content_type: str):
 +    def _post(self, path: str, body: bytes, content_type: str, cost: float):
 +        # Before the request exists, so a refusal leaves nothing sent.
 +        self._spend.charge(cost)
 +
-@@ -179,0 +256,5 @@ class MetaClient:
+@@ -179,0 +258,5 @@ class MetaClient:
 +
 +        Meta caches the start of a prompt by itself, so the instructions go
 +        first and the person's words last (services/intake_service.py). The
 +        cache key only helps it send the calls that begin alike, all the calls
 +        of one task, to the same cache.
-@@ -187,0 +269 @@ class MetaClient:
+@@ -187,0 +271 @@ class MetaClient:
 +            "prompt_cache_key": schema_name,
-@@ -190 +272,5 @@ class MetaClient:
+@@ -190 +274,5 @@ class MetaClient:
 -        reply = self._post("/chat/completions", json.dumps(body).encode(), "application/json")
 +        payload = json.dumps(body).encode()
 +
 +        self.last_usage = {}
 +
 +        reply = self._post("/chat/completions", payload, "application/json", _chat_cost(model, len(payload), max_tokens))
-@@ -193 +279,5 @@ class MetaClient:
+@@ -193 +281,5 @@ class MetaClient:
 -            return json.loads(json.loads(reply)["choices"][0]["message"]["content"])
 +            parsed = json.loads(reply)
 +            # Before the answer is read: Meta billed these tokens whether or not
 +            # the answer is any use.
 +            self.last_usage = _usage(parsed)
 +            return json.loads(parsed["choices"][0]["message"]["content"])
-@@ -197,2 +287,6 @@ class MetaClient:
+@@ -197,2 +289,6 @@ class MetaClient:
 -    def transcribe(self, wav: bytes, language: str, model: str):
 -        """The transcript of a mono 16-bit WAV, with `language` (a name such as "Hindi") as the bias."""
 +    def transcribe(self, wav: bytes, language: str, model: str, keywords=()):
@@ -124,7 +130,7 @@ index e282ffa..65c8db8 100644
 +        `keywords` are words the model is asked to favour: names, places, jargon.
 +        Meta does not promise their spelling.
 +        """
-@@ -202 +296,6 @@ class MetaClient:
+@@ -202 +298,6 @@ class MetaClient:
 -        settings = json.dumps({"model": model, "audioEncoding": "WAV", "mode": "PUSH_TO_TALK", "languageBias": [language]})
 +        request = {"model": model, "audioEncoding": "WAV", "mode": "PUSH_TO_TALK", "languageBias": [language]}
 +
@@ -132,6 +138,6 @@ index e282ffa..65c8db8 100644
 +            request["keywords"] = keywords
 +
 +        settings = json.dumps(request)
-@@ -219 +318 @@ class MetaClient:
+@@ -219 +320 @@ class MetaClient:
 -        reply = self._post("/asr/transcribe", body, f"multipart/form-data; boundary={boundary}")
 +        reply = self._post("/asr/transcribe", body, f"multipart/form-data; boundary={boundary}", _speech_cost(len(wav)))

@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..492fdd6 100644
+index b8e7eb3..d87c3ec 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -38,7 +38,7 @@ index b8e7eb3..492fdd6 100644
 +
 +```bash
 +node --test tools/verify/talk-lib-test.mjs    # wav.js and talkAnswers.js: 45 tests, no server
-+node --test tools/verify/app-state-test.mjs   # AppContext's applyEdit, applyHelperFill and storage: 22 tests, no server
++node --test tools/verify/app-state-test.mjs   # AppContext's applyEdit, applyHelperFill, applyResult, applyPlan and storage: 41 tests, no server
 +node tools/verify/talk-ui.mjs                 # the page in a real Edge: 17 scenarios, 259 checks, about 30 s (--only=S3,S5 runs some)
 +```
 +
