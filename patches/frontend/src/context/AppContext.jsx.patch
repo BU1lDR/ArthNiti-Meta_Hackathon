@@ -1,10 +1,11 @@
 diff --git a/frontend/src/context/AppContext.jsx b/frontend/src/context/AppContext.jsx
-index 82ff99e..481a49c 100644
+index 82ff99e..85fa140 100644
 --- a/frontend/src/context/AppContext.jsx
 +++ b/frontend/src/context/AppContext.jsx
-@@ -4,0 +5 @@ import { MAX_RUPEES } from '../data/limits'
+@@ -4,0 +5,2 @@ import { MAX_RUPEES } from '../data/limits'
 +import { LABEL_KEY_BY_PATH, planFill } from '../data/talkAnswers'
-@@ -15,8 +16,8 @@ const STORAGE_KEY = 'sih-application'
++import { isPlan } from '../data/planShape'
+@@ -15,8 +17,9 @@ const STORAGE_KEY = 'sih-application'
 -// and nothing used the second, yet both were sent with every check. None of the
 -// bumps moved or renamed anything, so versions 1 to 3 are still read: hydrate()
 -// fills a missing field in from EMPTY (the flag as false, the income as '') and
@@ -14,14 +15,23 @@ index 82ff99e..481a49c 100644
 -const STORAGE_VERSION = 4
 -const READABLE_VERSIONS = new Set([1, 2, 3, 4])
 +// and nothing used the second, yet both were sent with every check. 5 added
-+// `aiFilled`. None of the bumps moved or renamed anything, so every version is
-+// still read: hydrate() fills a missing field in from EMPTY (the flag as false,
-+// the income as '', the list as empty) and drops a field EMPTY no longer has. A
-+// later bump that renames or moves a field must drop the older versions from
-+// this set rather than let hydrate() half-restore them.
-+const STORAGE_VERSION = 5
-+const READABLE_VERSIONS = new Set([1, 2, 3, 4, 5])
-@@ -70,0 +72,7 @@ const EMPTY = {
++// `aiFilled`. 6 added `request` and `plan`. None of the bumps moved or renamed
++// anything, so every version is still read: hydrate() fills a missing field in
++// from EMPTY (the flag as false, the income as '', the list as empty, the request
++// and the plan as none) and drops a field EMPTY no longer has. A later bump that
++// renames or moves a field must drop the older versions from this set rather than
++// let hydrate() half-restore them.
++const STORAGE_VERSION = 6
++const READABLE_VERSIONS = new Set([1, 2, 3, 4, 5, 6])
+@@ -70,0 +74,15 @@ const EMPTY = {
++
++  // The answers the result on screen was made from, as they were sent, and the plan
++  // the AI wrote for them (null until one is asked for). A plan fits those answers and
++  // no others, so both leave with the result when an answer changes (applyEdit()
++  // below), and neither is read back without a result. The plan is words the model
++  // wrote and figures the rules put in; its shape is in data/planShape.js.
++  request: null,
++  plan: null,
 +
 +  // The answers the helper (/talk) wrote into the form that the reader has not
 +  // changed since, as "section.field" paths. A page lists them so they get
@@ -29,14 +39,26 @@ index 82ff99e..481a49c 100644
 +  // (applyEdit() below). Never sent anywhere, and not part of isStarted(): it only
 +  // ever names answers that already differ from the defaults.
 +  aiFilled: [],
-@@ -168,0 +177,6 @@ function hydrate(data) {
+@@ -143,0 +162,2 @@ function pick(base, stored) {
++const isPlainObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value)
++
+@@ -151,0 +172,6 @@ function hydrate(data) {
++  // The request and the plan mean something only beside the result they belong to,
++  // and a plan only beside the request it was written for. One of the wrong shape is
++  // dropped here and costs the reader nothing else.
++  const request = data.result && isPlainObject(data.request) ? data.request : null
++  const plan = request && isPlan(data.plan) ? data.plan : null
++
+@@ -168,0 +195,8 @@ function hydrate(data) {
++    request,
++    plan,
 +    // Only paths of answers the helper can fill: anything else in a stored list
 +    // would reach the banner as a question with no name. A one-item array would
 +    // pass hasOwn as its own text, so the type is checked first.
 +    aiFilled: Array.isArray(data.aiFilled)
 +      ? data.aiFilled.filter((path) => typeof path === 'string' && Object.hasOwn(LABEL_KEY_BY_PATH, path))
 +      : [],
-@@ -194,0 +209,42 @@ function readStored() {
+@@ -194,0 +229,62 @@ function readStored() {
 +// The answers after `data` is written into `section`. Every change to an answer
 +// goes through here, so the two rules below hold for all of them.
 +export function applyEdit(current, section, data) {
@@ -57,6 +79,9 @@ index 82ff99e..481a49c 100644
 +      ...data,
 +    },
 +    result: clears ? null : current.result,
++    // The request and the plan belong to the result, and go with it.
++    request: clears ? null : current.request,
++    plan: clears ? null : current.plan,
 +    // Set only when this change is the one that threw a result away. Once
 +    // set it stays set through later edits, which have no result left to
 +    // clear, until a new result arrives or the reader starts over.
@@ -79,7 +104,24 @@ index 82ff99e..481a49c 100644
 +  return { ...next, aiFilled: [...next.aiFilled, ...filled] }
 +}
 +
-@@ -211,23 +267,5 @@ export function AppProvider({ children }) {
++// The answers after a check has come back: the result, the answers it was made from
++// (the request, as sent) and no plan, because a plan written for an earlier result is
++// not one for this.
++export function applyResult(current, result, request) {
++  return { ...current, result, request: request ?? null, plan: null, resultCleared: false }
++}
++
++// The answers after a plan has come back. It is kept only for the result it was
++// written for, whose request is held since the check. One that arrives after an
++// answer changed (the result and the request are gone), or after a new check (a
++// different request), or that is not a plan at all, is dropped.
++export function applyPlan(current, plan, request) {
++  if (!request || current.request !== request || !isPlan(plan)) return current
++
++  return { ...current, plan }
++}
++
+@@ -211,23 +307,10 @@ export function AppProvider({ children }) {
 -    setApplicationData((current) => {
 -      // Nothing actually moved. Returning the same object skips the re-render
 -      // and the sessionStorage write, and — the reason this check is here rather
@@ -108,5 +150,21 @@ index 82ff99e..481a49c 100644
 +
 +  const fillFromHelper = (patches) => {
 +    setApplicationData((current) => applyHelperFill(current, patches))
-@@ -260,0 +299 @@ export function AppProvider({ children }) {
++  }
++
++  // `request` is what the check was made from: a plan is written for those answers.
++  const setResult = (result, request) => {
++    setApplicationData((current) => applyResult(current, result, request))
+@@ -236,6 +319,2 @@ export function AppProvider({ children }) {
+-  const setResult = (result) => {
+-    setApplicationData((current) => ({
+-      ...current,
+-      result,
+-      resultCleared: false,
+-    }))
++  const setPlan = (plan, request) => {
++    setApplicationData((current) => applyPlan(current, plan, request))
+@@ -260,0 +340 @@ export function AppProvider({ children }) {
 +        fillFromHelper,
+@@ -261,0 +342 @@ export function AppProvider({ children }) {
++        setPlan,

@@ -1,0 +1,32 @@
+diff --git a/backend/tests/test_log_privacy.py b/backend/tests/test_log_privacy.py
+index d01b6f4..3cf2637 100644
+--- a/backend/tests/test_log_privacy.py
++++ b/backend/tests/test_log_privacy.py
+@@ -18 +17,0 @@ import logging
+-from typing import get_args
+@@ -35 +34 @@ from market_fixtures import synthetic_market  # noqa: F401
+-from privacy_fixtures import FIGURE, HEADCOUNT, assert_clean, sinks  # noqa: F401
++from privacy_fixtures import FIGURE, HEADCOUNT, assert_clean, marker, numeric_fields, sinks  # noqa: F401
+@@ -52,5 +50,0 @@ MVP_SUMMARY_KEYS = {
+-def _marker(field, limit):
+-    text = f"S3NT-{field}"
+-    return text[:limit]
+-
+-
+@@ -68,8 +61,0 @@ def _string_limits(path):
+-def _numeric_fields(model):
+-    return [
+-        name
+-        for name, field in model.model_fields.items()
+-        if field.annotation in (int, float) or {int, float} & set(get_args(field.annotation))
+-    ]
+-
+-
+@@ -80,2 +66,2 @@ def _marked_analysis_body():
+-        body[field] = _marker(field, limit)
+-    for field in _numeric_fields(UnifiedAnalysisRequest):
++        body[field] = marker(field, limit)
++    for field in numeric_fields(UnifiedAnalysisRequest):
+@@ -94 +80 @@ def _marked_route_body(path):
+-        body[field] = _marker(field, limit)
++        body[field] = marker(field, limit)

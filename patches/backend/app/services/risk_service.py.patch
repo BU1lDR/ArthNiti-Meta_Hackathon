@@ -1,0 +1,23 @@
+diff --git a/backend/app/services/risk_service.py b/backend/app/services/risk_service.py
+index d10a330..bf5f684 100644
+--- a/backend/app/services/risk_service.py
++++ b/backend/app/services/risk_service.py
+@@ -172,0 +173,2 @@ def calculate_repayment_pressure(
++    annual_interest_percent: float = ASSUMED_ANNUAL_INTEREST_PERCENT,
++    tenure_months: int = ASSUMED_TENURE_MONTHS,
+@@ -173,0 +176,5 @@ def calculate_repayment_pressure(
++    # `funding_gap` is the principal of the loan priced here. The terms default
++    # to the assumption the pages state; options_service passes others to price
++    # the same loan over a shorter or longer time, and through this function so
++    # that its bands and household check cannot differ from the analysis's.
++    #
+@@ -193 +200,3 @@ def calculate_repayment_pressure(
+-    estimated_new_emi = estimate_monthly_repayment(funding_gap)
++    estimated_new_emi = estimate_monthly_repayment(
++        funding_gap, annual_interest_percent, tenure_months
++    )
+@@ -200,2 +209,2 @@ def calculate_repayment_pressure(
+-        "assumed_interest_rate_percent": ASSUMED_ANNUAL_INTEREST_PERCENT,
+-        "assumed_tenure_months": ASSUMED_TENURE_MONTHS,
++        "assumed_interest_rate_percent": annual_interest_percent,
++        "assumed_tenure_months": tenure_months,

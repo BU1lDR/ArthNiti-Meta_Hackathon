@@ -1,0 +1,49 @@
+diff --git a/backend/tests/test_intake_log_privacy.py b/backend/tests/test_intake_log_privacy.py
+index 5c0afd6..1f01958 100644
+--- a/backend/tests/test_intake_log_privacy.py
++++ b/backend/tests/test_intake_log_privacy.py
+@@ -18 +17,0 @@ import pytest
+-from fastapi.testclient import TestClient
+@@ -21,3 +19,0 @@ from app.api.routes import intake as intake_route
+-from app.core.meta_client import MetaError
+-from app.core.settings import load_settings
+-from app.main import create_app
+@@ -25,3 +21,2 @@ from app.schemas.limits import MAX_AUDIO_BYTES
+-from deployment_fixtures import PRODUCTION
+-from intake_fixtures import AI_ON, KEY, FakeModel, wav_bytes
+-from privacy_fixtures import assert_clean, sinks  # noqa: F401
++from intake_fixtures import KEY, FakeModel, wav_bytes
++from privacy_fixtures import FAILURES, LINE_KEYS, assert_clean, assert_lines, helper, sinks  # noqa: F401
+@@ -42,2 +36,0 @@ ECHOING = {
+-LINE_KEYS = {"event", "request_id", "ts", "tenant", "method", "path", "status", "duration_ms"}
+-
+@@ -47,11 +39,0 @@ TRANSCRIBE = "/api/intake/transcribe"
+-# Every field of an error that a client might copy into a message, carrying the
+-# marker, the figure or the key.
+-FAILURES = [
+-    (MetaError("auth", 401, code="invalid_api_key", param="Authorization", detail=f"S3NT 987654 {KEY}"), 503),
+-    (MetaError("billing", 402, code="S3NT-code", detail="S3NT-billing"), 503),
+-    (MetaError("unavailable", detail="S3NT-down"), 503),
+-    (MetaError("rate_limited", 429, detail="S3NT-slow", retry_after=5), 429),
+-    (MetaError("bad_request", 400, param="S3NT-param", detail="S3NT-bad"), 502),
+-    (MetaError("bad_output", detail="S3NT-output"), 502),
+-]
+-
+@@ -80,17 +61,0 @@ def route(request):
+-@pytest.fixture(params=[{}, PRODUCTION], ids=["dev", "prod"])
+-def helper(request):
+-    """Builds a client for the helper. Call it inside the test, after `sinks`, so the logs are watched from startup."""
+-
+-    def make(model, **more):
+-        return TestClient(create_app(load_settings({**request.param, **AI_ON, **more}), model_client=model))
+-
+-    return make
+-
+-
+-def assert_lines(lines, *expected):
+-    assert [(line["path"], line["status"]) for line in lines] == list(expected)
+-    for line in lines:
+-        assert set(line) == LINE_KEYS
+-        assert line["method"] == "POST"
+-
+-

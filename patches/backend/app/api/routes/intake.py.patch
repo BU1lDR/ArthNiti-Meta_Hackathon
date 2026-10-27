@@ -1,9 +1,37 @@
 diff --git a/backend/app/api/routes/intake.py b/backend/app/api/routes/intake.py
-index e397c07..df981b1 100644
+index e397c07..0a891e5 100644
 --- a/backend/app/api/routes/intake.py
 +++ b/backend/app/api/routes/intake.py
-@@ -130 +130,3 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+@@ -14,0 +15,3 @@ nothing the person said is in an error body or a log line.
++
++The hourly limit and the mapping of a failed call to a status are shared with
++the plan route (routes/advisor.py), which calls the model too.
+@@ -59 +62 @@ def _busy(wait: int):
+-def _refusal(error: MetaError):
++def refusal(error: MetaError):
+@@ -74 +77 @@ def _refusal(error: MetaError):
+-def _limiter(limit: int):
++def hourly_limiter(limit: int):
+@@ -76,0 +80,4 @@ def _limiter(limit: int):
++    One is made for the app (main.py) and shared by every route that calls the
++    model, so the limit is on the calls in all. Only the event loop calls it
++    (the routes are async), so it needs no lock.
++
+@@ -112 +119 @@ async def _body(request: Request):
+-def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
++def build_router(client, chat_model: str, asr_model: str, take):
+@@ -115,3 +121,0 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+-    # Only the event loop calls this (the routes are async), so it needs no lock.
+-    take = _limiter(hourly_limit)
+-
+@@ -130 +134,3 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
 -            transcript = await run_in_threadpool(client.transcribe, wav, intake.LANGUAGES[language], asr_model)
 +            transcript = await run_in_threadpool(
 +                client.transcribe, wav, intake.LANGUAGES[language], asr_model, intake.SPEECH_KEYWORDS
 +            )
+@@ -132 +138 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+-            raise _refusal(error) from None
++            raise refusal(error) from None
+@@ -152 +158 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+-            raise _refusal(error) from None
++            raise refusal(error) from None

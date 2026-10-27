@@ -1,8 +1,15 @@
 diff --git a/backend/tests/test_intake_routes.py b/backend/tests/test_intake_routes.py
-index e739709..51d5862 100644
+index e739709..45078ff 100644
 --- a/backend/tests/test_intake_routes.py
 +++ b/backend/tests/test_intake_routes.py
-@@ -170,0 +171,42 @@ def test_production_with_the_helper_on_serves_it(model):
+@@ -26,0 +27 @@ from app.services import intake_service as intake
++from app.services import plan_service as plan
+@@ -131,0 +133 @@ PRODUCTION_WITH_THE_HELPER = {
++    ("post", "/api/advisor/plan"),
+@@ -135 +137 @@ PRODUCTION_WITH_THE_HELPER = {
+-def test_production_documents_the_two_intake_routes_besides_its_usual_two_when_the_helper_is_on(model):
++def test_production_documents_the_two_intake_routes_and_the_plan_route_besides_its_usual_two_when_the_helper_is_on(model):
+@@ -170,0 +173,42 @@ def test_production_with_the_helper_on_serves_it(model):
 +# What a page sends to each route. A recording or a JSON body is more than a
 +# browser sends without asking first, so the CORS settings decide whether the
 +# helper works at all in a browser and for whom.
@@ -45,30 +52,32 @@ index e739709..51d5862 100644
 +    assert len(model.calls) == 1
 +
 +
-@@ -173,0 +216 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
+@@ -173,0 +218 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
 +    settings = load_settings({**environ, **AI_ON})
-@@ -175 +218 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
+@@ -175 +220 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
 -    create_app(load_settings({**environ, **AI_ON}), model_client=FakeModel())
 +    create_app(settings, model_client=FakeModel())
-@@ -181 +224 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
+@@ -181 +226 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
 -    assert "muse-spark-1.3" in message and "muse-voice-transcribe-1.0" in message
 +    assert "muse-spark-1.3 for text, muse-voice-transcribe-1.0 for speech" in message
-@@ -182,0 +226,2 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
+@@ -182,0 +228,2 @@ def test_the_startup_log_says_the_helper_is_on_and_what_it_sends_but_never_the_k
 +    # The owner reads the ceiling and where its total is kept off the first log line.
 +    assert "$10.00" in message and settings.ai_spend_file in message
-@@ -199 +244 @@ def test_a_model_client_given_to_an_app_with_the_helper_off_is_refused(model):
+@@ -199 +246 @@ def test_a_model_client_given_to_an_app_with_the_helper_off_is_refused(model):
 -def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkeypatch):
 +def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key_and_the_spend_cap(monkeypatch, tmp_path):
-@@ -208,0 +254 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
+@@ -208,0 +256 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
 +    ledger = tmp_path / "ledger"
-@@ -210 +256 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
+@@ -210 +258 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
 -    create_app(load_settings(AI_ON))
 +    create_app(load_settings({**AI_ON, "ARTHNITI_AI_SPEND_FILE": str(ledger), "ARTHNITI_AI_SPEND_CAP_USD": "0.5"}))
-@@ -213 +259,29 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
+@@ -213 +261,31 @@ def test_with_the_helper_on_and_no_client_given_one_is_built_from_the_key(monkey
 -    assert made == [((KEY,), {})]
 +    ((arguments, keywords),) = made
 +    assert arguments == (KEY,)
-+    assert list(keywords) == ["spend"]
++    assert list(keywords) == ["spend", "timeout"]
++    # A plan is a long reply (reasoning tokens included), so the one client waits longer than its default.
++    assert keywords["timeout"] == plan.CALL_TIMEOUT_SECONDS
 +
 +    # The cap it holds is the one in the settings, kept in the file in the settings.
 +    keywords["spend"].charge(0.4)
@@ -95,7 +104,7 @@ index e739709..51d5862 100644
 +        load_settings({**AI_ON, "ARTHNITI_AI_SPEND_FILE": str(tmp_path / "missing" / "ledger")}),
 +        model_client=FakeModel(),
 +    )
-@@ -229,0 +304,6 @@ def test_a_recording_is_sent_to_the_speech_model_in_the_language_asked_for(model
+@@ -229,0 +308,6 @@ def test_a_recording_is_sent_to_the_speech_model_in_the_language_asked_for(model
 +def test_the_speech_model_is_asked_to_favour_the_words_this_form_is_about(model, client):
 +    post_transcribe(client)
 +

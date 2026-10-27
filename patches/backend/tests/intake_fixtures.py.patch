@@ -1,5 +1,5 @@
 diff --git a/backend/tests/intake_fixtures.py b/backend/tests/intake_fixtures.py
-index 0edfa03..de0eb10 100644
+index 0edfa03..b7b5853 100644
 --- a/backend/tests/intake_fixtures.py
 +++ b/backend/tests/intake_fixtures.py
 @@ -9,0 +10 @@ import io
@@ -18,14 +18,23 @@ index 0edfa03..de0eb10 100644
 +    "MODEL_API_KEY": KEY,
 +    "ARTHNITI_AI_SPEND_FILE": str(Path(_LEDGER_FOLDER.name) / "ledger"),
 +}
-@@ -25,0 +37,5 @@ class FakeModel:
+@@ -25,0 +37,8 @@ class FakeModel:
++        # The next chat replies, in order: a dict is returned, an exception is
++        # raised. Once they are used up, `failure` and `extraction` answer again.
++        self.replies = []
 +        # What the real client keeps of the last chat reply's token counts.
 +        self.last_usage = {}
 +        # The words the last speech call asked the model to favour. Kept apart
 +        # from `calls`, whose entries many tests unpack.
 +        self.keywords = ()
-@@ -27 +43 @@ class FakeModel:
+@@ -27 +46 @@ class FakeModel:
 -    def transcribe(self, wav, language, model):
 +    def transcribe(self, wav, language, model, keywords=()):
-@@ -28,0 +45 @@ class FakeModel:
+@@ -28,0 +48 @@ class FakeModel:
 +        self.keywords = keywords
+@@ -34,0 +55,5 @@ class FakeModel:
++        if self.replies:
++            reply = self.replies.pop(0)
++            if isinstance(reply, Exception):
++                raise reply
++            return reply

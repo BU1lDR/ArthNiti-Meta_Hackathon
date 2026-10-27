@@ -1,0 +1,6 @@
+diff --git a/backend/tests/test_production_app.py b/backend/tests/test_production_app.py
+index 0879b73..9cca824 100644
+--- a/backend/tests/test_production_app.py
++++ b/backend/tests/test_production_app.py
+@@ -49,0 +50 @@ def test_production_serves_analysis_and_health():
++        "financing_options",

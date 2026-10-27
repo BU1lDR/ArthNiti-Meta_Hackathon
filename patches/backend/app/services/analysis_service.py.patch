@@ -1,0 +1,20 @@
+diff --git a/backend/app/services/analysis_service.py b/backend/app/services/analysis_service.py
+index 6da989b..cc8d90d 100644
+--- a/backend/app/services/analysis_service.py
++++ b/backend/app/services/analysis_service.py
+@@ -2,0 +3 @@ from app.services.risk_service import calculate_repayment_pressure
++from app.services.options_service import build_financing_options
+@@ -30,0 +32 @@ def run_unified_analysis(
++    - Financing options for the funding gap
+@@ -60,0 +63,9 @@ def run_unified_analysis(
++    # 2b. Financing options for the funding gap. Priced through the same
++    # function as step 2, so the 60-month option is the loan step 2 prices.
++    financing_options = build_financing_options(
++        monthly_surplus=financial_analysis["monthly_profit"],
++        monthly_emi=monthly_emi,
++        funding_gap=financial_analysis["funding_gap"],
++        household_monthly_income=household_monthly_income,
++    )
++
+@@ -112,0 +124 @@ def run_unified_analysis(
++        "financing_options": financing_options,

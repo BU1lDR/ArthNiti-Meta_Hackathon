@@ -1,22 +1,47 @@
 diff --git a/backend/app/main.py b/backend/app/main.py
-index a92c0ef..db3746d 100644
+index a92c0ef..3372cbc 100644
 --- a/backend/app/main.py
 +++ b/backend/app/main.py
-@@ -20,0 +21 @@ from app.core.settings import load_settings
+@@ -10,0 +11 @@ from app.api.routes import entrepreneur
++from app.api.routes import advisor
+@@ -20,0 +22,2 @@ from app.core.settings import load_settings
 +from app.core.spend import SpendCap
-@@ -172 +173,2 @@ def _log_startup(settings, routers):
++from app.services import plan_service
+@@ -90,2 +93,3 @@ def _mounted_routers(settings, model_client):
+-    # The voice-and-text helper is off unless ARTHNITI_AI_ENABLED is true, in
+-    # production too. Nothing is sent to Meta, and no route exists to send it.
++    # The voice-and-text helper and the plan writer are off unless
++    # ARTHNITI_AI_ENABLED is true, in production too. Nothing is sent to Meta,
++    # and no route exists to send it.
+@@ -93,3 +97,4 @@ def _mounted_routers(settings, model_client):
+-        routers.append(
+-            intake.build_router(model_client, settings.ai_model, settings.asr_model, settings.ai_hourly_limit)
+-        )
++        # One count for every route that calls the model.
++        take = intake.hourly_limiter(settings.ai_hourly_limit)
++        routers.append(intake.build_router(model_client, settings.ai_model, settings.asr_model, take))
++        routers.append(advisor.build_router(model_client, settings.ai_model, take))
+@@ -171,2 +176,5 @@ def _log_startup(settings, routers):
+-            "model API (%s for text, %s for speech), at most %d calls an hour "
 -            "in all. docs/PROCESSOR_SCHEDULE.md lists what that adds for the "
++            "model API (%s for text, %s for speech), and POST /api/advisor/plan "
++            "sends it a short description of a business, with no figure, name "
++            "or place in it, to have a plan worded; at most %d calls an hour "
 +            "in all, and at most $%.2f of billing in all (the total is kept in "
 +            "%s). docs/PROCESSOR_SCHEDULE.md lists what that adds for the "
-@@ -176,0 +179,2 @@ def _log_startup(settings, routers):
+@@ -176,0 +185,2 @@ def _log_startup(settings, routers):
 +            settings.ai_spend_cap_usd,
 +            settings.ai_spend_file,
-@@ -199 +203,3 @@ def create_app(settings=None, model_client=None):
+@@ -186 +196,2 @@ def create_app(settings=None, model_client=None):
+-    ARTHNITI_AI_ENABLED true, either also serves the two /api/intake routes.
++    ARTHNITI_AI_ENABLED true, either also serves the two /api/intake routes and
++    POST /api/advisor/plan.
+@@ -199 +210,3 @@ def create_app(settings=None, model_client=None):
 -        model_client = MetaClient(settings.model_api_key)
 +        # A ledger that cannot be used stops the start here and not the first call.
 +        spend = SpendCap(settings.ai_spend_file, settings.ai_spend_cap_usd)
-+        model_client = MetaClient(settings.model_api_key, spend=spend)
-@@ -226 +232,3 @@ def create_app(settings=None, model_client=None):
++        model_client = MetaClient(settings.model_api_key, spend=spend, timeout=plan_service.CALL_TIMEOUT_SECONDS)
+@@ -226 +239,3 @@ def create_app(settings=None, model_client=None):
 -    # the frontend sends: GET and POST with a JSON body.
 +    # the frontend sends: GET and POST with a JSON body, or with a WAV
 +    # recording for the helper. Both set Content-Type, which is why a browser
