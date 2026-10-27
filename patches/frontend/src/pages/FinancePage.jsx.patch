@@ -1,0 +1,9 @@
+diff --git a/frontend/src/pages/FinancePage.jsx b/frontend/src/pages/FinancePage.jsx
+index 8af5d7a..c55a20b 100644
+--- a/frontend/src/pages/FinancePage.jsx
++++ b/frontend/src/pages/FinancePage.jsx
+@@ -4,0 +5 @@ import Button from '../components/Button'
++import HelperFilledBanner from '../components/HelperFilledBanner'
+@@ -342,0 +344,2 @@ function FinancePage() {
++      <HelperFilledBanner section="finance" />
++

@@ -1,0 +1,9 @@
+diff --git a/frontend/src/pages/LocationPage.jsx b/frontend/src/pages/LocationPage.jsx
+index 4c8e8fd..512616c 100644
+--- a/frontend/src/pages/LocationPage.jsx
++++ b/frontend/src/pages/LocationPage.jsx
+@@ -3,0 +4 @@ import Button from '../components/Button'
++import HelperFilledBanner from '../components/HelperFilledBanner'
+@@ -121,0 +123,2 @@ function LocationPage() {
++      <HelperFilledBanner section="location" />
++

@@ -1,0 +1,9 @@
+diff --git a/frontend/src/pages/BusinessPage.jsx b/frontend/src/pages/BusinessPage.jsx
+index 8c13c7b..2d5eadb 100644
+--- a/frontend/src/pages/BusinessPage.jsx
++++ b/frontend/src/pages/BusinessPage.jsx
+@@ -4,0 +5 @@ import Button from '../components/Button'
++import HelperFilledBanner from '../components/HelperFilledBanner'
+@@ -96,0 +98,2 @@ function BusinessPage() {
++      <HelperFilledBanner section="business" />
++

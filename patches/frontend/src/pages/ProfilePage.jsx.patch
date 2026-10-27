@@ -1,0 +1,16 @@
+diff --git a/frontend/src/pages/ProfilePage.jsx b/frontend/src/pages/ProfilePage.jsx
+index 729f17e..bbc12ec 100644
+--- a/frontend/src/pages/ProfilePage.jsx
++++ b/frontend/src/pages/ProfilePage.jsx
+@@ -4,0 +5 @@ import ShortNotice from '../components/ShortNotice'
++import { DEPLOYMENT } from '../config/deployment'
+@@ -63,0 +65,9 @@ function ProfilePage() {
++      {DEPLOYMENT.aiHelper && (
++        <div className="ui-card-soft mb-6 flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
++          <p className="font-semibold">{t('talk.entryText')}</p>
++          <Button to="/talk" variant="secondary" className="w-full sm:w-auto sm:shrink-0">
++            <span aria-hidden="true">🎤</span> {t('talk.title')}
++          </Button>
++        </div>
++      )}
++

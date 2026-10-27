@@ -1,0 +1,22 @@
+diff --git a/frontend/src/App.jsx b/frontend/src/App.jsx
+index 268d6b7..b76ccce 100644
+--- a/frontend/src/App.jsx
++++ b/frontend/src/App.jsx
+@@ -7,0 +8 @@ import InstructionManual from './components/InstructionManual'
++import { DEPLOYMENT } from './config/deployment'
+@@ -19,0 +21 @@ import PrivacyPage from './pages/PrivacyPage'
++import TalkPage from './pages/TalkPage'
+@@ -417 +419 @@ function AppShell({ children }) {
+-const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy' }
++const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy', '/talk': 'talk.title' }
+@@ -598 +600 @@ function LandingPage() {
+-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
++          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+@@ -601,0 +604,5 @@ function LandingPage() {
++            {DEPLOYMENT.aiHelper && (
++              <Button to="/talk" variant="secondary" size="lg" className="w-full sm:w-auto">
++                <span aria-hidden="true">🎤</span> {t('talk.title')}
++              </Button>
++            )}
+@@ -726,0 +734 @@ function App() {
++        {DEPLOYMENT.aiHelper && <Route path="/talk" element={<TalkPage />} />}

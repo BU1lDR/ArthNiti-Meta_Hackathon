@@ -9,9 +9,18 @@
     "backend/tests/test_network_guard.py",
     "backend/tests/test_spend_cap.py",
     "backend/tests/test_talk_fake_backend.py",
+    "frontend/src/audio/record.js",
+    "frontend/src/audio/wav.js",
+    "frontend/src/components/HelperFilledBanner.jsx",
+    "frontend/src/data/talkAnswers.js",
+    "frontend/src/pages/TalkPage.jsx",
+    "tools/verify/app-state-test.mjs",
+    "tools/verify/talk-lib-test.mjs",
+    "tools/verify/talk-ui.mjs",
     "tools/verify/talk_fake_backend.py"
   ],
   "patched": [
+    ".github/workflows/ci.yml",
     ".gitignore",
     "backend/app/api/routes/intake.py",
     "backend/app/core/meta_client.py",
@@ -25,11 +34,21 @@
     "backend/tests/test_intake_service.py",
     "backend/tests/test_intake_settings.py",
     "backend/tests/test_meta_client.py",
-    "backend/tests/test_smoke_meta.py"
+    "backend/tests/test_smoke_meta.py",
+    "frontend/.env.example",
+    "frontend/src/App.jsx",
+    "frontend/src/config/deployment.js",
+    "frontend/src/context/AppContext.jsx",
+    "frontend/src/i18n/resultStrings.js",
+    "frontend/src/pages/BusinessPage.jsx",
+    "frontend/src/pages/FinancePage.jsx",
+    "frontend/src/pages/LocationPage.jsx",
+    "frontend/src/pages/ProfilePage.jsx",
+    "frontend/src/services/api.js"
   ],
   "removed": [],
   "result": {
-    "devCommit": "260c996f0deee00b11c6aec94760954432fb5817",
-    "tree": "7f3335c938da23c28b90fcad2947518a5315cf6d"
+    "devCommit": "d42f84dc0cd7a8fdb9ad70929f9066b35c23d473",
+    "tree": "eb861fd22e9e2d4b3a67c6f3d47a4e55b2741dc4"
   }
 }
