@@ -1,0 +1,20 @@
+diff --git a/frontend/src/i18n/backendStrings.js b/frontend/src/i18n/backendStrings.js
+index 6d108cc..6372bf3 100644
+--- a/frontend/src/i18n/backendStrings.js
++++ b/frontend/src/i18n/backendStrings.js
+@@ -106,0 +107 @@ const en = {
++  'src.necc': 'Daily egg prices published by the National Egg Co-ordination Committee (NECC)',
+@@ -186,0 +188 @@ const hi = {
++  'src.necc': 'राष्ट्रीय अंडा समन्वय समिति (NECC) द्वारा प्रकाशित अंडों के रोज़ के दाम',
+@@ -260,0 +263 @@ const ta = {
++  'src.necc': 'தேசிய முட்டை ஒருங்கிணைப்புக் குழு (NECC) வெளியிட்ட முட்டையின் தினசரி விலைகள்',
+@@ -334,0 +338 @@ const te = {
++  'src.necc': 'నేషనల్ ఎగ్ కోఆర్డినేషన్ కమిటీ (NECC) ప్రచురించిన గుడ్ల రోజువారీ ధరలు',
+@@ -408,0 +413 @@ const ml = {
++  'src.necc': 'നാഷണൽ എഗ് കോ-ഓർഡിനേഷൻ കമ്മിറ്റി (NECC) പ്രസിദ്ധീകരിച്ച മുട്ടയുടെ ദിവസേനയുള്ള വിലകൾ',
+@@ -482,0 +488 @@ const kn = {
++  'src.necc': 'ನ್ಯಾಷನಲ್ ಎಗ್ ಕೋ-ಆರ್ಡಿನೇಷನ್ ಕಮಿಟಿ (NECC) ಪ್ರಕಟಿಸಿದ ಮೊಟ್ಟೆಯ ದಿನನಿತ್ಯದ ದರಗಳು',
+@@ -556,0 +563 @@ const mr = {
++  'src.necc': 'राष्ट्रीय अंडी समन्वय समिती (NECC) यांनी प्रकाशित केलेले अंड्यांचे रोजचे भाव',
+@@ -630,0 +638 @@ const bn = {
++  'src.necc': 'ন্যাশনাল এগ কো-অর্ডিনেশন কমিটি (NECC) প্রকাশিত ডিমের দৈনিক দাম',

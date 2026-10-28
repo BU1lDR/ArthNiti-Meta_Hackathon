@@ -1,0 +1,10 @@
+diff --git a/.gitattributes b/.gitattributes
+index 52c4712..3cfe953 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -5,0 +6,5 @@ tools/fetch-market-data.mjs text eol=lf
++
++# The egg prices record the same hash (script_sha256 in
++# backend/app/data/necc_egg_prices.json), over these two files.
++tools/necc-lib.mjs text eol=lf
++tools/fetch-necc-prices.mjs text eol=lf

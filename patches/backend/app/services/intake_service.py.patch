@@ -1,8 +1,10 @@
 diff --git a/backend/app/services/intake_service.py b/backend/app/services/intake_service.py
-index 3efda19..f3f2624 100644
+index 3efda19..66e340a 100644
 --- a/backend/app/services/intake_service.py
 +++ b/backend/app/services/intake_service.py
-@@ -90,0 +91,7 @@ LOCATION_TYPES = ("rural", "semi-urban", "urban")
+@@ -84,0 +85 @@ CATEGORIES = (
++    "poultry",
+@@ -90,0 +92,7 @@ LOCATION_TYPES = ("rural", "semi-urban", "urban")
 +# Words the speech model is asked to favour, because the form turns on them and
 +# they are likelier to be misheard than everyday speech: the Indian counting
 +# words, the loan word, the places the market data covers, and the kinds of

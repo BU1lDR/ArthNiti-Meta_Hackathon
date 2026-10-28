@@ -1,45 +1,178 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..d87c3ec 100644
+index b8e7eb3..5c5f3c4 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
 -28 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`).
-+31 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
++34 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
 +one Python helper, `verify/talk_fake_backend.py`.
 @@ -11 +12 @@ neighbours'.
 -Not all 28 are gates. Counted by class:
-+Not all 31 are gates. Counted by class:
++Not all 34 are gates. Counted by class:
 @@ -15 +16 @@ Not all 28 are gates. Counted by class:
 -| **Gates**: exit 1 on a finding, 2 when they could not measure | 18 | `parity4`, `keycheck`, `market-lib-test` (via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf` |
-+| **Gates**: exit 1 on a finding, 2 when they could not measure | 21 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test` and `app-state-test` (the three via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui` |
++| **Gates**: exit 1 on a finding, 2 when they could not measure | 22 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test`, `app-state-test` and `necc-lib-test` (the four via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui` |
+@@ -17,2 +18,2 @@ Not all 28 are gates. Counted by class:
+-| **Helpers**: not gates | 6 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen` and `svgcheck` (asset tools), `fetch-market-data` (data fetch), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
+-| **Library**: not run directly | 1 | `market-lib` |
++| **Helpers**: not gates | 7 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen` and `svgcheck` (asset tools), `fetch-market-data` and `fetch-necc-prices` (data fetches), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
++| **Library**: not run directly | 2 | `market-lib`, `necc-lib` |
 @@ -55 +56,2 @@ fall into four groups.
 -  its own Vite never coming up;
 +  its own Vite never coming up; 8012, 5182 to 5184 or 9379 for `talk-ui`, or its
 +  own backend or Vite never coming up;
-@@ -276 +278 @@ a wait you can hit:
+@@ -132,2 +134,3 @@ Three are narrower:
+-- `market-lib-test` runs under `node --test`, which exits 1 for a failing test and
+-  for a crash alike. Read its output to tell the two apart.
++- `market-lib-test`, `necc-lib-test`, `talk-lib-test` and `app-state-test` run under
++  `node --test`, which exits 1 for a failing test and for a crash alike. Read the
++  output to tell the two apart.
+@@ -276 +279 @@ a wait you can hit:
 -| **Edge** | All 19 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit` and `market-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
 +| **Edge** | All 20 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
-@@ -453,2 +455,3 @@ this build is never deployed, so it gets a placeholder that cannot resolve
+@@ -300 +303 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
+-node tools/verify/drive.mjs                # 4. the main gate, 41 page loads
++node tools/verify/drive.mjs                # 4. the main gate, 43 page loads
+@@ -343,0 +347 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
++node --test tools/verify/necc-lib-test.mjs     # the egg-price parser and checks, 74 tests, no network
+@@ -446,3 +450,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
+-frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`
+-and `market-lib-test`, then `glyph-audit`, which exits 0 whenever it ran and is there to be
+-read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
++frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`,
++`market-lib-test`, `necc-lib-test`, `talk-lib-test` and `app-state-test`, then `glyph-audit`,
++which exits 0 whenever it ran and is there to be read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
+@@ -453,2 +457,3 @@ this build is never deployed, so it gets a placeholder that cannot resolve
 -text. **None of the browser scripts is in CI.** **CI has never run, on GitHub or
 -on Linux**, because the branch has not been pushed. Two scripts were changed for
 +text. **None of the browser scripts is in CI.** **CI was written without being run**,
 +on a Windows machine with no Linux and no Python 3.10; the Actions tab has the
 +result. Two scripts were changed for
-@@ -581,2 +584,4 @@ correct app.
+@@ -466 +471 @@ Need the **Vite dev server** on 5173:
+-node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
++node tools/verify/drive.mjs          # hydrate check + 9 passes, 43 page loads + scheme cards — the main gate; exits 1 on a finding
+@@ -550 +555 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+-result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
++result byte for byte. `/privacy` is one of the 43 loads, in every pass that loads
+@@ -569,0 +575,83 @@ exited 0 with `neutralised` naming both.
++**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
++and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
++`/report`, for each loan in the response that carries a `schedule`, `drive` picks
++that length in the `#schedule-term` menu and reads the table back: the number of rows
++must equal the months (`SCHEDULE ROWS`), each row's five cells must equal the
++response's row to the paisa (`SCHEDULE ROW`), the payments and the interest must add
++up to the card's totals (`SCHEDULE PAYMENTS`, `SCHEDULE INTEREST`), and the last row
++must owe nothing (`ends owing`). A schedule heading with no table under it is the
++selector gone stale and exits 2. A response with schedules and no section on the
++page is `SCHEDULE MISSING`, several lengths and no menu is `SCHEDULE MENU MISSING`,
++and a result without schedules (one stored before the feature) must draw no section
++(`SCHEDULE SHOWN WITH NO ROWS`). `report.json` counts the loans checked as
++`scheduleChecked`, and the console line prints `schedules=N` (4 on a result that
++has all four lengths). Measured on 28 Oct 2026 with defects planted in the pages
++and then undone: dropping the last row and printing the card total with
++`formatCurrency`, together, exited 1 with `SCHEDULE ROWS` on all four lengths and
++`LOAN TOTAL NOT TO THE PAISA`; showing the loan part in the interest column exited 1
++with `SCHEDULE ROW` and `SCHEDULE INTEREST`. On the restored pages it exits 0.
++The other findings were each planted alone the same day and each exited 1: the
++payment column printing the interest (`SCHEDULE ROW` and `SCHEDULE PAYMENTS`), the
++closing balance column printing the opening balance (`SCHEDULE ROW` and `ends
++owing`), the length menu switched off (`SCHEDULE MENU MISSING`), the section
++returning nothing (`SCHEDULE MISSING`) and a heading drawn for a result with no
++schedules (`SCHEDULE SHOWN WITH NO ROWS`). Each plant was undone with `cp` and the
++page checked against the good copy with `cmp`.
++
++**The scheme funding card.** `/advisory` and `/report` draw one card for the schemes
++the response priced (`scheme_funding`, `components/SchemeFunding.jsx`). From the
++response alone `drive` works out which schemes those are (`pricedSchemes`: a subsidy
++scheme with at least one case, or a Mudra band the card has words for) and reads the
++`data-scheme-funding` box. It must be there (`FUNDING CARD MISSING`), carry `fs.title`
++(`FUNDING CARD TITLE`) and the `fs.caption` that calls it an estimate (`FUNDING CARD
++HAS NO ESTIMATE CAPTION`), hold one block per priced scheme (`FUNDING CARD SCHEMES`,
++and `FUNDING CARD: no block for <id>`, found by the scheme's name in
++`scheme_matches`), and print every figure of every case as the card formats it
++(`FUNDING FIGURE MISSING`). A response that priced nothing must draw no card
++(`FUNDING CARD SHOWN WITH NOTHING PRICED`). The card's headings are the schemes' own
++names, so the scheme-card walk leaves the box out (`[data-scheme-funding]`); read as
++scheme cards they would fail for having no fit label. `report.json` counts the
++schemes checked as `fundingChecked` and the console line prints `funding=N` (2 on
++the `good` case, which prices PMMY and PMEGP). Measured on 28 Oct 2026: before the
++card was drawn, `drive` exited 1 with `FUNDING CARD MISSING` on the 6 loads of the
++`good` case (3 languages, 2 routes). With defects planted in the card, then undone,
++it exited 1 on 10 loads: `FUNDING CARD HAS NO ESTIMATE CAPTION` and three `FUNDING
++FIGURE MISSING` (PMMY ₹50,000 and PMEGP ₹1,30,000 and ₹1,20,000) on the 6 `good`
++loads, and `FUNDING CARD SHOWN WITH NOTHING PRICED` on the 4 loads of the `nulls`
++and `empty` cases. With one scheme's block dropped it exited 1 on the 6 `good` loads
++with `FUNDING CARD SCHEMES: 1 drawn, 2 priced` and `no block for pmegp`. On the
++finished card it exits 0.
++
++**The compliance card.** `/advisory` and `/report` also draw the "Registrations and
++licences to check" card (`compliance`, `components/Compliance.jsx`). `drive` does not
++reuse the component's logic: it restates the mapping from the response to the
++words, in the page's language (`complianceSteps`), and reads the
++`data-compliance` box with a probe that takes `textContent`. The box must be there
++(`COMPLIANCE CARD MISSING`) and carry `cl.title` (`COMPLIANCE CARD TITLE`); its
++paragraphs must be the page's eyebrow (on `/advisory` only), the intro, the yearly
++sales sentence with the sales formatted as the card formats them, and the caption
++(`COMPLIANCE CARD TEXT`); and it must hold one `li[data-compliance-step]` per step
++of the response, in order, each with its number, its title, its need badge and its
++sentences (`COMPLIANCE STEP n`, which prints what was drawn and what was wanted).
++A response with no steps must draw no card (`COMPLIANCE CARD SHOWN WITH NOTHING TO
++DRAW`). A step, need, case, kind, place or source with no wording in the
++dictionary, and a `cl.*` key missing from `resultStrings.js`, are exit 2: the
++backend has a value the page cannot say. A fixture with no compliance steps is also
++exit 2 (it was made by an older backend: run `refresh-cases.mjs`).
++The ninth pass, `old`, loads `/advisory` and `/report` in English with the `good`
++answers and a result stored before `compliance` and `scheme_funding` existed (both
++keys deleted from the fixture); the page must draw neither card and throw nothing.
++`report.json` counts the steps checked as `complianceChecked` (40 in all: 4 steps on
++each of the 10 loads of a result) and the console line prints `compliance=N`, the
++steps that matched (4 on a load that passes). Measured on 28 Oct
++2026 with defects planted in the component and then undone with `cp` and a `sha256`
++check; each exited 1: the card never drawn (`COMPLIANCE CARD MISSING` on 10 loads);
++the card drawn with no steps (`COMPLIANCE CARD SHOWN WITH NOTHING TO DRAW` on the 2
++`old` loads); the Udyam badge reading "Ask the office" and FSSAI's source line
++naming the GST booklet (`COMPLIANCE STEP` 1 and 3 on 10 loads); the dairy-cooperative
++sentence printed for every business (`COMPLIANCE STEP 3` on the 2 `empty` loads, the
++only case where FSSAI is not "probably not needed"); and five defects together, the
++wrong title, no caption, the order reversed, the Udyam badge and the FSSAI source
++(`COMPLIANCE CARD TITLE` on the 5 `/advisory` loads, `COMPLIANCE CARD TEXT` on 10
++and 40 `COMPLIANCE STEP`). On the finished card it exits 0.
++
+@@ -581,2 +669,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
-+**Seed versions.** `AppContext.jsx` writes version 5 and reads 1 to 5. Version 5 added
++**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
 +`aiFilled`, the answers the voice-and-text helper filled in; a seed without it reads
-+with an empty list. Any other version, or a payload with no `{v, data}` wrapper, is
++with an empty list. Version 6 added `request` and `plan`, the answers a result was
++computed from and the written plan for it; a seed without them reads with both null.
++Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -816,0 +822,62 @@ is still slow or unbounded" above).
+@@ -735 +827 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+-node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
++node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
+@@ -745,0 +838,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
++A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
++and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
++state-wide) and two that the page must refuse to draw (Chittoor, which has no
++clarification, and Ranchi, whose unit is `kg`). It checks the price text
++(`EGG-PRICE`), the label (`EGG-LABEL`), the kind sentence and that the other
++kind's is absent (`EGG-KIND`), the reading of the unit (`EGG-READING`), that no
++per-kilo mandi sentence is printed (`EGG-UNIT`), that the refused rows draw no
++card (`EGG-UNSAFE`), and in the sources block the clarification once, in its own
++`<p lang="en">` (`EGG-CLARIFICATION`, `EGG-CLARIFICATION-LANG`), its lead-in
++(`EGG-SAYS`), the egg warranty (`EGG-WARRANTY`), no government open-data warranty
++on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
++egg price (`EGG-STRAY`). `--broken` plants one defect for each.
++
+@@ -817 +922,106 @@ is still slow or unbounded" above).
+-Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
 +
 +```bash
 +node --test tools/verify/talk-lib-test.mjs    # wav.js and talkAnswers.js: 45 tests, no server
 +node --test tools/verify/app-state-test.mjs   # AppContext's applyEdit, applyHelperFill, applyResult, applyPlan and storage: 41 tests, no server
-+node tools/verify/talk-ui.mjs                 # the page in a real Edge: 17 scenarios, 259 checks, about 30 s (--only=S3,S5 runs some)
++node tools/verify/talk-ui.mjs                 # the page in a real Edge: 24 scenarios, 460 checks, about 50 s (--only=S3,S5 runs some)
 +```
 +
 +- `talk-lib-test` also hands a real encoded recording to the backend's own
@@ -51,9 +184,13 @@ index b8e7eb3..d87c3ec 100644
 +- `talk-ui` starts its own backend (8012), three Vites (5182 helper on, 5183 helper
 +  off, 5184 on with the age box) and its own Edge (9379, with a synthetic microphone),
 +  and kills all of them by PID on every exit path. It needs `.venv`, Edge and
-+  `frontend/node_modules`, and no `case_*.json`. Its scenarios are S0 to S15 plus S2b.
++  `frontend/node_modules`, and no `case_*.json`. Its scenarios are S0 to S22 plus S2b:
++  S0 to S15 drive `/talk`, S16 to S22 the plan card on `/advisory`.
 +  A wait for something the page owes the reader (the consent error) is a finding when
 +  it never comes; a wait for something the instrument needs is a fault, exit 2.
++  `waitForRender()` (more than 40 characters in `#main`) cannot tell the page being
++  left from the one being entered after a client-side move, so S16 to S22 wait on the
++  `h1` (`h1Now`) instead.
 +- `verify/talk_fake_backend.py <port>` is the shipped app with the helper switched on
 +  and a fake in Meta's place. It must keep the real client's signatures. The first
 +  browser run caught a drift the unit tests could not: the route had started passing
@@ -61,9 +198,10 @@ index b8e7eb3..d87c3ec 100644
 +  `backend/tests/test_talk_fake_backend.py` now compares the signatures with
 +  `MetaClient` and serves both routes through the fake.
 +
-+`talk-ui` has no `--broken` flag. Its refuters were run by hand on 27 Oct 2026: change
-+one line, run with `--only=`, restore it, compare the bytes. The thirteen are listed in
-+the script's header. Each made the scenario fail:
++`talk-ui` has no `--broken` flag. Its refuters were run by hand: change one line, run
++with `--only=`, restore it, compare the bytes. The thirteen for `/talk` (27 Oct 2026)
++and the twenty for the plan card (28 Oct 2026, further down) are listed in the script's
++header. Each made the scenario fail:
 +
 +| Change | Scenario | Checks that failed |
 +|---|---|---|
@@ -95,11 +233,77 @@ index b8e7eb3..d87c3ec 100644
 +with it (40 interleaved pairs; too few for significance). The page's report of such a
 +recording is correct, and S15's second part tests it on purpose.
 +
-@@ -898,2 +965,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
++The twenty for the plan card, run the same way on 28 Oct 2026 (`PlanWriter` in
++`AdvisoryPage.jsx` unless a file is named):
++
++| Change | Scenario | Checks that failed |
++|---|---|---|
++| drop `DEPLOYMENT.aiHelper &&` where `PlanWriter` is mounted | S16 | 1 |
++| `setConsentMissing(!consent)` becomes `setConsentMissing(false)` | S16 | 2 |
++| `if (!consent) {` becomes `if (false) {` (sent without the tick) | S16 | 3 |
++| the `setError('')` that starts `write()` becomes `setError(error)` | S19, S20 | 1, 4 |
++| `requestPlan` is always asked for `'en'` | S18, S21 | 3, 14 |
++| `requestPlan` sends `send_to_meta` false | S17 | 2 (the route answers 422, the scenario ends at 6 checks) |
++| `justWritten.current = true` becomes `false` | S17 | 1 |
++| `setConsent(false)` after a plan becomes `setConsent(true)` | S17 | 1 |
++| an abort is shown as an error (no `isAbortError` test) | S20 | 2 |
++| the Cancel button does nothing | S20 | 3 |
++| Write is not disabled while the request is out | S20 | 1 |
++| the consent box is not disabled while the request is out | S20 | 1 |
++| `api.js`: 429 maps to the generic error, not to `plan.errBusy` | S19 | 1 |
++| `api.js`: no `isPlan()` test on a 200 | S19 | 1 |
++| `AppContext.jsx`: `applyEdit` keeps the plan when an answer changes | S17 | 1 |
++| `plan_service.py`: "It is in Lucknow." added to the facts the model is sent | S17 | 1 |
++| `plan_service.py`: "It is for 8000." added to those facts | S17 | 1 |
++| one sentence of the card at 10 px | S22 | 5 |
++| `min-w-[520px]` on the Write button | S22 | 5 |
++| a 20 px high label round the consent box | S22 | 5 |
++
++Two of these taught something. The first Cancel refuter exited 2, not 1: the plan then
++arrived after the scripted delay, the button read "again", and the last step faulted on
++a "Write my plan" that was gone. S20 now stops there (`if (v.card?.summary) return`), so
++the finding is a plain exit 1. And a fixed width on the Write button (`w-[520px]`)
++survived S22 with 0 failures: the buttons sit in a `flex flex-wrap` row and shrink to
++fit it, so that refuter was invalid, not the gate. `min-w-` cannot shrink.
++
++Not covered in a browser: a plan that arrives after the answers changed (the reader
++leaves the page mid-request and edits) is covered by `app-state-test` only; S22 has no
++refuter for the Cancel button, which is only on screen while the request is out; and
++after a failed request the consent tick stays ticked (observed, not pinned).
++
++Helpers, the 7 that are not gates:
+@@ -825,0 +1036 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
++node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
+@@ -860,3 +1071,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+-the gates. It is the only script here that goes to the internet, and
+-`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
+-a script to run.
++the gates. `market-lib.mjs` beside it is the library it and `market-lib-test.mjs`
++share, not a script to run.
++
++`fetch-necc-prices.mjs` is the second script that goes to the internet. It reads
++NECC's public daily rate sheet, needs no key and is a dry run unless you pass
++`--write`. `--from FILE` reads a saved copy of the page instead and refuses
++`--write`, so a test page cannot reach the data file. It maps each NECC centre to a
++district through `tools/necc-crosswalk.json` (30 of 34 mapped, 4 skipped with a
++reason), keeps the last price printed in the month, and drops a price older than 30
++days. The usual refresh is `node tools/fetch-necc-prices.mjs --write`, then
++`refresh-cases.mjs` and the gates. `necc-lib.mjs` beside it is the library it and
++`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
++(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
++either without fetching again makes that record false.
+@@ -898,2 +1120,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +981 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1136 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379 — plus `assetgen` 9377
+@@ -941 +1163 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+-node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
++node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
+@@ -948 +1170,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+-on 26 Oct 2026, after the exit-code fixes.
++on 26 Oct 2026, after the exit-code fixes. The exception is `market-ui`'s, measured
++again on 28 Oct 2026 after the egg cases were added.

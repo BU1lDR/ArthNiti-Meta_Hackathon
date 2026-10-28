@@ -1,0 +1,37 @@
+diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
+index 4ea17de..f03a57a 100644
+--- a/backend/gen_schemes.py
++++ b/backend/gen_schemes.py
+@@ -131,0 +132 @@ SPEC = [
++            ("elig.pmfme.upgrade", "The Ministry's page for individual units speaks of units that want to upgrade. It does not say whether a new unit can get this subsidy."),
+@@ -139 +140,4 @@ SPEC = [
+-        "central", ["ALL"], [MFG, SVC, TRD],
++        # FP, DRY, PLT and BEE follow the guidelines' own para 30 (KVIC, 1 June
++        # 2022): only meat is excluded from food processing, and dairy, poultry
++        # and insects including bees are named as animal husbandry that is allowed.
++        "central", ["ALL"], [MFG, SVC, TRD, FP, DRY, PLT, BEE],
+@@ -147,0 +152 @@ SPEC = [
++            ("elig.pmegp.period", "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026."),
+@@ -155 +160,4 @@ SPEC = [
+-        "central", ["ALL"], [MFG, TRD, SVC, DRY, PLT, BEE],
++        # FP is an inference: the Department of Financial Services page says the
++        # loans are for non-agricultural activities and names poultry, dairy and
++        # beekeeping as allied ones; it does not name food processing.
++        "central", ["ALL"], [MFG, TRD, SVC, FP, DRY, PLT, BEE],
+@@ -190,3 +198,3 @@ SPEC = [
+-        # is not covered, so the Agriculture button must not list it. Dairy and
+-        # food processing are the allied activities that rule names.
+-        "central", ["ALL"], [MFG, SVC, TRD, DRY, FP],
++        # is not covered, so the Agriculture button must not list it. Dairy,
++        # poultry and food processing are the allied activities that rule names.
++        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
+@@ -200,0 +209 @@ SPEC = [
++            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
+@@ -615,3 +624,4 @@ SPEC = [
+-# The three original schemes keep their own verification date. Everything added
+-# on 7 Sept 2026 carries that date, and the UI prints it on every card.
+-EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
++# Everything added on 7 Sept 2026 carries that date, and the UI prints it on every
++# card. The four schemes the funding calculation prices or describes had their
++# official pages read again on 28 Oct 2026 and carry that date instead.
++EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")

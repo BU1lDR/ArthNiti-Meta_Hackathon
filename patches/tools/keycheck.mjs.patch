@@ -1,0 +1,36 @@
+diff --git a/tools/keycheck.mjs b/tools/keycheck.mjs
+index c2bf6ca..2c81a03 100644
+--- a/tools/keycheck.mjs
++++ b/tools/keycheck.mjs
+@@ -55,0 +56 @@ const MARKET_JSON = 'backend/app/data/market_data.json'
++const NECC_JSON = 'backend/app/data/necc_egg_prices.json'
+@@ -60,0 +62 @@ const MARKET_LIB = 'tools/market-lib.mjs'
++const NECC_LIB = 'tools/necc-lib.mjs'
+@@ -183,0 +186 @@ collectDataCodes(MARKET_JSON)
++collectDataCodes(NECC_JSON)
+@@ -185 +188 @@ collectDataCodes(MARKET_JSON)
+-// 2b. Codes the market fetch tool writes into rows it has not produced yet.
++// 2b. Codes the fetch tools write into rows they have not produced yet.
+@@ -187,10 +190,12 @@ collectDataCodes(MARKET_JSON)
+-//     (SOURCE_EN / NOTE_EN), and the NIC map carries the per-category note_code.
+-//     A missing file throws rather than being skipped: an absent input is not
+-//     the same as a clean one.
+-readFileSync(MARKET_LIB, 'utf8')
+-  .split(/\r?\n/)
+-  .forEach((line, i) => {
+-    for (const m of line.matchAll(/['"]((?:src|mknote)\.[A-Za-z]+)['"]/g)) {
+-      noteBackend(m[1], `${MARKET_LIB}:${i + 1}`)
+-    }
+-  })
++//     (SOURCE_EN / NOTE_EN), necc-lib.mjs spells out its SOURCE_CODE, and the
++//     NIC map carries the per-category note_code. A missing file throws rather
++//     than being skipped: an absent input is not the same as a clean one.
++for (const lib of [MARKET_LIB, NECC_LIB]) {
++  readFileSync(lib, 'utf8')
++    .split(/\r?\n/)
++    .forEach((line, i) => {
++      for (const m of line.matchAll(/['"]((?:src|mknote)\.[A-Za-z]+)['"]/g)) {
++        noteBackend(m[1], `${lib}:${i + 1}`)
++      }
++    })
++}

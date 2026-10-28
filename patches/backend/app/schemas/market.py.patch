@@ -1,0 +1,53 @@
+diff --git a/backend/app/schemas/market.py b/backend/app/schemas/market.py
+index a541ebc..c0e5d6a 100644
+--- a/backend/app/schemas/market.py
++++ b/backend/app/schemas/market.py
+@@ -1 +1 @@
+-from typing import Optional
++from typing import Optional, Union
+@@ -50,0 +51,33 @@ class Provenance(BaseModel):
++class NeccProvenance(BaseModel):
++    """The same job as Provenance, for a row of egg prices from NECC.
++
++    The two sets of fields share only a few names, so a row's provenance is one
++    or the other, never a mix: a government-data record lacks `sheet`, `month`
++    and the rest, and an egg record lacks `resource_id` and the rest, so each
++    fails the other model and the Union below cannot pick wrongly. Same policy
++    as Provenance: every field the fetch writes is declared and anything else is
++    dropped. test_the_neccprovenance_model_declares_every_provenance_key keeps
++    this list and the guard's PROVENANCE_KEYS the same, in order.
++
++    `clarification` is the wording NECC asked to travel with its prices, and it
++    must reach the client with the price.
++    """
++
++    model_config = ConfigDict(extra="ignore")
++
++    publisher: str
++    page_url: str
++    sheet: str
++    month: str
++    centre_label: str
++    published_value: int
++    unit_reading: str
++    permission: str
++    fetched_at: str
++    method: str
++    crosswalk_version: int
++    script_sha256: str
++    clarification: str
++    attribution: str
++
++
+@@ -61 +94 @@ class MarketContext(BaseModel):
+-    provenance: Provenance
++    provenance: Union[Provenance, NeccProvenance]
+@@ -78,0 +112,8 @@ class MarketContext(BaseModel):
++    # metric "egg_price" only. It also uses `unit`, `indicative_price`,
++    # `last_reported` and `stale` above. price_kind is the section of NECC's
++    # sheet the centre is listed in: "suggested" ("NECC Suggested Egg Prices")
++    # or "prevailing" ("Prevailing Prices"). centre is the NECC centre the
++    # price was printed for.
++    price_kind: Optional[str] = None
++    centre: Optional[str] = None
++

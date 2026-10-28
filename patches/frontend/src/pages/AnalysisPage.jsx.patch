@@ -1,0 +1,67 @@
+diff --git a/frontend/src/pages/AnalysisPage.jsx b/frontend/src/pages/AnalysisPage.jsx
+index 4590df9..8690668 100644
+--- a/frontend/src/pages/AnalysisPage.jsx
++++ b/frontend/src/pages/AnalysisPage.jsx
+@@ -6,0 +7 @@ import Figure from '../components/Figure'
++import { drawableMarketRows, eggKindKey, isEggRow, marketSourceFacts } from '../data/marketRows'
+@@ -57 +58 @@ function AnalysisPage() {
+-  const market = Array.isArray(result.market_context) ? result.market_context : []
++  const market = drawableMarketRows(Array.isArray(result.market_context) ? result.market_context : [])
+@@ -620,0 +622 @@ function MarketCard({ row, marketType, t, bt }) {
++  const isEgg = isEggRow(row)
+@@ -626,0 +629,3 @@ function MarketCard({ row, marketType, t, bt }) {
++  // The sentence that says whose price it is names the centre and the date, so it
++  // is all of them or nothing, the same as the window sentence above.
++  const kindKey = row.centre && row.last_reported ? eggKindKey(row) : null
+@@ -666,0 +672,25 @@ function MarketCard({ row, marketType, t, bt }) {
++      {/* The price of ONE egg, which is not a price per kg: none of the mandi
++          sentences above (the per-kg label, the 30-day window, the market count)
++          is printed here. The kind sentence says whose price it is, NECC's
++          suggestion or the going price at its centre; the reading sentence says
++          how the printed whole number became rupees. */}
++      {isEgg && (
++        <div className="mt-4 min-w-0">
++          <p className="text-xl font-bold text-[var(--color-text)]">{formatPrice(row.indicative_price, t)}</p>
++          <p className="mt-1 break-words text-xs font-semibold text-[var(--color-text-muted)]">{t('mk.eggPrice')}</p>
++          {kindKey && (
++            <p className="mt-3 break-words text-sm leading-6 text-[var(--color-text)]">
++              {t(kindKey, { centre: row.centre, date: formatDate(row.last_reported) })}
++            </p>
++          )}
++          {hasNumber(row.provenance?.published_value) && (
++            <p className="mt-1 break-words text-sm leading-6 text-[var(--color-text-muted)]">
++              {t('mk.eggReading', { printed: String(row.provenance.published_value), price: formatPrice(row.indicative_price, t) })}
++            </p>
++          )}
++          {row.stale === true && (
++            <p className="ui-notice ui-notice-warn mt-3 break-words">{t('mk.stale')}</p>
++          )}
++        </div>
++      )}
++
+@@ -722,3 +752 @@ function MarketSources({ rows, t }) {
+-  const attributions = [...new Set(
+-    rows.map((row) => row.provenance?.attribution).filter((text) => typeof text === 'string' && text.trim()),
+-  )]
++  const { attributions, clarifications, hasEgg, hasOther } = marketSourceFacts(rows)
+@@ -731,0 +760,11 @@ function MarketSources({ rows, t }) {
++      {/* NECC allows its prices to be passed on only with its own clarification, in
++          its own words, so it is printed whole, once, in English, and marked as
++          English like the attribution. Plain text, never inside a <details>. */}
++      {hasEgg && (
++        <>
++          <p className="mt-3 break-words text-xs font-semibold leading-5 text-[var(--color-text)]">{t('mk.eggSays')}</p>
++          {clarifications.map((text) => (
++            <p key={text} lang="en" className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{text}</p>
++          ))}
++        </>
++      )}
+@@ -733 +772,4 @@ function MarketSources({ rows, t }) {
+-      <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>
++      {/* The government open-data warranty is true of the mandi and Udyam rows and
++          false of NECC's, which has a warranty sentence of its own. */}
++      {hasOther && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>}
++      {hasEgg && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.eggWarranty')}</p>}
+@@ -913 +955 @@ const CHOICE_KEYS = {
+-  agriculture: 'cat.agriculture', dairy: 'cat.dairy', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',
++  agriculture: 'cat.agriculture', dairy: 'cat.dairy', poultry: 'cat.poultry', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',

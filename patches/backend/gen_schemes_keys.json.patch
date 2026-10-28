@@ -1,0 +1,10 @@
+diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
+index 220d74e..d501d7d 100644
+--- a/backend/gen_schemes_keys.json
++++ b/backend/gen_schemes_keys.json
+@@ -5,0 +6 @@
++  "elig.pmfme.upgrade": "The Ministry's page for individual units speaks of units that want to upgrade. It does not say whether a new unit can get this subsidy.",
+@@ -9,0 +11 @@
++  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
+@@ -23,0 +26 @@
++  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",

@@ -1,0 +1,19 @@
+diff --git a/backend/tests/market_fixtures.py b/backend/tests/market_fixtures.py
+index 6e40034..2085444 100644
+--- a/backend/tests/market_fixtures.py
++++ b/backend/tests/market_fixtures.py
+@@ -392,0 +393,4 @@ def synthetic_market_file(tmp_path, monkeypatch):
++
++    The market data is two files since the egg prices came (necc_egg_prices.json,
++    merged in by load_market_data), so the second is written too, with no rows.
++    necc_fixtures.necc_market_file is the one that brings egg rows.
+@@ -395,4 +399,5 @@ def synthetic_market_file(tmp_path, monkeypatch):
+-    (tmp_path / "market_data.json").write_text(
+-        json.dumps(rows, ensure_ascii=False, indent=2) + "\n",
+-        encoding="utf-8",
+-    )
++    for name, content in (("market_data.json", rows), ("necc_egg_prices.json", [])):
++        (tmp_path / name).write_text(
++            json.dumps(content, ensure_ascii=False, indent=2) + "\n",
++            encoding="utf-8",
++        )

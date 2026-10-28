@@ -1,6 +1,9 @@
 diff --git a/backend/app/schemas/analysis.py b/backend/app/schemas/analysis.py
-index 2dad09a..705ce19 100644
+index 2dad09a..3dac96d 100644
 --- a/backend/app/schemas/analysis.py
 +++ b/backend/app/schemas/analysis.py
 @@ -191,0 +192 @@ class UnifiedAnalysisResponse(BaseModel):
 +    financing_options: dict
+@@ -198,0 +200,2 @@ class UnifiedAnalysisResponse(BaseModel):
++    scheme_funding: dict
++    compliance: dict

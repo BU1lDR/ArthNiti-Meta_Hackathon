@@ -1,0 +1,20 @@
+diff --git a/frontend/src/i18n/strings.js b/frontend/src/i18n/strings.js
+index 4915325..1282ad7 100644
+--- a/frontend/src/i18n/strings.js
++++ b/frontend/src/i18n/strings.js
+@@ -263,0 +264 @@ const en = {
++  'cat.poultry': 'Poultry / Eggs',
+@@ -526,0 +528 @@ const hi = {
++  'cat.poultry': 'मुर्गी पालन / अंडे',
+@@ -769,0 +772 @@ const ta = {
++  'cat.poultry': 'கோழி வளர்ப்பு / முட்டை',
+@@ -1009,0 +1013 @@ const te = {
++  'cat.poultry': 'కోళ్ల పెంపకం / గుడ్లు',
+@@ -1249,0 +1254 @@ const ml = {
++  'cat.poultry': 'കോഴി വളർത്തൽ / മുട്ട',
+@@ -1489,0 +1495 @@ const kn = {
++  'cat.poultry': 'ಕೋಳಿ ಸಾಕಣೆ / ಮೊಟ್ಟೆ',
+@@ -1729,0 +1736 @@ const mr = {
++  'cat.poultry': 'कोंबडी पालन / अंडी',
+@@ -1969,0 +1977 @@ const bn = {
++  'cat.poultry': 'মুরগি পালন / ডিম',
