@@ -1,0 +1,7 @@
+diff --git a/frontend/package.json b/frontend/package.json
+index fe763a6..f3acb36 100644
+--- a/frontend/package.json
++++ b/frontend/package.json
+@@ -4 +4 @@
+-  "license": "UNLICENSED",
++  "license": "MIT",

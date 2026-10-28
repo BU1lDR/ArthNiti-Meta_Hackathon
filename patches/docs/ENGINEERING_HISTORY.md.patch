@@ -1,7 +1,10 @@
 diff --git a/docs/ENGINEERING_HISTORY.md b/docs/ENGINEERING_HISTORY.md
-index a00c61f..b9f7992 100644
+index a00c61f..c5e3bfa 100644
 --- a/docs/ENGINEERING_HISTORY.md
 +++ b/docs/ENGINEERING_HISTORY.md
+@@ -23 +23 @@
+-- **Ownership: the project belongs to the owner, Aryan Verma**, and so does the scheme data and its upkeep. The repo is proprietary, not open source — see `LICENSE`. Teammates' contributions (Manjeet, Netra) need a written assignment before any sale; until then that is an open legal item, not a code one.
++- **Ownership: the project belongs to the owner, Aryan Verma**, and so does the scheme data and its upkeep. The repo is proprietary, not open source — see `LICENSE`. Teammates' contributions (Manjeet, Netra) need a written assignment before any sale; until then that is an open legal item, not a code one. *(Superseded on 29 Oct 2026: the owner says the Meta hackathon needs a public, open-source entry, so `LICENSE` is now MIT. The owner states that Manjeet and Netra agree; nothing in writing is on file. See `DATA_SOURCES.md`, "People".)*
 @@ -1515,0 +1516,70 @@ How long a clean run takes, in seconds: lang-layout 280, field-align 121, error-
 +### The Meta hackathon intake helper, 26–27 Oct 2026 (branches `feature/security-hardening` and `feature/voice-assistant`)
 +
