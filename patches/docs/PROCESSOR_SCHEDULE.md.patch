@@ -1,10 +1,10 @@
 diff --git a/docs/PROCESSOR_SCHEDULE.md b/docs/PROCESSOR_SCHEDULE.md
-index ff0c0ca..8e5e533 100644
+index ff0c0ca..20f0fdf 100644
 --- a/docs/PROCESSOR_SCHEDULE.md
 +++ b/docs/PROCESSOR_SCHEDULE.md
 @@ -5 +5 @@ This is the technical schedule for an organisation that runs अर्थNiti fo
 -It describes the code as measured on 27 Sept 2026 (branch `feature/dpdp-compliance`, notice version `2026-09-27.1`). A statement of the form "the software does X" is backed by the test or live probe named next to it. If the code changes, this file has to change with it.
-+It describes the code as measured on 27 Sept 2026 (branch `feature/dpdp-compliance`, notice version `2026-09-27.1`), plus the optional AI helper added on 26 and 27 Oct 2026 for the Meta hackathon (`docs/HACKATHON.md`). **The helper is off by default.** Sections 1 to 9 describe the software with the helper off, and say so where the helper changes a statement. Section 10 describes the helper. A statement of the form "the software does X" is backed by the test or live probe named next to it. If the code changes, this file has to change with it.
++It describes the code as measured on 27 Sept 2026 (committed as `57185b9`, notice version `2026-09-27.1`), plus the optional AI helper added on 26 and 27 Oct 2026 for the Meta hackathon (`docs/HACKATHON.md`). **The helper is off by default.** Sections 1 to 9 describe the software with the helper off, and say so where the helper changes a statement. Section 10 describes the helper. A statement of the form "the software does X" is backed by the test or live probe named next to it. If the code changes, this file has to change with it.
 @@ -20 +20 @@ Nothing here says that the software, or any deployment of it, complies with the
 -- **The software uses no AI model.** Every figure and every sentence of advice comes from fixed, hand-written rules in `backend/app/services/`. No request is sent to any model, API or third party.
 +- **By default the software uses no AI model.** Every figure and every sentence of advice comes from fixed, hand-written rules in `backend/app/services/`, and with the helper off no request is sent to any model, API or third party. The optional helper (§10), off unless the deployer switches it on, sends what a person says or types on one page to Meta's Model API, so that the form can be filled in for the person to check. It never produces a figure or a sentence of advice.

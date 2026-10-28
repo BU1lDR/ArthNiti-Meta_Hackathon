@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..7c72a10 100644
+index d6ab002..eb8e37e 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -11,7 +11,7 @@ index d6ab002..7c72a10 100644
 +- **The hyperlocal claim stays, backed by real data**: 125 sourced market rows for 13 districts from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
 @@ -24 +24 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -**Repo:** `https://github.com/BU1lDR/SIH_2026` (**private**; the name dates from the team build, and a rename or going public is a GitHub change).
-+**Repo:** `https://github.com/BU1lDR/ArthNiti` (**private** until the owner makes it public for the hackathon; renamed from `SIH_2026` on 26 Oct 2026, and GitHub redirects the old URL). The repo and folder name is ASCII `ArthNiti` because a path cannot reasonably be Devanagari; the product name in the app stays `अर्थNiti` (see `APP_NAME`).
++**Repo:** `https://github.com/BU1lDR/ArthNiti` (**public** as of 28 Oct 2026, switched by the owner, so anything pushed is published at once; renamed from `SIH_2026` on 26 Oct 2026, and GitHub redirects the old URL). The repo and folder name is ASCII `ArthNiti` because a path cannot reasonably be Devanagari; the product name in the app stays `अर्थNiti` (see `APP_NAME`).
 @@ -36 +36 @@ This file loads into every session and every subagent. **The long-form history 
 -- **Do not grow this file back.** Put a dated narrative ("what happened on X, and why") in the history file and keep only the resulting rule here. Keep this file under about 40 KB.
 +- **Do not grow this file back.** Put a dated narrative ("what happened on X, and why") in the history file and keep only the resulting rule here. The original aim was under 40 KB; it was 42 KB before the hackathon sections. `wc -c CLAUDE.md` gives the size now, so trim before you add.
@@ -75,7 +75,7 @@ index d6ab002..7c72a10 100644
 +                        necc, plan, privacy); 2177 tests
 @@ -114 +129 @@ backend/requirements-dev.txt   -r requirements.txt + pytest + httpx2 (httpx2 is
 -.github/workflows/ci.yml       pytest (3.10 + 3.14) + no-server frontend gates. NEVER RUN: not pushed
-+.github/workflows/ci.yml       pytest (3.10 + 3.14) + no-server frontend gates. written without being run (no Linux or Python 3.10 here): the Actions tab has the result
++.github/workflows/ci.yml       pytest (3.10 + 3.14) + no-server frontend gates, on Linux; green since its first run (27 Oct 2026): the Actions tab has every run
 @@ -116,3 +131,4 @@ frontend/src/
 -  App.jsx               shell + JourneyBar + LandingPage + NotFoundPage + 11 routes + `*`
 -  config/               deployment.js (VITE_* notice values, DEMO_MODE), notice.js (NOTICE_VERSION,
@@ -256,7 +256,7 @@ index d6ab002..7c72a10 100644
 +**Advice and data:** a household income of 0 needs a tick and then gives "do not take a new loan"; the household income is self-reported; the pressure figure errs high when another earner pays their own loan; **no eligibility rule is evaluated anywhere** (`sc.eligUnchecked` says so on the page); `stale` is decided at fetch time; the Udyam counts cannot be reproduced; the egg-price unit is unconfirmed and NECC's permission is an e-mail (`DATA_SOURCES.md`); the scheme rules have no re-check schedule (the footer date and `test_review_dates.py` are the only guard); the funding card rests on three pages with a gap each and does not test affordability, and the registrations card's limits are the 2017 and 2019 figures, not checked against later amendments (`docs/HACKATHON.md` §8); there is no helpline number.
 @@ -415 +430,3 @@ Traps:
 -Also open, stated where they apply: the household definition, market coverage, dialect coverage and the translation review, CI never run, the Windows-only gates.
-+Also open, stated where they apply: the household definition, market coverage, dialect coverage and the translation review, CI written without being run, the Windows-only gates.
++Also open, stated where they apply: the household definition, market coverage, dialect coverage and the translation review, the Windows-only gates.
 +
 +**Meta helper** (the full list is `docs/HACKATHON.md` §8): the owner ran `python -m app.smoke_meta` and `--plan` on 27 Oct 2026: the key works, and both plans passed the checks first time at about 1.1 to 1.2 cents each (`PROCESSOR_SCHEDULE.md` §10.7). Not observed: the speech `keywords`, a real person's speech and the Billing balance since `--plan`. **The plan card has been driven in a browser only against the fake model** (`talk-ui` S16–S22). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
 @@ -417 +434 @@ Also open, stated where they apply: the household definition, market coverage, d
@@ -264,11 +264,12 @@ index d6ab002..7c72a10 100644
 +**Legal:** the hackathon asks for open-source, public entries and `LICENSE` is proprietary. The owner has to choose a licence or ask the organisers; nothing is changed. The September build has commits by Manjeet and Netra and no written assignment on file; the owner's position (26 Oct 2026) is that none is needed, which is a legal question and not a code one. The Official Rules are behind a login and have not been read.
 @@ -426 +442,0 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- `tools/notice-version.json` is untracked; commit it with `notice.js`.
-@@ -433,2 +449,2 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -433,4 +449,4 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- **Branch state:** as of 26 Oct 2026, `feature/dpdp-compliance` is at `4a2307e`, 6 local commits ahead of `origin/before-main`, none pushed (`git rev-list --left-right --count origin/before-main...HEAD` gives `0 6`). **The DPDP work, the verifier exit-code work and the hackathon edits are uncommitted in the working tree.** The other 17 `feature/*` branches hold no work of their own (16 at `cf1c775`, `feature/real-market-data` at `053a99e`, both already in HEAD's history).
 -- **The remote has two branches, `before-main` and `main`.** `origin/before-main` is a fast-forward of `origin/main`. Compare `origin/` refs, not local names: local `main` carries 6 unpushed scaffolding commits.
-+- **History is one line on top of `4a2307e`**, pushed as three branches that sit on it: `feature/dpdp-compliance` (the September DPDP work, the verifier work and the brand-asset files, uncommitted until 27 Oct), `feature/security-hardening` (adds the Meta client, the spend cap and the network guard) and `feature/voice-assistant` (the tip: the `/talk` page, its i18n, the verifiers and the docs). The commit titled "chore: the project as it stood at the hackathon start" is the 12:00 PM ET start of the hackathon on 26 Oct 2026; `docs/HACKATHON.md` §2.3 shows how to diff against it. The other `feature/*` branches are empty placeholders.
-+- **The remote has two other branches, `before-main` and `main`.** `origin/main` is still the old scaffold, and the finished code reaches it by a pull request or by changing the default branch, which is the owner's step. Compare `origin/` refs, not local names: local `main` carries unpushed scaffolding commits.
-@@ -436 +452 @@ Also open, stated where they apply: the household definition, market coverage, d
+-- Never commit to `main`. **Commit messages carry no Co-Authored-By line and no Claude attribution.**
 -- The brand-asset working-tree changes, dated 13 Sept (`tools/assetgen.mjs`, `frontend/src/assets/README.md`, two regenerated lockups, and two untracked `arthniti-wordmark-on-*.png` files), are the owner's to commit. Leave them out of other commits.
++- **History is one line on top of `4a2307e`, and `main` is the only branch.** Until 29 Oct 2026 it sat on three branches: `feature/dpdp-compliance` (the September DPDP work, the verifier work and the brand-asset files, uncommitted until 27 Oct), `feature/security-hardening` (the Meta client, the spend cap and the network guard) and `feature/voice-assistant` (the tip). `main` was fast-forwarded to the tip and the others, each an ancestor of it, were deleted. The commit titled "chore: the project as it stood at the hackathon start" is the 12:00 PM ET start of the hackathon on 26 Oct 2026; `docs/HACKATHON.md` §2.3 shows how to diff against it.
++- **New work goes on a new branch cut from `main`.** A clone from before 29 Oct may hold a local `main` with unpushed scaffolding commits: compare `origin/` refs.
++- Never commit on `main` itself: `main` moves only by a push the owner has approved, as a fast-forward. **Commit messages carry no Co-Authored-By line and no Claude attribution.**
 +- The brand-asset changes dated 13 Sept (`tools/assetgen.mjs`, `frontend/src/assets/README.md`, two regenerated lockups, and the two `arthniti-wordmark-on-*.png` files) are the owner's and have their own commit. Keep them out of other commits.
