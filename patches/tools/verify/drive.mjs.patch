@@ -1,8 +1,8 @@
 diff --git a/tools/verify/drive.mjs b/tools/verify/drive.mjs
-index 864c305..98d3aa4 100644
+index 864c305..25421d1 100644
 --- a/tools/verify/drive.mjs
 +++ b/tools/verify/drive.mjs
-@@ -23,2 +23,6 @@
+@@ -23,2 +23,8 @@
 -// read, a key the checks need (a cleared, not-ready or fit label) is not in
 -// resultStrings.js, the page cannot import deployment.js or it no longer
 +// read, a schedule heading with no table under it on /report, a result fixture
@@ -10,8 +10,10 @@ index 864c305..98d3aa4 100644
 +// miss one of the three lights (they predate the card or the band: regenerate
 +// them with refresh-cases.mjs), a compliance step, need, case, kind, place or source the
 +// card check has no wording for, a key the checks need (a cleared, not-ready,
-+// fit, schedule or compliance label) is not in resultStrings.js, the page cannot import deployment.js or it no longer
-@@ -177,0 +182,16 @@ const FORMS = {
++// fit, schedule, compliance or Simple/Detailed label) is not in resultStrings.js, a heading the
++// Simple/Detailed check names is not printed exactly once, as a line of #main, by its page when
++// the page shows everything (it could not tell the sections apart), the page cannot import deployment.js or it no longer
+@@ -177,0 +184,16 @@ const FORMS = {
 +  // The one case that reaches the green light: a profit, low repayment pressure, a
 +  // plan that pays, no funding gap and a household inside its limit. See
 +  // refresh-cases.mjs, which regenerates the response beside this.
@@ -28,16 +30,16 @@ index 864c305..98d3aa4 100644
 +    },
 +    finance: { availableCapital: '120000', monthlyExpenses: '22000', monthlyEmi: '2000' },
 +  },
-@@ -207,0 +228,6 @@ FORMS.cleared = structuredClone(FORMS.good)
+@@ -207,0 +230,6 @@ FORMS.cleared = structuredClone(FORMS.good)
 +// Answered and submitted before the compliance card, the scheme funding card and the
 +// traffic light existed: good's answers, and good's response without those keys
 +// (RESULTS.old, below). The result pages must leave the cards and the light out and
 +// carry on, and /analysis must keep the status mark it had before the light.
 +FORMS.old = structuredClone(FORMS.good)
 +
-@@ -211,0 +238 @@ const RESULTS = {
+@@ -211,0 +240 @@ const RESULTS = {
 +  green: JSON.parse(readFileSync('screenshots/verify/case_green.json', 'utf8')),
-@@ -218,0 +246,56 @@ const RESULTS = {
+@@ -218,0 +248,56 @@ const RESULTS = {
 +RESULTS.old = structuredClone(RESULTS.good)
 +delete RESULTS.old.compliance
 +delete RESULTS.old.scheme_funding
@@ -94,13 +96,43 @@ index 864c305..98d3aa4 100644
 +    }
 +  })
 +})()`
-@@ -335 +418 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
+@@ -330,0 +416,29 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
++
++// --- the Simple / Detailed switch ---------------------------------------------------
++// /analysis and /advisory carry a two-button switch (DetailSwitch), kept in localStorage
++// as sih-detail. Detailed, the default, shows everything. Simple keeps the verdict and
++// hides the sections the page marks ui-detail-only. display:none takes a section out of
++// innerText, so a section that is hidden but still in the DOM counts as hidden here, and
++// one that is shown does not. `keep` is text Simple must still print and `hide` text it
++// must not, each a heading or a line its section owns. The text is #main's, so a link in
++// the nav bar or the footer cannot stand in for a heading (Your money is both), and a
++// name is matched as a whole line, after a glyph if the line starts with one, never as
++// a substring (the summary prints "Your business is in a good position."). A name has to
++// be printed exactly once by its page when everything is shown, or it could not tell one
++// section from another: checkDetail() throws on every one that is not, and that exits 2.
++// Make my report is not a name here: /advisory prints it twice, once in a hidden note.
++const DETAIL_KEY = 'sih-detail'
++const DETAIL_PAGES = [
++  {
++    route: '/analysis',
++    keep: ['band.basis', 'an.nextHeading', 'an.reviewDetails'],
++    hide: ['an.moneyHeading', 'an.bizHeading', 'an.marketHeading', 'an.details', 'an.noticed', 'an.govHeading'],
++  },
++  {
++    route: '/advisory',
++    keep: ['band.basis', 'ad.takeaway', 'ad.planTitle', 'ad.reviewSchemes', 'ad.disclaimer'],
++    hide: ['ad.schemesWorth', 'fo.title', 'fs.title', 'cl.title', 'ad.details'],
++  },
++]
++const DETAIL_KEYS = ['detail.label', 'detail.simple', 'detail.detailed', 'detail.simpleNote']
++
+@@ -335 +449 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
 -for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS)]) {
-+for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS), 'rp.scheduleTitle', 'fs.title', 'fs.caption', ...BANDS.map((b) => `band.${b}`), 'band.basis', 'st.good', 'st.attention_needed', 'st.review']) {
-@@ -361 +444 @@ const cardProbe = (names) => `(() => {
++for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS), 'rp.scheduleTitle', 'fs.title', 'fs.caption', ...BANDS.map((b) => `band.${b}`), 'band.basis', 'st.good', 'st.attention_needed', 'st.review', ...DETAIL_KEYS, ...DETAIL_PAGES.flatMap((p) => [...p.keep, ...p.hide])]) {
+@@ -361 +475 @@ const cardProbe = (names) => `(() => {
 -  const heads = [...document.querySelectorAll('h2, h3')]
 +  const heads = [...document.querySelectorAll('h2, h3')].filter((el) => !el.closest('[data-scheme-funding]'))
-@@ -371 +454,134 @@ const cardProbe = (names) => `(() => {
+@@ -371 +485,134 @@ const cardProbe = (names) => `(() => {
 -const ALL_ROUTES = ['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
 +// Runs in the page. /report draws the schedule of whichever loan its menu names and
 +// does no arithmetic, so this picks one the way a person does (the menu's own change
@@ -236,19 +268,164 @@ index 864c305..98d3aa4 100644
 +  }
 +})()`
 +const ALL_ROUTES =['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
-@@ -439 +655 @@ function textProblems(text, lang) {
+@@ -439 +686 @@ function textProblems(text, lang) {
 -    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed',
 +    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed', 'egg_price',
-@@ -452 +668 @@ function textProblems(text, lang) {
+@@ -452 +699,3 @@ function textProblems(text, lang) {
 -// case, language, routes. 8 passes, 41 page loads: 12 + 4 + 4 + 4 + 4 + 1 + 8 + 4.
 +// case, language, routes. 10 passes, 48 page loads: 12 + 4 + 4 + 4 + 4 + 4 + 1 + 8 + 4 + 3.
-@@ -458,0 +675 @@ const PASSES = [
++// None stores a Simple/Detailed choice, so every one reads the default, Detailed; the
++// switch itself is checked after them, by checkDetail().
+@@ -458,0 +708 @@ const PASSES = [
 +  ['green', 'en', RESULT_ROUTES],
-@@ -466,0 +684,3 @@ const PASSES = [
+@@ -466,0 +717,3 @@ const PASSES = [
 +  // A result stored before the compliance card, the scheme funding card and the
 +  // traffic light existed.
 +  ['old', 'en', ['/analysis', '/advisory', '/report']],
-@@ -806 +1026,120 @@ async function main() {
+@@ -586,0 +840,140 @@ async function loadPage(cdp, url) {
++// Runs in the page: the switch as drawn, the mode on <html>, the stored choice, and the text.
++const detailProbe = `(() => {
++  const group = document.querySelector('.ui-detail-switch')
++  const labelledBy = group && document.getElementById(group.getAttribute('aria-labelledby') || '')
++  return {
++    mode: document.documentElement.dataset.detail ?? null,
++    stored: localStorage.getItem(${JSON.stringify(DETAIL_KEY)}),
++    group: group && {
++      role: group.getAttribute('role'),
++      label: group.getAttribute('aria-label') ?? labelledBy?.innerText.trim() ?? null,
++      buttons: [...group.querySelectorAll('button')].map((b) => ({ text: b.innerText.trim(), pressed: b.getAttribute('aria-pressed') })),
++    },
++    text: (document.querySelector('#main') || document.body).innerText,
++  }
++})()`
++
++// How many lines of the page read as this name: the whole line, or the line after the
++// glyph that leads it (a heading's icon, a button's arrow).
++const lineCount = (text, name) => text.split('\n').map((line) => line.trim()).filter((line) => line === name || line.endsWith(' ' + name)).length
++
++// What one look at /analysis or /advisory must show in the mode `want`.
++function detailProblems(page, probe, want, noteText) {
++  const say = (key) => resultText('en', key)
++  const problems = []
++  if (probe.mode !== want) problems.push(`MODE: data-detail is ${JSON.stringify(probe.mode)}, wanted "${want}"`)
++  if (!probe.group) {
++    problems.push('SWITCH MISSING')
++  } else {
++    const { role, label, buttons } = probe.group
++    if (role !== 'group') problems.push(`SWITCH ROLE: ${JSON.stringify(role)}, wanted "group"`)
++    if (label !== say('detail.label')) problems.push(`SWITCH NAME: ${JSON.stringify(label)}, wanted ${JSON.stringify(say('detail.label'))}`)
++    if (!probe.text.includes(say('detail.label'))) problems.push('SWITCH LABEL NOT ON SCREEN: it is only a name for a screen reader')
++    const names = buttons.map((b) => b.text)
++    const wantNames = [say('detail.simple'), say('detail.detailed')]
++    if (JSON.stringify(names) !== JSON.stringify(wantNames)) {
++      problems.push(`SWITCH BUTTONS: ${JSON.stringify(names)}, wanted ${JSON.stringify(wantNames)}`)
++    } else {
++      const pressed = buttons.map((b) => b.pressed)
++      const wantPressed = want === 'simple' ? ['true', 'false'] : ['false', 'true']
++      if (JSON.stringify(pressed) !== JSON.stringify(wantPressed)) problems.push(`SWITCH PRESSED: ${JSON.stringify(pressed)}, wanted ${JSON.stringify(wantPressed)}`)
++    }
++  }
++  for (const key of page.keep) {
++    if (!lineCount(probe.text, say(key))) problems.push(`GONE IN ${want.toUpperCase()}, it is the verdict: "${say(key)}"`)
++  }
++  for (const key of page.hide) {
++    const shown = lineCount(probe.text, say(key)) > 0
++    if (want === 'simple' && shown) problems.push(`STILL SHOWN IN SIMPLE: "${say(key)}"`)
++    if (want === 'detailed' && !shown) problems.push(`MISSING IN DETAILED: "${say(key)}"`)
++  }
++  const noted = probe.text.includes(noteText)
++  if (want === 'simple' && !noted) problems.push(`SIMPLE NOTE MISSING: "${noteText}"`)
++  if (want === 'detailed' && noted) problems.push('SIMPLE NOTE SHOWN IN DETAILED')
++  return problems
++}
++
++// The Simple / Detailed check (see DETAIL_PAGES), run once after the passes, in English
++// on good's answers. Per page: the refuters first (seeded Detailed, nothing stored, and a
++// value the app does not know: all three must show everything, and the second must not
++// store a choice nobody made), then Simple seeded, then the two buttons pressed in turn.
++// The second page is also loaded cold with the first page's last choice, which is the
++// choice carried between pages. Returns its loads, for report.json.
++async function checkDetail(cdp, deployerPatterns, findings) {
++  const say = (key) => resultText('en', key)
++  const noteText = say('detail.simpleNote').replace('{detailed}', say('detail.detailed'))
++  const seen = []
++  const setStore = (value) =>
++    cdp.evaluate((value === null ? `localStorage.removeItem('${DETAIL_KEY}')` : `localStorage.setItem('${DETAIL_KEY}', '${value}')`) + '; true')
++
++  await loadPage(cdp, APP + '/')
++  const payload = JSON.stringify({ v: SEED_VERSION, data: { ...FORMS.good, result: RESULTS.good } })
++  await cdp.evaluate(`
++    sessionStorage.setItem('sih-application', ${JSON.stringify(payload)});
++    localStorage.setItem('sih-language', 'en');
++    localStorage.setItem('sih-theme', 'light');
++    localStorage.removeItem('sih-dialect');
++    true;
++  `)
++
++  for (const [index, page] of DETAIL_PAGES.entries()) {
++    const slug = page.route.replace(/\//g, '_')
++    // One look at the page: after a fresh load, or as it stands after a press.
++    const look = async (step, want, stored, load = true) => {
++      const tag = `detail-${slug}-${step}`
++      cdp.pageErrors.length = 0
++      const rendered = load ? await loadPage(cdp, APP + page.route) : true
++      if (load) await sleep(450)
++      const probe = await cdp.evaluate(detailProbe)
++      const problems = detailProblems(page, probe, want, noteText)
++      if (!rendered) problems.unshift('BLANK: #main never filled')
++      if (cdp.pageErrors.length) problems.push('PAGE EXCEPTION: ' + cdp.pageErrors[0].split('\n')[0])
++      if (probe.stored !== stored) problems.push(`STORED: ${DETAIL_KEY} is ${JSON.stringify(probe.stored)}, wanted ${JSON.stringify(stored)}`)
++      problems.push(...textProblems(neutralise(probe.text, deployerPatterns), 'en'))
++      seen.push({ tag, route: page.route, want, chars: probe.text.length, problems })
++      if (problems.length) findings.push({ tag, problems })
++      console.log(
++        `${problems.length ? 'FAIL' : 'ok  '}  ${tag.padEnd(32)} ${String(probe.text.length).padStart(5)}c ${want}` +
++          (problems.length ? '  ' + problems.join(' | ') : ''),
++      )
++      return { probe, tag }
++    }
++    // Pressed the way a person does, by its words. No such button is a finding, and the
++    // look after it then says what the page is showing.
++    const press = async (key) => {
++      const clicked = await cdp.evaluate(`(() => {
++        const b = [...document.querySelectorAll('.ui-detail-switch button')].find((el) => el.innerText.trim() === ${JSON.stringify(say(key))})
++        if (!b) return false
++        b.click()
++        return true
++      })()`)
++      await sleep(250)
++      if (!clicked) findings.push({ tag: `detail-${slug}-press`, problems: [`NO BUTTON "${say(key)}" TO PRESS`] })
++    }
++
++    if (index > 0) await look('carried', 'simple', 'simple')
++
++    await setStore('detailed')
++    const { probe: full } = await look('seeded-detailed', 'detailed', 'detailed')
++    const notOnce = [...page.keep, ...page.hide].map((key) => [key, lineCount(full.text, say(key))]).filter(([, n]) => n !== 1)
++    if (notOnce.length) {
++      throw new Error(`the Simple/Detailed check names text that ${page.route} does not print once as a line when it shows everything, so it cannot tell the sections apart: ${notOnce.map(([key, n]) => `${key} ("${say(key)}") ${n} times`).join(', ')}. Name other text in DETAIL_PAGES.`)
++    }
++    await setStore(null)
++    await look('default', 'detailed', null)
++    await setStore('unknown')
++    await look('unknown-value', 'detailed', 'unknown')
++
++    await setStore('simple')
++    const { tag } = await look('seeded-simple', 'simple', 'simple')
++    const shot = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true })
++    writeFileSync(`${OUT}/${tag}.png`, Buffer.from(shot.data, 'base64'))
++    await press('detail.detailed')
++    await look('pressed-detailed', 'detailed', 'detailed', false)
++    await press('detail.simple')
++    await look('pressed-simple', 'simple', 'simple', false)
++  }
++  await setStore(null)
++  return seen
++}
++
+@@ -689,0 +1083 @@ async function main() {
++        localStorage.removeItem('${DETAIL_KEY}');
+@@ -806 +1200,120 @@ async function main() {
 -        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, detailsOpened, problems })
 +        // The repayment schedule. Each loan's table on /report must equal the
 +        // response's own rows to the paisa, add up to the totals /advisory prints
@@ -370,8 +547,19 @@ index 864c305..98d3aa4 100644
 +        }
 +
 +        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, scheduleChecked, fundingChecked, complianceChecked, bandChecked, detailsOpened, problems })
-@@ -812,0 +1152,4 @@ async function main() {
+@@ -812,0 +1326,4 @@ async function main() {
 +            (scheduleChecked ? ` schedules=${scheduleChecked}` : '') +
 +            (fundingChecked ? ` funding=${fundingChecked}` : '') +
 +            (complianceChecked ? ` compliance=${complianceChecked}` : '') +
 +            (bandChecked ? ` band=${RESULTS[caseName].mvp_summary.band}` : '') +
+@@ -817,0 +1335,4 @@ async function main() {
++    // The Simple / Detailed switch, after the passes: they run with no stored choice, which
++    // is the default, so it must be Detailed or they would be measuring a shorter page.
++    const detail = await checkDetail(cdp, deployerPatterns, findings)
++
+@@ -824 +1345 @@ async function main() {
+-      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, findings }, null, 2),
++      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, detail, findings }, null, 2),
+@@ -826 +1347 @@ async function main() {
+-    console.log(`\n${report.length} page loads plus the hydrate check, ${findings.length} with problems.`)
++    console.log(`\n${report.length} page loads plus the hydrate check and ${detail.length} looks at the Simple/Detailed switch, ${findings.length} with problems.`)

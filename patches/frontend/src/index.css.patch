@@ -1,5 +1,5 @@
 diff --git a/frontend/src/index.css b/frontend/src/index.css
-index d73114b..a90e916 100644
+index d73114b..2868500 100644
 --- a/frontend/src/index.css
 +++ b/frontend/src/index.css
 @@ -102,8 +102,10 @@
@@ -142,7 +142,7 @@ index d73114b..a90e916 100644
 +   hero-art before changing it or the opacity. The halftone discs still read as
 +   dotted spheres here: the ink is a deep teal, so its dots stay darker than the
 +   lifted ground. */
-@@ -1472,0 +1484,69 @@ summary:focus-visible {
+@@ -1472,0 +1484,147 @@ summary:focus-visible {
 +/* The traffic light (ResultBand.jsx). The tone is the left rule and the shape's fill;
 +   the glyph colour is the one that reads on that fill in both themes. Yellow is pale
 +   on a white page, so the shape also carries an outline in the text colour. */
@@ -212,19 +212,101 @@ index d73114b..a90e916 100644
 +  color: var(--color-text-muted);
 +}
 +
-@@ -1506,0 +1587,4 @@ summary:focus-visible {
++/* The Simple / Detailed switch (DetailSwitch): two segments in one outline, the
++   pressed one filled. The fill is not the only cue: aria-pressed says it to a screen
++   reader and, in Simple, the note under the row says it in words. 44px for a thumb.
++   No overflow:hidden on the outline: the global focus ring sits outside the button
++   and would be clipped, so the end segments round their own outer corners.
++   The two words are the widest in Malayalam: at 320px and the largest text the row
++   was 307px in a 296px box (mobile-audit, 29 Oct 2026). The max-width gives the row
++   a ceiling, the segments may shrink under it and wrap their word as a last resort. */
++.ui-detail {
++  display: flex;
++  flex-wrap: wrap;
++  align-items: center;
++  gap: 8px 14px;
++  margin-top: 16px;
++}
++
++.ui-detail-label {
++  color: var(--color-text);
++  font-size: 0.94rem;
++  font-weight: 700;
++}
++
++.ui-detail-switch {
++  display: inline-flex;
++  max-width: 100%;
++  border: 2px solid var(--color-primary-strong);
++  border-radius: 0.6rem;
++}
++
++.ui-detail-switch button {
++  flex: 1 1 auto;
++  min-width: 44px;
++  min-height: 44px;
++  padding: 0 14px;
++  overflow-wrap: anywhere;
++  border: 0;
++  background: var(--color-surface);
++  color: var(--color-primary-strong);
++  font-size: 0.98rem;
++  font-weight: 800;
++  cursor: pointer;
++  transition: background-color var(--motion-fast) var(--motion-ease);
++}
++
++.ui-detail-switch button:first-child {
++  border-radius: 0.45rem 0 0 0.45rem;
++}
++
++.ui-detail-switch button:last-child {
++  border-radius: 0 0.45rem 0.45rem 0;
++  border-left: 2px solid var(--color-primary-strong);
++}
++
++.ui-detail-switch button:hover {
++  background: var(--color-surface-soft);
++}
++
++/* After :hover and as specific as it, so a pressed segment stays filled under the pointer. */
++.ui-detail-switch button[aria-pressed="true"] {
++  background: var(--color-btn);
++  color: var(--color-on-btn);
++}
++
++.ui-detail-note {
++  flex-basis: 100%;
++  margin: 0;
++  color: var(--color-text-muted);
++  font-size: 0.94rem;
++  line-height: 1.5;
++}
++
++/* Unlayered like the other .ui-* rules, so it also beats a Tailwind display utility on
++   the same element. display:none takes the section out of the accessibility tree too,
++   so a screen reader does not read what the eye is spared. */
++[data-detail="simple"] .ui-detail-only {
++  display: none;
++}
++
+@@ -1506,0 +1665,4 @@ summary:focus-visible {
 +/* The label drops under the bars when it would squeeze them below 1.5rem each.
 +   It was `flex: 0 0 auto` in a nowrap row, so a long label (Malayalam, "Step 3 of
 +   4 · Your results", largest text) left the four bars 3 to 0px wide and, at 320px,
 +   stuck out of the page by 17px. */
-@@ -1508,0 +1593 @@ summary:focus-visible {
+@@ -1508,0 +1671 @@ summary:focus-visible {
 +  flex-wrap: wrap;
-@@ -1516 +1601 @@ summary:focus-visible {
+@@ -1516 +1679 @@ summary:focus-visible {
 -  flex: 1;
 +  flex: 1 0 1.5rem;
-@@ -1527 +1612,2 @@ summary:focus-visible {
+@@ -1527 +1690,2 @@ summary:focus-visible {
 -  flex: 0 0 auto;
 +  flex: 0 1 auto;
 +  min-width: 0;
-@@ -2216,0 +2303 @@ summary:focus-visible {
+@@ -2199 +2363,2 @@ summary:focus-visible {
+-  .ui-manual-overlay {
++  .ui-manual-overlay,
++  .ui-detail {
+@@ -2216,0 +2382 @@ summary:focus-visible {
 +  .ui-band,

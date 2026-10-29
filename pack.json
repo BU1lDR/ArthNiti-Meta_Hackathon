@@ -33,6 +33,7 @@
     "frontend/src/audio/record.js",
     "frontend/src/audio/wav.js",
     "frontend/src/components/Compliance.jsx",
+    "frontend/src/components/DetailSwitch.jsx",
     "frontend/src/components/HelperFilledBanner.jsx",
     "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
@@ -124,6 +125,7 @@
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
     "tools/verify/hero-vibrance.mjs",
+    "tools/verify/lang-layout.mjs",
     "tools/verify/market-lib-test.mjs",
     "tools/verify/market-ui.mjs",
     "tools/verify/mobile-audit.mjs",
@@ -136,7 +138,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "950bead31f0f1806ba4fd5efa80b7349ac0e90d8",
-    "tree": "bf5f490c15bafc504c636dfa4f4987583e20cda6"
+    "devCommit": "4e4d986a7617fa4b259c2fc481fe17db0ad17413",
+    "tree": "bd86769aea362c85c8eb666a4bc78aefde074cf0"
   }
 }

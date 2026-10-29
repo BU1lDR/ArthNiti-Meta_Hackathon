@@ -1,0 +1,14 @@
+diff --git a/tools/verify/lang-layout.mjs b/tools/verify/lang-layout.mjs
+index eebaa1a..4433c32 100644
+--- a/tools/verify/lang-layout.mjs
++++ b/tools/verify/lang-layout.mjs
+@@ -331,2 +331,4 @@ const PROBE = [
+-  // The A-/A/A+ trio is a segmented control: the buttons share edges on purpose,
+-  // exactly like a radio group. Reporting it drowns every page in two findings.
++  // The A-/A/A+ trio and the Simple/Detailed pair are segmented controls: the
++  // buttons share edges on purpose, exactly like a radio group. Reporting them
++  // drowns every page in findings (the pair was reported by every language on
++  // /analysis on 29 Oct 2026). How far the words reach is mobile-audit's CLIP.
+@@ -338 +340 @@ const PROBE = [
+-  '    if (parent.closest(".ui-textsize")) continue',
++  '    if (parent.closest(".ui-textsize, .ui-detail-switch")) continue',
