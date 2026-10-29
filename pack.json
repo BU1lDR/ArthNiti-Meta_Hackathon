@@ -29,6 +29,7 @@
     "backend/tests/test_spend_cap.py",
     "backend/tests/test_structuring_service.py",
     "backend/tests/test_talk_fake_backend.py",
+    "frontend/public/hero-backdrop.svg",
     "frontend/src/audio/record.js",
     "frontend/src/audio/wav.js",
     "frontend/src/components/Compliance.jsx",
@@ -40,6 +41,7 @@
     "frontend/src/data/talkAnswers.js",
     "frontend/src/pages/TalkPage.jsx",
     "tools/fetch-necc-prices.mjs",
+    "tools/make-hero-backdrop.mjs",
     "tools/necc-crosswalk.json",
     "tools/necc-lib.mjs",
     "tools/verify/app-state-test.mjs",
@@ -99,6 +101,7 @@
     "frontend/package-lock.json",
     "frontend/package.json",
     "frontend/src/App.jsx",
+    "frontend/src/assets/README.md",
     "frontend/src/config/deployment.js",
     "frontend/src/context/AppContext.jsx",
     "frontend/src/data/reviewDates.js",
@@ -120,6 +123,7 @@
     "tools/market-crosswalk.json",
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
+    "tools/verify/hero-vibrance.mjs",
     "tools/verify/market-lib-test.mjs",
     "tools/verify/market-ui.mjs",
     "tools/verify/mobile-audit.mjs",
@@ -127,10 +131,12 @@
     "tools/verify/refresh-cases.mjs"
   ],
   "removed": [
-    "OUR_MVP.md"
+    "OUR_MVP.md",
+    "frontend/public/hero-backdrop.jpeg",
+    "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "3d1bb0b97f0dee4ac28b6ffc89ac013a62bc8b8a",
-    "tree": "34e10b73141fe00ffeafa39222a1e4398e49d043"
+    "devCommit": "950bead31f0f1806ba4fd5efa80b7349ac0e90d8",
+    "tree": "bf5f490c15bafc504c636dfa4f4987583e20cda6"
   }
 }

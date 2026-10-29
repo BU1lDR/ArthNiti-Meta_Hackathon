@@ -1,12 +1,12 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..651a5b7 100644
+index d6ab002..5bb7a12 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -- **Ownership: Aryan Verma** owns the project and the scheme data. The repo is proprietary (`LICENSE`). The earlier team's work (Manjeet, Netra and others) needs written permission before the submission and a written assignment before any sale: a legal item, not a code one.
 -- **26 Oct 2026. Solo, and entered in the Meta hackathon.**
 -- **The hyperlocal claim stays, backed by real data**: 20 sourced market rows for Lucknow and Varanasi from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
-+- **Ownership: Aryan Verma** owns the project and the scheme data. `LICENSE` has been MIT since 29 Oct 2026 (the hackathon wants a public, open-source entry); the GODL-India rows, NECC egg prices and `hero-backdrop.jpeg` are outside it (README, **Licence**).
++- **Ownership: Aryan Verma** owns the project and the scheme data. `LICENSE` has been MIT since 29 Oct 2026 (the hackathon wants a public, open-source entry); the GODL-India rows and NECC egg prices are outside it (README, **Licence**).
 +- **26 Oct 2026. Solo, and entered in the Meta hackathon.** Spend only the free Meta credits ($150), never pay, keep the account balance at ₹0.00: the app's spend cap enforces it for this app's calls (see Data protection).
 +- **The hyperlocal claim stays, backed by real data**: 125 sourced market rows for 13 districts from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
 @@ -24 +24 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -264,7 +264,7 @@ index d6ab002..651a5b7 100644
 +**Meta helper** (the full list is `docs/HACKATHON.md` §8): the owner ran `python -m app.smoke_meta` and `--plan` on 27 Oct 2026: the key works, and both plans passed the checks first time at about 1.1 to 1.2 cents each (`PROCESSOR_SCHEDULE.md` §10.7). Not observed: the speech `keywords`, a real person's speech and the Billing balance since `--plan`. **The plan card has been driven in a browser only against the fake model** (`talk-ui` S16–S22). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
 @@ -417 +434 @@ Also open, stated where they apply: the household definition, market coverage, d
 -**Legal:** the earlier team's written permission (before the submission) and IP assignments (before any sale).
-+**Legal:** `LICENSE` became MIT on 29 Oct 2026. The owner states that Manjeet and Netra agree; nothing from either is on file, and a line from each is the safe step. Outside the licence: the NECC egg prices (an e-mail agreement) and `hero-backdrop.jpeg` (no source). The owner confirmed the Official Rules and the NECC use on 29 Oct 2026; it is their word, nothing is on file, and what the NECC message covered is not recorded.
++**Legal:** `LICENSE` became MIT on 29 Oct 2026. The owner states that Manjeet and Netra agree; nothing from either is on file, and a line from each is the safe step. Outside the licence: the NECC egg prices (an e-mail agreement). The unsourced photo backdrop was replaced on 29 Oct 2026 by a generated SVG (`tools/make-hero-backdrop.mjs`); the photo stays in git history. The owner confirmed the Official Rules and the NECC use on 29 Oct 2026; it is their word, nothing is on file, and what the NECC message covered is not recorded.
 @@ -426 +442,0 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- `tools/notice-version.json` is untracked; commit it with `notice.js`.
 @@ -433,4 +449,4 @@ Also open, stated where they apply: the household definition, market coverage, d

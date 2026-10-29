@@ -1,0 +1,9 @@
+diff --git a/tools/verify/hero-vibrance.mjs b/tools/verify/hero-vibrance.mjs
+index c679e55..8b1a69e 100644
+--- a/tools/verify/hero-vibrance.mjs
++++ b/tools/verify/hero-vibrance.mjs
+@@ -111,0 +112,4 @@ async function requireServer(url, start) {
++// NOTE (29 Oct 2026): round 1 below was measured on the photo that was the backdrop
++// until the generated SVG replaced it. That SVG has no true black (its darkest ink is
++// #16322f), so the "v = 0" argument and the figures in it do not carry over. Measure
++// again with this script before reusing them.

@@ -1,0 +1,51 @@
+diff --git a/frontend/src/assets/README.md b/frontend/src/assets/README.md
+index 51df657..e274189 100644
+--- a/frontend/src/assets/README.md
++++ b/frontend/src/assets/README.md
+@@ -25 +25 @@ file there is served at the site root under a stable URL:
+-| `frontend/public/hero-backdrop.jpeg` | `frontend/src/index.css:667` — `url("/hero-backdrop.jpeg")` | The CSS names that absolute path |
++| `frontend/public/hero-backdrop.svg` | the `.ui-hero::before` rule in `frontend/src/index.css` — `url("/hero-backdrop.svg")` | The CSS names that absolute path |
+@@ -51 +50,0 @@ tidiness.
+-| `hero-backdrop.jpeg` | 735×386 — **a copy of the live backdrop** | showing the landing page in the deck |
+@@ -147,26 +146,15 @@ for using these PNGs in the deck rather than typing the name into a text box.
+-### The backdrop copy
+-
+-`hero-backdrop.jpeg` here is a **byte-identical copy** of the file the app
+-serves. As of 9 Sept 2026 both are:
+-
+-```
+-sha256  63ec53c4648bb1a5c7f7475c9ef74cc7a385606700a995af740b9b090ae149a5
+-```
+-
+-Check they still match before trusting either:
+-
+-```bash
+-sha256sum frontend/public/hero-backdrop.jpeg frontend/src/assets/hero-backdrop.jpeg
+-```
+-
+-The duplication is deliberate and it has a cost: **two copies can drift and
+-nothing checks.** If you replace the backdrop, replace both. The live one is
+-`frontend/public/hero-backdrop.jpeg` — that is the one the page reads, so if you
+-only do one, do that one.
+-
+-Note the file here is the **raw photo**. On the page it is composited: 0.40
+-opacity in light mode with `brightness(0.5) saturate(2.6) contrast(0.91)`, and
+-0.26 opacity in dark. So it looks considerably more muted on the landing page
+-than it does in this folder. Those numbers are tuned against the contrast of the
+-hero copy sitting on top of it — see the note above the filter in `index.css`
+-before changing any of them.
++### The backdrop
++
++The backdrop is `frontend/public/hero-backdrop.svg`, and it is **drawn by
++`tools/make-hero-backdrop.mjs`** (29 Oct 2026): edit the script and run it, never
++the SVG. `node tools/make-hero-backdrop.mjs --check` exits 1 when the file on
++disk is not what the script draws. It replaced a photo, `hero-backdrop.jpeg`,
++whose source was never recorded; there is no copy of the backdrop in this folder
++any more, so for a deck open the SVG in a browser and export from there.
++
++Note the file is the **raw drawing**. On the page it is composited: 0.40 opacity
++in light mode with `brightness(0.5) saturate(2.6) contrast(0.91)`, and 0.26
++opacity in dark. So it looks considerably more muted on the landing page than it
++does on its own. Those numbers are tuned against the contrast of the hero copy
++sitting on top of it — see the note above the filter in `index.css` before
++changing any of them.

@@ -1,10 +1,10 @@
 diff --git a/DATA_SOURCES.md b/DATA_SOURCES.md
-index 0efe29f..304fc2f 100644
+index 0efe29f..88c3f93 100644
 --- a/DATA_SOURCES.md
 +++ b/DATA_SOURCES.md
 @@ -5 +5 @@ This file records where every dataset and image in अर्थNiti came from, t
 -The software's own licence is in [LICENSE](LICENSE), and the code dependencies are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-+The software's own licence (MIT) is in [LICENSE](LICENSE). It does not cover the market rows, the egg prices or `hero-backdrop.jpeg`, which keep the terms given below. The code dependencies are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
++The software's own licence (MIT) is in [LICENSE](LICENSE). It does not cover the market rows or the egg prices, which keep the terms given below. The code dependencies are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 @@ -10 +10 @@ The software's own licence is in [LICENSE](LICENSE), and the code dependencies a
 -- **Terms.** The facts come from public government sources. The wording, the structure and the translations are our own, and they belong to the owner under [LICENSE](LICENSE). No government body endorses the dataset or is affiliated with it. The app does not link to any government site, a decision made on 10 September 2026 (see CLAUDE.md).
 +- **Terms.** The facts come from public government sources. The wording, the structure and the translations are our own, and they are released with the rest of the repo under the MIT licence ([LICENSE](LICENSE)). No government body endorses the dataset or is affiliated with it. The app does not link to any government site, a decision made on 10 September 2026 (see CLAUDE.md).
@@ -60,9 +60,10 @@ index 0efe29f..304fc2f 100644
 +- **The Udyam count is narrow.** The card counts the matched schemes that carry "Udyam registration is required", which are two (the Kerala and North-East ones). A scheme that needs Udyam without saying so is not counted.
 +- **No native speaker has reviewed the card's wording** in the 7 other languages (`cl.*`, 32 keys).
 +
-@@ -46 +80 @@ The software's own licence is in [LICENSE](LICENSE), and the code dependencies a
+@@ -46 +80,2 @@ The software's own licence is in [LICENSE](LICENSE), and the code dependencies a
 -| **`public/hero-backdrop.jpeg`** (and its copy in `src/assets/`) | Added in c92f907 on 9 Sept 2026. **No source recorded** | **UNRESOLVED.** Record where it came from and its licence, or replace it with an image we own or license |
-+| **`public/hero-backdrop.jpeg`** (and its copy in `src/assets/`) | Added in c92f907 on 9 Sept 2026. **No source recorded** | **UNRESOLVED.** Record where it came from and its licence, or replace it with an image we own or license. The MIT licence makes no promise about it. It is the landing page's backdrop (`frontend/src/index.css`) |
-@@ -54 +88 @@ None are shipped. The stylesheet asks for "Noto Sans", then Inter, then the syst
++| `public/hero-backdrop.svg` | Drawn for this project by `tools/make-hero-backdrop.mjs` (no image, font or dependency comes in), 29 Oct 2026. It is the landing page's backdrop (`frontend/src/index.css`) | Owner's |
++| `hero-backdrop.jpeg` (removed 29 Oct 2026) | A photo collage added in c92f907 on 9 Sept 2026, in `public/` and `src/assets/`. **No source was recorded**, and it showed US dollar notes | **Replaced by the SVG above and no longer in the working tree**, but still in the git history from c92f907. The MIT licence makes no promise about it. If the owner finds where it came from, record it here |
+@@ -54 +89 @@ None are shipped. The stylesheet asks for "Noto Sans", then Inter, then the syst
 -Aryan Verma (the owner) now builds and maintains this alone. Before 26 Oct 2026 it was a six-person college team project, and the git history shows earlier code from Manjeet and Netra. **UNRESOLVED:** get a written assignment of rights, or at least a written permission to submit and reuse their work, from Manjeet and Netra (and from anyone else whose work is in the repo) before any hackathon submission, sale or exclusive licence.
 +Aryan Verma (the owner) builds and maintains this alone. Before 26 Oct 2026 it was a six-person college team project, and the git history shows earlier commits from Manjeet and Netra. The owner's position, stated on 26 Oct 2026, is that it is now an individual project and needs nobody's permission. Whether that holds for the earlier team code still in the repo is a legal question that nobody has answered. On 29 Oct 2026 the owner also said that Manjeet and Netra agree to the repository being public under an open-source licence, which is now MIT. That is the owner's statement; nothing from either of them is on file. **UNRESOLVED:** a written note from each of them (a message or an e-mail saying their commits may be released under the MIT licence, kept outside the repo), and from anyone else whose work is in the repo, would settle it. It is the safe step before any sale or exclusive licence, and the one that backs the open-source release.

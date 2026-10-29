@@ -1,8 +1,148 @@
 diff --git a/frontend/src/index.css b/frontend/src/index.css
-index d73114b..77068b1 100644
+index d73114b..a90e916 100644
 --- a/frontend/src/index.css
 +++ b/frontend/src/index.css
-@@ -1472,0 +1473,69 @@ summary:focus-visible {
+@@ -102,8 +102,10 @@
+-     backdrop changed. The old SVG was line art on a transparent ground, so the
+-     hero text mostly sat on the page colour and three separate alphas multiplied
+-     before anything reached the screen — which is why it needed 0.5. The JPEG is
+-     opaque: every pixel behind the copy is artwork, so the text lands on the
+-     worst patch in the picture, and the halftone hands contain true black (1.5%
+-     of sampled pixels at L* 0.5). Measured over 17,848 pixels, 0.5 puts the hero
+-     copy at 4.04:1 — below AA. 0.40 holds 5.48:1 and is MORE visible than the
+-     SVG ever was (mean dL* 21.7 at 100% present, against 15.7 at 74%).
++     backdrop became opaque. The line-art SVG before the photo was on a
++     transparent ground, so the hero text mostly sat on the page colour and three
++     separate alphas multiplied before anything reached the screen — which is why
++     it needed 0.5. An opaque backdrop puts artwork behind every pixel of the
++     copy, so the text lands on the worst patch in the picture. On the photo that
++     was true-black halftone (1.5% of sampled pixels at L* 0.5), and 0.5 put the
++     hero copy at 4.04:1, below AA. The drawn SVG's darkest ink is a deep teal
++     (#16322f) and holds 6.03:1 at 0.40; 0.52 would be 4.35:1 (the sweep is by
++     the filter below). 0.40 is MORE visible than the line-art ever was (mean
++     dL* 22 at 100% present, against 15.7 at 74%).
+@@ -827,2 +829,5 @@ summary:focus-visible {
+-/* The landing hero sits on a translucent halftone collage (hands, money, an
+-   idea bulb) — /hero-backdrop.jpeg, replacing the line-art SVG on 8 Sept 2026.
++/* The landing hero sits on a translucent halftone illustration (an idea bulb,
++   rupee notes, coins, the brand's lotus) — /hero-backdrop.svg, which
++   tools/make-hero-backdrop.mjs draws. It replaced a photo collage on 29 Oct 2026
++   (no source on record, US dollar notes), which had replaced a line-art SVG on
++   8 Sept 2026.
+@@ -843,10 +848,12 @@ summary:focus-visible {
+-  background-image: url("/hero-backdrop.jpeg");
+-  /* `cover`, not a width — and with an opaque image it is not optional. The old
+-     SVG was sized to 116% of the width at `bottom center` and simply did not
+-     reach the top of the band, which was fine because its ground was
+-     transparent. Do that with an opaque photo and the page colour shows above
+-     it as a hard horizontal seam. `cover` fills the box; `center` crops the
+-     overflow evenly rather than cutting the bulb off one end. The source is
+-     735x386 (1.9:1) and the band is wider than that, so cover scales on width
+-     and trims top and bottom — the bulb, the hands and the notes all survive
+-     it, the globe's bottom arc is the first thing to go. */
++  background-image: url("/hero-backdrop.svg");
++  /* `cover`, not a width — and with an opaque image it is not optional. The
++     line-art SVG this once held was sized to 116% of the width at `bottom
++     center` and simply did not reach the top of the band, which was fine because
++     its ground was transparent. Do that with an opaque image and the page colour
++     shows above it as a hard horizontal seam. `cover` fills the box; `center`
++     crops the overflow evenly rather than cutting the bulb off one end. The
++     source is 1200x630 (1.9:1) and a desktop band is about that shape, so little
++     is trimmed there. On a phone the band is taller than it is wide and only the
++     middle of the picture shows: the bulb, the starburst and the lotus sit on
++     the centre line for that reason, and the discs, notes and coins at the sides
++     are what goes. */
+@@ -856 +863 @@ summary:focus-visible {
+-  /* The old SVG faded into the page through its own gradient mask, so the
++  /* The line-art SVG faded into the page through its own gradient mask, so the
+@@ -876,0 +884,3 @@ summary:focus-visible {
++     The figures are hero-art's, off the real composite in light mode: the mean
++     dL* between the artwork and the page, and the contrast of the hero copy on
++     its worst pixel.
+@@ -878,2 +888,2 @@ summary:focus-visible {
+-     brightness(0.5) is what makes the artwork visible at all: 45% of this image
+-     is one mid-tone teal at L* 69.9, and a near-white page is L* 97, so at full
++     brightness(0.5) is what makes the artwork visible at all: the ground is one
++     mid-tone teal (#86b5ad, L* 70) and a near-white page is L* 97, so at full
+@@ -885,5 +895,11 @@ summary:focus-visible {
+-     looks wrong: values BELOW 1 pull everything toward mid-grey, which LIFTS the
+-     black halftone off zero and hands the hero text back some contrast (5.18:1 ->
+-     5.48:1 on the worst pixel) for 0.5 dL* of visibility. Do not raise it above
+-     1 — contrast above 1 pushes everything lighter than mid-grey toward white,
+-     and three quarters of this image is lighter than mid-grey.
++     looks wrong. It runs last, after brightness has put every channel at about
++     half or less, so a value BELOW 1 lifts the darkest ink off zero (out =
++     0.91 * in + 0.045) and hands the hero text back some contrast for 0.4 dL* of
++     visibility:
++
++       no contrast()    dL* 22.4   copy 5.79:1
++       contrast(0.91)   dL* 22.0   copy 6.03:1   shipped
++       contrast(1.1)    dL* 22.9   copy 5.57:1
++
++     Do not raise it above 1: that darkens the ink, and the copy loses more than
++     the picture gains.
+@@ -892,19 +908,13 @@ summary:focus-visible {
+-     chosen by eye — because it is the only one that is FREE. It was 1.2 until
+-     8 Sept 2026, when the backdrop was asked to be more vibrant in light mode.
+-     Measured over the real composite, raising it from 1.2 to 2.6 moved:
+-
+-       mean chroma      C* 3.5 -> 6.6   (the request: +89%)
+-       colourful pixels 5% -> 64%       (more colourful than the paper)
+-       hero copy        5.47:1 -> 5.47:1  UNCHANGED
+-       mean dL*         21.8 -> 21.6      unchanged within noise
+-       artwork present  100% -> 100%
+-
+-     Nothing was traded for that, and the reason is arithmetic rather than luck.
+-     The composite is v*b*k + 0.5*(1-k), and the worst pixel for dark hero copy
+-     is the densest halftone dot, which in this image is TRUE BLACK. v = 0
+-     annihilates b, and saturate is a luminance-preserving matrix, so neither
+-     brightness nor saturate can move the text-contrast figure at all — only
+-     contrast(k)'s additive term and the opacity blend can. Which is why:
+-
+-       DO NOT raise opacity to get vibrance. It is the expensive lever: 0.46
+-       drops the copy to 4.58:1 and 0.52 to 3.73:1, below AA. 0.40 stays.
++     chosen by eye — because it is close to FREE. It was 1.2 until 8 Sept 2026,
++     when the backdrop was asked to be more vibrant in light mode. On this art
++     the copy figure hardly moves with it (hero-vibrance: 5.98:1 at 1.8, 6.03:1
++     at 2.6, 6.08:1 at 3.6). It moves at all only because the ink is a deep teal
++     and not black; on a true-black dot neither brightness nor saturate could
++     touch the copy figure, and only contrast()'s additive term and the opacity
++     blend could. Opacity is the expensive lever:
++
++       DO NOT raise opacity to get vibrance.
++       0.40 (shipped)   dL* 22.0   copy 6.03:1
++       0.46             dL* 25.3   copy 5.17:1
++       0.52             dL* 28.8   copy 4.35:1   below AA
++       0.60             dL* 33.2   copy 3.46:1   below AA
+@@ -912 +922 @@ summary:focus-visible {
+-       the artwork toward the page — 0.62 costs 3 whole dL* of visibility.
++       the artwork toward the page — 0.62 costs 2.8 dL* of visibility.
+@@ -914,5 +924,6 @@ summary:focus-visible {
+-     The ceiling on saturate is posterisation, not contrast. Above ~3 the bulb
+-     goes orange-peach and the halftone hands pick up a green cast; the pixel
+-     count behind that is channels clamping at the chain floor, 5.8% shipped ->
+-     15.5% here -> 17.9% at 3.6. 2.6 is the most colour this collage takes while
+-     still reading as a photograph.
++     The ceiling on saturate is clamping, not contrast. The art is flat fills, so
++     a clamped channel cannot band; it only shifts a fill toward its primary
++     (gold toward orange). The count is pixels with a channel clamped at either
++     end of the chain: 6.5% at 1.8, 11.4% at 2.2, 30.4% shipped, 33% at 3.6, 36.4%
++     at 4.4. hero-vibrance flags a candidate that clamps 4 points more than the
++     shipped row.
+@@ -949,6 +960,6 @@ summary:focus-visible {
+-   already gives 6.80:1 at mean dL* 21.8 with 96% of the artwork present — as
+-   visible as light mode with more contrast headroom. The sweep does offer mean
+-   dL* 25.4 at opacity 0.40, but only by spending the text down to 5.10:1, which
+-   is a poor trade for visibility this mode does not need. One consequence worth
+-   knowing rather than fixing: the halftone black lands ~2.6 dL* off the navy, so
+-   the hands read as silhouettes here and the teal and cream carry the image. */
++   gives 6.81:1 at mean dL* 21.5 with 95% of the artwork present — as visible as
++   light mode with more contrast headroom. (It gave 6.80:1 at 21.8 on the photo
++   this one replaced, which is why the filter was left alone.) Measure with
++   hero-art before changing it or the opacity. The halftone discs still read as
++   dotted spheres here: the ink is a deep teal, so its dots stay darker than the
++   lifted ground. */
+@@ -1472,0 +1484,69 @@ summary:focus-visible {
 +/* The traffic light (ResultBand.jsx). The tone is the left rule and the shape's fill;
 +   the glyph colour is the one that reads on that fill in both themes. Yellow is pale
 +   on a white page, so the shape also carries an outline in the text colour. */
@@ -72,19 +212,19 @@ index d73114b..77068b1 100644
 +  color: var(--color-text-muted);
 +}
 +
-@@ -1506,0 +1576,4 @@ summary:focus-visible {
+@@ -1506,0 +1587,4 @@ summary:focus-visible {
 +/* The label drops under the bars when it would squeeze them below 1.5rem each.
 +   It was `flex: 0 0 auto` in a nowrap row, so a long label (Malayalam, "Step 3 of
 +   4 · Your results", largest text) left the four bars 3 to 0px wide and, at 320px,
 +   stuck out of the page by 17px. */
-@@ -1508,0 +1582 @@ summary:focus-visible {
+@@ -1508,0 +1593 @@ summary:focus-visible {
 +  flex-wrap: wrap;
-@@ -1516 +1590 @@ summary:focus-visible {
+@@ -1516 +1601 @@ summary:focus-visible {
 -  flex: 1;
 +  flex: 1 0 1.5rem;
-@@ -1527 +1601,2 @@ summary:focus-visible {
+@@ -1527 +1612,2 @@ summary:focus-visible {
 -  flex: 0 0 auto;
 +  flex: 0 1 auto;
 +  min-width: 0;
-@@ -2216,0 +2292 @@ summary:focus-visible {
+@@ -2216,0 +2303 @@ summary:focus-visible {
 +  .ui-band,
