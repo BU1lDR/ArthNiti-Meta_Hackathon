@@ -1,5 +1,5 @@
 diff --git a/docs/frontend_integration.md b/docs/frontend_integration.md
-index 2463c76..4656883 100644
+index 2463c76..b4dd2e0 100644
 --- a/docs/frontend_integration.md
 +++ b/docs/frontend_integration.md
 @@ -3 +3 @@
@@ -84,7 +84,7 @@ index 2463c76..4656883 100644
 +  - A result stored before this field existed has no `band`, so the client must tolerate its absence. The frontend falls back to the two-state mark it used before.
 @@ -139 +191,2 @@ A 200 carries these seven top-level keys:
 -- **A `match_level: "state"` market row is a state-wide figure,** not a local one. Say so. Rows are never taken from another district. There is data for only 2 districts.
-+- **A `match_level: "state"` market row is a state-wide figure,** not a local one. Say so. Rows are never taken from another district. There is data for 13 districts, and egg prices for 30 NECC centres (29 districts and Delhi as a whole).
++- **A `match_level: "state"` market row is a state-wide figure,** not a local one. Say so. Rows are never taken from another district. There is data for 31 districts, and egg prices for 30 NECC centres (29 districts and Delhi as a whole).
 +- **An `egg_price` row is the price of one egg, in rupees.** NECC prints it as a whole number with no unit; `indicative_price` is our reading of it as paise (`provenance.published_value` is the number as printed and `provenance.unit_reading` says how it is read), and NECC has not confirmed that reading. `price_kind` says whose price it is: `suggested` is a price NECC suggests and `prevailing` is the going price it lists, and neither is a price the reader will always get. `centre` is NECC's own name for the centre (it can differ from the district). NECC allows its prices to be passed on only with its clarification, so print `provenance.clarification` (the same on every egg row) beside the prices, and do not draw an egg row that lacks it or whose `unit` is not `egg`. The frontend does both in `frontend/src/data/marketRows.js`.
 @@ -159,0 +213,83 @@ A 422 lists every failing field. The rejected value is never echoed: `input` and
 +## The optional AI helper: `/api/intake/*`

@@ -1,11 +1,13 @@
 diff --git a/tools/market-crosswalk.json b/tools/market-crosswalk.json
-index 65bb195..23c02cb 100644
+index 65bb195..9d62fcf 100644
 --- a/tools/market-crosswalk.json
 +++ b/tools/market-crosswalk.json
-@@ -1 +1 @@
+@@ -1,2 +1,2 @@
 -{ "version": 1,
-+{ "version": 2,
-@@ -5 +5,12 @@
+-  "aliases": { "district": {"faizabad":"Ayodhya","allahabad":"Prayagraj","kheri":"Lakhimpur Kheri"}, "state": {"keralam":"Kerala"} },
++{ "version": 3,
++  "aliases": { "district": {"faizabad":"Ayodhya","allahabad":"Prayagraj","kheri":"Lakhimpur Kheri","northpraganas":"North 24 Parganas","southpraganas":"South 24 Parganas","rangareddi":"Rangareddy","ahmadabad":"Ahmedabad"}, "state": {"keralam":"Kerala"} },
+@@ -5 +5,30 @@
 -    {"state":"Uttar Pradesh","district":"Varanasi","lgd_state":9,"lgd_district":187,"udyam_district":"VARANASI","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Varanasi"],"origin":"manual"}
 +    {"state":"Uttar Pradesh","district":"Varanasi","lgd_state":9,"lgd_district":187,"udyam_district":"VARANASI","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Varanasi"],"origin":"manual"},
 +    {"state":"Tamil Nadu","district":"Coimbatore","lgd_state":33,"lgd_district":569,"udyam_district":"COIMBATORE","agmarknet_state":"Tamil Nadu","agmarknet_district":["Coimbatore"],"origin":"auto"},
@@ -18,4 +20,22 @@ index 65bb195..23c02cb 100644
 +    {"state":"Rajasthan","district":"Jaipur","lgd_state":8,"lgd_district":102,"udyam_district":"JAIPUR","agmarknet_state":"Rajasthan","agmarknet_district":["Jaipur"],"origin":"auto"},
 +    {"state":"Madhya Pradesh","district":"Indore","lgd_state":23,"lgd_district":410,"udyam_district":"INDORE","agmarknet_state":"Madhya Pradesh","agmarknet_district":["Indore"],"origin":"auto"},
 +    {"state":"Bihar","district":"Gaya","lgd_state":10,"lgd_district":196,"udyam_district":"GAYA","agmarknet_state":"Bihar","agmarknet_district":["Gaya"],"origin":"auto"},
-+    {"state":"Punjab","district":"Ludhiana","lgd_state":3,"lgd_district":36,"udyam_district":"LUDHIANA","agmarknet_state":"Punjab","agmarknet_district":["Ludhiana"],"origin":"auto"}
++    {"state":"Punjab","district":"Ludhiana","lgd_state":3,"lgd_district":36,"udyam_district":"LUDHIANA","agmarknet_state":"Punjab","agmarknet_district":["Ludhiana"],"origin":"auto"},
++    {"state":"Jharkhand","district":"Ranchi","lgd_state":20,"lgd_district":339,"udyam_district":"RANCHI ","agmarknet_state":"Jharkhand","agmarknet_district":["Ranchi"],"origin":"manual"},
++    {"state":"Jharkhand","district":"East Singhbhum","lgd_state":20,"lgd_district":327,"udyam_district":"EAST SINGHBHUM","agmarknet_state":"Jharkhand","agmarknet_district":["East Singhbhum"],"origin":"manual"},
++    {"state":"Bihar","district":"Begusarai","lgd_state":10,"lgd_district":191,"udyam_district":"BEGUSARAI","agmarknet_state":"Bihar","agmarknet_district":["Begusarai"],"origin":"auto"},
++    {"state":"Bihar","district":"Muzaffarpur","lgd_state":10,"lgd_district":208,"udyam_district":"MUZAFFARPUR","agmarknet_state":"Bihar","agmarknet_district":["Muzaffarpur"],"origin":"auto"},
++    {"state":"Madhya Pradesh","district":"Guna","lgd_state":23,"lgd_district":406,"udyam_district":"GUNA","agmarknet_state":"Madhya Pradesh","agmarknet_district":["Guna"],"origin":"auto"},
++    {"state":"West Bengal","district":"North 24 Parganas","lgd_state":19,"lgd_district":303,"udyam_district":"NORTH 24 PRAGANAS","agmarknet_state":"West Bengal","agmarknet_district":["North 24 Parganas"],"origin":"auto"},
++    {"state":"Uttar Pradesh","district":"Prayagraj","lgd_state":9,"lgd_district":120,"udyam_district":"PRAYAGRAJ","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Prayagraj"],"origin":"auto"},
++    {"state":"West Bengal","district":"South 24 Parganas","lgd_state":19,"lgd_district":304,"udyam_district":"SOUTH 24 PRAGANAS","agmarknet_state":"West Bengal","agmarknet_district":[],"origin":"auto"},
++    {"state":"West Bengal","district":"Murshidabad","lgd_state":19,"lgd_district":319,"udyam_district":"MURSHIDABAD","agmarknet_state":"West Bengal","agmarknet_district":["Murshidabad"],"origin":"auto"},
++    {"state":"West Bengal","district":"Purba Bardhaman","lgd_state":19,"lgd_district":306,"udyam_district":"PURBA BARDHAMAN","agmarknet_state":"West Bengal","agmarknet_district":["Purba Bardhaman"],"origin":"auto"},
++    {"state":"West Bengal","district":"Paschim Bardhaman","lgd_state":19,"lgd_district":704,"udyam_district":"PASCHIM BARDHAMAN","agmarknet_state":"West Bengal","agmarknet_district":["Paschim Bardhaman"],"origin":"auto"},
++    {"state":"Telangana","district":"Rangareddy","lgd_state":36,"lgd_district":518,"udyam_district":"RANGA REDDI","agmarknet_state":"Telangana","agmarknet_district":["Ranga Reddy"],"origin":"auto"},
++    {"state":"Gujarat","district":"Ahmedabad","lgd_state":24,"lgd_district":438,"udyam_district":"AHMADABAD","agmarknet_state":"Gujarat","agmarknet_district":["Ahmedabad"],"origin":"auto"},
++    {"state":"Uttar Pradesh","district":"Kanpur Nagar","lgd_state":9,"lgd_district":157,"udyam_district":"KANPUR NAGAR","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Kanpur"],"origin":"manual"},
++    {"state":"Uttar Pradesh","district":"Kanpur Dehat","lgd_state":9,"lgd_district":156,"udyam_district":"KANPUR DEHAT","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Kanpur Dehat"],"origin":"manual"},
++    {"state":"Assam","district":"Dhubri","lgd_state":18,"lgd_district":285,"udyam_district":"DHUBRI","agmarknet_state":"Assam","agmarknet_district":["Dhubri"],"origin":"manual"},
++    {"state":"Assam","district":"Kamrup","lgd_state":18,"lgd_district":291,"udyam_district":"KAMRUP","agmarknet_state":"Assam","agmarknet_district":["Kamrup"],"origin":"auto"},
++    {"state":"Uttar Pradesh","district":"Pratapgarh","lgd_state":9,"lgd_district":174,"udyam_district":"PRATAPGARH","agmarknet_state":"Uttar Pradesh","agmarknet_district":["Pratapgarh"],"origin":"manual"}

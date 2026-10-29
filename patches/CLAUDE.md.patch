@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..e0304d5 100644
+index d6ab002..06ed92b 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -8,7 +8,7 @@ index d6ab002..e0304d5 100644
 -- **The hyperlocal claim stays, backed by real data**: 20 sourced market rows for Lucknow and Varanasi from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
 +- **Ownership: Aryan Verma** owns the project and the scheme data. `LICENSE` has been MIT since 29 Oct 2026 (the hackathon wants a public, open-source entry); the GODL-India rows and NECC egg prices are outside it (README, **Licence**).
 +- **26 Oct 2026. Solo, and entered in the Meta hackathon.** Spend only the free Meta credits ($150), never pay, keep the account balance at ₹0.00: the app's spend cap enforces it for this app's calls (see Data protection).
-+- **The hyperlocal claim stays, backed by real data**: 125 sourced market rows for 13 districts from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
++- **The hyperlocal claim stays, backed by real data**: 291 sourced market rows for 31 districts from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` is the honesty marker for how local a figure is.
 @@ -24 +24 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -**Repo:** `https://github.com/BU1lDR/SIH_2026` (**private**; the name dates from the team build, and a rename or going public is a GitHub change).
 +**Repo:** `https://github.com/BU1lDR/ArthNiti` (**public** as of 28 Oct 2026, switched by the owner, so anything pushed is published at once; renamed from `SIH_2026` on 26 Oct 2026, and GitHub redirects the old URL). The repo and folder name is ASCII `ArthNiti` because a path cannot reasonably be Devanagari; the product name in the app stays `अर्थNiti` (see `APP_NAME`).
@@ -67,7 +67,7 @@ index d6ab002..e0304d5 100644
 +                        and 60 month loans, schedule_service.py their schedules, structuring_service.py
 +                        what PMEGP, PMFME and Mudra ask for and pay, compliance_service.py the
 +                        registrations to ask about; the call is in core/
-+  data/                 schemes.json (30 schemes, 7 tiers), market_data.json (125 rows),
++  data/                 schemes.json (30 schemes, 7 tiers), market_data.json (291 rows),
 +                        market_data.provenance.json, necc_egg_prices.json (30 rows)
 @@ -111 +125,2 @@ backend/app/
 -backend/tests/          38 test files, conftest.py, market_fixtures.py, deployment_fixtures.py; 867 tests
@@ -205,7 +205,7 @@ index d6ab002..e0304d5 100644
 -  - The other 7 category buttons get one Udyam count each (Lucknow tailoring: 5,826 of 249,493), suppressed under 10.
 -  - There are no poultry rows.
 -- Every other district shows the empty state.
-+- **All 125 rows are `scope:"district"`, for 13 districts in 12 states** (measured 27 Oct 2026): Lucknow and Varanasi (UP, fetched 24 Sept) and 11 added on 27 Oct (Coimbatore, Warangal, Ernakulam, Mysuru, Pune, Jaipur, Indore, Ludhiana, Nadia, Guntur, Gaya). Agriculture gets up to 3 mandi prices per district (the median over the last 30 reporting days, with a P10–P90 range; Guntur has none and Gaya one). The other 7 category buttons get one Udyam count each (Lucknow tailoring: 5,826 of 249,493), suppressed under 10. Every other district shows the empty state, except for eggs (next).
++- **All 291 rows are `scope:"district"`, for 31 districts in 15 states** (measured 29 Oct 2026): Lucknow and Varanasi (UP, fetched 24 Sept), 11 added on 27 Oct and 18 on 29 Oct (the names are in `DATA_SOURCES.md`). Agriculture gets up to 3 mandi prices per district (the median over the last 30 reporting days, with a P10–P90 range): 74 price rows, 26 districts with one, none for Guntur, Dhubri, East Singhbhum, Ranchi and South 24 Parganas (`DATA_SOURCES.md` says why). 9 price rows (Kanpur Dehat, Kanpur Nagar, Pratapgarh) are `stale`; Kanpur Nagar uses Agmarknet's "Kanpur", our reading, unconfirmed. **Lucknow's and Varanasi's prices (last reported 19–23 Sept) show no warning, because `stale` is decided at fetch time: refetch before a demo.** The other 7 category buttons get one Udyam count each (217 rows; Lucknow tailoring: 5,826 of 249,493), suppressed under 10. Every other district shows the empty state, except for eggs (next).
 +- **Egg prices** (`necc_egg_prices.json`, merged in by `load_market_data()`): 30 rows for the Poultry / Eggs button from the daily sheet of the National Egg Co-ordination Committee (NECC), 16 states, fetched 28 Oct 2026. 29 are `scope:"district"`; Delhi's is the one `scope:"state"` row. NECC is not under GODL: it agreed by e-mail (keep the owner's contact details out of the repo). Each row carries the first three sentences of NECC's clarification, the pages print them once, and `drawableMarketRows` (`marketRows.js`) refuses to draw an egg row without them. **The unit is our reading** (whole numbers, no unit; 640 is taken as 640 paise an egg, ₹6.40) and unconfirmed, so the page prints NECC's number beside it. The `Average` column is never read. 4 of 34 centres are skipped on purpose (`tools/necc-crosswalk.json`). A price goes stale in 8 days: refetch before a demo. `plan_service` sends Meta no egg row.
 @@ -308,0 +325 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 +- **`last_verified`:** `EXISTING_VERIFIED` in `gen_schemes.py` puts PMFME, PMEGP, PMMY and Stand-Up India at 2026-10-28 (their official pages were read again for the funding card) and every other scheme at 2026-09-07. `reviewDates.js` prints the earliest and latest in the footer, and `test_review_dates.py` keeps them equal.
