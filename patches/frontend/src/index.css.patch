@@ -1,0 +1,18 @@
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index d73114b..1cb759e 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -1506,0 +1507,4 @@ summary:focus-visible {
++/* The label drops under the bars when it would squeeze them below 1.5rem each.
++   It was `flex: 0 0 auto` in a nowrap row, so a long label (Malayalam, "Step 3 of
++   4 · Your results", largest text) left the four bars 3 to 0px wide and, at 320px,
++   stuck out of the page by 17px. */
+@@ -1508,0 +1513 @@ summary:focus-visible {
++  flex-wrap: wrap;
+@@ -1516 +1521 @@ summary:focus-visible {
+-  flex: 1;
++  flex: 1 0 1.5rem;
+@@ -1527 +1532,2 @@ summary:focus-visible {
+-  flex: 0 0 auto;
++  flex: 0 1 auto;
++  min-width: 0;

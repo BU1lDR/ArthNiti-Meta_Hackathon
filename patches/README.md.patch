@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 6bedb8a..19b561f 100644
+index 6bedb8a..53b17eb 100644
 --- a/README.md
 +++ b/README.md
 @@ -5 +5 @@ Hyper-local business advice and financial structuring for rural micro-entreprene
@@ -156,9 +156,11 @@ index 6bedb8a..19b561f 100644
 @@ -217 +267 @@ Eight: `en`, `hi`, `ta`, `te`, `ml`, `kn`, `mr`, `bn`. The default is **Hindi**,
 -732 distinct keys across 4 dictionary files, 5,856 strings in all, and all 8 languages are at full parity. That's checked by a script rather than by anyone's word. The backend prose is translated too — every sentence a Python service composes carries a translation code that the frontend resolves through `tBackend()`.
 +890 distinct keys across 4 dictionary files, 7,120 strings in all, and all 8 languages are at full parity. That's checked by a script rather than by anyone's word. The backend prose is translated too — every sentence a Python service composes carries a translation code that the frontend resolves through `tBackend()`.
-@@ -237 +287 @@ node tools/verify/refresh-cases.mjs    # needs the BACKEND up — generates the
+@@ -237,2 +287,2 @@ node tools/verify/refresh-cases.mjs    # needs the BACKEND up — generates the
 -node tools/verify/drive.mjs            # needs VITE — the main gate, 8 passes, 41 page loads; exits 1 on a finding
+-node tools/verify/mobile-audit.mjs     # needs VITE — phone widths, 48 page loads
 +node tools/verify/drive.mjs            # needs VITE — the main gate, 9 passes, 43 page loads; exits 1 on a finding
++node tools/verify/mobile-audit.mjs     # needs VITE — phone widths, 50 page loads
 @@ -258 +307,0 @@ Run the browser verifiers after any UI change, and `refresh-cases.mjs` after tou
 -| [OUR_MVP.md](OUR_MVP.md) | the product view: what's built and what isn't | you need the product picture |
 @@ -260 +309 @@ Run the browser verifiers after any UI change, and `refresh-cases.mjs` after tou

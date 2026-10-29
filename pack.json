@@ -101,6 +101,7 @@
     "frontend/src/i18n/resultStrings.js",
     "frontend/src/i18n/schemeStrings.js",
     "frontend/src/i18n/strings.js",
+    "frontend/src/index.css",
     "frontend/src/pages/AdvisoryPage.jsx",
     "frontend/src/pages/AnalysisPage.jsx",
     "frontend/src/pages/BusinessPage.jsx",
@@ -115,13 +116,14 @@
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
     "tools/verify/market-lib-test.mjs",
-    "tools/verify/market-ui.mjs"
+    "tools/verify/market-ui.mjs",
+    "tools/verify/mobile-audit.mjs"
   ],
   "removed": [
     "OUR_MVP.md"
   ],
   "result": {
-    "devCommit": "254b9d22195786252b9b8e73dae48d87a05c9601",
-    "tree": "0b0b7e3f02ec2052d5ac6b901cb9e3324a858c4e"
+    "devCommit": "d7ec6d6054228a8dc56f79c66cf051cec4e68f35",
+    "tree": "835545e9fdbe60f2f92ff1f2e412930b9779c716"
   }
 }

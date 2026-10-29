@@ -1,0 +1,25 @@
+diff --git a/tools/verify/mobile-audit.mjs b/tools/verify/mobile-audit.mjs
+index a6eb765..83e8a80 100644
+--- a/tools/verify/mobile-audit.mjs
++++ b/tools/verify/mobile-audit.mjs
+@@ -31 +31 @@
+-// a narrow band.
++// a narrow band. A fourth, 320, runs with the widest language at the largest text.
+@@ -188,0 +189,9 @@ const VIEWPORTS = [
++  // 320 is below the usual floor and was not measured until 29 Oct 2026, when the
++  // results label ("Step 3 of 4 · …") stuck out of the page by 17px in Malayalam
++  // at the largest text. Malayalam sets the widest labels of the eight languages.
++  // Two routes only, on purpose: the other nine still have findings at this width
++  // (a word wider than its box on the landing page, the category buttons, the
++  // /location disclosure, the /finance section title and consent line, and the
++  // scheme-fit chart's labels), and a gate that fails for good gets ignored.
++  // Widen `routes` as they are fixed.
++  { name: '320-stress', width: 320, height: 640, theme: 'dark', textsize: 'lg', lang: 'ml', routes: ['/advisory', '/report'] },
+@@ -540,4 +549,3 @@ async function main() {
+-      const loads = [
+-        ...ROUTES.map((route) => ({ route, state: '' })),
+-        { route: '/finance', state: 'blocked' },
+-      ]
++      const loads = vp.routes
++        ? vp.routes.map((route) => ({ route, state: '' }))
++        : [...ROUTES.map((route) => ({ route, state: '' })), { route: '/finance', state: 'blocked' }]

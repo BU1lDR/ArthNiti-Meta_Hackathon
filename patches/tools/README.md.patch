@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..5f88abe 100644
+index b8e7eb3..a2338fb 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -50,9 +50,11 @@ index b8e7eb3..5f88abe 100644
 +machine with no Linux and no Python 3.10, and has run on Linux since 27 Oct 2026
 +(the Actions tab has every run). Two scripts were changed for Linux by reading
 +the code, and both have since run there in CI. `keycheck` turns every `\`
-@@ -466 +471 @@ Need the **Vite dev server** on 5173:
+@@ -466,2 +471,2 @@ Need the **Vite dev server** on 5173:
 -node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
+-node tools/verify/mobile-audit.mjs   # 360/390/412 px, 48 page loads
 +node tools/verify/drive.mjs          # hydrate check + 9 passes, 43 page loads + scheme cards — the main gate; exits 1 on a finding
++node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
 @@ -550 +555 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 43 loads, in every pass that loads
