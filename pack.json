@@ -32,10 +32,12 @@
     "docs/HINDI_REVIEW.md",
     "frontend/public/hero-backdrop.svg",
     "frontend/src/audio/record.js",
+    "frontend/src/audio/speak.js",
     "frontend/src/audio/wav.js",
     "frontend/src/components/Compliance.jsx",
     "frontend/src/components/DetailSwitch.jsx",
     "frontend/src/components/HelperFilledBanner.jsx",
+    "frontend/src/components/ReadAloud.jsx",
     "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
     "frontend/src/data/marketRows.js",
@@ -48,6 +50,8 @@
     "tools/necc-lib.mjs",
     "tools/verify/app-state-test.mjs",
     "tools/verify/necc-lib-test.mjs",
+    "tools/verify/read-aloud.mjs",
+    "tools/verify/speak-lib-test.mjs",
     "tools/verify/talk-lib-test.mjs",
     "tools/verify/talk-ui.mjs",
     "tools/verify/talk_fake_backend.py"
@@ -143,7 +147,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "05bd202c325642a688a555de73b153d50a4fc58c",
-    "tree": "4628fdd02d28f44b06f768cf2a609b9c38f06209"
+    "devCommit": "a180b12c9ad1948a1676c8105b2ea237502b19bc",
+    "tree": "f3258605d0deb6d87bf4699981c03eddb58ac5bd"
   }
 }

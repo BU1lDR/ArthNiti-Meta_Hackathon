@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..06ed92b 100644
+index d6ab002..b85699f 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -81,7 +81,7 @@ index d6ab002..06ed92b 100644
 -  config/               deployment.js (VITE_* notice values, DEMO_MODE), notice.js (NOTICE_VERSION,
 -                        NOTICE_KEYS, SENT_FIELDS)
 +  App.jsx               shell + JourneyBar + LandingPage + NotFoundPage + 12 routes + `*`
-+  audio/                record.js (microphone to a 16 kHz WAV, released on every exit path), wav.js
++  audio/                record.js (microphone to a 16 kHz WAV, released on every exit path), wav.js, speak.js (read-aloud)
 +  config/               deployment.js (VITE_* notice values, DEMO_MODE, aiHelper), notice.js
 +                        (NOTICE_VERSION, NOTICE_KEYS, SENT_FIELDS)
 @@ -123,5 +139,7 @@ frontend/src/
@@ -94,7 +94,7 @@ index d6ab002..06ed92b 100644
 +                        talkAnswers.js (helper answers to form fields), planShape.js (what a stored
 +                        plan must look like), marketRows.js (which market rows may be drawn)
 +  pages/                11 page components
-+  components/           Button, BrandMark, BrandWordmark, Figure, HelperFilledBanner, InstructionManual,
++  components/           Button, BrandMark, BrandWordmark, Figure, HelperFilledBanner, InstructionManual, ReadAloud,
 +                        SchemeFunding, Compliance, ResultBand, DetailSwitch, ShortNotice, Charts, chartData.js
 +  services/api.js       the only module that touches the network
 @@ -129 +147,2 @@ frontend/src/
@@ -156,11 +156,11 @@ index d6ab002..06ed92b 100644
 -
 -  `DIGIT_ALLOW`/`SOURCE_ALLOW` entries must carry a reason, and an entry that is no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists, and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 +| `strings.js` | 223 | chrome, landing, the four form steps, `notice.*`, `consent.*`, `errf.*` |
-+| `resultStrings.js` | 424 | result pages, `/login`, `/privacy`, `/404`, the helper page (`talk.*`, 40 keys), the loan-options card (`fo.*`, 21), the schedule table (`rp.schedule*`, 10), the scheme-funding card (`fs.*`, 24), the registrations card (`cl.*`, 32) and the plan card (`plan.*`, 20), the traffic light (`band.*`, 4), the Simple/Detailed switch (`detail.*`, 4), the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
++| `resultStrings.js` | 427 | result pages, `/login`, `/privacy`, `/404`, the helper page (`talk.*`, 40 keys), the loan-options card (`fo.*`, 21), the schedule table (`rp.schedule*`, 10), the scheme-funding card (`fs.*`, 24), the registrations card (`cl.*`, 32) and the plan card (`plan.*`, 20), the traffic light (`band.*`, 4), the Simple/Detailed switch (`detail.*`, 4), the Listen button (`ra.*`, 3), the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
 +| `backendStrings.js` | 60 | sentences a **Python service composes** (`adv.*`, `obs.*`, `rsn.*`, `sum.*`, `nxt.*`, `why.*`, `src.*`, `cmd.*`, `mknote.*`) |
 +| `schemeStrings.js` | 191 | prose **typed into schemes.json** (`sdata.*`, `elig.*`, `doc.*`, `scat.*`) |
 +
-+**898 keys, 7,184 strings** (measured 29 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**. A difference of one means a number is wrong.
++**901 keys, 7,208 strings** (measured 29 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**. A difference of one means a number is wrong.
 +
 +- **`node tools/parity4.mjs`** runs 9 checks and exits 1 on a failure: every `en` key in every language; no duplicate key; no key in two files; no non-English value identical to English; placeholders and digit runs match English; no non-ASCII digits; `schemeStrings` figures match `schemes.json`; the notice hash (see Data protection). `DIGIT_ALLOW`/`SOURCE_ALLOW` entries carry a reason, and one no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 @@ -208 +214 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
@@ -231,46 +231,50 @@ index d6ab002..06ed92b 100644
 -  - `BarGroup` draws no bar for a negative value and shares one maximum across the group.
 -  - The scheme-fit chart has one bar per `fit_basis` (`chartData.js` `schemeFitItems`) and returns `[]` when there are fewer than 2 groups.
 +- **Charts** are hand-rolled in `Charts.jsx`, not a library, and always print the figure as text next to the bar. `BarGroup` draws no bar for a negative value and shares one maximum across the group. The scheme-fit chart has one bar per `fit_basis` (`chartData.js` `schemeFitItems`) and returns `[]` for fewer than 2 groups.
-@@ -376 +390 @@ python -m pip install -r backend/requirements-dev.txt
+@@ -366,0 +381 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
++- **Read aloud** (`ReadAloud`, `audio/speak.js`, under the light on `/analysis` and `/advisory`): the browser's speech engine only, a voice with `localService === true` only (a network voice would send the sentence off the device), no sentence with a digit, nothing starts without a press, and no connection opened (`speak-lib-test` pins it). On the owner's Windows Edge all 321 voices were network voices (29 Oct 2026), so the button does not appear there. The `ra.*` wording is machine-written and unreviewed.
+@@ -376 +391 @@ python -m pip install -r backend/requirements-dev.txt
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed, ~5s
 +cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2189 passed, ~18s
-@@ -379 +393 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+@@ -379 +394 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Backend tests only; there are no frontend tests.** Some tests pin user-visible wording, so edit them together with a copy change.
-+- **The backend is tested with pytest.** The frontend has no test framework; `node --test` covers four pure modules (below) and the browser gates cover the pages. Some tests pin user-visible wording, so edit them together with a copy change.
-@@ -381,2 +395,2 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
++- **The backend is tested with pytest.** The frontend has no test framework; `node --test` covers five pure modules (below) and the browser gates cover the pages. Some tests pin user-visible wording, so edit them together with a copy change.
+@@ -381,2 +396,2 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- Market tests bring their own rows from `tests/market_fixtures.py`.
 -- `conftest.py` pins `ARTHNITI_ENV=development` and clears the other `ARTHNITI_*` variables. Build a production app with `create_app(load_settings({...}))`.
 +- Market tests bring their own rows from `tests/market_fixtures.py`; Meta tests use the fake model client in `tests/intake_fixtures.py`.
 +- `conftest.py` pins `ARTHNITI_ENV=development`, clears the other `ARTHNITI_*` variables and `MODEL_API_KEY`, and blocks any connection that is not to this machine and any write to the real ledger (`test_network_guard.py`; it covers blocking sockets, not asyncio on Windows). Build a production app with `create_app(load_settings({...}))`.
-@@ -385 +399 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+@@ -385 +400 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, `node --test tools/verify/market-lib-test.mjs` (185 tests).
-+**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `tools/verify/market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (45, the answer mapping and the WAV encoder), `app-state-test.mjs` (41, the stored state) and `necc-lib-test.mjs` (74, the egg-price parser and checks). The two before the last load JSX through Vite's `ssrLoadModule`.
-@@ -391 +405 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
++**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `tools/verify/market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (45, the answer mapping and the WAV encoder), `app-state-test.mjs` (41, the stored state) `necc-lib-test.mjs` (74, the egg-price parser and checks) and `speak-lib-test.mjs` (23, the read-aloud voice choice and speech queue). `talk-lib-test` and `app-state-test` load JSX through Vite's `ssrLoadModule`.
+@@ -391 +406 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**Vite up** (`http://localhost:5173`): the browser gates. `drive` (8 passes / 41 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. Each has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
-+**Vite up** (`http://localhost:5173`): the browser gates. `drive` (10 passes / 48 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label, the traffic light; plus 13 looks at the Simple/Detailed switch), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. **`talk-ui`** needs neither: it starts its own backend (8012, `tools/verify/talk_fake_backend.py` with a fake model client, so it never reaches Meta), three Vites (5182–5184) and Edge (CDP 9379, fake microphone), runs scenarios S0–S22 (S0–S15 drive `/talk`, S16–S22 the plan card; `--only=S15` runs one) and kills all of it by PID. Each gate has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
-@@ -394 +408 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
++**Vite up** (`http://localhost:5173`): the browser gates. `drive` (10 passes / 48 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label, the traffic light; plus 13 looks at the Simple/Detailed switch), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), `read-aloud` (Vite only; a fake speech engine in place of the browser's, CDP 9381), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. **`talk-ui`** needs neither: it starts its own backend (8012, `tools/verify/talk_fake_backend.py` with a fake model client, so it never reaches Meta), three Vites (5182–5184) and Edge (CDP 9379, fake microphone), runs scenarios S0–S22 (S0–S15 drive `/talk`, S16–S22 the plan card; `--only=S15` runs one) and kills all of it by PID. Each gate has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
+@@ -393,2 +408,2 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+-- **`--broken` must exit 1:** `scroll-audit`, `text-align`, `field-align`, `market-ui`, `figure-audit` (`=split|over|tiny`) and `motion-audit`.
 -- **Exit 2 is an instrument fault, never a finding or a pass:** a crash, the wrong cwd, a server or Edge down or lost, a page with nothing to measure, a refuter that missed, or a seed the app discards (it measures clean as a blank page). The seeding scripts refuse a `SEED_VERSION` outside `READABLE_VERSIONS` and fail an empty result route as `UNSEEDED`. `drive` seeds v2 on purpose, for its hydrate check. Only `market-lib-test` (`node --test`) exits 1 on a crash. Details: `tools/README.md` § Exit codes. A `report.json` starts with `exit`; a run stopped by a thrown fault leaves none.
++- **`--broken` must exit 1:** `scroll-audit`, `text-align`, `field-align`, `market-ui`, `figure-audit` (`=split|over|tiny`), `read-aloud` (`=cancel|local|digits`) and `motion-audit`.
 +- **Exit 2 is an instrument fault, never a finding or a pass:** a crash, the wrong cwd, a server or Edge down or lost, a page with nothing to measure, a refuter that missed, or a seed the app discards (it measures clean as a blank page). The seeding scripts refuse a `SEED_VERSION` outside `READABLE_VERSIONS` and fail an empty result route as `UNSEEDED`. `drive` seeds v2 on purpose, for its hydrate check. Only the four `node --test` files exit 1 on a crash. Details: `tools/README.md` § Exit codes. A `report.json` starts with `exit`; a run stopped by a thrown fault leaves none.
-@@ -400,0 +415,2 @@ Traps:
+@@ -400,0 +416,2 @@ Traps:
 +- **A "nothing was sent" check must watch the page's own requests** (`talk-ui` hooks `fetch` in the page): the fake backend logs a call only when the model client is reached, and the real routes reject an unusable WAV with a 422 before that. `talk_fake_backend.py` must track the real client's signature (`test_talk_fake_backend.py` guards it).
 +- **A recording that is stopped at once is sometimes reported unusable** (`talk.errRecording`): 3 of 40 runs of `talk-ui` S15 without a pause before Stop, 0 of 40 with a 1.2 s pause (too few for significance; `docs/HACKATHON.md` §7). A browser check that records waits before it presses Stop, and a wait for a state the page owes the reader is soft (`settleSnap`, which reports) and not a never-ending wait (a fault).
-@@ -405 +421 @@ Traps:
+@@ -405 +422 @@ Traps:
 -`tools/fetch-market-data.mjs` refetches the market rows. It is a dry run unless `--write` is passed, and it reads the key from `.env`. `script_sha256` hashes `market-lib.mjs` + `fetch-market-data.mjs`, which `.gitattributes` pins to LF, so don't edit either without refetching.
 +`tools/fetch-market-data.mjs` refetches the market rows. It is a dry run unless `--write` is passed, and it reads the key from `.env`. `script_sha256` hashes `market-lib.mjs` + `fetch-market-data.mjs`, which `.gitattributes` pins to LF, so don't edit either without refetching. `tools/fetch-necc-prices.mjs` does the same for the egg prices with `necc-lib.mjs` (no key; `--from FILE` reads a saved page and refuses `--write`).
-@@ -411 +427 @@ Traps:
+@@ -411 +428 @@ Traps:
 -**Advice and data:** a household income of 0 needs a tick and then gives "do not take a new loan"; the household income is self-reported; the pressure figure errs high when another earner pays their own loan; **no eligibility rule is evaluated anywhere** (`sc.eligUnchecked` says so on the page); `stale` is decided at fetch time; the Udyam counts cannot be reproduced; the scheme rules have no re-check schedule (the footer date and `test_review_dates.py` are the only guard); there is no helpline number.
 +**Advice and data:** a household income of 0 needs a tick and then gives "do not take a new loan"; the household income is self-reported; the pressure figure errs high when another earner pays their own loan; **no eligibility rule is evaluated anywhere** (`sc.eligUnchecked` says so on the page); `stale` is decided at fetch time; the Udyam counts cannot be reproduced; the egg-price unit is unconfirmed and NECC's permission is an e-mail (`DATA_SOURCES.md`); the scheme rules have no re-check schedule (the footer date and `test_review_dates.py` are the only guard); the funding card rests on three pages with a gap each and does not test affordability, and the registrations card's limits are the 2017 and 2019 figures, not checked against later amendments (`docs/HACKATHON.md` §8); there is no helpline number.
-@@ -415 +431,3 @@ Traps:
+@@ -415 +432,3 @@ Traps:
 -Also open, stated where they apply: the household definition, market coverage, dialect coverage and the translation review, CI never run, the Windows-only gates.
 +Also open, stated where they apply: the household definition, market coverage, dialect coverage and the translation review, the Windows-only gates.
 +
 +**Meta helper** (the full list is `docs/HACKATHON.md` §8): the owner ran `python -m app.smoke_meta` and `--plan` on 27 Oct 2026: the key works, and both plans passed the checks first time at about 1.1 to 1.2 cents each (`PROCESSOR_SCHEDULE.md` §10.7). Not observed: the speech `keywords`, a real person's speech and the Billing balance since `--plan`. **The plan card has been driven in a browser only against the fake model** (`talk-ui` S16–S22). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
-@@ -417 +435 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -417 +436 @@ Also open, stated where they apply: the household definition, market coverage, d
 -**Legal:** the earlier team's written permission (before the submission) and IP assignments (before any sale).
 +**Legal:** `LICENSE` became MIT on 29 Oct 2026. The owner states that Manjeet and Netra agree; nothing from either is on file, and a line from each is the safe step. Outside the licence: the NECC egg prices (an e-mail agreement). The unsourced photo backdrop was replaced on 29 Oct 2026 by a generated SVG (`tools/make-hero-backdrop.mjs`); the photo stays in git history. The owner confirmed the Official Rules and the NECC use on 29 Oct 2026; it is their word, nothing is on file, and what the NECC message covered is not recorded.
-@@ -426 +443,0 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -426 +444,0 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- `tools/notice-version.json` is untracked; commit it with `notice.js`.
-@@ -433,4 +450,4 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -433,4 +451,4 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- **Branch state:** as of 26 Oct 2026, `feature/dpdp-compliance` is at `4a2307e`, 6 local commits ahead of `origin/before-main`, none pushed (`git rev-list --left-right --count origin/before-main...HEAD` gives `0 6`). **The DPDP work, the verifier exit-code work and the hackathon edits are uncommitted in the working tree.** The other 17 `feature/*` branches hold no work of their own (16 at `cf1c775`, `feature/real-market-data` at `053a99e`, both already in HEAD's history).
 -- **The remote has two branches, `before-main` and `main`.** `origin/before-main` is a fast-forward of `origin/main`. Compare `origin/` refs, not local names: local `main` carries 6 unpushed scaffolding commits.
 -- Never commit to `main`. **Commit messages carry no Co-Authored-By line and no Claude attribution.**

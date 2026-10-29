@@ -1,19 +1,22 @@
 diff --git a/frontend/src/pages/AnalysisPage.jsx b/frontend/src/pages/AnalysisPage.jsx
-index 4590df9..8dbfa84 100644
+index 4590df9..fae250f 100644
 --- a/frontend/src/pages/AnalysisPage.jsx
 +++ b/frontend/src/pages/AnalysisPage.jsx
 @@ -5,0 +6 @@ import { schemeFitItems } from '../components/chartData'
 +import DetailSwitch from '../components/DetailSwitch'
-@@ -6,0 +8,2 @@ import Figure from '../components/Figure'
+@@ -6,0 +8,3 @@ import Figure from '../components/Figure'
++import ReadAloud from '../components/ReadAloud'
 +import ResultBand from '../components/ResultBand'
 +import { drawableMarketRows, eggKindKey, isEggRow, marketSourceFacts } from '../data/marketRows'
-@@ -57 +60 @@ function AnalysisPage() {
+@@ -57 +61 @@ function AnalysisPage() {
 -  const market = Array.isArray(result.market_context) ? result.market_context : []
 +  const market = drawableMarketRows(Array.isArray(result.market_context) ? result.market_context : [])
-@@ -205,0 +209,2 @@ function AnalysisPage() {
+@@ -88,0 +93 @@ function AnalysisPage() {
++  const nextSentence = bt.nextStep(summary) || t('an.nextSub')
+@@ -205,0 +211,2 @@ function AnalysisPage() {
 +      <DetailSwitch />
 +
-@@ -209,6 +214,10 @@ function AnalysisPage() {
+@@ -209,6 +216,10 @@ function AnalysisPage() {
 -            <div className="flex min-w-0 flex-wrap items-center gap-3">
 -              <span className="text-3xl" aria-hidden="true">{isPositive ? '✅' : '⚠️'}</span>
 -              <span className={`inline-flex rounded-full border px-3 py-1 text-sm font-bold ${isPositive ? 'border-[var(--color-primary)] bg-[var(--color-surface-soft)] text-[var(--color-primary-strong)]' : 'border-[var(--color-accent)] bg-[var(--color-accent)]/20 text-[var(--color-text)]'}`}>
@@ -30,28 +33,33 @@ index 4590df9..8dbfa84 100644
 +                </span>
 +              </div>
 +            </ResultBand>
-@@ -265 +274 @@ function AnalysisPage() {
+@@ -222 +233 @@ function AnalysisPage() {
+-              {bt.nextStep(summary) || t('an.nextSub')}
++              {nextSentence}
+@@ -223,0 +235 @@ function AnalysisPage() {
++            <ReadAloud band={summary.band} lines={[headline, nextSentence]} />
+@@ -265 +277 @@ function AnalysisPage() {
 -      <section className="mt-8 grid gap-6 lg:grid-cols-2">
 +      <section className="ui-detail-only mt-8 grid gap-6 lg:grid-cols-2">
-@@ -373 +382 @@ function AnalysisPage() {
+@@ -373 +385 @@ function AnalysisPage() {
 -      <section className="ui-card mt-6 p-5 sm:p-8">
 +      <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -389 +398 @@ function AnalysisPage() {
+@@ -389 +401 @@ function AnalysisPage() {
 -      <details className="ui-disclosure mt-6">
 +      <details className="ui-disclosure ui-detail-only mt-6">
-@@ -416 +425 @@ function AnalysisPage() {
+@@ -416 +428 @@ function AnalysisPage() {
 -        <section className="ui-card mt-6 p-5 sm:p-8">
 +        <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -452 +461 @@ function AnalysisPage() {
+@@ -452 +464 @@ function AnalysisPage() {
 -      <section className="ui-card mt-6 p-5 sm:p-8">
 +      <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -620,0 +630 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -620,0 +633 @@ function MarketCard({ row, marketType, t, bt }) {
 +  const isEgg = isEggRow(row)
-@@ -626,0 +637,3 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -626,0 +640,3 @@ function MarketCard({ row, marketType, t, bt }) {
 +  // The sentence that says whose price it is names the centre and the date, so it
 +  // is all of them or nothing, the same as the window sentence above.
 +  const kindKey = row.centre && row.last_reported ? eggKindKey(row) : null
-@@ -666,0 +680,25 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -666,0 +683,25 @@ function MarketCard({ row, marketType, t, bt }) {
 +      {/* The price of ONE egg, which is not a price per kg: none of the mandi
 +          sentences above (the per-kg label, the 30-day window, the market count)
 +          is printed here. The kind sentence says whose price it is, NECC's
@@ -77,12 +85,12 @@ index 4590df9..8dbfa84 100644
 +        </div>
 +      )}
 +
-@@ -722,3 +760 @@ function MarketSources({ rows, t }) {
+@@ -722,3 +763 @@ function MarketSources({ rows, t }) {
 -  const attributions = [...new Set(
 -    rows.map((row) => row.provenance?.attribution).filter((text) => typeof text === 'string' && text.trim()),
 -  )]
 +  const { attributions, clarifications, hasEgg, hasOther } = marketSourceFacts(rows)
-@@ -731,0 +768,11 @@ function MarketSources({ rows, t }) {
+@@ -731,0 +771,11 @@ function MarketSources({ rows, t }) {
 +      {/* NECC allows its prices to be passed on only with its own clarification, in
 +          its own words, so it is printed whole, once, in English, and marked as
 +          English like the attribution. Plain text, never inside a <details>. */}
@@ -94,12 +102,12 @@ index 4590df9..8dbfa84 100644
 +          ))}
 +        </>
 +      )}
-@@ -733 +780,4 @@ function MarketSources({ rows, t }) {
+@@ -733 +783,4 @@ function MarketSources({ rows, t }) {
 -      <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>
 +      {/* The government open-data warranty is true of the mandi and Udyam rows and
 +          false of NECC's, which has a warranty sentence of its own. */}
 +      {hasOther && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>}
 +      {hasEgg && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.eggWarranty')}</p>}
-@@ -913 +963 @@ const CHOICE_KEYS = {
+@@ -913 +966 @@ const CHOICE_KEYS = {
 -  agriculture: 'cat.agriculture', dairy: 'cat.dairy', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',
 +  agriculture: 'cat.agriculture', dairy: 'cat.dairy', poultry: 'cat.poultry', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',

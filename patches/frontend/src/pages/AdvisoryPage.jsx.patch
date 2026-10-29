@@ -1,29 +1,42 @@
 diff --git a/frontend/src/pages/AdvisoryPage.jsx b/frontend/src/pages/AdvisoryPage.jsx
-index 0beb02e..11ddcf7 100644
+index 0beb02e..d75375e 100644
 --- a/frontend/src/pages/AdvisoryPage.jsx
 +++ b/frontend/src/pages/AdvisoryPage.jsx
 @@ -0,0 +1 @@
 +import { useEffect, useRef, useState } from 'react'
 @@ -2,0 +4 @@ import Button from '../components/Button'
 +import { DEPLOYMENT } from '../config/deployment'
-@@ -4,0 +7,5 @@ import { BarRow, UnitChart } from '../components/Charts'
+@@ -4,0 +7,6 @@ import { BarRow, UnitChart } from '../components/Charts'
 +import Compliance from '../components/Compliance'
 +import DetailSwitch from '../components/DetailSwitch'
++import ReadAloud from '../components/ReadAloud'
 +import ResultBand from '../components/ResultBand'
 +import SchemeFunding from '../components/SchemeFunding'
 +import { LANGUAGES } from '../i18n/languages'
-@@ -6,0 +14 @@ import { useBackendText } from '../i18n/backendText'
+@@ -6,0 +15 @@ import { useBackendText } from '../i18n/backendText'
 +import { isAbortError, requestPlan } from '../services/api'
-@@ -76,0 +85,5 @@ function AdvisoryPage() {
+@@ -32,0 +42,3 @@ function AdvisoryPage() {
++  // The takeaway card's two sentences, named here so the card and ReadAloud use the same.
++  const takeaway = businessRecommendation(feasibility, t)
++  const takeawayText = observations[0] || recommendations[0] || t('ad.reviewSteps')
+@@ -76,0 +89,5 @@ function AdvisoryPage() {
 +          <DetailSwitch />
 +
 +          {/* Nothing for a result stored before the band existed. */}
 +          <ResultBand className="mt-8" band={result.mvp_summary?.band} />
 +
-@@ -99 +112 @@ function AdvisoryPage() {
+@@ -85 +102 @@ function AdvisoryPage() {
+-                  {businessRecommendation(feasibility, t)}
++                  {takeaway}
+@@ -93 +110 @@ function AdvisoryPage() {
+-                  {observations[0] || recommendations[0] || t('ad.reviewSteps')}
++                  {takeawayText}
+@@ -94,0 +112 @@ function AdvisoryPage() {
++                <ReadAloud band={result.mvp_summary?.band} lines={[takeaway, takeawayText]} />
+@@ -99 +117 @@ function AdvisoryPage() {
 -          <section className="mt-6 grid gap-4 sm:grid-cols-2">
 +          <section className="ui-detail-only mt-6 grid gap-4 sm:grid-cols-2">
-@@ -166 +179,15 @@ function AdvisoryPage() {
+@@ -166 +184,15 @@ function AdvisoryPage() {
 -          <details className="ui-disclosure mt-6">
 +          {/* One wrapper so Simple hides the three cards together and /report, which
 +              draws two of them too, is left alone. */}
@@ -40,13 +53,13 @@ index 0beb02e..11ddcf7 100644
 +          {DEPLOYMENT.aiHelper && applicationData.request && <PlanWriter />}
 +
 +          <details className="ui-disclosure ui-detail-only mt-6">
-@@ -267 +294 @@ function AdvisoryCard({ icon, title, value, description, chart }) {
+@@ -267 +299 @@ function AdvisoryCard({ icon, title, value, description, chart }) {
 -function ActionItem({ number, text }) {
 +function ActionItem({ number, text, children }) {
-@@ -273 +300 @@ function ActionItem({ number, text }) {
+@@ -273 +305 @@ function ActionItem({ number, text }) {
 -      <p className="min-w-0 flex-1 break-words pt-1 leading-7 text-[var(--color-text)]">{typeof text === 'string' ? text : JSON.stringify(text)}</p>
 +      <p className="min-w-0 flex-1 break-words pt-1 leading-7 text-[var(--color-text)]">{children ?? (typeof text === 'string' ? text : JSON.stringify(text))}</p>
-@@ -286,0 +314,297 @@ function DetailBlock({ title, children }) {
+@@ -286,0 +319,297 @@ function DetailBlock({ title, children }) {
 +// How much of the money still needed could be borrowed, and over how long. Every
 +// figure comes from `financing_options`, which the backend prices with the same
 +// function as the loan pressure on this page, so a card cannot disagree with it.
@@ -344,7 +357,7 @@ index 0beb02e..11ddcf7 100644
 +  )
 +}
 +
-@@ -472,0 +797,9 @@ function formatCurrency(value, t) {
+@@ -472,0 +802,9 @@ function formatCurrency(value, t) {
 +// The total a loan costs is the sum of a month-by-month table that keeps its paise
 +// (the last payment clears what rounding the instalment leaves), so it prints with
 +// both decimals, and the card adds up to the table on /report to the paisa.

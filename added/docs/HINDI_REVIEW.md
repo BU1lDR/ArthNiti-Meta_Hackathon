@@ -4,7 +4,7 @@
 
 ## What is here
 
-215 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) and the eight result-page strings added this week (the traffic light and the Simple/Detailed switch). They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
+218 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) and the eleven result-page strings added this week (the traffic light, the Simple/Detailed switch and the Listen button). They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
 
 ## How to answer
 
@@ -32,6 +32,7 @@ What stood out on a first read. These are suspicions, not corrections: the reade
 | 103, 120, 163 | The English buttons say “Continue to my business / my area / finance”. The Hindi ones tell the person to give the information about their work, area and money. Intended? |
 | 214, 215 | The note puts the button name into the sentence: “…सब देखने के लिए विस्तार से दबाएँ।” It reads like “press in detail”. |
 | 38, 46, 50, 66, 67, 99, 113, 118, 148 | Spelling is not uniform. Dotted letters appear in ज़िला, ज़रूरी, फ़ॉर्म, क़र्ज़, ख़ाली and आख़िरी, but not in खर्च, खुद, गलत, खरीदते and सफर. “कौन सी” (profile.language, landing.schemes.text) and “कौन-सी” (landing.f3.text, business.subtitle) both appear. So do आंकड़े (landing.f1.text) and आँकड़े (seven other rows), and ढूँढ (location.subtitle) and ढूँढ़ (talk.find and four more). The loan word is क़र्ज़ in the nine rows here that use it, but कर्ज़ in 69 strings on pages this sheet does not cover. One rule for each can be applied everywhere. |
+| 218 | “कुछ भी कहीं नहीं भेजता” (sends nothing anywhere) stacks negatives. “कुछ भी बाहर नहीं भेजता” is a plainer option. Does “इस डिवाइस की अपनी आवाज़” say that the voice lives on the device? |
 | 108, 205 | Not a Hindi question. The English says “the team running this demonstration”, and one person runs it. This is part of the versioned notice, so a change bumps the version. |
 
 ## Found while collecting (not a wording question)
@@ -301,9 +302,9 @@ Shot 4: step 4 of 4, with the privacy note next to the consent box. (32 strings)
 | 206 | ch.inOut | Money in and money out | आने और जाने वाला पैसा | |
 | 207 | ch.required<br>same Hindi as 180 | Money needed to start | शुरू करने के लिए ज़रूरी पैसा | |
 
-## Result pages: the light and the Simple/Detailed switch (shown in English in the video)
+## Result pages: the light, the Simple/Detailed switch and the Listen button (shown in English in the video)
 
-Not in the Hindi part of the video (the language is switched to English on the last step), but new this week and shown when a reviewer switches the language on a result page. (8 strings)
+Not in the Hindi part of the video (the language is switched to English on the last step), but new this week and shown when a reviewer switches the language on a result page. The Listen button (rows 216 to 218) appears only where the browser has a voice for the language that runs on the device itself. On the author's Windows Edge on 29 Oct 2026 it had none, so these three have not been seen on a real screen yet. (11 strings)
 
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
@@ -315,6 +316,9 @@ Not in the Hindi part of the video (the language is switched to English on the l
 | 213 | detail.simple | Simple | सरल | |
 | 214 | detail.detailed | Detailed | विस्तार से | |
 | 215 | detail.simpleNote | This is the short version. To see everything we worked out, press {detailed}. | यह छोटा रूप है। हमने जो कुछ निकाला है वह सब देखने के लिए {detailed} दबाएँ। | |
+| 216 | ra.listen | Listen | सुनें | |
+| 217 | ra.stop | Stop | रोकें | |
+| 218 | ra.note | A voice on this device reads out the light and the main sentences. It does not read the figures. This app sends nothing to do it. | इस डिवाइस की अपनी आवाज़ बत्ती और मुख्य वाक्य पढ़कर सुनाती है। आँकड़े नहीं पढ़े जाते। इसके लिए यह ऐप कुछ भी कहीं नहीं भेजता। | |
 
 ## State and union territory names in the menu
 

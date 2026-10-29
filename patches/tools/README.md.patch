@@ -1,44 +1,83 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..d65b22c 100644
+index b8e7eb3..3696ede 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
 -28 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`).
-+35 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
++37 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
 +one Python helper, `verify/talk_fake_backend.py`.
 @@ -11 +12 @@ neighbours'.
 -Not all 28 are gates. Counted by class:
-+Not all 35 are gates. Counted by class:
++Not all 37 are gates. Counted by class:
 @@ -15 +16 @@ Not all 28 are gates. Counted by class:
 -| **Gates**: exit 1 on a finding, 2 when they could not measure | 18 | `parity4`, `keycheck`, `market-lib-test` (via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf` |
-+| **Gates**: exit 1 on a finding, 2 when they could not measure | 22 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test`, `app-state-test` and `necc-lib-test` (the four via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui` |
++| **Gates**: exit 1 on a finding, 2 when they could not measure | 24 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test`, `app-state-test`, `necc-lib-test` and `speak-lib-test` (the five via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui`, `read-aloud` |
 @@ -17,2 +18,2 @@ Not all 28 are gates. Counted by class:
 -| **Helpers**: not gates | 6 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen` and `svgcheck` (asset tools), `fetch-market-data` (data fetch), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
 -| **Library**: not run directly | 1 | `market-lib` |
 +| **Helpers**: not gates | 8 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen`, `svgcheck` and `make-hero-backdrop` (asset tools), `fetch-market-data` and `fetch-necc-prices` (data fetches), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
 +| **Library**: not run directly | 2 | `market-lib`, `necc-lib` |
-@@ -55 +56,2 @@ fall into four groups.
+@@ -47,2 +48,2 @@ fall into four groups.
+-  `figure-audit`'s `--broken=` naming a refuter it does not have, `mobile-audit`'s
+-  `--out=` naming a folder that does not start with `mobile`;
++  `figure-audit`'s or `read-aloud`'s `--broken=` naming a refuter it does not have,
++  `mobile-audit`'s `--out=` naming a folder that does not start with `mobile`;
+@@ -55,2 +56,3 @@ fall into four groups.
 -  its own Vite never coming up;
+-- a seed version `AppContext.jsx` no longer reads, in the nine gates that seed
 +  its own Vite never coming up; 8012, 5182 to 5184 or 9379 for `talk-ui`, or its
-+  own backend or Vite never coming up;
-@@ -132,2 +134,3 @@ Three are narrower:
++  own backend or Vite never coming up; 9381 for `read-aloud`;
++- a seed version `AppContext.jsx` no longer reads, in the ten gates that seed
+@@ -58,2 +60,4 @@ fall into four groups.
+-- an input that is not there: a `case_*.json`, `market-lib.mjs` for `market-ui`,
+-  a dictionary `load-perf` cannot read in all 8 languages.
++- an input that is not there: a `case_*.json` (`read-aloud` needs three, the green,
++  yellow and red results, and also stops when one is not the colour its name says),
++  `market-lib.mjs` for `market-ui`, a dictionary `load-perf` cannot read in all 8
++  languages.
+@@ -79,3 +83,3 @@ fall into four groups.
+-  empty state, in the seven gates that seed a result (`figure-audit`,
+-  `lang-layout`, `mobile-audit`, `motion-audit`, `print-audit`, `scroll-audit`,
+-  `text-align`) and in `market-ui`; a `/finance` box without its seeded value in
++  empty state, in the eight gates that seed a result (`figure-audit`,
++  `lang-layout`, `mobile-audit`, `motion-audit`, `print-audit`, `read-aloud`,
++  `scroll-audit`, `text-align`) and in `market-ui`; a `/finance` box without its seeded value in
+@@ -87 +91,2 @@ fall into four groups.
+-  `motion-audit`, `print-audit`) and `NOT-MOUNTED` (`figure-audit`, `text-align`):
++  `motion-audit`, `print-audit`, `read-aloud`) and `NOT-MOUNTED` (`figure-audit`,
++  `text-align`):
+@@ -100,2 +105,2 @@ fall into four groups.
+-in `figure-audit`, `field-align`, `market-ui`, `motion-audit`, `scroll-audit` and
+-`text-align` (see "When a new check reports zero").
++in `figure-audit`, `field-align`, `market-ui`, `motion-audit`, `read-aloud`,
++`scroll-audit` and `text-align` (see "When a new check reports zero").
+@@ -132,2 +137,3 @@ Three are narrower:
 -- `market-lib-test` runs under `node --test`, which exits 1 for a failing test and
 -  for a crash alike. Read its output to tell the two apart.
-+- `market-lib-test`, `necc-lib-test`, `talk-lib-test` and `app-state-test` run under
-+  `node --test`, which exits 1 for a failing test and for a crash alike. Read the
-+  output to tell the two apart.
-@@ -276 +279 @@ a wait you can hit:
++- `market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test` and
++  `speak-lib-test` run under `node --test`, which exits 1 for a failing test and for
++  a crash alike. Read the output to tell the two apart.
+@@ -145 +151 @@ reason differs by script:
+-  `print-audit`;
++  `print-audit`, `read-aloud`;
+@@ -276 +282 @@ a wait you can hit:
 -| **Edge** | All 19 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit` and `market-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
-+| **Edge** | All 20 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
-@@ -300 +303 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
++| **Edge** | All 21 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui`, `read-aloud` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
+@@ -290 +296 @@ tracked** — they are backend-derived and go stale silently, so they are genera
+-rather than committed. That means a fresh clone has none, and eight of the drivers
++rather than committed. That means a fresh clone has none, and nine of the drivers
+@@ -292 +298 @@ rather than committed. That means a fresh clone has none, and eight of the drive
+-`scroll-audit`, `text-align`) cannot run until you make them.
++`read-aloud`, `scroll-audit`, `text-align`) cannot run until you make them.
+@@ -300 +306 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
 -node tools/verify/drive.mjs                # 4. the main gate, 41 page loads
 +node tools/verify/drive.mjs                # 4. the main gate, 48 page loads and 13 Simple/Detailed looks
-@@ -310,0 +314,4 @@ fixture if the backend still echoes a field the page no longer sends (a
+@@ -310,0 +317,4 @@ fixture if the backend still echoes a field the page no longer sends (a
 +It also exits 1 if a case's traffic-light band is not the one that case exists
 +to show (`EXPECTED_BAND`: `good` yellow, `nulls` red, `empty` red, `green`
 +green), which is the same fault from the other side: a backend that predates
 +the band.
-@@ -317,4 +324,4 @@ need re-measuring, not the script.
+@@ -317,4 +327,4 @@ need re-measuring, not the script.
 -The three cases give three different answers to the optional household income
 -question, so a verifier seeding from any one of them sees a different
 -`household_check`. Repayments are the entered EMI plus a new EMI for the funding
@@ -47,24 +86,25 @@ index b8e7eb3..d65b22c 100644
 +a verifier seeding from one of them can see a different `household_check`.
 +Repayments are the entered EMI plus a new EMI for the funding gap, priced at
 +12% a year over 60 months:
-@@ -326,0 +334 @@ gap, priced at 12% a year over 60 months:
+@@ -326,0 +337 @@ gap, priced at 12% a year over 60 months:
 +| `green` (retail, Pune) | 30000 | 11.11%, low | 0 | 6.67%, `within_limit` | `adv.maintainExpand` | `adv.maintainExpand`, `adv.healthyMargin` |
-@@ -328 +336,4 @@ gap, priced at 12% a year over 60 months:
+@@ -328 +339,4 @@ gap, priced at 12% a year over 60 months:
 -All three are `attention_needed`, and every `risk_analysis` has 19 keys. `empty` is
 +The first three are `attention_needed`; `green` is `good`, with no funding gap, so
 +it is the case that reaches the green light. The lights: `good` is priority
 +medium, so yellow; `nulls` and `empty` are priority high, so red; `green` is
 +priority low, so green. Every `risk_analysis` has 19 keys. `empty` is
-@@ -343,0 +355 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
+@@ -343,0 +358,2 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
 +node --test tools/verify/necc-lib-test.mjs     # the egg-price parser and checks, 74 tests, no network
-@@ -446,3 +458,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
++node --test tools/verify/speak-lib-test.mjs    # the read-aloud voice choice and speech queue, 23 tests, no network
+@@ -446,3 +462,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
 -frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`
 -and `market-lib-test`, then `glyph-audit`, which exits 0 whenever it ran and is there to be
 -read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
 +frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`,
-+`market-lib-test`, `necc-lib-test`, `talk-lib-test` and `app-state-test`, then `glyph-audit`,
++`market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test` and `speak-lib-test`, then `glyph-audit`,
 +which exits 0 whenever it ran and is there to be read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
-@@ -453,3 +465,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
+@@ -453,3 +469,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
 -text. **None of the browser scripts is in CI.** **CI has never run, on GitHub or
 -on Linux**, because the branch has not been pushed. Two scripts were changed for
 -Linux, by reading the code, not by running it there. `keycheck` turns every `\`
@@ -72,18 +112,20 @@ index b8e7eb3..d65b22c 100644
 +machine with no Linux and no Python 3.10, and has run on Linux since 27 Oct 2026
 +(the Actions tab has every run). Two scripts were changed for Linux by reading
 +the code, and both have since run there in CI. `keycheck` turns every `\`
-@@ -466,2 +479,2 @@ Need the **Vite dev server** on 5173:
+@@ -466,2 +483,2 @@ Need the **Vite dev server** on 5173:
 -node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
 -node tools/verify/mobile-audit.mjs   # 360/390/412 px, 48 page loads
 +node tools/verify/drive.mjs          # hydrate check + 10 passes, 48 page loads + scheme cards + 13 Simple/Detailed looks — the main gate; exits 1 on a finding
 +node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
-@@ -533 +546 @@ until the 422 check was added.
+@@ -479,0 +497 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
++node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 99 page loads, 750 checks; Vite only
+@@ -533 +551 @@ until the 422 check was added.
 -`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
 +`drive`'s ninth pass, `cleared`, loads the four result pages in Hindi with the
-@@ -550 +563 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+@@ -550 +568 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 48 loads, in every pass that loads
-@@ -569,0 +583,193 @@ exited 0 with `neutralised` naming both.
+@@ -569,0 +588,193 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -207,7 +249,7 @@ index b8e7eb3..d65b22c 100644
 +and `index.css` hides every `.ui-detail-only` section in `simple`. The page opens in Simple
 +(the owner's call, 29 Oct 2026), so a verifier that has to see the loan options, the scheme
 +funding, the registrations or the local prices seeds `'detailed'`: the ten passes of
-+`drive` and the nine other verifiers that visit those pages do, beside their `sih-textsize`
++`drive` and the ten other verifiers that visit those pages do, beside their `sih-textsize`
 +seed. A pass that does not shows `LOAN TOTAL NOT TO THE PAISA` for options it cannot see.
 +One check runs after the ten passes (`checkDetail`), in English on the `good` answers, and
 +puts 13 looks in `report.json` under `detail` (`{tag, route, want, chars, problems}`). A
@@ -277,7 +319,7 @@ index b8e7eb3..d65b22c 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +787,6 @@ correct app.
+@@ -581,2 +792,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -286,10 +328,17 @@ index b8e7eb3..d65b22c 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -735 +945 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -594 +809,2 @@ is `FinancePage` local state, never stored.
+-- Each of those nine declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
++- `read-aloud` seeds 6, the current shape: a result and nothing else.
++- Each of those ten declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
+@@ -597 +813 @@ is `FinancePage` local state, never stored.
+-- The seven that seed a result read the stored state back on each result route
++- The eight that seed a result read the stored state back on each result route
+@@ -735 +951 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +956,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +962,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -303,7 +352,7 @@ index b8e7eb3..d65b22c 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1040,106 @@ is still slow or unbounded" above).
+@@ -817 +1046,197 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -410,12 +459,103 @@ index b8e7eb3..d65b22c 100644
 +refuter for the Cancel button, which is only on screen while the request is out; and
 +after a failed request the consent tick stays ticked (observed, not pinned).
 +
++**The Listen button.** `/analysis` and `/advisory` draw a `ReadAloud` block
++(`components/ReadAloud.jsx`, `audio/speak.js`): a button that reads out the light's word, its
++note and the page's two main sentences in a voice the browser keeps on the device. It draws
++nothing without such a voice, speaks nothing before a press, and leaves out any line with a
++digit in it. It has one Node test file and one browser gate.
++
++`speak-lib-test` (23 tests, `node --test`, no browser, no network) holds the pure part. A
++voice counts only when `localService` is `true` (all 321 of Edge's own voices were network
++voices on the owner's machine, 29 Oct 2026). The language is compared whole and not by its
++first letters, and the Indian voice of a language is preferred. `speakLines` trims, drops
++blank lines and any line with a digit in any script, speaks each line as its own utterance,
++cancels only what is already playing, reports its end once after the last line, and lets a
++cancelled line's late event neither end nor flip the speech that replaced it. The last test
++reads `speak.js` itself and fails on `fetch(`, `XMLHttpRequest`, `WebSocket`, `sendBeacon`,
++`EventSource` and `import(`.
++
++`read-aloud.mjs` needs Vite on 5173 and nothing else: no backend, no model, no sound. A
++script added through `Page.addScriptToEvaluateOnNewDocument` replaces `speechSynthesis` and
++`SpeechSynthesisUtterance` with a fake before the page's own scripts run, so the app meets
++it as it would meet a real engine, and the page is seeded from the saved responses
++`case_green.json`, `case_good.json` and `case_empty.json`, the green, yellow and red results
++(exit 2 if one is missing or is not the colour its name says). The fake lists a network
++voice first, so a build that takes the first voice of a language is caught, and it reports a
++cancelled line 500 ms late, as real engines do. What a press speaks is compared with what
++the page prints (the light's word, its note and the two sentences, a line with a digit left
++out), not with the app's own variables, so a sentence that is spoken and not shown fails as
++well as one that is shown and not spoken. 99 page loads and 750 checks in 13 scenarios
++(named R1 to R14; there is no R4): the button appears with the dictionary's words for a
++local voice in each of the 8 languages on both pages, and nothing is spoken before a press
++(R1); no button without a local voice (R2); a press speaks the right lines in the local
++voice, in every language and for the three lights (R3); a second press stops, and a stale
++cancel is ignored (R5); the speech runs to its end and can start again (R6); voices that
++arrive late, and one taken away mid-speech (R7); a language switch (R8); leaving the page
++(R9); a line with a digit is shown and not spoken (R10); nothing leaves the machine (R11);
++print (R12); layout at 320 px with the largest text in the dark, in all 8 languages, and at
++390 px and on a desktop (R13); Simple and Detailed (R14). The script's header lists its 20
++finding kinds. Port 9381, profile `screenshots/verify/edge-profile-readaloud`, output
++`screenshots/verify/read-aloud` (`read-aloud-broken` with `--broken`).
++
++Twenty defects were planted in the app's own source, one at a time, on 29 and 30 Oct 2026
++(`frontend/src/audio/speak.js` and `components/ReadAloud.jsx`; a script kept outside the
++repo made the edit, ran the gate, put the file back and compared its sha256, and the
++originals were compared with `cmp` at the end). Every one exits 1 and reports the kind it
++was planted for; the unplanted tree exits 0 with 99 loads and no finding:
++
++| Change | Scenarios | Findings |
++|---|---|---|
++| `speak.js`: no `localService` test in `localVoiceFor` | R2, R3, R7, R8 | 53: REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1 |
++| `speak.js`: no digit filter in `speakLines` | R10 | 16: DIGIT-SPOKEN 8, WRONG-LINES 8 |
++| `ReadAloud`: no cleanup effect | R7, R8, R9 | NOT-STOPPED 4 |
++| `ReadAloud`: the cleanup runs on unmount only (deps `[]`) | R7, R8 | NOT-STOPPED 3 |
++| `speak.js`: no `live` guard on a cancelled line | R5 | STALE-EVENT 1, SILENT 1 |
++| `ReadAloud`: speech starts on mount | R1, R3, R5 to R10 | 128: AUTO-SPEECH 20, WRONG-LINES 57, SILENT 26, ENDED-EARLY 24, NOT-STOPPED 1 |
++| `ReadAloud`: no `voiceschanged` listener | R7, R9 | 6: NO-BUTTON 2, LEAK 2, BUTTON-WITHOUT-VOICE 1, NOT-STOPPED 1 |
++| `speak.js`: `onend` on every line, not the last | R6 | ENDED-EARLY 24 |
++| `ReadAloud`: the speaker drawing without `aria-hidden` | R1 | ICON 16 |
++| `ReadAloud`: the block without its print-hidden class | R12 | PRINT 2 |
++| `speak.js`: the language matched by prefix | R2 | BUTTON-WITHOUT-VOICE 2 |
++| `ReadAloud`: the light's note left out of the lines | R3, R8, R10 | WRONG-LINES 57 |
++| `ReadAloud`: a `fetch()` when Listen is pressed | R11 | NETWORK 24 |
++| `speak.js`: no voice set on the utterance | R3, R8 | 49: REMOTE-VOICE-USED 24, WRONG-VOICE 24, WRONG-LINES 1 |
++| `ReadAloud`: the note at 0.6rem | R13 | LAYOUT 24 |
++| `ReadAloud`: the button remounts on every press | R5 | FOCUS-LOST 2 |
++| `ReadAloud`: an exception after the speech starts | R3, R5, R7 to R10 | PAGE-ERROR 39 |
++| `ReadAloud`: a second press restarts and does not stop | R5 | 6: NOT-STOPPED 2, SILENT 3, STALE-EVENT 1 |
++| `ReadAloud`: the voice is always looked up for English | R2, R3, R8 | 25: WRONG-VOICE 18, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 2, LABEL 1, WRONG-LINES 1 |
++| `ReadAloud`: a full-size element laid over the button | R3, R5 to R10 | 211: COVERED 70, WRONG-LINES 57, SILENT 27, LABEL 24, ENDED-EARLY 24, NOT-STOPPED 6, FOCUS-LOST 2, STALE-EVENT 1 |
++
++The kinds beyond the one planted are the same fault seen in other scenarios, not noise: a
++build with no `localService` test also speaks in the network voice in R3, and an overlay
++the click never gets through leaves every later step with nothing spoken. The last row was
++added after the first nineteen, because `COVERED` was the one finding kind no plant reached
++and so had never been seen to fire; with the overlay in place it fired 70 times.
++
++The fake engine can be made to misbehave too: `--broken=cancel` (`cancel()` does nothing),
++`--broken=local` (every voice reports itself as on the device) and `--broken=digits` (a digit
++is added to every spoken line). A bare `--broken` applies all three. It exits 1 when each
++arm's findings appear and 2 when one is missing (`unrefuted` in `report.json`). Measured on
++30 Oct 2026 on the finished tree, 99 loads each: `cancel` 6 findings (NOT-STOPPED 6), `local`
++53 (the same set as the first plant above), `digits` 89 (WRONG-LINES 57, DIGIT-SPOKEN 32),
++all three 146; every arm exit 1, none unrefuted.
++
++The fake is not the real engine. No real `speechSynthesis` has been driven: on the owner's
++Windows Edge the button does not appear at all, because none of its 321 voices is a local
++one. How a real local voice sounds, and the order of a real engine's events beyond the late
++cancel the fake models, are unobserved. `speechSynthesis.getVoices().filter(v => v.localService).map(v => v.lang)`
++in the page's console says whether a machine has one (`docs/HACKATHON.md` §10.1). The `ra.*`
++wording is machine-written and unreviewed in the 7 non-English languages: the gate checks
++that the page shows the dictionary's words, not that the words are right. `read-aloud` is
++not in CI (it needs Edge); `speak-lib-test` is, as a step that has not run on Linux yet.
++
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1152 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1249 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1155 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1252 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1185,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1282,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -425,7 +565,7 @@ index b8e7eb3..d65b22c 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1199,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1296,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -443,21 +583,32 @@ index b8e7eb3..d65b22c 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -867 +1217 @@ a script to run.
+@@ -866,2 +1313,2 @@ a script to run.
+-**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
++**Run `refresh-cases.mjs` after any backend change.** Nine scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1248,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1345,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-+`figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` find their own Edge by its
++`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui` and `read-aloud` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1264 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1361 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
-+`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379 — plus `assetgen` 9377
-@@ -941 +1291 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
++`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381 — plus `assetgen` 9377
+@@ -933 +1380 @@ working one.
+-Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
++Seven scripts have that refuter built in as a flag, and each **must exit 1** with it:
+@@ -941 +1388 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -948 +1298,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -944,0 +1392,4 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
++node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 99 loads
++node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
++node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
++node tools/verify/read-aloud.mjs   --broken        # all three: 146 findings; exit 2 names an arm whose findings did not appear
+@@ -948 +1399,3 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
-+on 26 Oct 2026, after the exit-code fixes. The exception is `market-ui`'s, measured
-+again on 28 Oct 2026 after the egg cases were added.
++on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
++again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s, measured on
++30 Oct 2026 on the finished gate.
