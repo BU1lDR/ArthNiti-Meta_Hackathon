@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..cdd32f0 100644
+index d6ab002..651a5b7 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -72,7 +72,7 @@ index d6ab002..cdd32f0 100644
 @@ -111 +125,2 @@ backend/app/
 -backend/tests/          38 test files, conftest.py, market_fixtures.py, deployment_fixtures.py; 867 tests
 +backend/tests/          58 test files, conftest.py and 6 fixture modules (deployment, intake, market,
-+                        necc, plan, privacy); 2177 tests
++                        necc, plan, privacy); 2189 tests
 @@ -114 +129 @@ backend/requirements-dev.txt   -r requirements.txt + pytest + httpx2 (httpx2 is
 -.github/workflows/ci.yml       pytest (3.10 + 3.14) + no-server frontend gates. NEVER RUN: not pushed
 +.github/workflows/ci.yml       pytest (3.10 + 3.14) + no-server frontend gates, on Linux; green since its first run (27 Oct 2026): the Actions tab has every run
@@ -95,7 +95,7 @@ index d6ab002..cdd32f0 100644
 +                        plan must look like), marketRows.js (which market rows may be drawn)
 +  pages/                11 page components
 +  components/           Button, BrandMark, BrandWordmark, Figure, HelperFilledBanner, InstructionManual,
-+                        SchemeFunding, Compliance, ShortNotice, Charts, chartData.js
++                        SchemeFunding, Compliance, ResultBand, ShortNotice, Charts, chartData.js
 +  services/api.js       the only module that touches the network
 @@ -129 +147,2 @@ frontend/src/
 -tools/                  verifiers (tools/verify/), parity4, keycheck, notice-version.json, market fetch;
@@ -153,11 +153,11 @@ index d6ab002..cdd32f0 100644
 -
 -  `DIGIT_ALLOW`/`SOURCE_ALLOW` entries must carry a reason, and an entry that is no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists, and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 +| `strings.js` | 223 | chrome, landing, the four form steps, `notice.*`, `consent.*`, `errf.*` |
-+| `resultStrings.js` | 416 | result pages, `/login`, `/privacy`, `/404`, the helper page (`talk.*`, 40 keys), the loan-options card (`fo.*`, 21), the schedule table (`rp.schedule*`, 10), the scheme-funding card (`fs.*`, 24), the registrations card (`cl.*`, 32) and the plan card (`plan.*`, 20), the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
++| `resultStrings.js` | 420 | result pages, `/login`, `/privacy`, `/404`, the helper page (`talk.*`, 40 keys), the loan-options card (`fo.*`, 21), the schedule table (`rp.schedule*`, 10), the scheme-funding card (`fs.*`, 24), the registrations card (`cl.*`, 32) and the plan card (`plan.*`, 20), the traffic light (`band.*`, 4), the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
 +| `backendStrings.js` | 60 | sentences a **Python service composes** (`adv.*`, `obs.*`, `rsn.*`, `sum.*`, `nxt.*`, `why.*`, `src.*`, `cmd.*`, `mknote.*`) |
 +| `schemeStrings.js` | 191 | prose **typed into schemes.json** (`sdata.*`, `elig.*`, `doc.*`, `scat.*`) |
 +
-+**890 keys, 7,120 strings** (measured 28 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**. A difference of one means a number is wrong.
++**894 keys, 7,152 strings** (measured 29 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**. A difference of one means a number is wrong.
 +
 +- **`node tools/parity4.mjs`** runs 9 checks and exits 1 on a failure: every `en` key in every language; no duplicate key; no key in two files; no non-English value identical to English; placeholders and digit runs match English; no non-ASCII digits; `schemeStrings` figures match `schemes.json`; the notice hash (see Data protection). `DIGIT_ALLOW`/`SOURCE_ALLOW` entries carry a reason, and one no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 @@ -208 +213 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
@@ -165,7 +165,7 @@ index d6ab002..cdd32f0 100644
 +- **No native speaker has reviewed any non-English wording**, the 40 `talk.*` keys included (their 7 non-English sets are machine-written). Two real errors have already been found by eye.
 @@ -229 +234 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -**Response: 7 top-level keys** (`analysis_service.py`): `financial_analysis`, `risk_analysis` (19 keys), `business_analysis`, `market_context` (a list), `scheme_matches` (a list of 16-key entries), `advisory` and `mvp_summary` (7 keys).
-+**Response: 10 top-level keys** (`analysis_service.py`): `financial_analysis`, `risk_analysis` (19 keys), `business_analysis`, `market_context` (a list), `scheme_matches` (a list of 16-key entries), `scheme_funding` (5 keys), `compliance` (2 keys), `advisory`, `financing_options` (6 keys) and `mvp_summary` (7 keys).
++**Response: 10 top-level keys** (`analysis_service.py`): `financial_analysis`, `risk_analysis` (19 keys), `business_analysis`, `market_context` (a list), `scheme_matches` (a list of 16-key entries), `scheme_funding` (5 keys), `compliance` (2 keys), `advisory`, `financing_options` (6 keys) and `mvp_summary` (8 keys).
 @@ -256,0 +262,18 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 +**Loan options** (`options_service.py`, the `financing_options` key; it has no rule of its own)
 +
@@ -185,6 +185,9 @@ index d6ab002..cdd32f0 100644
 +- FSSAI: sales up to ₹12 lakh (and 100 kg or litres a day, 500 litres of milk) is a registration, above it a licence; "usually", because the source says "and/or". GST: goods ₹40 lakh (₹20 lakh in 10 States), services ₹20 lakh (₹10 lakh in 4); exactly the limit is `within`; both or neither word is `mixed`, which gives `between` and "ask". The sources and their dates are in `DATA_SOURCES.md`; the limits are as published in 2017 and 2019 and **not checked against later amendments**.
 +- Not stated, because no source was read: fees, a farmer's own produce (only "can be treated differently"), goods between States, online sales, Udyam for farming alone. The food, goods and services lookups are whole-word tables of our own, never `CATEGORY_SYNONYMS`. `Compliance.jsx` draws only what the backend sent; `drive.mjs` checks it with its own copy of the mapping and a pass for a result stored without the key.
 +
+@@ -269 +292 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+-- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`.
++- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`. `band` reads status and priority as a light: green is `good`, red is priority `high`, yellow is the rest. `ResultBand` only draws it (shape, word and colour, with the earlier mark as the fallback for a result stored before it existed), and the rule is the owner's to confirm.
 @@ -285,6 +308 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Category matching:**
 -  - The test is **`if scheme_category in phrase`**: the scheme's word must be a substring of the user's phrase.
@@ -227,7 +230,7 @@ index d6ab002..cdd32f0 100644
 +- **Charts** are hand-rolled in `Charts.jsx`, not a library, and always print the figure as text next to the bar. `BarGroup` draws no bar for a negative value and shares one maximum across the group. The scheme-fit chart has one bar per `fit_basis` (`chartData.js` `schemeFitItems`) and returns `[]` for fewer than 2 groups.
 @@ -376 +389 @@ python -m pip install -r backend/requirements-dev.txt
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed, ~5s
-+cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2177 passed, ~17s
++cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2189 passed, ~18s
 @@ -379 +392 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Backend tests only; there are no frontend tests.** Some tests pin user-visible wording, so edit them together with a copy change.
 +- **The backend is tested with pytest.** The frontend has no test framework; `node --test` covers four pure modules (below) and the browser gates cover the pages. Some tests pin user-visible wording, so edit them together with a copy change.
@@ -241,7 +244,7 @@ index d6ab002..cdd32f0 100644
 +**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `tools/verify/market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (45, the answer mapping and the WAV encoder), `app-state-test.mjs` (41, the stored state) and `necc-lib-test.mjs` (74, the egg-price parser and checks). The two before the last load JSX through Vite's `ssrLoadModule`.
 @@ -391 +404 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**Vite up** (`http://localhost:5173`): the browser gates. `drive` (8 passes / 41 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. Each has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
-+**Vite up** (`http://localhost:5173`): the browser gates. `drive` (9 passes / 43 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. **`talk-ui`** needs neither: it starts its own backend (8012, `tools/verify/talk_fake_backend.py` with a fake model client, so it never reaches Meta), three Vites (5182–5184) and Edge (CDP 9379, fake microphone), runs scenarios S0–S22 (S0–S15 drive `/talk`, S16–S22 the plan card; `--only=S15` runs one) and kills all of it by PID. Each gate has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
++**Vite up** (`http://localhost:5173`): the browser gates. `drive` (10 passes / 48 loads: leaked keys, `null%`, `NaN`, raw enums, the fit label, the traffic light), `mobile-audit`, `print-audit`, `text-align`, `field-align`, `lang-layout`, `motion-audit`, `hero-art`, `brand-mark`, `manual-audit` (it includes the no-pill check), `market-ui` (it starts its own Vite on 5179), and `error-banner`, `scroll-audit` and `figure-audit`, which also need the backend. **`talk-ui`** needs neither: it starts its own backend (8012, `tools/verify/talk_fake_backend.py` with a fake model client, so it never reaches Meta), three Vites (5182–5184) and Edge (CDP 9379, fake microphone), runs scenarios S0–S22 (S0–S15 drive `/talk`, S16–S22 the plan card; `--only=S15` runs one) and kills all of it by PID. Each gate has its own CDP port and Edge profile, and `tools/README.md` says what each checks. They drive Edge at a hardcoded Windows path, so they are Windows-only and not in CI.
 @@ -394 +407 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Exit 2 is an instrument fault, never a finding or a pass:** a crash, the wrong cwd, a server or Edge down or lost, a page with nothing to measure, a refuter that missed, or a seed the app discards (it measures clean as a blank page). The seeding scripts refuse a `SEED_VERSION` outside `READABLE_VERSIONS` and fail an empty result route as `UNSEEDED`. `drive` seeds v2 on purpose, for its hydrate check. Only `market-lib-test` (`node --test`) exits 1 on a crash. Details: `tools/README.md` § Exit codes. A `report.json` starts with `exit`; a run stopped by a thrown fault leaves none.
 +- **Exit 2 is an instrument fault, never a finding or a pass:** a crash, the wrong cwd, a server or Edge down or lost, a page with nothing to measure, a refuter that missed, or a seed the app discards (it measures clean as a blank page). The seeding scripts refuse a `SEED_VERSION` outside `READABLE_VERSIONS` and fail an empty result route as `UNSEEDED`. `drive` seeds v2 on purpose, for its hydrate check. Only the four `node --test` files exit 1 on a crash. Details: `tools/README.md` § Exit codes. A `report.json` starts with `exit`; a run stopped by a thrown fault leaves none.

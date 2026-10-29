@@ -1,0 +1,47 @@
+diff --git a/tools/verify/refresh-cases.mjs b/tools/verify/refresh-cases.mjs
+index 8886321..b85ba2e 100644
+--- a/tools/verify/refresh-cases.mjs
++++ b/tools/verify/refresh-cases.mjs
+@@ -31 +31,7 @@ const { NOTICE_VERSION } = await import(pathToFileURL(resolve('frontend/src/conf
+-const MVP_SUMMARY_KEYS = new Set(['status', 'simple_message', 'message_code', 'next_step', 'next_step_code', 'priority', 'location_type'])
++const MVP_SUMMARY_KEYS = new Set(['status', 'simple_message', 'message_code', 'next_step', 'next_step_code', 'priority', 'band', 'location_type'])
++
++// The traffic light each case must come back with. The fixtures between them have
++// to reach all three, or a verifier seeding from them never sees one of the three
++// drawn: good is yellow (a funding gap), nulls and empty are red (a loss; a
++// household over its limit) and green is the one case with nothing to flag.
++const EXPECTED_BAND = { good: 'yellow', nulls: 'red', empty: 'red', green: 'green' }
+@@ -38,3 +44,3 @@ const MVP_SUMMARY_KEYS = new Set(['status', 'simple_message', 'message_code', 'n
+-// The household income question is optional, and the three cases between them
+-// reach all three answers to it, so a verifier seeding from any one of them sees
+-// a different household_check:
++// The household income question is optional, and the first three cases between
++// them reach all three answers to it, so a verifier seeding from any one of them
++// sees a different household_check:
+@@ -46,0 +53 @@ const MVP_SUMMARY_KEYS = new Set(['status', 'simple_message', 'message_code', 'n
++//   green  within_limit, and the one case with nothing to flag (see that case).
+@@ -77,0 +85,12 @@ const CASES = {
++  // The only case that reaches the green light, which needs everything at once:
++  // a profit, low repayment pressure, a plan that pays, no gap and a household
++  // inside its limit. Capital 120000 covers the 100000 investment, so there is no
++  // gap and no new loan. Profit 40000 - 22000 = 18000; the 2000 EMI is 11.11% of
++  // it, under 30. Operating surplus 40000 - 20000 = 20000, so the plan is
++  // feasible. Household 2000 of 30000 = 6.67%, within the limit.
++  green: {
++    profile: { language: 'Marathi' },
++    business: { category: 'retail', initialInvestment: '100000', monthlyRevenue: '40000', monthlyOperatingExpenses: '20000', existingDebt: 0 },
++    location: { village: 'Wagholi', district: 'Pune', state: 'Maharashtra', locationType: 'rural', marketType: ['town'], customers: 'Local families' },
++    finance: { availableCapital: '120000', monthlyExpenses: '22000', monthlyEmi: '2000', householdIncome: '30000' },
++  },
+@@ -132,0 +152,7 @@ for (const [name, form] of Object.entries(CASES)) {
++  // The opposite fault: a backend older than the code sends no band at all, and
++  // the fixtures written from it would draw the old two-state mark everywhere.
++  const band = result.mvp_summary?.band
++  if (band !== EXPECTED_BAND[name]) {
++    console.log(`${name}: mvp_summary.band is ${JSON.stringify(band)}, wanted ${EXPECTED_BAND[name]}; restart the backend on the current code, or the case no longer reaches that light`)
++    process.exit(1)
++  }
+@@ -169 +195,2 @@ for (const [name, form] of Object.entries(CASES)) {
+-    `\n       household_check=${ra.household_check} household_repayment_percent=${householdPercent === null ? 'null' : householdPercent + '%'}`,
++    `\n       household_check=${ra.household_check} household_repayment_percent=${householdPercent === null ? 'null' : householdPercent + '%'}` +
++    `\n       status=${result.mvp_summary.status} priority=${result.mvp_summary.priority} band=${band}`,

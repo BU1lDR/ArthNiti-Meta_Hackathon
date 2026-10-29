@@ -1,5 +1,5 @@
 diff --git a/docs/frontend_integration.md b/docs/frontend_integration.md
-index 2463c76..17fae99 100644
+index 2463c76..4656883 100644
 --- a/docs/frontend_integration.md
 +++ b/docs/frontend_integration.md
 @@ -3 +3 @@
@@ -24,6 +24,9 @@ index 2463c76..17fae99 100644
 @@ -104,0 +106,2 @@ A 200 carries these seven top-level keys:
 +| `scheme_funding` (5) | `status`, `project_cost`, `money_in_hand`, `funding_gap`, `schemes[]`. `schemes` has one entry for each of PMEGP, PMFME and Mudra that the matcher found, in its order, and no other scheme is priced. A `kind: "subsidy"` entry (PMEGP, PMFME) has `scheme_id, kind, terms, limit_kind, limit, limit_applied, cases[]`, and PMEGP adds `area, area_assumed`. Every case has `code, own_percent, own_amount, own_short_by, subsidy_percent, subsidy_amount, bank_amount, net_loan_amount`. A `kind: "loan_band"` entry (Mudra) has `scheme_id, kind, terms, loan_amount, band, band_limit` |
 +| `compliance` (2) | `yearly_sales`, `steps[]`. `yearly_sales` is the expected monthly income times 12, and every limit below is tested against it. `steps` is always four entries in this order: `udyam`, `local`, `fssai`, `gst`. Every step has `id`, `need` and `source`. `udyam` adds `schemes_requiring`; `local` adds `place`; `fssai` adds `kind`, `sales_limit`, `food_per_day`, `milk_per_day`, `dairy_exemption`; `gst` adds `state`, `supply`, `goods_limit`, `services_limit`, `limit`, `farm`, `case` |
+@@ -106 +109 @@ A 200 carries these seven top-level keys:
+-| `mvp_summary` | `status, simple_message, message_code, next_step, next_step_code, priority, location_type` |
++| `mvp_summary` (8) | `status, simple_message, message_code, next_step, next_step_code, priority, band, location_type` |
 @@ -114,0 +118,16 @@ A 200 carries these seven top-level keys:
 +| `financing_options.status` | `covered` / `partial` / `no_gap` / `no_surplus` / `household_over_limit` / `no_room` |
 +| `financing_options.options[].code` | `term_12` / `term_24` / `term_36` / `term_60` |
@@ -41,11 +44,14 @@ index 2463c76..17fae99 100644
 +| `compliance.steps[].kind` (fssai) | `registration` / `licence`, and `null` when `need` is `not_needed` |
 +| `compliance.steps[].supply` (gst) | `goods` / `services` / `mixed` |
 +| `compliance.steps[].case` (gst) | `within` / `above` / `between` / `farm_above` |
-@@ -119 +138,2 @@ A 200 carries these seven top-level keys:
+@@ -116,0 +136,2 @@ A 200 carries these seven top-level keys:
++| `mvp_summary.priority` | `high` / `medium` / `low` |
++| `mvp_summary.band` | `green` / `yellow` / `red` |
+@@ -119 +140,2 @@ A 200 carries these seven top-level keys:
 -| `metric` (market) | `wholesale_price_per_kg` / `registered_units` |
 +| `metric` (market) | `wholesale_price_per_kg` / `registered_units` / `egg_price` |
 +| `price_kind` (egg price) | `suggested` / `prevailing` |
-@@ -132,0 +153,26 @@ A 200 carries these seven top-level keys:
+@@ -132,0 +155,30 @@ A 200 carries these seven top-level keys:
 +- **`financing_options` answers "how much of the gap can be borrowed, over how long, and stay in the low band".**
 +  - Each option is the largest loan, in whole thousands of rupees or the whole gap, whose total repayment is `low` and inside the household cap, for 12, 24, 36 or 60 months at the same assumed rate as `estimated_new_emi`. It is priced by the same function as `risk_analysis`, so the 60-month option is the loan `risk_analysis` already prices whenever the gap fits.
 +  - `options` is empty unless `status` is `covered` (some option has `remaining_gap` 0) or `partial` (none does). The other four statuses say why no loan is offered. A tenure that allows no loan at all is left out of `options`.
@@ -72,11 +78,15 @@ index 2463c76..17fae99 100644
 +  - Not stated, because no source was read for it: fees, goods sent between States, e-commerce, and whether farming alone can register on Udyam.
 +  - Amounts are whole rupees except `yearly_sales`, which can carry paise: print a whole rupee bare and any other with two decimals.
 +  - A result stored before this field existed has no `compliance`, so the client must tolerate its absence. The frontend draws nothing then.
-@@ -139 +185,2 @@ A 200 carries these seven top-level keys:
++- **`mvp_summary.band` is the status and the priority read as a traffic light, not a third verdict.**
++  - `green` is exactly `status: good`. `red` is exactly `priority: high`: the plan is not making a profit, the repayment pressure is high, or the household is over its limit. `yellow` is everything between: moderate pressure, a funding gap, or a plan whose operating figures do not show it as feasible. Red wins over a yellow cause.
++  - It carries no more than the two fields it is read from: `green` means the figures given look fine, not that the person qualifies for anything or that a lender will lend. Print a word beside the colour, because colour must never be the only signal.
++  - A result stored before this field existed has no `band`, so the client must tolerate its absence. The frontend falls back to the two-state mark it used before.
+@@ -139 +191,2 @@ A 200 carries these seven top-level keys:
 -- **A `match_level: "state"` market row is a state-wide figure,** not a local one. Say so. Rows are never taken from another district. There is data for only 2 districts.
 +- **A `match_level: "state"` market row is a state-wide figure,** not a local one. Say so. Rows are never taken from another district. There is data for 13 districts, and egg prices for 30 NECC centres (29 districts and Delhi as a whole).
 +- **An `egg_price` row is the price of one egg, in rupees.** NECC prints it as a whole number with no unit; `indicative_price` is our reading of it as paise (`provenance.published_value` is the number as printed and `provenance.unit_reading` says how it is read), and NECC has not confirmed that reading. `price_kind` says whose price it is: `suggested` is a price NECC suggests and `prevailing` is the going price it lists, and neither is a price the reader will always get. `centre` is NECC's own name for the centre (it can differ from the district). NECC allows its prices to be passed on only with its clarification, so print `provenance.clarification` (the same on every egg row) beside the prices, and do not draw an egg row that lacks it or whose `unit` is not `egg`. The frontend does both in `frontend/src/data/marketRows.js`.
-@@ -159,0 +207,83 @@ A 422 lists every failing field. The rejected value is never echoed: `input` and
+@@ -159,0 +213,83 @@ A 422 lists every failing field. The rejected value is never echoed: `input` and
 +## The optional AI helper: `/api/intake/*`
 +
 +Two more routes exist only when the backend runs with `ARTHNITI_AI_ENABLED=true` and `MODEL_API_KEY` set. They are mounted in production too. The frontend calls them from `/talk`, which exists only in a build made with `VITE_AI_HELPER=true`. They are not part of the contract above. They fill in the form, they compute nothing, and `POST /api/analysis/run` behaves the same with or without them. What they send to Meta, what they log and what to do before switching them on is `docs/PROCESSOR_SCHEDULE.md` §10.
@@ -160,6 +170,6 @@ index 2463c76..17fae99 100644
 +
 +A refused reply is logged as the codes of the checks it failed and nothing else; no body, log line or stderr line holds the model's words or the reader's answers (`test_advisor_log_privacy.py`). `frontend/src/services/api.js` turns 404, 503, no connection and the 330-second timeout into `plan.errUnavailable`, 429 into `plan.errBusy`, 502 into `plan.errNoPlan`, and anything else, a 422 and a reply that is not a plan included, into `plan.errGeneric`. The advice above the card is the rules' and stays on the page whatever happens here.
 +
-@@ -169 +299 @@ A 422 lists every failing field. The rejected value is never echoed: `input` and
+@@ -169 +305 @@ A 422 lists every failing field. The rejected value is never echoed: `input` and
 -- The frontend gives up after 20 seconds.
 +- The frontend gives up after 20 seconds (60 seconds for the two intake routes, 330 for the plan: two tries of up to 150 seconds each, with a margin).

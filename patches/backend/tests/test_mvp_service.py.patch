@@ -1,0 +1,72 @@
+diff --git a/backend/tests/test_mvp_service.py b/backend/tests/test_mvp_service.py
+index 0af921a..7e3d42a 100644
+--- a/backend/tests/test_mvp_service.py
++++ b/backend/tests/test_mvp_service.py
+@@ -2,0 +3,2 @@ from itertools import product
++import pytest
++
+@@ -146,0 +149 @@ def test_priority_advice_is_reachable_through_the_real_pipeline():
++    seen_band = set()
+@@ -174,0 +178,5 @@ def test_priority_advice_is_reachable_through_the_real_pipeline():
++        seen_band.add(summary["band"])
++
++        # The band is the status and the priority read as a traffic light.
++        assert (summary["band"] == "green") == (summary["status"] == "good")
++        assert (summary["band"] == "red") == (summary["priority"] == "high")
+@@ -200,0 +209,2 @@ def test_priority_advice_is_reachable_through_the_real_pipeline():
++    # And so are all three bands.
++    assert seen_band == {"green", "yellow", "red"}
+@@ -248,0 +259 @@ def test_the_summary_does_not_echo_language_dialect_or_literacy():
++        "band",
+@@ -272,0 +284 @@ def test_no_capital_against_a_large_plan_is_not_told_to_keep_going():
++    assert summary["band"] == "red"
+@@ -296,0 +309,49 @@ def test_a_small_gap_is_flagged_without_calling_the_risk_high():
++    assert summary["band"] == "yellow"
++
++
++# ------------------------------------------------------------------ the band
++#
++# Green, yellow and red are the status and the priority read as a traffic
++# light, not a second opinion. Green is exactly the "good" status. Red is
++# exactly the "high" priority: not making a profit, high repayment pressure,
++# or a household over its limit. Yellow is everything in between.
++
++
++def band_for(
++    financial_status="profitable",
++    risk_level="low",
++    feasibility="feasible",
++    funding_gap=0,
++    household_check="within_limit",
++):
++    return build_mvp_summary(
++        financial_analysis={
++            "financial_status": financial_status,
++            "funding_gap": funding_gap,
++        },
++        risk_analysis={"risk_level": risk_level, "household_check": household_check},
++        business_analysis={"feasibility_status": feasibility},
++        advisory={"recommendations": ["Maintain the current business model."]},
++    )["band"]
++
++
++@pytest.mark.parametrize(
++    "band, changes",
++    [
++        ("green", {}),
++        ("green", {"household_check": "not_checked"}),
++        ("red", {"financial_status": "loss"}),
++        ("red", {"financial_status": "break_even"}),
++        ("red", {"financial_status": "loss", "funding_gap": 50000}),
++        ("red", {"risk_level": "high"}),
++        ("red", {"household_check": "over_limit"}),
++        # Red wins over a yellow cause.
++        ("red", {"risk_level": "moderate", "household_check": "over_limit"}),
++        ("yellow", {"risk_level": "moderate"}),
++        ("yellow", {"funding_gap": 50000}),
++        ("yellow", {"feasibility": "not_feasible"}),
++        ("yellow", {"feasibility": "break_even"}),
++    ],
++)
++def test_the_band_follows_the_situation(band, changes):
++    assert band_for(**changes) == band

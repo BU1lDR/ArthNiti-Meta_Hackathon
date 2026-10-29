@@ -1,0 +1,6 @@
+diff --git a/backend/tests/test_household_income.py b/backend/tests/test_household_income.py
+index a255cfb..3330168 100644
+--- a/backend/tests/test_household_income.py
++++ b/backend/tests/test_household_income.py
+@@ -604,0 +605 @@ def test_every_household_branch_is_reachable_through_the_real_pipeline():
++            "band",

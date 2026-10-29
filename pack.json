@@ -33,6 +33,7 @@
     "frontend/src/audio/wav.js",
     "frontend/src/components/Compliance.jsx",
     "frontend/src/components/HelperFilledBanner.jsx",
+    "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
     "frontend/src/data/marketRows.js",
     "frontend/src/data/planShape.js",
@@ -68,6 +69,7 @@
     "backend/app/services/analysis_service.py",
     "backend/app/services/intake_service.py",
     "backend/app/services/market_service.py",
+    "backend/app/services/mvp_service.py",
     "backend/app/services/risk_service.py",
     "backend/app/smoke_meta.py",
     "backend/gen_schemes.py",
@@ -76,12 +78,15 @@
     "backend/tests/intake_fixtures.py",
     "backend/tests/market_fixtures.py",
     "backend/tests/privacy_fixtures.py",
+    "backend/tests/test_household_income.py",
     "backend/tests/test_intake_log_privacy.py",
     "backend/tests/test_intake_routes.py",
     "backend/tests/test_intake_service.py",
     "backend/tests/test_intake_settings.py",
     "backend/tests/test_log_privacy.py",
     "backend/tests/test_meta_client.py",
+    "backend/tests/test_mvp_api_contract.py",
+    "backend/tests/test_mvp_service.py",
     "backend/tests/test_production_app.py",
     "backend/tests/test_risk_service.py",
     "backend/tests/test_scheme_service.py",
@@ -117,13 +122,15 @@
     "tools/verify/drive.mjs",
     "tools/verify/market-lib-test.mjs",
     "tools/verify/market-ui.mjs",
-    "tools/verify/mobile-audit.mjs"
+    "tools/verify/mobile-audit.mjs",
+    "tools/verify/print-audit.mjs",
+    "tools/verify/refresh-cases.mjs"
   ],
   "removed": [
     "OUR_MVP.md"
   ],
   "result": {
-    "devCommit": "d7ec6d6054228a8dc56f79c66cf051cec4e68f35",
-    "tree": "835545e9fdbe60f2f92ff1f2e412930b9779c716"
+    "devCommit": "3d1bb0b97f0dee4ac28b6ffc89ac013a62bc8b8a",
+    "tree": "34e10b73141fe00ffeafa39222a1e4398e49d043"
   }
 }

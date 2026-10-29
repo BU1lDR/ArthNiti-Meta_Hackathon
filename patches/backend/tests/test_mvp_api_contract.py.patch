@@ -1,0 +1,8 @@
+diff --git a/backend/tests/test_mvp_api_contract.py b/backend/tests/test_mvp_api_contract.py
+index c02ae98..2ebbee1 100644
+--- a/backend/tests/test_mvp_api_contract.py
++++ b/backend/tests/test_mvp_api_contract.py
+@@ -55,0 +56 @@ def test_mvp_summary_required_fields():
++    assert summary["band"] in {"green", "yellow", "red"}
+@@ -64,0 +66 @@ MVP_SUMMARY_KEYS = {
++    "band",

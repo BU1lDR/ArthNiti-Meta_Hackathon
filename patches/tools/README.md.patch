@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..a2338fb 100644
+index b8e7eb3..4a8d0c0 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -32,17 +32,39 @@ index b8e7eb3..a2338fb 100644
 +| **Edge** | All 20 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
 @@ -300 +303 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
 -node tools/verify/drive.mjs                # 4. the main gate, 41 page loads
-+node tools/verify/drive.mjs                # 4. the main gate, 43 page loads
-@@ -343,0 +347 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
++node tools/verify/drive.mjs                # 4. the main gate, 48 page loads
+@@ -310,0 +314,4 @@ fixture if the backend still echoes a field the page no longer sends (a
++It also exits 1 if a case's traffic-light band is not the one that case exists
++to show (`EXPECTED_BAND`: `good` yellow, `nulls` red, `empty` red, `green`
++green), which is the same fault from the other side: a backend that predates
++the band.
+@@ -317,4 +324,4 @@ need re-measuring, not the script.
+-The three cases give three different answers to the optional household income
+-question, so a verifier seeding from any one of them sees a different
+-`household_check`. Repayments are the entered EMI plus a new EMI for the funding
+-gap, priced at 12% a year over 60 months:
++The four cases answer the optional household income question in three ways, so
++a verifier seeding from one of them can see a different `household_check`.
++Repayments are the entered EMI plus a new EMI for the funding gap, priced at
++12% a year over 60 months:
+@@ -326,0 +334 @@ gap, priced at 12% a year over 60 months:
++| `green` (retail, Pune) | 30000 | 11.11%, low | 0 | 6.67%, `within_limit` | `adv.maintainExpand` | `adv.maintainExpand`, `adv.healthyMargin` |
+@@ -328 +336,4 @@ gap, priced at 12% a year over 60 months:
+-All three are `attention_needed`, and every `risk_analysis` has 19 keys. `empty` is
++The first three are `attention_needed`; `green` is `good`, with no funding gap, so
++it is the case that reaches the green light. The lights: `good` is priority
++medium, so yellow; `nulls` and `empty` are priority high, so red; `green` is
++priority low, so green. Every `risk_analysis` has 19 keys. `empty` is
+@@ -343,0 +355 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
 +node --test tools/verify/necc-lib-test.mjs     # the egg-price parser and checks, 74 tests, no network
-@@ -446,3 +450,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
+@@ -446,3 +458,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
 -frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`
 -and `market-lib-test`, then `glyph-audit`, which exits 0 whenever it ran and is there to be
 -read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
 +frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`,
 +`market-lib-test`, `necc-lib-test`, `talk-lib-test` and `app-state-test`, then `glyph-audit`,
 +which exits 0 whenever it ran and is there to be read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
-@@ -453,3 +457,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
+@@ -453,3 +465,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
 -text. **None of the browser scripts is in CI.** **CI has never run, on GitHub or
 -on Linux**, because the branch has not been pushed. Two scripts were changed for
 -Linux, by reading the code, not by running it there. `keycheck` turns every `\`
@@ -50,15 +72,18 @@ index b8e7eb3..a2338fb 100644
 +machine with no Linux and no Python 3.10, and has run on Linux since 27 Oct 2026
 +(the Actions tab has every run). Two scripts were changed for Linux by reading
 +the code, and both have since run there in CI. `keycheck` turns every `\`
-@@ -466,2 +471,2 @@ Need the **Vite dev server** on 5173:
+@@ -466,2 +479,2 @@ Need the **Vite dev server** on 5173:
 -node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
 -node tools/verify/mobile-audit.mjs   # 360/390/412 px, 48 page loads
-+node tools/verify/drive.mjs          # hydrate check + 9 passes, 43 page loads + scheme cards — the main gate; exits 1 on a finding
++node tools/verify/drive.mjs          # hydrate check + 10 passes, 48 page loads + scheme cards — the main gate; exits 1 on a finding
 +node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
-@@ -550 +555 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+@@ -533 +546 @@ until the 422 check was added.
+-`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
++`drive`'s ninth pass, `cleared`, loads the four result pages in Hindi with the
+@@ -550 +563 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
-+result byte for byte. `/privacy` is one of the 43 loads, in every pass that loads
-@@ -569,0 +575,83 @@ exited 0 with `neutralised` naming both.
++result byte for byte. `/privacy` is one of the 48 loads, in every pass that loads
+@@ -569,0 +583,118 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -125,11 +150,12 @@ index b8e7eb3..a2338fb 100644
 +dictionary, and a `cl.*` key missing from `resultStrings.js`, are exit 2: the
 +backend has a value the page cannot say. A fixture with no compliance steps is also
 +exit 2 (it was made by an older backend: run `refresh-cases.mjs`).
-+The ninth pass, `old`, loads `/advisory` and `/report` in English with the `good`
-+answers and a result stored before `compliance` and `scheme_funding` existed (both
-+keys deleted from the fixture); the page must draw neither card and throw nothing.
-+`report.json` counts the steps checked as `complianceChecked` (40 in all: 4 steps on
-+each of the 10 loads of a result) and the console line prints `compliance=N`, the
++The tenth pass, `old`, loads `/analysis`, `/advisory` and `/report` in English with
++the `good` answers and a result stored before `compliance`, `scheme_funding` and
++`mvp_summary.band` existed (all three deleted from the fixture); the pages must draw
++neither card nor the traffic light and throw nothing.
++`report.json` counts the steps checked as `complianceChecked` (48 in all: 4 steps on
++each of the 12 loads of a result) and the console line prints `compliance=N`, the
 +steps that matched (4 on a load that passes). Measured on 28 Oct
 +2026 with defects planted in the component and then undone with `cp` and a `sha256`
 +check; each exited 1: the card never drawn (`COMPLIANCE CARD MISSING` on 10 loads);
@@ -142,7 +168,41 @@ index b8e7eb3..a2338fb 100644
 +(`COMPLIANCE CARD TITLE` on the 5 `/advisory` loads, `COMPLIANCE CARD TEXT` on 10
 +and 40 `COMPLIANCE STEP`). On the finished card it exits 0.
 +
-@@ -581,2 +669,6 @@ correct app.
++**The traffic light.** `/analysis`, `/advisory` and `/report` each draw one
++`ResultBand` (`components/ResultBand.jsx`) from the response's own
++`mvp_summary.band`. For a result with a band `drive` wants exactly one `.ui-band`
++on the page (`BAND: n drawn on <route>, wanted 1`), whose lamp class matches the
++band (`BAND LAMP`), whose word is `band.<colour>` in the page's language and not
++another colour's (`BAND WORD MISSING`, `WRONG BAND WORD`), whose note is
++`band.basis` (`BAND NOTE MISSING`), whose `<svg data-shape>` is a circle for green,
++a triangle for yellow and an octagon for red, so that colour is never the only
++signal (`BAND SHAPE`), and whose left rule is the colour that lamp's own token
++resolves to on the page (`BAND COLOUR`; the expected colour is read from the page
++itself, by resolving the token on a probe element). A load with no result, and the `old`
++pass, whose result predates the band, must draw no light (`BAND SHOWN WITH NOTHING
++TO DRAW`), and on `/analysis` the `old` result must keep the status word the page
++showed before the light existed (`STATUS MARK MISSING`). `report.json` counts the
++lights checked as `bandChecked` (19 in all, one on each load of a result with a
++band) and the console line prints `band=<colour>`. A fixture with no band, or
++fixtures that between them never reach one of the three lights, is exit 2 (the
++backend that made them predates the band: run `refresh-cases.mjs`); the four real
++fixtures do reach all three (`good` yellow, `nulls` and `empty` red, `green`
++green), and `green` was added for that, because no other case is `good`.
++Measured on 29 Oct 2026: before the component existed `drive` exited 1 with
++`BAND: 0 drawn` on all 19 loads of a result. On the finished component it exits 0
++with 48 loads. With four defects planted in the component, then undone with `cp`
++and a `sha256` check, it exited 1 on 19 loads: the triangle drawn as a circle
++(`BAND SHAPE` on the 10 yellow loads), the note dropped for yellow (`BAND NOTE
++MISSING` on the same 10), the red lamp taking the yellow colour (`BAND COLOUR` on
++the 6 red loads) and the green lamp showing yellow's word (`BAND WORD MISSING` and
++`WRONG BAND WORD` on the 3 green loads). With four more planted in the pages it
++exited 1 on 19 loads: the light left off `/report` (`BAND: 0 drawn` on its 6 loads),
++every band drawn as green (`BAND LAMP` on the 11 yellow and red loads of `/analysis`
++and `/advisory`), a green light invented for a result with no band (`BAND SHOWN WITH
++NOTHING TO DRAW` on `old` `/advisory`) and the earlier status word removed from
++`/analysis`' fallback (`STATUS MARK MISSING` on `old` `/analysis`).
++
+@@ -581,2 +712,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -151,10 +211,10 @@ index b8e7eb3..a2338fb 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -735 +827 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -735 +870 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +838,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +881,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -168,7 +228,7 @@ index b8e7eb3..a2338fb 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +922,106 @@ is still slow or unbounded" above).
+@@ -817 +965,106 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -276,9 +336,9 @@ index b8e7eb3..a2338fb 100644
 +after a failed request the consent tick stays ticked (observed, not pinned).
 +
 +Helpers, the 7 that are not gates:
-@@ -825,0 +1036 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1079 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -860,3 +1071,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1114,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -296,18 +356,21 @@ index b8e7eb3..a2338fb 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -898,2 +1120,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -867 +1132 @@ a script to run.
+-among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
++among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
+@@ -898,2 +1163,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1136 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1179 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379 — plus `assetgen` 9377
-@@ -941 +1163 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1206 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -948 +1170,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1213,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exception is `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added.

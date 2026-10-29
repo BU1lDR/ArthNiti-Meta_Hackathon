@@ -1,0 +1,19 @@
+diff --git a/backend/app/services/mvp_service.py b/backend/app/services/mvp_service.py
+index 1b912a0..a48f623 100644
+--- a/backend/app/services/mvp_service.py
++++ b/backend/app/services/mvp_service.py
+@@ -184,0 +185,12 @@ def build_mvp_summary(
++    # The traffic light is the two verdicts above read together, not a third
++    # opinion: green is exactly "good", red is exactly priority "high" (not making
++    # a profit, high repayment pressure, or a household over its limit) and
++    # yellow is everything between. Moderate risk, a funding gap and an unproven
++    # plan are yellow because each leaves something to check, not something wrong.
++    if status == "good":
++        band = "green"
++    elif priority == "high":
++        band = "red"
++    else:
++        band = "yellow"
++
+@@ -191,0 +204 @@ def build_mvp_summary(
++        "band": band,

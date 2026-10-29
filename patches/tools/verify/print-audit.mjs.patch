@@ -1,0 +1,7 @@
+diff --git a/tools/verify/print-audit.mjs b/tools/verify/print-audit.mjs
+index 9757da7..4a8592a 100644
+--- a/tools/verify/print-audit.mjs
++++ b/tools/verify/print-audit.mjs
+@@ -621 +621 @@ const BREAK_AVOID = [
+-  '.ui-formsection', '.ui-notice', '.ui-bar-row', '.ui-unit-chart',
++  '.ui-formsection', '.ui-notice', '.ui-band', '.ui-bar-row', '.ui-unit-chart',
