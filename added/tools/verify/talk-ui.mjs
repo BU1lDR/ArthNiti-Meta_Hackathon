@@ -853,6 +853,7 @@ async function open(base, route, { lang = 'en', keep = false } = {}) {
       localStorage.removeItem('sih-dialect')
       localStorage.setItem('sih-theme', 'light')
       localStorage.setItem('sih-textsize', 'md')
+      localStorage.setItem('sih-detail', 'detailed')
       sessionStorage.removeItem(${JSON.stringify(STORAGE_KEY)})
       return true
     })()`)

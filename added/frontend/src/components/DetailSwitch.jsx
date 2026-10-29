@@ -9,12 +9,14 @@ import { useI18n } from '../i18n/LanguageContext'
 // knows which sections those are.
 //
 // A choice nobody made is not stored: the key is written by a press, never on mount,
-// and a missing or unknown value reads as DEFAULT_DETAIL. That is Detailed, so a
-// reader who never finds the switch still sees the loan options, the scheme funding and
-// the written plan. To make Simple the default change DEFAULT_DETAIL and have every
-// browser verifier that seeds localStorage (tools/verify) seed 'detailed' instead.
+// and a missing or unknown value reads as DEFAULT_DETAIL. That is Simple, the owner's
+// call on 29 Oct 2026: the readers are mainly people who read little, and a page that
+// opens on the verdict and the next step serves them. The price is that a reader who
+// never presses Detailed does not see the loan options, the scheme funding, the
+// registrations or the local prices, so the note under the switch says there is more,
+// and every browser verifier that seeds localStorage (tools/verify) seeds 'detailed'.
 const STORAGE_KEY = 'sih-detail'
-const DEFAULT_DETAIL = 'detailed'
+const DEFAULT_DETAIL = 'simple'
 
 function readDetail() {
   try {

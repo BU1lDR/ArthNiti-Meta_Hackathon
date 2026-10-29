@@ -1,5 +1,5 @@
 diff --git a/tools/verify/mobile-audit.mjs b/tools/verify/mobile-audit.mjs
-index a6eb765..83e8a80 100644
+index a6eb765..e3ce681 100644
 --- a/tools/verify/mobile-audit.mjs
 +++ b/tools/verify/mobile-audit.mjs
 @@ -31 +31 @@
@@ -15,7 +15,9 @@ index a6eb765..83e8a80 100644
 +  // scheme-fit chart's labels), and a gate that fails for good gets ignored.
 +  // Widen `routes` as they are fixed.
 +  { name: '320-stress', width: 320, height: 640, theme: 'dark', textsize: 'lg', lang: 'ml', routes: ['/advisory', '/report'] },
-@@ -540,4 +549,3 @@ async function main() {
+@@ -533,0 +543 @@ async function main() {
++        localStorage.setItem('sih-detail', 'detailed');
+@@ -540,4 +550,3 @@ async function main() {
 -      const loads = [
 -        ...ROUTES.map((route) => ({ route, state: '' })),
 -        { route: '/finance', state: 'blocked' },

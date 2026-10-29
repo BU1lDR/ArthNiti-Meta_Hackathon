@@ -1,5 +1,5 @@
 diff --git a/tools/verify/drive.mjs b/tools/verify/drive.mjs
-index 864c305..25421d1 100644
+index 864c305..a4ff7ca 100644
 --- a/tools/verify/drive.mjs
 +++ b/tools/verify/drive.mjs
 @@ -23,2 +23,8 @@
@@ -96,12 +96,13 @@ index 864c305..25421d1 100644
 +    }
 +  })
 +})()`
-@@ -330,0 +416,29 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
+@@ -330,0 +416,30 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
 +
 +// --- the Simple / Detailed switch ---------------------------------------------------
 +// /analysis and /advisory carry a two-button switch (DetailSwitch), kept in localStorage
-+// as sih-detail. Detailed, the default, shows everything. Simple keeps the verdict and
-+// hides the sections the page marks ui-detail-only. display:none takes a section out of
++// as sih-detail. Simple, the default since 29 Oct 2026, keeps the verdict and hides the
++// sections the page marks ui-detail-only; Detailed shows everything, so every pass below
++// seeds it. display:none takes a section out of
 +// innerText, so a section that is hidden but still in the DOM counts as hidden here, and
 +// one that is shown does not. `keep` is text Simple must still print and `hide` text it
 +// must not, each a heading or a line its section owns. The text is #main's, so a link in
@@ -126,13 +127,13 @@ index 864c305..25421d1 100644
 +]
 +const DETAIL_KEYS = ['detail.label', 'detail.simple', 'detail.detailed', 'detail.simpleNote']
 +
-@@ -335 +449 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
+@@ -335 +450 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
 -for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS)]) {
 +for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS), 'rp.scheduleTitle', 'fs.title', 'fs.caption', ...BANDS.map((b) => `band.${b}`), 'band.basis', 'st.good', 'st.attention_needed', 'st.review', ...DETAIL_KEYS, ...DETAIL_PAGES.flatMap((p) => [...p.keep, ...p.hide])]) {
-@@ -361 +475 @@ const cardProbe = (names) => `(() => {
+@@ -361 +476 @@ const cardProbe = (names) => `(() => {
 -  const heads = [...document.querySelectorAll('h2, h3')]
 +  const heads = [...document.querySelectorAll('h2, h3')].filter((el) => !el.closest('[data-scheme-funding]'))
-@@ -371 +485,134 @@ const cardProbe = (names) => `(() => {
+@@ -371 +486,134 @@ const cardProbe = (names) => `(() => {
 -const ALL_ROUTES = ['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
 +// Runs in the page. /report draws the schedule of whichever loan its menu names and
 +// does no arithmetic, so this picks one the way a person does (the menu's own change
@@ -268,21 +269,21 @@ index 864c305..25421d1 100644
 +  }
 +})()`
 +const ALL_ROUTES =['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
-@@ -439 +686 @@ function textProblems(text, lang) {
+@@ -439 +687 @@ function textProblems(text, lang) {
 -    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed',
 +    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed', 'egg_price',
-@@ -452 +699,3 @@ function textProblems(text, lang) {
+@@ -452 +700,3 @@ function textProblems(text, lang) {
 -// case, language, routes. 8 passes, 41 page loads: 12 + 4 + 4 + 4 + 4 + 1 + 8 + 4.
 +// case, language, routes. 10 passes, 48 page loads: 12 + 4 + 4 + 4 + 4 + 4 + 1 + 8 + 4 + 3.
-+// None stores a Simple/Detailed choice, so every one reads the default, Detailed; the
++// Each seeds Detailed (the default is Simple), so it measures the whole page; the
 +// switch itself is checked after them, by checkDetail().
-@@ -458,0 +708 @@ const PASSES = [
+@@ -458,0 +709 @@ const PASSES = [
 +  ['green', 'en', RESULT_ROUTES],
-@@ -466,0 +717,3 @@ const PASSES = [
+@@ -466,0 +718,3 @@ const PASSES = [
 +  // A result stored before the compliance card, the scheme funding card and the
 +  // traffic light existed.
 +  ['old', 'en', ['/analysis', '/advisory', '/report']],
-@@ -586,0 +840,140 @@ async function loadPage(cdp, url) {
+@@ -586,0 +841,142 @@ async function loadPage(cdp, url) {
 +// Runs in the page: the switch as drawn, the mode on <html>, the stored choice, and the text.
 +const detailProbe = `(() => {
 +  const group = document.querySelector('.ui-detail-switch')
@@ -340,11 +341,12 @@ index 864c305..25421d1 100644
 +}
 +
 +// The Simple / Detailed check (see DETAIL_PAGES), run once after the passes, in English
-+// on good's answers. Per page: the refuters first (seeded Detailed, nothing stored, and a
-+// value the app does not know: all three must show everything, and the second must not
-+// store a choice nobody made), then Simple seeded, then the two buttons pressed in turn.
-+// The second page is also loaded cold with the first page's last choice, which is the
-+// choice carried between pages. Returns its loads, for report.json.
++// on good's answers. Per page: the refuters first (nothing stored, and a value the app
++// does not know: both must show Simple, and the first must not store a choice nobody
++// made), then Simple seeded, then Detailed seeded, then the two buttons pressed in turn,
++// Simple and then Detailed, so the page ends on a choice that is not the default. The
++// second page is loaded cold with that choice, which is the choice carried between pages
++// (it could not show as carried if it were the default). Returns its loads, for report.json.
 +async function checkDetail(cdp, deployerPatterns, findings) {
 +  const say = (key) => resultText('en', key)
 +  const noteText = say('detail.simpleNote').replace('{detailed}', say('detail.detailed'))
@@ -397,7 +399,17 @@ index 864c305..25421d1 100644
 +      if (!clicked) findings.push({ tag: `detail-${slug}-press`, problems: [`NO BUTTON "${say(key)}" TO PRESS`] })
 +    }
 +
-+    if (index > 0) await look('carried', 'simple', 'simple')
++    if (index > 0) await look('carried', 'detailed', 'detailed')
++
++    await setStore(null)
++    await look('default', 'simple', null)
++    await setStore('unknown')
++    await look('unknown-value', 'simple', 'unknown')
++
++    await setStore('simple')
++    const { tag } = await look('seeded-simple', 'simple', 'simple')
++    const shot = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true })
++    writeFileSync(`${OUT}/${tag}.png`, Buffer.from(shot.data, 'base64'))
 +
 +    await setStore('detailed')
 +    const { probe: full } = await look('seeded-detailed', 'detailed', 'detailed')
@@ -405,27 +417,18 @@ index 864c305..25421d1 100644
 +    if (notOnce.length) {
 +      throw new Error(`the Simple/Detailed check names text that ${page.route} does not print once as a line when it shows everything, so it cannot tell the sections apart: ${notOnce.map(([key, n]) => `${key} ("${say(key)}") ${n} times`).join(', ')}. Name other text in DETAIL_PAGES.`)
 +    }
-+    await setStore(null)
-+    await look('default', 'detailed', null)
-+    await setStore('unknown')
-+    await look('unknown-value', 'detailed', 'unknown')
-+
-+    await setStore('simple')
-+    const { tag } = await look('seeded-simple', 'simple', 'simple')
-+    const shot = await cdp.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true })
-+    writeFileSync(`${OUT}/${tag}.png`, Buffer.from(shot.data, 'base64'))
-+    await press('detail.detailed')
-+    await look('pressed-detailed', 'detailed', 'detailed', false)
 +    await press('detail.simple')
 +    await look('pressed-simple', 'simple', 'simple', false)
++    await press('detail.detailed')
++    await look('pressed-detailed', 'detailed', 'detailed', false)
 +  }
 +  await setStore(null)
 +  return seen
 +}
 +
-@@ -689,0 +1083 @@ async function main() {
-+        localStorage.removeItem('${DETAIL_KEY}');
-@@ -806 +1200,120 @@ async function main() {
+@@ -689,0 +1086 @@ async function main() {
++        localStorage.setItem('${DETAIL_KEY}', 'detailed');
+@@ -806 +1203,120 @@ async function main() {
 -        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, detailsOpened, problems })
 +        // The repayment schedule. Each loan's table on /report must equal the
 +        // response's own rows to the paisa, add up to the totals /advisory prints
@@ -547,19 +550,19 @@ index 864c305..25421d1 100644
 +        }
 +
 +        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, scheduleChecked, fundingChecked, complianceChecked, bandChecked, detailsOpened, problems })
-@@ -812,0 +1326,4 @@ async function main() {
+@@ -812,0 +1329,4 @@ async function main() {
 +            (scheduleChecked ? ` schedules=${scheduleChecked}` : '') +
 +            (fundingChecked ? ` funding=${fundingChecked}` : '') +
 +            (complianceChecked ? ` compliance=${complianceChecked}` : '') +
 +            (bandChecked ? ` band=${RESULTS[caseName].mvp_summary.band}` : '') +
-@@ -817,0 +1335,4 @@ async function main() {
-+    // The Simple / Detailed switch, after the passes: they run with no stored choice, which
-+    // is the default, so it must be Detailed or they would be measuring a shorter page.
+@@ -817,0 +1338,4 @@ async function main() {
++    // The Simple / Detailed switch, after the passes: they seed Detailed because the default
++    // is Simple and they would be measuring a shorter page.
 +    const detail = await checkDetail(cdp, deployerPatterns, findings)
 +
-@@ -824 +1345 @@ async function main() {
+@@ -824 +1348 @@ async function main() {
 -      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, findings }, null, 2),
 +      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, detail, findings }, null, 2),
-@@ -826 +1347 @@ async function main() {
+@@ -826 +1350 @@ async function main() {
 -    console.log(`\n${report.length} page loads plus the hydrate check, ${findings.length} with problems.`)
 +    console.log(`\n${report.length} page loads plus the hydrate check and ${detail.length} looks at the Simple/Detailed switch, ${findings.length} with problems.`)

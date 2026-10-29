@@ -1,0 +1,6 @@
+diff --git a/tools/verify/text-align.mjs b/tools/verify/text-align.mjs
+index 5d7c3cb..318a335 100644
+--- a/tools/verify/text-align.mjs
++++ b/tools/verify/text-align.mjs
+@@ -691,0 +692 @@ async function main() {
++            localStorage.setItem('sih-detail', 'detailed')

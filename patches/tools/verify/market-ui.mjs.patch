@@ -1,5 +1,5 @@
 diff --git a/tools/verify/market-ui.mjs b/tools/verify/market-ui.mjs
-index ac366a3..db5ba84 100644
+index ac366a3..e07c600 100644
 --- a/tools/verify/market-ui.mjs
 +++ b/tools/verify/market-ui.mjs
 @@ -25,0 +26,11 @@
@@ -289,13 +289,15 @@ index ac366a3..db5ba84 100644
 +      if (text.includes(stray)) add('EGG-STRAY', `"${stray.slice(0, 60)}…" printed on a page with no egg price`)
 +    }
 +  }
-@@ -1072 +1274,2 @@ async function main() {
+@@ -1067,0 +1270 @@ async function main() {
++          localStorage.setItem('sih-detail', 'detailed');
+@@ -1072 +1275,2 @@ async function main() {
 -        const headings = ROWS.map((row) => expectRow(row, lang).heading)
 +        const headings = SHOWN[caseName].map((row) => expectRow(row, lang).heading)
 +        const badHeadings = caseName === 'egg' ? BAD_EGG_ROWS.map((row) => expectRow(row, lang).heading) : []
-@@ -1110 +1313 @@ async function main() {
+@@ -1110 +1314 @@ async function main() {
 -          const got = await cdp.evaluate(probe({ headings, sourcesHeading }))
 +          const got = await cdp.evaluate(probe({ headings, badHeadings, sourcesHeading }))
-@@ -1131 +1334 @@ async function main() {
+@@ -1131 +1335 @@ async function main() {
 -              (caseName !== 'empty' ? ` cards=${got.cards.filter((c) => c.found).length}/${ROWS.length}` : '') +
 +              (caseName !== 'empty' ? ` cards=${got.cards.filter((c) => c.found).length}/${SHOWN[caseName].length}` : '') +

@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..e560bac 100644
+index d6ab002..e0304d5 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -114,7 +114,7 @@ index d6ab002..e560bac 100644
 +- **The prototype notice was removed at the owner's instruction (8 Sept)**; `manual-audit.mjs` fails if `.ui-prototype-pill` returns, and it does not come back without the owner. `mk.notEndorsed` is a different thing, a GODL-India licence condition, and stays with `common.disclaimer`, `common.schemesChecked`, the market attribution and `mk.warranty`. The demo-mode `notice.demo` lives only in `ShortNotice`.
 @@ -157 +174,2 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
 -- **The outbound government links were removed at the owner's instruction (10 Sept)** as a legal call. The schemes carry no `official_url`, and the tests assert that it is absent. `gen_schemes.py` keeps the URLs as internal citations only. Market attribution URLs print as plain text, never as `<a>`, and `market-ui.mjs` checks that. The only outbound links are the Fiduciary's own URLs on `/privacy`, which Rule 3 requires.
-+- **Simple or Detailed** (`DetailSwitch`, on `/analysis` and `/advisory` only) sets `<html data-detail>` and `localStorage['sih-detail']`, and `index.css` hides every `.ui-detail-only` section in `simple`: a page marks its detail and the switch knows no section. `DEFAULT_DETAIL` is `'detailed'`, and nothing is stored before a press. To make Simple the default, change it **and** make every browser verifier that seeds localStorage seed `'detailed'`. `drive` holds each page's keep and hide lists (`DETAIL_PAGES`).
++- **Simple or Detailed** (`DetailSwitch`, on `/analysis` and `/advisory` only) sets `<html data-detail>` and `localStorage['sih-detail']`, and `index.css` hides every `.ui-detail-only` section in `simple`: a page marks its detail and the switch knows no section. `DEFAULT_DETAIL` is `'simple'` (the owner's call, 29 Oct 2026: the readers read little), and nothing is stored before a press. Simple hides the loan options, scheme funding, registrations and local prices, so every browser verifier that seeds localStorage seeds `'detailed'` and the video presses Detailed once. `drive` holds each page's keep and hide lists (`DETAIL_PAGES`).
 +- **The outbound government links were removed at the owner's instruction (10 Sept)**, a legal call. Schemes carry no `official_url` (tests assert it); `gen_schemes.py` keeps the URLs as internal citations. Market attribution URLs print as plain text, never `<a>` (`market-ui.mjs` checks). The only outbound links are the Fiduciary's own URLs on `/privacy`, which Rule 3 requires.
 @@ -165 +183 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **`STORAGE_VERSION` is 4, and `READABLE_VERSIONS` is {1, 2, 3, 4}.** Bump the version whenever `EMPTY`'s shape changes. A bump that **renames or moves** a field must drop the older versions from the set.
@@ -190,7 +190,7 @@ index d6ab002..e560bac 100644
 +
 @@ -269 +293 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`.
-+- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`. `band` reads status and priority as a light: green is `good`, red is priority `high`, yellow is the rest. `ResultBand` only draws it (shape, word and colour, with the earlier mark as the fallback for a result stored before it existed), and the rule is the owner's to confirm.
++- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`. `band` reads status and priority as a light: green is `good`, red is priority `high`, yellow is the rest. `ResultBand` only draws it (shape, word and colour, with the earlier mark as the fallback for a result stored before it existed). The rule is the owner's own, confirmed 29 Oct 2026.
 @@ -285,6 +309 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Category matching:**
 -  - The test is **`if scheme_category in phrase`**: the scheme's word must be a substring of the user's phrase.

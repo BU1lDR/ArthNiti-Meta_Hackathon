@@ -1,0 +1,6 @@
+diff --git a/tools/verify/scroll-audit.mjs b/tools/verify/scroll-audit.mjs
+index c574245..58a5f27 100644
+--- a/tools/verify/scroll-audit.mjs
++++ b/tools/verify/scroll-audit.mjs
+@@ -566,0 +567 @@ async function main() {
++          localStorage.setItem('sih-detail', 'detailed')

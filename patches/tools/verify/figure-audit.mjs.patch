@@ -1,0 +1,6 @@
+diff --git a/tools/verify/figure-audit.mjs b/tools/verify/figure-audit.mjs
+index da63580..12891df 100644
+--- a/tools/verify/figure-audit.mjs
++++ b/tools/verify/figure-audit.mjs
+@@ -534,0 +535 @@ async function main() {
++            localStorage.setItem('sih-detail', 'detailed');

@@ -1,5 +1,5 @@
 diff --git a/tools/verify/lang-layout.mjs b/tools/verify/lang-layout.mjs
-index eebaa1a..4433c32 100644
+index eebaa1a..c1a67b7 100644
 --- a/tools/verify/lang-layout.mjs
 +++ b/tools/verify/lang-layout.mjs
 @@ -331,2 +331,4 @@ const PROBE = [
@@ -12,3 +12,5 @@ index eebaa1a..4433c32 100644
 @@ -338 +340 @@ const PROBE = [
 -  '    if (parent.closest(".ui-textsize")) continue',
 +  '    if (parent.closest(".ui-textsize, .ui-detail-switch")) continue',
+@@ -508,0 +511 @@ async function main() {
++          `localStorage.setItem('sih-detail', 'detailed');`,

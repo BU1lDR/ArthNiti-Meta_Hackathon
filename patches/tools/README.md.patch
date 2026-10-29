@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..1c6a646 100644
+index b8e7eb3..d65b22c 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -83,7 +83,7 @@ index b8e7eb3..1c6a646 100644
 @@ -550 +563 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 48 loads, in every pass that loads
-@@ -569,0 +583,171 @@ exited 0 with `neutralised` naming both.
+@@ -569,0 +583,193 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -204,15 +204,22 @@ index b8e7eb3..1c6a646 100644
 +
 +**Simple or Detailed.** `/analysis` and `/advisory` carry a `DetailSwitch`
 +(`components/DetailSwitch.jsx`): `<html data-detail>` and `localStorage['sih-detail']`,
-+and `index.css` hides every `.ui-detail-only` section in `simple`. One check runs after
-+the ten passes (`checkDetail`), in English on the `good` answers, and puts 13 looks in
-+`report.json` under `detail` (`{tag, route, want, chars, problems}`). A page's looks, in
-+order: `carried` (the second page only: loaded cold with the first page's last choice, so
-+it must already be Simple), `seeded-detailed`, `default` (nothing stored: must show
-+everything and must still store nothing, because the key is written by a press and never
-+on mount), `unknown-value` (the app does not know the stored value: Detailed again, and the
-+value is left as it was), `seeded-simple` (with a PNG), then the real buttons pressed in
-+turn, found by their words, `pressed-detailed` and `pressed-simple`. A look wants
++and `index.css` hides every `.ui-detail-only` section in `simple`. The page opens in Simple
++(the owner's call, 29 Oct 2026), so a verifier that has to see the loan options, the scheme
++funding, the registrations or the local prices seeds `'detailed'`: the ten passes of
++`drive` and the nine other verifiers that visit those pages do, beside their `sih-textsize`
++seed. A pass that does not shows `LOAN TOTAL NOT TO THE PAISA` for options it cannot see.
++One check runs after the ten passes (`checkDetail`), in English on the `good` answers, and
++puts 13 looks in `report.json` under `detail` (`{tag, route, want, chars, problems}`). A
++page's looks, in order: `carried` (the second page only: loaded cold with the first page's
++last choice, which is a press of Detailed, so it must already be Detailed), `default`
++(nothing stored: must be Simple and must still store nothing, because the key is written
++by a press and never on mount), `unknown-value` (the app does not know the stored value:
++Simple again, and the value is left as it was), `seeded-simple` (with a PNG),
++`seeded-detailed`, then the real buttons pressed in turn, found by their words,
++`pressed-simple` and `pressed-detailed`. Each page ends on a Detailed press on purpose:
++with Simple as the default, a `carried` look that wanted Simple would pass on a page that
++ignored the store. A look wants
 +`data-detail` to match (`MODE`); a `role="group"` named by the visible label
 +(`SWITCH MISSING`, `SWITCH ROLE`, `SWITCH NAME`, `SWITCH LABEL NOT ON SCREEN`); the two
 +buttons in the order Simple, Detailed (`SWITCH BUTTONS`) with `aria-pressed` on the one in
@@ -228,10 +235,12 @@ index b8e7eb3..1c6a646 100644
 +exactly once with everything shown cannot tell one section from another, so `checkDetail`
 +throws, naming every one: that is exit 2, not a finding. The check leaves `sih-detail`
 +removed, because `drive`'s Edge profile outlives the run.
-+Measured on 29 Oct 2026: written first, against the page without the switch, it exited 1
-+with 17 findings (13 looks, and the 4 buttons it could not press). On the finished switch
-+it exits 0 with 13 looks and 48 loads. Defects planted in the component, the pages and the
-+stylesheet, then undone with `cp` and a `sha256` check, each exited 1. Four together:
++Measured on 29 Oct 2026, first with Detailed as the default (every count down to the
++`print-audit` result belongs to that design and was not repeated): written first, against
++the page without the switch, it exited 1 with 17 findings (13 looks, and the 4 buttons it
++could not press). On the finished switch it exited 0 with 13 looks and 48 loads. Defects planted in
++the component, the pages and the stylesheet, then undone with `cp` and a `sha256` check,
++each exited 1. Four together:
 +the choice written on mount, the observations section unmarked, the next-step section
 +marked as detail and the pressed state swapped gave `SWITCH PRESSED` on all 13 looks,
 +`STORED` on the 4 `default` and `unknown-value` looks, `GONE IN SIMPLE` ("What you can do
@@ -244,6 +253,19 @@ index b8e7eb3..1c6a646 100644
 +is still laid out under media:print` once the print block stops hiding the switch (a first
 +attempt, which renamed the selector, exited 2: the block then hid a class CHROME does not
 +list, which is the probe's own fault check working).
++The owner then ordered Simple as the default (29 Oct 2026). On the finished tree `drive`
++exits 0 with 13 looks, none with a problem, and 48 loads. Three defects planted in
++`DetailSwitch.jsx`, each undone with `cp` and a `sha256` check: (A) `DEFAULT_DETAIL` put
++back to `'detailed'` exits 1 with exactly 4 looks failing, `default` and `unknown-value` on
++both pages (`MODE`, `SWITCH PRESSED`, `STILL SHOWN IN SIMPLE` for 6 names on `/analysis`
++and 5 on `/advisory`, `SIMPLE NOTE MISSING`). (B) The stored value ignored altogether, and
++(C) the stored value read on `/analysis` only, each exit 2 and not 1: 5 loads of
++`/advisory` in the passes fail on `LOAN TOTAL NOT TO THE PAISA` (the options are hidden in
++Simple), then `seeded-detailed` fails (on `/analysis` for B; for C `carried` on
++`/advisory` is the first look to fail, then `seeded-detailed` there), and then the proof
++that each name is printed once with everything shown throws, because no look can reach
++Detailed any more. The FAIL lines before the throw are the evidence, and a thrown fault
++leaves no `report.json`.
 +Two other gates found the switch on its first full run, and `drive` could not have:
 +`mobile-audit` (`320-stress_advisory`, `CLIP`: in Malayalam at 320 px and the largest text
 +the row was 307 px in a 296 px box, because the two padded segments could not shrink) and
@@ -255,7 +277,7 @@ index b8e7eb3..1c6a646 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +765,6 @@ correct app.
+@@ -581,2 +787,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -264,10 +286,10 @@ index b8e7eb3..1c6a646 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -735 +923 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -735 +945 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +934,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +956,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -281,7 +303,7 @@ index b8e7eb3..1c6a646 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1018,106 @@ is still slow or unbounded" above).
+@@ -817 +1040,106 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -389,11 +411,11 @@ index b8e7eb3..1c6a646 100644
 +after a failed request the consent tick stays ticked (observed, not pinned).
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1130 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1152 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1133 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1155 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1163,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1185,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -403,7 +425,7 @@ index b8e7eb3..1c6a646 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1177,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1199,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -421,21 +443,21 @@ index b8e7eb3..1c6a646 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -867 +1195 @@ a script to run.
+@@ -867 +1217 @@ a script to run.
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1226,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1248,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui` and `talk-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1242 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1264 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379 — plus `assetgen` 9377
-@@ -941 +1269 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1291 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -948 +1276,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1298,2 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exception is `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added.

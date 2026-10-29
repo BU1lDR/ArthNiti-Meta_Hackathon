@@ -125,13 +125,17 @@
     "tools/market-crosswalk.json",
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
+    "tools/verify/figure-audit.mjs",
     "tools/verify/hero-vibrance.mjs",
     "tools/verify/lang-layout.mjs",
     "tools/verify/market-lib-test.mjs",
     "tools/verify/market-ui.mjs",
     "tools/verify/mobile-audit.mjs",
+    "tools/verify/motion-audit.mjs",
     "tools/verify/print-audit.mjs",
-    "tools/verify/refresh-cases.mjs"
+    "tools/verify/refresh-cases.mjs",
+    "tools/verify/scroll-audit.mjs",
+    "tools/verify/text-align.mjs"
   ],
   "removed": [
     "OUR_MVP.md",
@@ -139,7 +143,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "e04d85bc4b37f2f28c359c802c7f020c2e456ae2",
-    "tree": "f47d192cfbf88279a28c909a2303490ac081b41e"
+    "devCommit": "7fdb08c18141a5a47d09b24e8dbbdbb6d056cc27",
+    "tree": "8f5a5f8d3c4a8d14fc9ef703eb1747c46e50204e"
   }
 }

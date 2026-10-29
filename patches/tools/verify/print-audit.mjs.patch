@@ -1,5 +1,5 @@
 diff --git a/tools/verify/print-audit.mjs b/tools/verify/print-audit.mjs
-index 9757da7..15d4bbe 100644
+index 9757da7..50d92ff 100644
 --- a/tools/verify/print-audit.mjs
 +++ b/tools/verify/print-audit.mjs
 @@ -356 +356 @@ const CHROME = [
@@ -8,3 +8,5 @@ index 9757da7..15d4bbe 100644
 @@ -621 +621 @@ const BREAK_AVOID = [
 -  '.ui-formsection', '.ui-notice', '.ui-bar-row', '.ui-unit-chart',
 +  '.ui-formsection', '.ui-notice', '.ui-band', '.ui-bar-row', '.ui-unit-chart',
+@@ -773,0 +774 @@ async function main() {
++        localStorage.setItem('sih-detail', 'detailed');

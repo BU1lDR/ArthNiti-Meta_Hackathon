@@ -1,0 +1,6 @@
+diff --git a/tools/verify/motion-audit.mjs b/tools/verify/motion-audit.mjs
+index ee7f09c..c9865a0 100644
+--- a/tools/verify/motion-audit.mjs
++++ b/tools/verify/motion-audit.mjs
+@@ -619,0 +620 @@ async function main() {
++      localStorage.setItem('sih-detail', 'detailed');
