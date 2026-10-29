@@ -29,6 +29,7 @@
     "backend/tests/test_spend_cap.py",
     "backend/tests/test_structuring_service.py",
     "backend/tests/test_talk_fake_backend.py",
+    "docs/HINDI_REVIEW.md",
     "frontend/public/hero-backdrop.svg",
     "frontend/src/audio/record.js",
     "frontend/src/audio/wav.js",
@@ -138,7 +139,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "51c605adb95c156db73e6af8d322bc8996da7e90",
-    "tree": "fc086f04d43bcddf1bbc1eabdef6e5374c6f6593"
+    "devCommit": "e04d85bc4b37f2f28c359c802c7f020c2e456ae2",
+    "tree": "f47d192cfbf88279a28c909a2303490ac081b41e"
   }
 }
