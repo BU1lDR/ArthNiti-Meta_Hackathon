@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..0de0858 100644
+index d6ab002..cdd32f0 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -17,3 +17,3 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
@@ -261,7 +261,7 @@ index d6ab002..0de0858 100644
 +**Meta helper** (the full list is `docs/HACKATHON.md` §8): the owner ran `python -m app.smoke_meta` and `--plan` on 27 Oct 2026: the key works, and both plans passed the checks first time at about 1.1 to 1.2 cents each (`PROCESSOR_SCHEDULE.md` §10.7). Not observed: the speech `keywords`, a real person's speech and the Billing balance since `--plan`. **The plan card has been driven in a browser only against the fake model** (`talk-ui` S16–S22). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
 @@ -417 +434 @@ Also open, stated where they apply: the household definition, market coverage, d
 -**Legal:** the earlier team's written permission (before the submission) and IP assignments (before any sale).
-+**Legal:** `LICENSE` became MIT on 29 Oct 2026. The owner states that Manjeet and Netra agree; nothing from either is on file, and a line from each is the safe step. Outside the licence: the NECC egg prices (an e-mail agreement) and `hero-backdrop.jpeg` (no source). The Official Rules are behind a login and unread.
++**Legal:** `LICENSE` became MIT on 29 Oct 2026. The owner states that Manjeet and Netra agree; nothing from either is on file, and a line from each is the safe step. Outside the licence: the NECC egg prices (an e-mail agreement) and `hero-backdrop.jpeg` (no source). The owner confirmed the Official Rules and the NECC use on 29 Oct 2026; it is their word, nothing is on file, and what the NECC message covered is not recorded.
 @@ -426 +442,0 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- `tools/notice-version.json` is untracked; commit it with `notice.js`.
 @@ -433,4 +449,4 @@ Also open, stated where they apply: the household definition, market coverage, d
