@@ -1,8 +1,16 @@
 diff --git a/frontend/src/i18n/backendText.js b/frontend/src/i18n/backendText.js
-index 7fe1eb5..bf31863 100644
+index 7fe1eb5..e9aa344 100644
 --- a/frontend/src/i18n/backendText.js
 +++ b/frontend/src/i18n/backendText.js
-@@ -231,0 +232,4 @@ export function useBackendText() {
+@@ -1,0 +2 @@ import { useI18n } from './LanguageContext'
++import { amountLine } from './adviceAmount'
+@@ -180,0 +182,5 @@ export function useBackendText() {
++    // The number beside the sentence whose translation code is `code`: a piece of
++    // advice, or the next step. '' when the rules gave it none, so a caller can
++    // gate on the result and draw nothing. `money` is the page's own formatter.
++    adviceAmount: (advisory, code, money) => amountLine(advisory?.amounts?.[code], t, money),
++
+@@ -231,0 +238,4 @@ export function useBackendText() {
 +    // The few eligibility lines worth checking before the trip (gen_schemes.CHECK_FIRST):
 +    // a subset of the list above, with the same codes, so it needs no key of its own.
 +    schemeCheckFirst: (scheme) => tBackendEach(scheme?.check_first_codes, scheme?.check_first),

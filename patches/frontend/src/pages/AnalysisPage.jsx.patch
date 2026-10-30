@@ -1,5 +1,5 @@
 diff --git a/frontend/src/pages/AnalysisPage.jsx b/frontend/src/pages/AnalysisPage.jsx
-index 4590df9..fae250f 100644
+index 4590df9..275e118 100644
 --- a/frontend/src/pages/AnalysisPage.jsx
 +++ b/frontend/src/pages/AnalysisPage.jsx
 @@ -5,0 +6 @@ import { schemeFitItems } from '../components/chartData'
@@ -11,12 +11,18 @@ index 4590df9..fae250f 100644
 @@ -57 +61 @@ function AnalysisPage() {
 -  const market = Array.isArray(result.market_context) ? result.market_context : []
 +  const market = drawableMarketRows(Array.isArray(result.market_context) ? result.market_context : [])
-@@ -88,0 +93 @@ function AnalysisPage() {
+@@ -88,0 +93,7 @@ function AnalysisPage() {
 +  const nextSentence = bt.nextStep(summary) || t('an.nextSub')
-@@ -205,0 +211,2 @@ function AnalysisPage() {
++  // The number beside a sentence, when the rules gave it one (advisory.amounts,
++  // keyed by the sentence's code). '' when they did not, and for a result stored
++  // before the amounts existed.
++  const amountFor = (code) => bt.adviceAmount(advisory, code, (value) => formatCurrency(value, t))
++  const nextAmount = amountFor(summary.next_step_code)
++  const recommendationAmounts = recommendations.map((_, index) => amountFor(advisory.recommendation_codes?.[index]))
+@@ -205,0 +217,2 @@ function AnalysisPage() {
 +      <DetailSwitch />
 +
-@@ -209,6 +216,10 @@ function AnalysisPage() {
+@@ -209,6 +222,10 @@ function AnalysisPage() {
 -            <div className="flex min-w-0 flex-wrap items-center gap-3">
 -              <span className="text-3xl" aria-hidden="true">{isPositive ? '✅' : '⚠️'}</span>
 -              <span className={`inline-flex rounded-full border px-3 py-1 text-sm font-bold ${isPositive ? 'border-[var(--color-primary)] bg-[var(--color-surface-soft)] text-[var(--color-primary-strong)]' : 'border-[var(--color-accent)] bg-[var(--color-accent)]/20 text-[var(--color-text)]'}`}>
@@ -33,33 +39,44 @@ index 4590df9..fae250f 100644
 +                </span>
 +              </div>
 +            </ResultBand>
-@@ -222 +233 @@ function AnalysisPage() {
+@@ -222 +239 @@ function AnalysisPage() {
 -              {bt.nextStep(summary) || t('an.nextSub')}
 +              {nextSentence}
-@@ -223,0 +235 @@ function AnalysisPage() {
+@@ -223,0 +241,2 @@ function AnalysisPage() {
++            {nextAmount && <p className="ui-advice-amount max-w-3xl">{nextAmount}</p>}
 +            <ReadAloud band={summary.band} lines={[headline, nextSentence]} />
-@@ -265 +277 @@ function AnalysisPage() {
+@@ -265 +284 @@ function AnalysisPage() {
 -      <section className="mt-8 grid gap-6 lg:grid-cols-2">
 +      <section className="ui-detail-only mt-8 grid gap-6 lg:grid-cols-2">
-@@ -373 +385 @@ function AnalysisPage() {
+@@ -373 +392 @@ function AnalysisPage() {
 -      <section className="ui-card mt-6 p-5 sm:p-8">
 +      <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -389 +401 @@ function AnalysisPage() {
+@@ -389 +408 @@ function AnalysisPage() {
 -      <details className="ui-disclosure mt-6">
 +      <details className="ui-disclosure ui-detail-only mt-6">
-@@ -416 +428 @@ function AnalysisPage() {
+@@ -416 +435 @@ function AnalysisPage() {
 -        <section className="ui-card mt-6 p-5 sm:p-8">
 +        <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -452 +464 @@ function AnalysisPage() {
+@@ -441,3 +460,6 @@ function AnalysisPage() {
+-                <p className="min-w-0 flex-1 break-words text-sm leading-6 text-[var(--color-text)]">
+-                  {typeof recommendation === 'string' ? recommendation : JSON.stringify(recommendation)}
+-                </p>
++                <div className="min-w-0 flex-1">
++                  <p className="break-words text-sm leading-6 text-[var(--color-text)]">
++                    {typeof recommendation === 'string' ? recommendation : JSON.stringify(recommendation)}
++                  </p>
++                  {recommendationAmounts[index] && <p className="ui-advice-amount">{recommendationAmounts[index]}</p>}
++                </div>
+@@ -452 +474 @@ function AnalysisPage() {
 -      <section className="ui-card mt-6 p-5 sm:p-8">
 +      <section className="ui-card ui-detail-only mt-6 p-5 sm:p-8">
-@@ -620,0 +633 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -620,0 +643 @@ function MarketCard({ row, marketType, t, bt }) {
 +  const isEgg = isEggRow(row)
-@@ -626,0 +640,3 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -626,0 +650,3 @@ function MarketCard({ row, marketType, t, bt }) {
 +  // The sentence that says whose price it is names the centre and the date, so it
 +  // is all of them or nothing, the same as the window sentence above.
 +  const kindKey = row.centre && row.last_reported ? eggKindKey(row) : null
-@@ -666,0 +683,25 @@ function MarketCard({ row, marketType, t, bt }) {
+@@ -666,0 +693,25 @@ function MarketCard({ row, marketType, t, bt }) {
 +      {/* The price of ONE egg, which is not a price per kg: none of the mandi
 +          sentences above (the per-kg label, the 30-day window, the market count)
 +          is printed here. The kind sentence says whose price it is, NECC's
@@ -85,12 +102,12 @@ index 4590df9..fae250f 100644
 +        </div>
 +      )}
 +
-@@ -722,3 +763 @@ function MarketSources({ rows, t }) {
+@@ -722,3 +773 @@ function MarketSources({ rows, t }) {
 -  const attributions = [...new Set(
 -    rows.map((row) => row.provenance?.attribution).filter((text) => typeof text === 'string' && text.trim()),
 -  )]
 +  const { attributions, clarifications, hasEgg, hasOther } = marketSourceFacts(rows)
-@@ -731,0 +771,11 @@ function MarketSources({ rows, t }) {
+@@ -731,0 +781,11 @@ function MarketSources({ rows, t }) {
 +      {/* NECC allows its prices to be passed on only with its own clarification, in
 +          its own words, so it is printed whole, once, in English, and marked as
 +          English like the attribution. Plain text, never inside a <details>. */}
@@ -102,12 +119,12 @@ index 4590df9..fae250f 100644
 +          ))}
 +        </>
 +      )}
-@@ -733 +783,4 @@ function MarketSources({ rows, t }) {
+@@ -733 +793,4 @@ function MarketSources({ rows, t }) {
 -      <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>
 +      {/* The government open-data warranty is true of the mandi and Udyam rows and
 +          false of NECC's, which has a warranty sentence of its own. */}
 +      {hasOther && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.warranty')}</p>}
 +      {hasEgg && <p className="mt-1 break-words text-xs leading-5 text-[var(--color-text-muted)]">{t('mk.eggWarranty')}</p>}
-@@ -913 +966 @@ const CHOICE_KEYS = {
+@@ -913 +976 @@ const CHOICE_KEYS = {
 -  agriculture: 'cat.agriculture', dairy: 'cat.dairy', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',
 +  agriculture: 'cat.agriculture', dairy: 'cat.dairy', poultry: 'cat.poultry', services: 'cat.services', manufacturing: 'cat.manufacturing', other: 'cat.other',

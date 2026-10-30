@@ -1,5 +1,5 @@
 diff --git a/frontend/src/index.css b/frontend/src/index.css
-index d73114b..2868500 100644
+index d73114b..89e723e 100644
 --- a/frontend/src/index.css
 +++ b/frontend/src/index.css
 @@ -102,8 +102,10 @@
@@ -304,9 +304,24 @@ index d73114b..2868500 100644
 -  flex: 0 0 auto;
 +  flex: 0 1 auto;
 +  min-width: 0;
-@@ -2199 +2363,2 @@ summary:focus-visible {
+@@ -1714,0 +1879,14 @@ summary:focus-visible {
++/* The number beside a piece of advice (advisory.amounts): a plain line under the
++   sentence it belongs to, set off by a rule so it reads as the working and not as
++   one more piece of advice. rem, so it follows the text-size control. The margin is
++   here and not a utility, because an unlayered rule beats a utility's. */
++.ui-advice-amount {
++  margin: 8px 0 0;
++  padding-inline-start: 12px;
++  border-inline-start: 3px solid var(--color-accent);
++  color: var(--color-text);
++  font-size: 0.875rem;
++  line-height: 1.6;
++  overflow-wrap: anywhere;
++}
++
+@@ -2199 +2377,2 @@ summary:focus-visible {
 -  .ui-manual-overlay {
 +  .ui-manual-overlay,
 +  .ui-detail {
-@@ -2216,0 +2382 @@ summary:focus-visible {
+@@ -2216,0 +2396 @@ summary:focus-visible {
 +  .ui-band,

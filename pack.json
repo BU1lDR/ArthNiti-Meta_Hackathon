@@ -49,11 +49,13 @@
     "frontend/src/data/marketRows.js",
     "frontend/src/data/planShape.js",
     "frontend/src/data/talkAnswers.js",
+    "frontend/src/i18n/adviceAmount.js",
     "frontend/src/pages/TalkPage.jsx",
     "tools/fetch-necc-prices.mjs",
     "tools/make-hero-backdrop.mjs",
     "tools/necc-crosswalk.json",
     "tools/necc-lib.mjs",
+    "tools/verify/amount-lib-test.mjs",
     "tools/verify/app-state-test.mjs",
     "tools/verify/necc-lib-test.mjs",
     "tools/verify/read-aloud.mjs",
@@ -159,7 +161,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "fe47ec7411974936de50378cf5749aa2be625e00",
-    "tree": "8222bc522c4c29ffc9154dbd439f198351f8e8cb"
+    "devCommit": "80cdb27066feacd46c3f9393c4ec0411bf3dec5d",
+    "tree": "419b71510ece3e68cf42ab1b99ee52793d778d70"
   }
 }
