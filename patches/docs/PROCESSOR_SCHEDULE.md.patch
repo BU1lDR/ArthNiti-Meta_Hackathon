@@ -1,5 +1,5 @@
 diff --git a/docs/PROCESSOR_SCHEDULE.md b/docs/PROCESSOR_SCHEDULE.md
-index ff0c0ca..96027cf 100644
+index ff0c0ca..b03e7a1 100644
 --- a/docs/PROCESSOR_SCHEDULE.md
 +++ b/docs/PROCESSOR_SCHEDULE.md
 @@ -5 +5 @@ This is the technical schedule for an organisation that runs अर्थNiti fo
@@ -12,7 +12,7 @@ index ff0c0ca..96027cf 100644
 -The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. The frontend makes no other network request, and it loads no third-party font, script, stylesheet or CDN asset. Exactly 12 answers are sent:
 +The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. With the helper off, the frontend makes no other network request. With it on, the `/talk` page also calls the backend's two intake routes (§10), still at `VITE_API_BASE_URL`: the browser contacts no other address. The frontend loads no third-party font, script, stylesheet or CDN asset in either case. Exactly 12 answers are sent:
 @@ -83,0 +84,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
-+The **Listen button** on `/analysis` and `/advisory` (`frontend/src/components/ReadAloud.jsx`, `frontend/src/audio/speak.js`) sends nothing, and the app makes no request for it. A press reads out sentences already on the page, with the browser's own speech engine: the light's word, the note under it and two sentences of the page, and a sentence with a digit in it is left out. Only a voice that the browser reports as running on the device (`localService`) is used. A voice reached over the network would send the sentence to a speech service this schedule does not list, so where the device has no such voice for the page's language the button is not drawn. The app relies on the browser's own `localService` flag and cannot check it. There is no setting that turns the button off; a deployer who wants it gone removes `ReadAloud` from the two pages. On Windows Edge on 29 Oct 2026 every voice listed was a network voice, so the button did not appear there.
++The **Listen button** on `/analysis` and `/advisory` (`frontend/src/components/ReadAloud.jsx`, `frontend/src/audio/speak.js`) sends nothing, and the app makes no request for it. A press reads out sentences already on the page, with the browser's own speech engine: the light's word, the note under it and two sentences of the page, and a sentence with a digit in it is left out. Only a voice that the browser reports as running on the device (`localService`) is used. A voice reached over the network would send the sentence to a speech service this schedule does not list, so where the device has no such voice for the page's language the button is not drawn. The app relies on the browser's own `localService` flag and cannot check it. There is no setting that turns the button off; a deployer who wants it gone removes `ReadAloud` from the two pages. On Windows Edge on 29 Oct 2026 every voice listed was a network voice, so the button did not appear there. The question voice on `/talk` is the one exception and does use a network voice when the device has none (§10.2).
 +
 @@ -88,2 +90,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
 -| Browser `sessionStorage`, key `sih-application` | every answer, the ones never sent included, and the last result, as `{v: 4, data}` | until **Start over** is pressed, or the tab is closed. It survives a page refresh. A browser that restores tabs after a restart may restore it too. | anyone using that tab on that device |
@@ -66,7 +66,7 @@ index ff0c0ca..96027cf 100644
 -- whether the processor has direct duties, or only duties through the contract. s. 8(1) puts responsibility on the Fiduciary, but Rule 6(1) and Rule 8(3) Case 2 reach the processor.
 +- whether the processor has direct duties, or only duties through the contract. s. 8(1) puts responsibility on the Fiduciary, but Rule 6(1) and Rule 8(3) Case 2 reach the processor;
 +- if the AI helper is switched on (§10): Meta as a further processor of what a person says or types, sent outside India; the term in Meta's free-credit programme that lets Meta use that content to improve its products; and whether the helper needs its own consent text, since the versioned notice does not mention it (§10.5, §10.6).
-@@ -460,0 +478,120 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
+@@ -460,0 +478,124 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
 +- **The helper's wording is outside the versioned notice, and `/privacy` does not mention the helper** (§10.5).
 +- **The helper's two routes have no sign-in, no server-side consent record and no limit per person** (§10.5, §10.7).
 +
@@ -78,7 +78,7 @@ index ff0c0ca..96027cf 100644
 +
 +### 10.1 What it is
 +
-+The `/talk` page lets a person say or type a few sentences about their business instead of answering the form's questions one at a time. It makes two calls, both through this backend:
++The `/talk` page asks the form's questions one at a time instead of showing the whole form. It begins with one open question, which the person can answer or skip, then asks the twelve form questions in the form's order, each with its number. The person answers by speaking or typing. The page shows what it found in the reply, with the person's own words beside each answer, and asks whether it is right before anything goes into the form; the person can say a reply again or skip a question. A spoken reply makes two calls and a typed one only the second, both through this backend:
 +
 +1. **Speech to words:** `POST /api/intake/transcribe?language=<code>`. The backend sends the recording to Meta's speech model (`muse-voice-transcribe-1.0` by default) and returns the words.
 +2. **Words to candidate answers:** `POST /api/intake/extract`. The backend sends the words to Meta's language model (`muse-spark-1.3` by default) and asks for the form answers it can find in them.
@@ -87,7 +87,7 @@ index ff0c0ca..96027cf 100644
 +
 +3. **Wording for a plan:** `POST /api/advisor/plan`. The backend runs the analysis again from the answers, sends Meta's language model a description of the result with no figure, state, district or name in it (§10.2), and gets back wording with `{{blanks}}` where the figures belong. The server puts the rules' own figures and scheme names into the blanks. It refuses a reply with a digit in any script, a number written as a word, a link, an abbreviation, a symbol, the wrong script or a blank it was not given, tries once more with the reasons, and otherwise answers 502 and shows no plan. The card labels the plan as AI-written. **No code checks that a plan is wise, or that a non-English plan is good Marathi or good Tamil.** A scheme's name inside it is the English name from the scheme file.
 +
-+The helper computes no figure and writes no advice. The result, the schemes and the advice come from the same fixed rules as when the answers are typed; the plan only words what the rules already decided. It does not look for the name or the business name, which stay in the tab (§2.3).
++The helper computes no figure and writes no advice. The result, the schemes and the advice come from the same fixed rules as when the answers are typed; the plan only words what the rules already decided. It does not look for the name or the business name, which stay in the tab (§2.3); the person still types them on the profile page after the questions.
 +
 +The server keeps an answer from the model only if all of these hold:
 +
@@ -116,6 +116,8 @@ index ff0c0ca..96027cf 100644
 +| Plan | one message of our fixed instructions, which names the language to write in and lists the blanks the plan may use, each with a fixed meaning (a scheme blank says who runs the scheme and what kind of help it gives, never its name). One message holding: the kind of business, as one word from our own list and never what the person typed; whether it is in a village, a small town or a city; the rules' verdicts, as fixed sentences; and the rules' own advice sentences, with any sentence that holds a digit left out. On a second try, a fixed hint for each check the last reply failed. A fixed JSON schema for the reply. The model name, `reasoning_effort` set to `low`, a cap of 8,000 output tokens (the model's reasoning counts against it) and a `prompt_cache_key` of `business_plan` |
 +
 +Nothing else is sent: not the other answers, not the name, not the consent record and not the person's IP address. The plan call sends no figure, no state or district, no scheme name and nothing the person typed. **For the speech and words calls, the person can say or type anything.** The page asks them not to say a name, phone number or bank details (`talk.sendsText`), and nothing checks that they do not.
++
++**The page also reads each question aloud, and that does not go to Meta.** Once the consent box is ticked, the page reads the question on the screen with the browser's own speech engine (`frontend/src/audio/useQuestionVoice.js`, `speak.js`). A button on the question stops it and reads it again, and unticking the box or leaving the page cuts it off. What is read is the page's own fixed wording in the page's language, never the person's words, an answer or a figure. A voice running on the device is chosen first. **If the device has none for the language, the page uses a voice the browser reaches over the network, which sends the question's sentence to the browser maker's speech service.** That service is not in this schedule's list of processors, and the app cannot see what the browser sends along with the sentence (at least the device's address). This differs on purpose from the Listen button (§2), which refuses a network voice because it reads out a person's result. There is no setting for the question voice alone: a deployer who does not accept it removes `useQuestionVoice` from `TalkPage.jsx`.
 +
 +### 10.3 What is held
 +
@@ -147,6 +149,7 @@ index ff0c0ca..96027cf 100644
 +- The `/talk` wording (`talk.*` in `resultStrings.js`) is **outside the versioned notice** (`NOTICE_KEYS`). Editing it does not change `NOTICE_VERSION`.
 +- **`/privacy` does not mention the helper.** A deployer who switches the helper on has to add that and bump `NOTICE_VERSION` (§5.4).
 +- The plan card on `/advisory` has its own box, kept in page memory only and unticked again after every plan. The plan route refuses (422) a request whose `send_to_meta` is not a real `true`; it cannot tell whether a person ticked a box or a script set the field.
++- Skipping a question, answering "Yes, that is right" and "No, I will say it again" send nothing and need no tick; only a recording or a look at the words (a question's reply, or **Find my answers**) does. Reading the question aloud starts when the box is ticked, so a person who never ticks it hears nothing.
 +- The three routes take and keep **no consent record**, so the server cannot tell whether a box was ticked. They do not see the age box either.
 +- The seven non-English `talk.*` sets, including the sentence about Meta, have not been reviewed by a native speaker (§9.1). The same holds for the `plan.*` sets, which include the sentence that says what the plan card sends.
 +- The `plan.*` wording is also outside the versioned notice.
@@ -178,6 +181,7 @@ index ff0c0ca..96027cf 100644
 +### 10.8 Before switching it on
 +
 +- [ ] The lawyer has answered §10.5 and §10.6.
++- [ ] The question voice's use of a network voice (§10.2) is accepted, or `useQuestionVoice` is removed from `TalkPage.jsx`.
 +- [ ] `MODEL_API_KEY` is in the server's environment only: never in a `VITE_*` variable, a file in the repository or a command line. Type it with `read -rs MODEL_API_KEY` and not `export MODEL_API_KEY=…`, so it does not land in the shell history.
 +- [ ] `ARTHNITI_AI_SPEND_CAP_USD` is an amount the deployer can afford to lose, and `ARTHNITI_AI_SPEND_FILE` is an absolute path on a disk that survives a restart.
 +- [ ] uvicorn runs with `--no-access-log` (§3.3).
