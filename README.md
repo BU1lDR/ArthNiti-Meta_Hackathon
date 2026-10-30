@@ -9,7 +9,7 @@ Demo video: _link added when submitted_
 
 ## What is in this repository
 
-Only the work done during the event, from its start on Mon 26 Oct 2026, 12:00 PM ET:
+The work done during the event, counted from 12:24 PM ET on Mon 26 Oct 2026, when the kickoff ended and, by the organisers' reply, building started. A few edits made in the 24 minutes before that are still in the patches ("One overlap", below):
 
 - `added/`: the files the event created, in full;
 - `patches/`: one patch for each earlier file the event changed;
@@ -19,7 +19,7 @@ That is 51 new files, 83 patches and 3 deletions. The earlier code and its git h
 
 The patches carry no surrounding lines of earlier code, only the lines the event added and the lines it replaced, and the replaced lines show up as removed lines. Two patches are larger than the work behind them. `patches/LICENSE.patch` swaps the earlier proprietary licence for the MIT licence. `patches/CLAUDE.md.patch` mostly deletes older text, and `added/docs/BUSINESS_RULES.md` is that older text moved out of `CLAUDE.md` (the formulas and dataset notes), not new content.
 
-This layout follows the reply the author received in the hackathon's Discord on 30 Oct 2026 to a question about entering a project that began before the event: it can be eligible if the submitted repository is a fresh public one, created on 26 Oct or later, that holds only work done during the event, and the earlier code stays in a separate repository that the README names and explains.
+This layout follows the replies the author received in the hackathon's Discord on 30 Oct 2026 to questions about entering a project that began before the event: it can be eligible if the submitted repository is a fresh public one, created on 26 Oct or later, that holds only work done during the event, and the earlier code stays in a separate repository that the README names and explains. The same replies put the start of building at 12:24 PM ET and say the event code must run on its own from the setup instructions in this README, which are the Setup sections below. The author has asked the organisers whether rebuilding the app from a pinned commit of the earlier repository meets that; `app/docs/HACKATHON.md` section 9.1 records the question and any answer.
 
 ## The earlier repository
 
@@ -32,17 +32,21 @@ This layout follows the reply the author received in the hackathon's Discord on 
 What the pinned commit holds:
 
 - **The product, built from 30 Aug 2026 to the morning of 26 Oct, before the event.** Financial, risk and business analysis, a 30-scheme dataset in 7 tiers, 20 market rows for Lucknow and Varanasi, the eight-language interface, the form and result pages, and the consent and notice work for India's DPDP Act. 867 tests in 38 test files at 8:03 AM ET on 26 Oct. It began as a six-person team's entry for a college round of the Smart India Hackathon; `DATA_SOURCES.md` credits the team.
-- **The first version of the Meta helper, written on the morning of 26 Oct.** The Meta client, the intake service and route, their settings, the smoke script and about 540 tests were written between 10:22 and 11:58 AM ET, in the two hours before the start, and nothing had been run against Meta's live API. This README counts them as earlier work because the line is the 12:00 PM ET start, even though it is the same day. 1,411 tests in 45 files at the start.
+- **The first version of the Meta helper, written on the morning of 26 Oct.** The Meta client, the intake service and route, their settings, the smoke script and about 540 tests were written between 10:22 and 11:58 AM ET, before the kickoff, and nothing had been run against Meta's live API. This README counts them as earlier work, even though it is the same day, because the organisers put the start of building at 12:24 PM ET. 1,411 tests in 45 files at 12:00 PM ET.
 
-The earlier repository's `main` goes on past the pinned commit: it also holds the first 11 of the 24 commits that this repository replays, published there before this repository existed. The patches here are against the pinned commit, not against that `main`.
+The earlier repository's `main` goes on past the pinned commit: it also holds the first 11 of the 25 commits that this repository replays, published there before this repository existed. The patches here are against the pinned commit, not against that `main`.
 
-The pinned commit is a reconstruction, not a saved snapshot. A full copy of the working tree was taken at 8:03 AM ET on 26 Oct; every edit made through the editor tools between then and 12:00 PM ET was replayed from the session transcript, a file last written before 12:00 PM ET is taken as it is on disk, and the few shell-script edits are accounted for by hand. As a check, replaying the 205 editor calls made after the start on top of it reproduces 26 of the 28 files they touched byte for byte; the other two are new files that shell commands changed afterwards. The reconstructed tree passes its own suite (the 1,411 tests). Section 2 of `app/docs/HACKATHON.md` has the detail.
+The pinned commit is a reconstruction, not a saved snapshot. A full copy of the working tree was taken at 8:03 AM ET on 26 Oct; every edit made through the editor tools between then and 12:00 PM ET was replayed from the session transcript, a file last written before 12:00 PM ET is taken as it is on disk, and the few shell-script edits are accounted for by hand. As a check, replaying the 205 editor calls made after 12:00 PM ET on top of it reproduces 26 of the 28 files they touched byte for byte; the other two are new files that shell commands changed afterwards. The reconstructed tree passes its own suite (the 1,411 tests). Section 2 of `app/docs/HACKATHON.md` has the detail.
 
-## Rebuild the app
+**One overlap.** The pinned commit is the tree at 12:00 PM ET, and the organisers count only what was done after 12:24 PM ET, so the 24 minutes between them are earlier work that the patches here still carry. The log of the editor tools shows edits to three files in that time and no file created: `backend/app/main.py`, `backend/tests/test_smoke_meta.py` and `backend/tests/test_intake_routes.py` (`patches/backend/app/main.py.patch`, `patches/backend/tests/test_smoke_meta.py.patch` and `patches/backend/tests/test_intake_routes.py.patch`). A full test run at 12:07 PM printed 1,416 passed against 1,411 at 12:00 PM, so about five tests were added. All three files were edited again after 12:24 PM, so each patch mixes the two, and the log neither gives the lines of each edit nor covers changes made by shell commands. `app/docs/HACKATHON.md` section 2.1 has the detail.
 
-You need Git, Node (it has been run on 24) and a network connection to download the one commit. Then:
+## Setup, step 1: rebuild the app
+
+You need Git, Node (it has been run on 24), Python 3.10 or newer and a network connection (to download the earlier repository's one commit, and later the packages). Then:
 
 ```bash
+git clone https://github.com/BU1lDR/ArthNiti-Meta_Hackathon.git
+cd ArthNiti-Meta_Hackathon
 node assemble.mjs        # builds the app into ./app
 ```
 
@@ -56,7 +60,7 @@ It checks that `added/` and `patches/` hold exactly the files `pack.json` lists,
 
 `--base <url or path>` takes the earlier repository from somewhere else, for example a local clone: `node assemble.mjs --base ../ArthNiti`. The script refuses to write into a folder that already holds files.
 
-## Run it
+## Setup, step 2: run it
 
 The rebuilt app has its own README at `app/README.md`. The short version, from inside `app/`, needs Python 3.10 or newer (the author runs 3.14) and Node 24:
 
@@ -87,16 +91,16 @@ node tools/parity4.mjs && node tools/keycheck.mjs                        # the e
 
 ## What the event added
 
-Dates are the dates of the author's commits, in India Standard Time (UTC+5:30), copied unchanged onto the 24 commits that replay them here. The author committed in batches after the work was done, so a date says when a commit was made, not when each line was written, and this repository was made after all of them. Nothing is dated before the event.
+Dates are the dates of the author's commits, in India Standard Time (UTC+5:30), copied unchanged onto the 25 commits that replay them here. The author committed in batches after the work was done, so a date says when a commit was made, not when each line was written, and this repository was made after all of them. Nothing is dated before the event.
 
 | Committed | What |
 |---|---|
 | Tue 27 Oct | **Cost control for the Meta calls:** a spend ledger that charges a call at its worst-case price before it is sent and refuses it once the total would pass a cap, and a guard that fails any test that reaches the network or writes the real ledger. **`/talk`:** consent, record or type, edit the transcript, find the answers, check each answer beside the words it came from, then use them; a browser recorder (16 kHz mono WAV); the answer mapping; stored-state version 5 (which fields the helper filled, and a banner on each form page that received an answer). **API efficiency:** a prompt-cache key, speech keywords, token-usage reading |
 | Wed 28 Oct | **The written plan:** `POST /api/advisor/plan`, where Muse Spark words a plan around blanks and code refuses any reply that carries a figure of its own; stored-state version 6 (a plan is kept only while the request it was written for is current). **Loan options** for 12, 24, 36 and 60 months, **repayment schedules**, **scheme funding** (PMEGP, PMFME, Mudra), a **registrations** card (Udyam, the local office, FSSAI, GST) and **egg prices** from the National Egg Co-ordination Committee. Market data for 11 more districts. `smoke_meta --plan`, two real plan calls under the cap |
 | Thu 29 Oct | The MIT licence. A green, yellow or red **light** on the result pages. A **Simple or Detailed** switch, opening on Simple. A generated SVG backdrop in place of a photo with no recorded source. A fix for the progress label at 320 px. Market data for 18 more districts, 291 rows for 31 districts in all. A Hindi review sheet and a two-minute reviewer path |
-| Fri 30 Oct | A **Listen** button on the result pages that reads the verdict aloud through a voice on the device. The hackathon's rules and judging stages, and a video plan that labels new work apart from old. `CLAUDE.md` trimmed, its formulas moved to `docs/BUSINESS_RULES.md`. The organisers' reply about entering with earlier work recorded in the docs, with the plan for this repository (`docs/HACKATHON.md` section 9.3) and the video's opening line |
+| Fri 30 Oct | A **Listen** button on the result pages that reads the verdict aloud through a voice on the device. The hackathon's rules and judging stages, and a video plan that labels new work apart from old. `CLAUDE.md` trimmed, its formulas moved to `docs/BUSINESS_RULES.md`. The organisers' two replies about entering with earlier work recorded in the docs (the second puts the start of building at 12:24 PM ET), with the plan for this repository (`docs/HACKATHON.md` section 9.3) and the video's opening line |
 
-Backend tests went from 1,411 at the start to 2,189 in 58 files on 30 Oct 2026. File-level detail is in `app/docs/HACKATHON.md` section 2.2, which lists each addition and where it lives.
+Backend tests went from 1,411 at 12:00 PM ET to 2,189 in 58 files on 30 Oct 2026. File-level detail is in `app/docs/HACKATHON.md` section 2.2, which lists each addition and where it lives.
 
 ## How Meta's models are used
 
@@ -146,4 +150,4 @@ Nothing here is financial, legal or eligibility advice.
 
 Aryan Verma, alone, from 26 Oct 2026. The six people who built the earlier version are credited in `DATA_SOURCES.md` ("People") in the earlier repository.
 
-`maintainer/` holds the two scripts that produced this repository from the author's working copy of the full project. `make-pack.mjs` writes `added/`, `patches/` and `pack.json` and replays the commits. `verify-states.mjs` rebuilds the app at every commit of this repository and compares each with the author's tree for the matching commit; all 24 replay commits matched on 30 Oct 2026. Both need the author's working copy, so only the author can run them. `assemble.mjs` needs only what is published.
+`maintainer/` holds the two scripts that produced this repository from the author's working copy of the full project. `make-pack.mjs` writes `added/`, `patches/` and `pack.json` and replays the commits. `verify-states.mjs` rebuilds the app at every commit of this repository and compares each with the author's tree for the matching commit; all 25 replay commits matched on 30 Oct 2026. Both need the author's working copy, so only the author can run them. `assemble.mjs` needs only what is published.
