@@ -1,47 +1,48 @@
 diff --git a/frontend/src/pages/AdvisoryPage.jsx b/frontend/src/pages/AdvisoryPage.jsx
-index 0beb02e..ee40f0d 100644
+index 0beb02e..98ae06b 100644
 --- a/frontend/src/pages/AdvisoryPage.jsx
 +++ b/frontend/src/pages/AdvisoryPage.jsx
 @@ -0,0 +1 @@
 +import { useEffect, useRef, useState } from 'react'
 @@ -2,0 +4 @@ import Button from '../components/Button'
 +import { DEPLOYMENT } from '../config/deployment'
-@@ -4,0 +7,6 @@ import { BarRow, UnitChart } from '../components/Charts'
+@@ -4,0 +7,7 @@ import { BarRow, UnitChart } from '../components/Charts'
 +import Compliance from '../components/Compliance'
 +import DetailSwitch from '../components/DetailSwitch'
++import OfferCheck from '../components/OfferCheck'
 +import ReadAloud from '../components/ReadAloud'
 +import ResultBand from '../components/ResultBand'
 +import SchemeFunding from '../components/SchemeFunding'
 +import { LANGUAGES } from '../i18n/languages'
-@@ -6,0 +15 @@ import { useBackendText } from '../i18n/backendText'
+@@ -6,0 +16 @@ import { useBackendText } from '../i18n/backendText'
 +import { isAbortError, requestPlan } from '../services/api'
-@@ -20,0 +30,4 @@ function AdvisoryPage() {
+@@ -20,0 +31,4 @@ function AdvisoryPage() {
 +  // The number beside a sentence, when the rules gave it one (advisory.amounts,
 +  // keyed by the sentence's code). '' when they did not, and for a result stored
 +  // before the amounts existed.
 +  const amountFor = (code) => bt.adviceAmount(advisory, code, (value) => formatCurrency(value, t))
-@@ -32,0 +46,3 @@ function AdvisoryPage() {
+@@ -32,0 +47,3 @@ function AdvisoryPage() {
 +  // The takeaway card's two sentences, named here so the card and ReadAloud use the same.
 +  const takeaway = businessRecommendation(feasibility, t)
 +  const takeawayText = observations[0] || recommendations[0] || t('ad.reviewSteps')
-@@ -76,0 +93,5 @@ function AdvisoryPage() {
+@@ -76,0 +94,5 @@ function AdvisoryPage() {
 +          <DetailSwitch />
 +
 +          {/* Nothing for a result stored before the band existed. */}
 +          <ResultBand className="mt-8" band={result.mvp_summary?.band} />
 +
-@@ -85 +106 @@ function AdvisoryPage() {
+@@ -85 +107 @@ function AdvisoryPage() {
 -                  {businessRecommendation(feasibility, t)}
 +                  {takeaway}
-@@ -93 +114 @@ function AdvisoryPage() {
+@@ -93 +115 @@ function AdvisoryPage() {
 -                  {observations[0] || recommendations[0] || t('ad.reviewSteps')}
 +                  {takeawayText}
-@@ -94,0 +116 @@ function AdvisoryPage() {
+@@ -94,0 +117 @@ function AdvisoryPage() {
 +                <ReadAloud band={result.mvp_summary?.band} lines={[takeaway, takeawayText]} />
-@@ -99 +121 @@ function AdvisoryPage() {
+@@ -99 +122 @@ function AdvisoryPage() {
 -          <section className="mt-6 grid gap-4 sm:grid-cols-2">
 +          <section className="ui-detail-only mt-6 grid gap-4 sm:grid-cols-2">
-@@ -154 +176,6 @@ function AdvisoryPage() {
+@@ -154 +177,6 @@ function AdvisoryPage() {
 -                <ActionItem key={index} number={index + 1} text={recommendation} />
 +                <ActionItem
 +                  key={index}
@@ -49,7 +50,7 @@ index 0beb02e..ee40f0d 100644
 +                  text={recommendation}
 +                  amount={amountFor(advisory?.recommendation_codes?.[index])}
 +                />
-@@ -166 +193,15 @@ function AdvisoryPage() {
+@@ -166 +194,23 @@ function AdvisoryPage() {
 -          <details className="ui-disclosure mt-6">
 +          {/* One wrapper so Simple hides the three cards together and /report, which
 +              draws two of them too, is left alone. */}
@@ -61,21 +62,29 @@ index 0beb02e..ee40f0d 100644
 +            <Compliance compliance={result.compliance} />
 +          </div>
 +
++          {/* Outside the Detailed-only block: Simple would otherwise hide a tool the
++              reader reaches for. Everything is worked out in the tab. */}
++          <OfferCheck
++            financing={result.financing_options}
++            money={(value) => formatCurrency(value, t)}
++            exact={(value) => formatExact(value, t)}
++          />
++
 +          {/* Only on a build with the helper on, and only for a result whose answers
 +              were kept: the plan is written for those answers. */}
 +          {DEPLOYMENT.aiHelper && applicationData.request && <PlanWriter />}
 +
 +          <details className="ui-disclosure ui-detail-only mt-6">
-@@ -267 +308 @@ function AdvisoryCard({ icon, title, value, description, chart }) {
+@@ -267 +317 @@ function AdvisoryCard({ icon, title, value, description, chart }) {
 -function ActionItem({ number, text }) {
 +function ActionItem({ number, text, amount, children }) {
-@@ -273 +314,4 @@ function ActionItem({ number, text }) {
+@@ -273 +323,4 @@ function ActionItem({ number, text }) {
 -      <p className="min-w-0 flex-1 break-words pt-1 leading-7 text-[var(--color-text)]">{typeof text === 'string' ? text : JSON.stringify(text)}</p>
 +      <div className="min-w-0 flex-1">
 +        <p className="break-words pt-1 leading-7 text-[var(--color-text)]">{children ?? (typeof text === 'string' ? text : JSON.stringify(text))}</p>
 +        {amount && <p className="ui-advice-amount">{amount}</p>}
 +      </div>
-@@ -286,0 +331,297 @@ function DetailBlock({ title, children }) {
+@@ -286,0 +340,297 @@ function DetailBlock({ title, children }) {
 +// How much of the money still needed could be borrowed, and over how long. Every
 +// figure comes from `financing_options`, which the backend prices with the same
 +// function as the loan pressure on this page, so a card cannot disagree with it.
@@ -373,7 +382,7 @@ index 0beb02e..ee40f0d 100644
 +  )
 +}
 +
-@@ -472,0 +814,9 @@ function formatCurrency(value, t) {
+@@ -472,0 +823,9 @@ function formatCurrency(value, t) {
 +// The total a loan costs is the sum of a month-by-month table that keeps its paise
 +// (the last payment clears what rounding the instalment leaves), so it prints with
 +// both decimals, and the card adds up to the table on /report to the paisa.

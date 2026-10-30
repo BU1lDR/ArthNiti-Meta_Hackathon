@@ -42,6 +42,7 @@
     "frontend/src/components/Compliance.jsx",
     "frontend/src/components/DetailSwitch.jsx",
     "frontend/src/components/HelperFilledBanner.jsx",
+    "frontend/src/components/OfferCheck.jsx",
     "frontend/src/components/ReadAloud.jsx",
     "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
@@ -167,7 +168,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "dfba5cfad96c93f03a57d11a6c5d23c55fac4f6c",
-    "tree": "c791c689803f9e9e6d1dd7843cc9a9554a09612f"
+    "devCommit": "23158a61e0ff27d7d9941500c4b1034dfcbe2d0d",
+    "tree": "c14391a19bc58bfb27917736321625f1a44c11a0"
   }
 }
