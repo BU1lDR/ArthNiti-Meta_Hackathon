@@ -4,7 +4,7 @@
 
 ## What is here
 
-218 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) and the eleven result-page strings added this week (the traffic light, the Simple/Detailed switch and the Listen button). They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
+228 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) the eleven result-page strings added this week (the traffic light, the Simple/Detailed switch and the Listen button) and the eleven strings of the questions that the helper page now asks one at a time. Row 56 was removed because its words are no longer on the page; the other row numbers did not change. They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
 
 ## How to answer
 
@@ -33,6 +33,7 @@ What stood out on a first read. These are suspicions, not corrections: the reade
 | 214, 215 | The note puts the button name into the sentence: “…सब देखने के लिए विस्तार से दबाएँ।” It reads like “press in detail”. |
 | 38, 46, 50, 66, 67, 99, 113, 118, 148 | Spelling is not uniform. Dotted letters appear in ज़िला, ज़रूरी, फ़ॉर्म, क़र्ज़, ख़ाली and आख़िरी, but not in खर्च, खुद, गलत, खरीदते and सफर. “कौन सी” (profile.language, landing.schemes.text) and “कौन-सी” (landing.f3.text, business.subtitle) both appear. So do आंकड़े (landing.f1.text) and आँकड़े (seven other rows), and ढूँढ (location.subtitle) and ढूँढ़ (talk.find and four more). The loan word is क़र्ज़ in the nine rows here that use it, but कर्ज़ in 69 strings on pages this sheet does not cover. One rule for each can be applied everywhere. |
 | 218 | “कुछ भी कहीं नहीं भेजता” (sends nothing anywhere) stacks negatives. “कुछ भी बाहर नहीं भेजता” is a plainer option. Does “इस डिवाइस की अपनी आवाज़” say that the voice lives on the device? |
+| 220, 223, 224 | “सवाल {n} / {total}” reads like a fraction rather than “Question 1 of 12”. “नहीं, फिर से बोलना है” literally says “no, (I) have to speak again”. “फ़ॉर्म से भरें” says “fill it from the form” for “Use the form instead”. |
 | 108, 205 | Not a Hindi question. The English says “the team running this demonstration”, and one person runs it. This is part of the versioned notice, so a change bumps the version. |
 
 ## Found while collecting (not a wording question)
@@ -110,11 +111,10 @@ Shot 1 (HACKATHON.md section 10.3): the first page, before the language is chang
 
 ## Shot 2: the speak-or-type page, before and after the consent tick
 
-Shot 2: the page where the person speaks or types. The microphone and the model are not needed to see these. (12 strings)
+Shot 2: the page where the person speaks or types. The microphone and the model are not needed to see these. (11 strings)
 
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
-| 56 | talk.optional | Optional shortcut | वैकल्पिक शॉर्टकट | |
 | 57 | talk.subtitle | Tell us in a few sentences what your business is, how much money you need and where you live. We find your answers in what you said, and you check each one before it goes into the form. | कुछ वाक्यों में बताइए कि आपका काम क्या है, आपको कितने पैसे चाहिए और आप कहाँ रहते हैं। हम आपकी बात से जवाब ढूँढ़ते हैं, और फ़ॉर्म में जाने से पहले हर जवाब आप खुद जाँचते हैं। | |
 | 58 | talk.sendsTitle | Before you start | शुरू करने से पहले | |
 | 59 | talk.sendsText | Your voice and your words are sent to an AI service run by Meta. It writes your words down and finds your answers in them. We do not save them. Meta handles them under its own rules. If this service is running on free credits, Meta may also use them to improve its products. Please do not say your name, phone number or bank details. | आपकी आवाज़ और आपके शब्द Meta की चलाई एक AI सेवा को भेजे जाते हैं। वह आपके शब्द लिखती है और उनमें से आपके जवाब ढूँढ़ती है। हम इन्हें सहेजकर नहीं रखते। Meta इन्हें अपने नियमों के अनुसार संभालती है। अगर यह सेवा मुफ़्त क्रेडिट पर चल रही है, तो Meta इन्हें अपने उत्पाद बेहतर बनाने में भी इस्तेमाल कर सकती है। कृपया अपना नाम, फ़ोन नंबर या बैंक की जानकारी न बोलें। | |
@@ -319,6 +319,24 @@ Not in the Hindi part of the video (the language is switched to English on the l
 | 216 | ra.listen | Listen | सुनें | |
 | 217 | ra.stop | Stop | रोकें | |
 | 218 | ra.note | A voice on this device reads out the light and the main sentences. It does not read the figures. This app sends nothing to do it. | इस डिवाइस की अपनी आवाज़ बत्ती और मुख्य वाक्य पढ़कर सुनाती है। आँकड़े नहीं पढ़े जाते। इसके लिए यह ऐप कुछ भी कहीं नहीं भेजता। | |
+
+## The questions the helper page asks one at a time (new this week)
+
+The helper page now asks the form's questions one at a time, in the order of the form, and reads each one aloud when the browser has a voice for the language. Nine of the questions are wording the form already uses and are in this sheet: rows 115 to 118, 156, 183, 187, 189 and 193. The eleven below are new. The Listen and Stop buttons beside each question are rows 216 and 217. On this page the voice may be one that the browser reaches over the network, so row 218 (“sends nothing”) is not shown here. Do not change `{n}` and `{total}`. (11 strings)
+
+| # | Key | English | Hindi | Fix |
+|---|---|---|---|---|
+| 219 | talk.askOpen | Tell me about your business: what work you do, where you are, and how much money you have and need. | अपने काम के बारे में बताइए: आप क्या काम करते हैं, कहाँ रहते हैं, और आपके पास कितना पैसा है और कितना चाहिए। | |
+| 220 | talk.progress | Question {n} of {total} | सवाल {n} / {total} | |
+| 221 | talk.skip | Skip this question | यह सवाल छोड़ें | |
+| 222 | talk.right | Yes, that is right | हाँ, यह सही है | |
+| 223 | talk.again | No, I will say it again | नहीं, फिर से बोलना है | |
+| 224 | talk.toForm | Use the form instead | फ़ॉर्म से भरें | |
+| 225 | talk.allDone | All the questions are done. Go to the form to check your answers. | सारे सवाल हो गए। अपने जवाब जाँचने के लिए फ़ॉर्म पर जाइए। | |
+| 226 | talk.noneHere | We could not find an answer to this question in what you said. Say it again, type it, or skip this question. | आपकी बात में हमें इस सवाल का जवाब नहीं मिला। फिर से बोलिए, लिखिए, या यह सवाल छोड़ दीजिए। | |
+| 227 | talk.askDebt | Does this business already owe any money? If yes, how much? | क्या इस काम पर पहले से कोई क़र्ज़ है? अगर हाँ, तो कितना? | |
+| 228 | talk.askState | Which state is your business in? | आपका काम किस राज्य में है? | |
+| 229 | talk.askDistrict | Which district is your business in? | आपका काम किस ज़िले में है? | |
 
 ## State and union territory names in the menu
 
