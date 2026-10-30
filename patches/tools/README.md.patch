@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..a09fbc1 100644
+index b8e7eb3..c8fd6cc 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -125,7 +125,7 @@ index b8e7eb3..a09fbc1 100644
 @@ -550 +568 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 48 loads, in every pass that loads
-@@ -569,0 +588,193 @@ exited 0 with `neutralised` naming both.
+@@ -569,0 +588,225 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -209,6 +209,38 @@ index b8e7eb3..a09fbc1 100644
 +wrong title, no caption, the order reversed, the Udyam badge and the FSSAI source
 +(`COMPLIANCE CARD TITLE` on the 5 `/advisory` loads, `COMPLIANCE CARD TEXT` on 10
 +and 40 `COMPLIANCE STEP`). On the finished card it exits 0.
++
++**The check-first lines.** A scheme that carries `check_first_codes` draws a "Check
++these first" block on `/schemes` and `/report`: the few eligibility lines that say who
++may apply, what kind of unit is covered or whether the scheme is running, kept out of
++the closed disclosure so the reader sees them before the trip. `drive` reads which
++schemes carry lines from the response. It wants the heading `sc.checkFirst` once per
++such scheme (`CHECK-FIRST HEADING: n printed, m scheme(s) carry lines`) and each line,
++in the page's language from `schemeStrings.js`, at least as many times as schemes carry
++its code (`CHECK-FIRST LINE MISSING`). It reads the page text with the disclosures
++closed, on purpose: the lines are a subset of the eligibility list, so with the
++disclosures open a block lost from the page would still be found inside one. "At
++least", because `/report`'s funding card prints two of the same sentences itself
++(`elig.pmegp.period`, `elig.pmfme.upgrade`), so a missing copy of those two can hide
++there. `/analysis`'s compact card has no block and is not checked. A scheme with no
++lines must draw no heading, and neither must a result stored before the keys existed:
++the `old` pass deletes `check_first` and `check_first_codes` from every scheme as well.
++A fixture with no scheme that carries lines (made by an older backend: run
++`refresh-cases.mjs`), a code with no English entry in `schemeStrings.js` and
++`sc.checkFirst` missing from `resultStrings.js` are exit 2. `report.json` counts the
++schemes checked as `checkFirstChecked` and the console line prints `checkfirst=N` when
++it is not 0 (9 on the `good` and `nulls` cases, 6 on `green`). The check adds no page
++load: `drive` still makes 48 loads and 13 Simple/Detailed looks. Measured on 31 Oct
++2026 with defects planted in the two pages and then undone with `cp` and a `sha256`
++check; each exited 1: the block moved into a closed `<details>` (`CHECK-FIRST HEADING`
++on the 5 `/schemes` loads of a result with lines, and 63 `CHECK-FIRST LINE MISSING`);
++the first line of every list dropped (41 `CHECK-FIRST LINE MISSING` on the same 5 loads,
++no heading finding); the block removed from `/report` only (`CHECK-FIRST HEADING` on
++the 5 `/report` loads and 59 `CHECK-FIRST LINE MISSING`, 4 fewer than the first plant
++because the funding card masks the two repeated sentences); the guard removed on
++`/schemes`, so the heading is drawn for a scheme with no lines (`CHECK-FIRST HEADING`
++on 5 loads and nothing else); and the same on `/report`, which also fires on the `old`
++load (6 loads, heading only). On the finished pages it exits 0.
 +
 +**The traffic light.** `/analysis`, `/advisory` and `/report` each draw one
 +`ResultBand` (`components/ResultBand.jsx`) from the response's own
@@ -319,7 +351,7 @@ index b8e7eb3..a09fbc1 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +792,6 @@ correct app.
+@@ -581,2 +824,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -328,17 +360,17 @@ index b8e7eb3..a09fbc1 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -594 +809,2 @@ is `FinancePage` local state, never stored.
+@@ -594 +841,2 @@ is `FinancePage` local state, never stored.
 -- Each of those nine declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
 +- `read-aloud` seeds 6, the current shape: a result and nothing else.
 +- Each of those ten declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
-@@ -597 +813 @@ is `FinancePage` local state, never stored.
+@@ -597 +845 @@ is `FinancePage` local state, never stored.
 -- The seven that seed a result read the stored state back on each result route
 +- The eight that seed a result read the stored state back on each result route
-@@ -735 +951 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -735 +983 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +962,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +994,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -352,7 +384,7 @@ index b8e7eb3..a09fbc1 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1046,270 @@ is still slow or unbounded" above).
+@@ -817 +1078,270 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -624,11 +656,11 @@ index b8e7eb3..a09fbc1 100644
 +not in CI (it needs Edge); `speak-lib-test` is, as a step that has not run on Linux yet.
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1322 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1354 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1325 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1357 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1355,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1387,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -638,7 +670,7 @@ index b8e7eb3..a09fbc1 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1369,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1401,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -656,31 +688,31 @@ index b8e7eb3..a09fbc1 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1386,2 @@ a script to run.
+@@ -866,2 +1418,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +**Run `refresh-cases.mjs` after any backend change.** Nine scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1418,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1450,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui` and `read-aloud` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1434 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1466 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381 — plus `assetgen` 9377
-@@ -933 +1453 @@ working one.
+@@ -933 +1485 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
 +Seven scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1461 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1493 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1465,4 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
+@@ -944,0 +1497,4 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
 +node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 99 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
 +node tools/verify/read-aloud.mjs   --broken        # all three: 146 findings; exit 2 names an arm whose findings did not appear
-@@ -948 +1472,3 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1504,3 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s, measured on

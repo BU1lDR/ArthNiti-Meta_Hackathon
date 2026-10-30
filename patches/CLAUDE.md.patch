@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..92d80f0 100644
+index d6ab002..d1c1bd5 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -133,7 +133,7 @@ index d6ab002..92d80f0 100644
 +  services/      all business logic: pure functions, no classes, no I/O
 +  data/          schemes.json, market_data.json (+ .provenance.json), necc_egg_prices.json
 +backend/gen_schemes.py     the SOURCE of schemes.json; tests/test_gen_schemes.py holds the two equal
-+backend/tests/             58 test files, conftest.py and 6 fixture modules; 2216 tests
++backend/tests/             59 test files, conftest.py and 6 fixture modules; 2225 tests
 +backend/requirements*.txt  runtime deps pinned (no hashes); -dev adds pytest and httpx2 (not a typo)
 +.github/workflows/ci.yml   pytest (3.10 + 3.14) + the no-server frontend gates, on Linux
 +frontend/src/    services/api.js (the only module that touches the network), context/AppContext.jsx
@@ -210,11 +210,11 @@ index d6ab002..92d80f0 100644
 -  `DIGIT_ALLOW`/`SOURCE_ALLOW` entries must carry a reason, and an entry that is no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists, and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 -- **`t(key)`** falls back from the dialect to the language to `en` to **the key itself**, so a typo shows up on the page as a dotted name. **`tBackend(code, english)`** falls back to the backend's English and never prints a code.
 +| `strings.js` | 223 | chrome, landing, the four form steps, `notice.*`, `consent.*`, `errf.*` |
-+| `resultStrings.js` | 437 | result pages, `/login`, `/privacy`, `/404`, `talk.*`, the cards (`fo.*`, `fs.*`, `cl.*`, `plan.*`), `band.*`, `detail.*`, `ra.*`, and the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
++| `resultStrings.js` | 439 | result pages, `/login`, `/privacy`, `/404`, `talk.*`, the cards (`fo.*`, `fs.*`, `cl.*`, `plan.*`), `band.*`, `detail.*`, `ra.*`, and the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
 +| `backendStrings.js` | 60 | sentences a **Python service composes** (`adv.*`, `obs.*`, `rsn.*`, `sum.*`, `nxt.*`, `why.*`, `src.*`, `cmd.*`, `mknote.*`) |
 +| `schemeStrings.js` | 191 | prose **typed into schemes.json** (`sdata.*`, `elig.*`, `doc.*`, `scat.*`) |
 +
-+**911 keys, 7,288 strings** (measured 30 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**; a difference of one means a number is wrong.
++**913 keys, 7,304 strings** (measured 31 Oct 2026). No key may be defined in two files, so **the per-file counts must add up to the total exactly**; a difference of one means a number is wrong.
 +
 +- **`node tools/parity4.mjs`** runs 9 checks and exits 1 on a failure (`tools/README.md` lists them); **`node tools/keycheck.mjs`** checks that every key the code uses exists and flags leaked keys, untranslated codes and unmapped enums (5 keys are unreferenced, on purpose). Run both after touching a dictionary.
 +- **`t(key)`** falls back from the dialect to the language to `en` to **the key itself**, so a typo shows up as a dotted name. **`tBackend(code, english)`** falls back to the backend's English and never prints a code.
@@ -338,11 +338,11 @@ index d6ab002..92d80f0 100644
 +- **Repayment pressure:** under 30 low, 30–50 moderate, over 50 high, classified on the *rounded* ratio; a surplus ≤ 0 is `high` with a `None` ratio. A funding gap is priced as a loan at an assumed 12% a year over 60 months, and the pages say it is an assumption. `existing_debt` is excluded: it is the principal of the loan `monthly_emi` already repays.
 +- **Household check** (RBI Master Direction 2022): over 50 is `over_limit`, exactly 50 is `within_limit`, a `None` income is `not_checked`. **Never call a result RBI-compliant, and never say a lender will lend.** Who counts as the household for an unmarried adult is our own reading of RBI, unchecked.
 +- **Loan options, scheme funding and registrations are estimates**, never a quote or an offer; the registrations' `need` is never "required", and never say a scheme is open. The FSSAI and GST limits are the 2017 and 2019 figures, not checked against later amendments.
-+- **No eligibility rule is evaluated anywhere.** The match score (+60 category, +40 the reader's state or +30 nationwide) checks none, so it is never printed as a percentage; cards print `fit_basis`. `drive.mjs` fails on a `90%` or `100%` on a card.
++- **No eligibility rule is evaluated anywhere.** The match score (+60 category, +40 the reader's state or +30 nationwide) checks none, so it is never printed as a percentage; cards print `fit_basis`. `drive.mjs` fails on a `90%` or `100%` on a card. The "Check these first" lines (`check_first`) only name a scheme's own conditions: bullets, never ticks, "might not fit", never "not eligible".
 +- **Status and light:** `good` needs profitable, feasible, low risk, no gap and a household check that is not `over_limit`; green is `good`, red is priority `high`, yellow is the rest (the owner's own rule, confirmed 29 Oct 2026).
 +- **Matching:** `if scheme_category in phrase`, so the scheme's word must be a substring of the user's phrase. `CATEGORY_SYNONYMS` bridges wording and must never widen eligibility. The availability gates (`serves_state`, `serves_location`) run before scoring, an empty user value means "do not filter", and the two functions stay separate. A scheme must never claim `livestock` or `other` as a category.
 +- **Market context:** never render a `state` row as local (`match_level`). **Another district's row is never returned**: don't widen the fallback, grow `tools/market-crosswalk.json` and fetch again. `stale` is decided at fetch time, so **refetch before a demo** (an egg price goes stale in 8 days; Lucknow's and Varanasi's mandi prices show no warning until then). The egg-price unit is our reading, unconfirmed.
-+- **The scheme dataset:** edit `SPEC` or `LOCATION_TYPES` in `backend/gen_schemes.py` and run it from `./backend`; a hand edit to `schemes.json` fails `test_gen_schemes.py`. New codes need all 8 `schemeStrings.js` entries by hand (keycheck reports a missing one).
++- **The scheme dataset:** edit `SPEC`, `LOCATION_TYPES` or `CHECK_FIRST` in `backend/gen_schemes.py` and run it from `./backend`; a hand edit to `schemes.json` fails `test_gen_schemes.py`. New codes need all 8 `schemeStrings.js` entries by hand (keycheck reports a missing one).
 @@ -316,2 +210,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **The notice text is versioned.** Editing any of the 60 `NOTICE_KEYS` in any language, or reordering `SENT_FIELDS`, fails parity4 check 9. Fix it by bumping `NOTICE_VERSION` and recording the printed hash in `tools/notice-version.json`. Commit `notice.js`, that JSON and the dictionaries together.
 -- **A new request field goes in `SENT_FIELDS`, with an `errf.*` label in `FIELD_LABELS`, or in `IGNORED_FIELDS`.** `test_notice_sent_fields.py` enforces this. Either way the field changes every payload code, so redo the schedule's test vector (§4.3).
@@ -401,7 +401,7 @@ index d6ab002..92d80f0 100644
 +- **Read aloud** (`ReadAloud`, `audio/speak.js`, under the light on `/analysis` and `/advisory`): the browser's speech engine and a voice with `localService === true` only (a network voice would send the sentence off the device), no sentence with a digit, nothing starts without a press (`speak-lib-test` pins it). On the owner's Windows Edge all 321 voices were network voices (29 Oct 2026), so the button does not appear there. **`/talk`'s fixed question text is the one exception** (`useQuestionVoice`, `promptVoiceFor`): a device voice if there is one, else a network voice, because the sentence is ours and holds nothing the person said; it starts once the consent box is ticked and stops when they press Record or Find, untick the box or leave (`PROCESSOR_SCHEDULE.md` §2, §10.2, §10.8).
 @@ -376 +260 @@ python -m pip install -r backend/requirements-dev.txt
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed, ~5s
-+cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2216 passed, ~18s
++cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2225 passed, ~18s
 @@ -379,5 +263,3 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Backend tests only; there are no frontend tests.** Some tests pin user-visible wording, so edit them together with a copy change.
 -- **When you add a branch, add a test proving a real request can reach it**, a sweep through `run_unified_analysis`, and not only a unit call.

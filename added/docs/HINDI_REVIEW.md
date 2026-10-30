@@ -4,7 +4,7 @@
 
 ## What is here
 
-228 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) the eleven result-page strings added this week (the traffic light, the Simple/Detailed switch and the Listen button) and the eleven strings of the questions that the helper page now asks one at a time. Row 56 was removed because its words are no longer on the page; the other row numbers did not change. They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
+230 strings: every Hindi string that a page prints on its own in shots 1 to 4 of the video, plus the helper page's other messages (they appear only after a recording or an error) the eleven result-page strings added this week (the traffic light, the Simple/Detailed switch and the Listen button) the eleven strings of the questions that the helper page now asks one at a time, and the two strings of the “Check these first” block on the scheme page. Row 56 was removed because its words are no longer on the page; the other row numbers did not change. They were found by opening each of those pages in a real browser, in Hindi, and matching what is printed to the dictionary. A string that the code uses but the video never shows is not here, and neither is a short word that only occurs inside a longer sentence. The language, state and district menus are data and are not in the dictionary: the state names are at the end of this sheet, and the districts are Latin-script names on purpose.
 
 ## How to answer
 
@@ -35,6 +35,7 @@ What stood out on a first read. These are suspicions, not corrections: the reade
 | 218 | “कुछ भी कहीं नहीं भेजता” (sends nothing anywhere) stacks negatives. “कुछ भी बाहर नहीं भेजता” is a plainer option. Does “इस डिवाइस की अपनी आवाज़” say that the voice lives on the device? |
 | 220, 223, 224 | “सवाल {n} / {total}” reads like a fraction rather than “Question 1 of 12”. “नहीं, फिर से बोलना है” literally says “no, (I) have to speak again”. “फ़ॉर्म से भरें” says “fill it from the form” for “Use the form instead”. |
 | 108, 205 | Not a Hindi question. The English says “the team running this demonstration”, and one person runs it. This is part of the versioned notice, so a change bumps the version. |
+| 231 | “लागू न हो” (does not apply) for “is not true for you” is a formal word. “आपके लिए सही न हो” is a plainer option. |
 
 ## Found while collecting (not a wording question)
 
@@ -337,6 +338,15 @@ The helper page now asks the form's questions one at a time, in the order of the
 | 227 | talk.askDebt | Does this business already owe any money? If yes, how much? | क्या इस काम पर पहले से कोई क़र्ज़ है? अगर हाँ, तो कितना? | |
 | 228 | talk.askState | Which state is your business in? | आपका काम किस राज्य में है? | |
 | 229 | talk.askDistrict | Which district is your business in? | आपका काम किस ज़िले में है? | |
+
+## The scheme page: “Check these first” (new this week, shown in English in the video)
+
+Each scheme on the scheme page and on the printout now opens with the few of its own eligibility lines that decide whether it fits a person. The lines themselves are the scheme's existing sentences (the scheme texts are not in this sheet); these two are the heading and the sentence under it. Nothing is checked for the reader, and the second sentence says so. (2 strings)
+
+| # | Key | English | Hindi | Fix |
+|---|---|---|---|---|
+| 230 | sc.checkFirst | Check these first | पहले ये जाँच लें | |
+| 231 | sc.checkFirstText | This scheme might not fit you if one of these is not true for you. We cannot check them for you. | इनमें से कोई बात आप पर लागू न हो, तो हो सकता है यह योजना आपके लिए न हो। इन्हें हम आपके लिए नहीं जाँच सकते। | |
 
 ## State and union territory names in the menu
 
