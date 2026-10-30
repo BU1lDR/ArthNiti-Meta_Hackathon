@@ -152,7 +152,7 @@
 //   TalkPage.jsx  "No, I will say it again" is never offered                          -> S23  [2]
 //   TalkPage.jsx  "Yes, that is right" not disabled while a request is out            -> S23  [1]
 //   TalkPage.jsx  "No, I will say it again" not disabled while a request is out       -> S23  [1]
-//   TalkPage.jsx  no navigation after the last answer                                 -> S3, S23  [1]
+//   TalkPage.jsx  no navigation after the last answer                                 -> S23  [1]
 // S24, the question read aloud:
 //   TalkPage.jsx  the voice starts without the consent tick                           -> S24  [3]
 //   TalkPage.jsx  the question is always read in English                              -> S24  [2]
@@ -178,7 +178,7 @@
 // the last answer) and 17 never ran, because the next one started before the ports of the
 // last were free. What fixed it: a state the page owes is awaited with reach() and
 // pressOwed(), which record a finding and stop the scenario instead of faulting; S23 presses
-// the review buttons while a request is out; S3 and S23 check the navigation after the last
+// the review buttons while a request is out; S23 checks the navigation after the last
 // answer; the runner waits up to 90 s for the ports. "Open is always false" then exited 2
 // once more: untickLucknowAndApply() in S3 still used press() and waitSnap(), which fault on
 // a button the page no longer has. It uses pressOwed() and reach() now, and exits 1.
