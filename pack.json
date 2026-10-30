@@ -64,6 +64,7 @@
     "tools/verify/offer-banned.mjs",
     "tools/verify/offer-lib-test.mjs",
     "tools/verify/offer-lines-test.mjs",
+    "tools/verify/offer-ui.mjs",
     "tools/verify/offer_reference.py",
     "tools/verify/read-aloud.mjs",
     "tools/verify/speak-lib-test.mjs",
@@ -168,7 +169,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "23158a61e0ff27d7d9941500c4b1034dfcbe2d0d",
-    "tree": "c14391a19bc58bfb27917736321625f1a44c11a0"
+    "devCommit": "e76a833e3546c4143645375587cb9ea0556fe8ec",
+    "tree": "bbeedc36e98232cbf466d9876cfb657658254628"
   }
 }

@@ -58,3 +58,26 @@ print("--- instalment and total at the assumed rate (12% a year)")
 for received, payments, per_year in [(10000, 12, 12), (5000, 12, 52), (5000, 60, 365), (100000, 36, 12)]:
     a = payment_at(12, received, payments, per_year)
     print(f"{received} over {payments} at {per_year}/yr: instalment={float(a)!r} total={float(a * payments)!r}")
+
+# The offers typed in by tools/verify/offer-ui.mjs, with what the page has to print: the total
+# paid, the yearly cost, and the total at the assumed 12% a year, rounded to a whole rupee
+# (half up) the way the page prints it.
+GATE_CASES = [
+    # received, instalment, payments, per_year
+    (10000, 889, 12, 12),
+    (5000, 500, 12, 52),
+    (5000, 100, 60, 365),
+    (5000, 100, 60, 12),
+    (5000, 100, 60, 52),
+    (100000, 4000, 36, 12),
+    (1000, 1100, 1, 12),
+    (20000, 700, 30, 52),
+    (1000000000, 1000000000, 3650, 365),
+]
+
+print("--- cases of offer-ui.mjs: received instalment payments per_year | total | yearly% | assumed total (rounded)")
+for received, instalment, payments, per_year in GATE_CASES:
+    yearly = solve_rate(received, instalment, payments) * per_year * 100
+    assumed = payment_at(12, received, payments, per_year) * payments
+    rounded = int(assumed.quantize(D(1), rounding="ROUND_HALF_UP"))
+    print(f"{received} {instalment} {payments} {per_year} | {instalment * payments} | {float(yearly)!r} | {float(assumed)!r} -> {rounded}")
