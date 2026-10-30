@@ -68,6 +68,9 @@ describe('percentText', () => {
       [120, '120%'],
       [0.12, '0.12%'],
       [1234.5, '1,230%'],
+      // past a lakh the grouping changes: 1,23,000 and not 123,000
+      [123456, '1,23,000%'],
+      [1e10, '10,00,00,00,000%'],
       [1.2000000012e-6, '0.0000012%'],
     ]) {
       assert.equal(percentText(value), text, String(value))
@@ -136,6 +139,10 @@ describe('offerLines: a cost', () => {
     // 12.5% of 10000 for a year is 1250.
     const half = draw(checkOffer(BY_RATE(), 12.5))
     assert.deepEqual(valuesFor(half.asked, 'offer.vsMore'), [{ rate: '12.5%', total: 'R11250', diff: 'R2350' }])
+    // 12.25% is 1225: four digits of rate, shown whole and not cut to 12.3
+    const quarter = draw(checkOffer(BY_RATE(), 12.25))
+    assert.deepEqual(valuesFor(quarter.asked, 'offer.vsMore'), [{ rate: '12.25%', total: 'R11225', diff: 'R2375' }])
+    assert.deepEqual(valuesFor(quarter.asked, 'offer.vsNote'), [{ rate: '12.25%' }])
   })
 
   test('no usable assumed rate: the cost is said, the comparison is left out', () => {
@@ -206,7 +213,13 @@ describe('offerLines: what it refuses to say', () => {
   }
 
   test('no result, or one that is not a cost, a same or a less', () => {
+    // every figure of a cost, under a name that says it is not one
+    const figures = checkOffer(BY_PAYMENTS(), ASSUMED)
     for (const check of [
+      { ...figures, status: 'incomplete' },
+      { ...figures, status: 'invalid' },
+      { ...figures, status: 'weird' },
+      { ...figures, status: undefined },
       undefined,
       null,
       '',
@@ -341,6 +354,14 @@ describe('offerErrors', () => {
     }
   })
 
+  test('mistakes are read from a result that is invalid and from no other', () => {
+    for (const status of ['incomplete', 'cost', 'less', 'same', 'weird', undefined]) {
+      const { asked, t } = recorder()
+      assert.deepEqual(offerErrors({ status, errors: { received: 'whole' } }, 'monthly', t, money), {}, String(status))
+      assert.deepEqual(asked, [], String(status))
+    }
+  })
+
   test('an error this build does not know, or a box it does not have, says nothing', () => {
     const { asked, t } = recorder()
     const out = offerErrors(
@@ -361,8 +382,25 @@ describe('offerErrors', () => {
     }
   })
 
+  test('a code that is a name every object has, or is not text, is not an error', () => {
+    for (const code of ['constructor', 'toString', '__proto__', 'hasOwnProperty', ['whole'], { toString: () => 'whole' }]) {
+      const { asked, t } = recorder()
+      const label = `${typeof code} ${String(code)}`
+      assert.deepEqual(offerErrors({ status: 'invalid', errors: { received: code } }, 'monthly', t, money), {}, label)
+      assert.deepEqual(asked, [], label)
+    }
+  })
+
+  test('a code handed down from another object is not the box\'s own', () => {
+    const { asked, t } = recorder()
+    const errors = Object.create({ received: 'whole', rate: 'rate' })
+    errors.months = 'whole'
+    assert.deepEqual(offerErrors({ status: 'invalid', errors }, 'monthly', t, money), { months: '[offer.errWhole]' })
+    assert.deepEqual(asked, [{ key: 'offer.errWhole' }])
+  })
+
   test('a payments box too big for a choice that was never made says nothing', () => {
-    for (const often of [undefined, null, '', 'yearly', 'constructor', 'toString']) {
+    for (const often of [undefined, null, '', 'yearly', 'constructor', 'toString', ['daily'], { toString: () => 'daily' }]) {
       const { asked, t } = recorder()
       assert.deepEqual(offerErrors({ status: 'invalid', errors: { payments: 'range' } }, often, t, money), {})
       assert.deepEqual(asked, [])
@@ -491,9 +529,11 @@ describe('pricedLoan', () => {
       { status: 'covered', options: [] },
       { status: 'covered', options: [{ ...OPTION_60, loan_amount: 0 }] },
       { status: 'partial', options: 'x' },
-      // a name every object has is not a reason
+      // a name every object has is not a reason, and neither is a status that is not text
       { status: 'constructor' },
       { status: 'toString' },
+      { status: ['no_room'] },
+      { status: { toString: () => 'no_room' } },
     ]) {
       const { out, asked } = priced(financing)
       assert.equal(out, null, JSON.stringify(financing))

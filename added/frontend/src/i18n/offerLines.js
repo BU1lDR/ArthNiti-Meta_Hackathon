@@ -41,7 +41,7 @@ function largest(box, often, money) {
 // said the payments fall, which sets how many payments the box takes.
 export function offerErrors(check, often, t, money) {
   const errors = check?.status === 'invalid' ? check.errors : undefined
-  if (errors === null || typeof errors !== 'object' || Array.isArray(errors)) return {}
+  if (errors === null || typeof errors !== 'object') return {}
   const messages = {}
   for (const box of BOXES) {
     const code = Object.hasOwn(errors, box) ? errors[box] : undefined
