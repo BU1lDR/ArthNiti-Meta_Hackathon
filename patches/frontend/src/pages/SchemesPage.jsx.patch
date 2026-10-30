@@ -1,0 +1,16 @@
+diff --git a/frontend/src/pages/SchemesPage.jsx b/frontend/src/pages/SchemesPage.jsx
+index da4db45..429476c 100644
+--- a/frontend/src/pages/SchemesPage.jsx
++++ b/frontend/src/pages/SchemesPage.jsx
+@@ -244,0 +245,11 @@ function SchemeCard({ scheme, index, t, bt }) {
++      {/* The few eligibility lines that decide whether the scheme fits a person,
++          kept out of the closed disclosure below so the reader sees them before
++          the trip. Plain bullets, never ticks: nothing here checks them, and the
++          text under the heading says so. */}
++      {Array.isArray(scheme.check_first) && scheme.check_first.length > 0 && (
++        <SchemeSection title={t('sc.checkFirst')}>
++          <p className="mb-3 text-sm leading-6 text-[var(--color-text-muted)]">{t('sc.checkFirstText')}</p>
++          <BulletList items={bt.schemeCheckFirst(scheme)} />
++        </SchemeSection>
++      )}
++

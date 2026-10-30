@@ -1,7 +1,10 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..f03a57a 100644
+index 4ea17de..5033529 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
+@@ -10 +10 @@ structurally true rather than something a test has to catch.
+-To change the dataset, edit SPEC (or LOCATION_TYPES) here and run the script;
++To change the dataset, edit SPEC (or LOCATION_TYPES, CHECK_FIRST) here and run the script;
 @@ -131,0 +132 @@ SPEC = [
 +            ("elig.pmfme.upgrade", "The Ministry's page for individual units speaks of units that want to upgrade. It does not say whether a new unit can get this subsidy."),
 @@ -139 +140,4 @@ SPEC = [
@@ -35,3 +38,55 @@ index 4ea17de..f03a57a 100644
 +# card. The four schemes the funding calculation prices or describes had their
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
+@@ -634,0 +645,39 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
++# The eligibility lines a reader should check before the trip, by scheme id. The app
++# asks for twelve answers and none is an age, a sex, a community, a trade, a
++# membership or a registration, so it cannot say whether a scheme fits anyone. A
++# card instead names the few lines that decide it, taken from the scheme's OWN list,
++# and says the app has not checked them. A line goes here when it says who may apply
++# (age, sex, community, residence, trade, membership, registration, a new unit),
++# what kind of unit is covered, or whether the scheme is running at all. It stays out
++# when the matcher already cut the list by it (the states list, LOCATION_TYPES) or
++# when it only says what the scheme pays, charges or asks you to bring. Codes, never
++# positions, so an inserted line cannot move a note onto the wrong sentence. Shown
++# in the order given. The five schemes that name nobody in particular have no entry.
++CHECK_FIRST = {
++    "pmfme": ["elig.pmfme.upgrade"],
++    "pmegp": ["elig.pmegp.period"],
++    "pmvishwakarma": ["elig.pmvishwakarma.trades", "elig.common.age18"],
++    "standupindia": ["elig.standupindia.who", "elig.common.newUnit", "elig.standupindia.period"],
++    "nlm": ["elig.nlm.activities", "elig.nlm.training"],
++    "ahidf": ["elig.ahidf.purpose"],
++    "aif": ["elig.aif.purpose"],
++    "kcc": ["elig.kcc.who"],
++    "up_myuva": ["elig.common.age21to40", "elig.common.class8", "elig.common.residentState"],
++    "up_vssy": ["elig.common.traditionalTrade", "elig.common.age18", "elig.common.residentState"],
++    "mh_cmegp": ["elig.common.age18to45", "elig.common.newUnit"],
++    "tn_needs": ["elig.needs.who", "elig.common.residentState"],
++    "kl_ess": ["elig.ess.who", "elig.common.udyamNeeded"],
++    "wb_bcc": ["elig.common.age18to45", "elig.common.residentState"],
++    "ka_udyogini": ["elig.common.womenOnly", "elig.udyogini.income", "elig.common.residentState"],
++    "unnati_ner": ["elig.unnati.register", "elig.common.udyamNeeded"],
++    "vvp_border": ["elig.vvp.where"],
++    "rseti": ["elig.common.age18to45"],
++    "kvk": ["elig.common.farmerOrLabourer"],
++    "odop_up": ["elig.odop.product", "elig.common.residentState"],
++    "subdiv_agri": ["elig.common.farmerOrLabourer"],
++    "bdo_nrlm": ["elig.common.shgMember"],
++    "atma_block": ["elig.common.farmerOrLabourer"],
++    "csc": ["elig.common.aadhaarBank"],
++    "svanidhi": ["elig.svanidhi.who"],
++}
++
+@@ -652,0 +702,4 @@ def build():
++    for sid in CHECK_FIRST:
++        if sid not in ids:
++            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
++
+@@ -663,0 +717,4 @@ def build():
++        check_first = list(CHECK_FIRST.get(sid, []))
++        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
++            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
++
+@@ -690,0 +748 @@ def build():
++                "check_first_codes": check_first,

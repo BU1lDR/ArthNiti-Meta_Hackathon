@@ -1,5 +1,5 @@
 diff --git a/tools/verify/drive.mjs b/tools/verify/drive.mjs
-index 864c305..a4ff7ca 100644
+index 864c305..211cf8e 100644
 --- a/tools/verify/drive.mjs
 +++ b/tools/verify/drive.mjs
 @@ -23,2 +23,8 @@
@@ -30,20 +30,22 @@ index 864c305..a4ff7ca 100644
 +    },
 +    finance: { availableCapital: '120000', monthlyExpenses: '22000', monthlyEmi: '2000' },
 +  },
-@@ -207,0 +230,6 @@ FORMS.cleared = structuredClone(FORMS.good)
-+// Answered and submitted before the compliance card, the scheme funding card and the
-+// traffic light existed: good's answers, and good's response without those keys
-+// (RESULTS.old, below). The result pages must leave the cards and the light out and
-+// carry on, and /analysis must keep the status mark it had before the light.
+@@ -207,0 +230,7 @@ FORMS.cleared = structuredClone(FORMS.good)
++// Answered and submitted before the compliance card, the scheme funding card, the
++// traffic light and the schemes' check-first lines existed: good's answers, and good's
++// response without those keys (RESULTS.old, below). The result pages must leave the
++// cards, the light and the check-first section out and carry on, and /analysis must
++// keep the status mark it had before the light.
 +FORMS.old = structuredClone(FORMS.good)
 +
-@@ -211,0 +240 @@ const RESULTS = {
+@@ -211,0 +241 @@ const RESULTS = {
 +  green: JSON.parse(readFileSync('screenshots/verify/case_green.json', 'utf8')),
-@@ -218,0 +248,56 @@ const RESULTS = {
+@@ -218,0 +249,62 @@ const RESULTS = {
 +RESULTS.old = structuredClone(RESULTS.good)
 +delete RESULTS.old.compliance
 +delete RESULTS.old.scheme_funding
 +delete RESULTS.old.mvp_summary.band
++for (const scheme of RESULTS.old.scheme_matches) { delete scheme.check_first; delete scheme.check_first_codes }
 +// The four real responses must carry compliance steps, or the card check would pass by
 +// finding nothing to draw. A fixture that predates the card is a stale instrument.
 +const REAL_CASES = ['good', 'nulls', 'empty', 'green']
@@ -51,6 +53,11 @@ index 864c305..a4ff7ca 100644
 +  if (!RESULTS[name].compliance?.steps?.length) {
 +    throw new Error(`screenshots/verify/case_${name}.json has no compliance steps: regenerate it with tools/verify/refresh-cases.mjs against the current backend`)
 +  }
++}
++// The same for the check-first lines: good reaches schemes that carry them, and a
++// fixture from before they existed would make the check below pass on nothing.
++if (!RESULTS.good.scheme_matches.some((s) => s.check_first_codes?.length)) {
++  throw new Error('screenshots/verify/case_good.json has no scheme with check_first_codes: regenerate it with tools/verify/refresh-cases.mjs against the current backend')
 +}
 +
 +// --- the traffic light ----------------------------------------------------------
@@ -96,7 +103,18 @@ index 864c305..a4ff7ca 100644
 +    }
 +  })
 +})()`
-@@ -330,0 +416,30 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
+@@ -279,0 +372,6 @@ const CARD_ROUTES = ['/analysis', '/schemes', '/report']
++// --- the check-first check ----------------------------------------------------
++// A scheme that carries check_first_codes prints "Check these first" and those eligibility
++// lines where the reader sees them, not inside the closed disclosure. /analysis's compact
++// card has none. It is measured on the closed page text on purpose: the lines are a subset
++// of the eligibility list, so with the details open they would always be found.
++const CHECK_FIRST_ROUTES = ['/schemes', '/report']
+@@ -314,0 +413 @@ const { RESULT_STRINGS } = await import(pathToFileURL(resolve('frontend/src/i18n
++const { SCHEME_STRINGS } = await import(pathToFileURL(resolve('frontend/src/i18n/schemeStrings.js')).href)
+@@ -317,0 +417 @@ const resultText = (lang, key) => RESULT_STRINGS[lang]?.[key] ?? RESULT_STRINGS.
++const schemeLine = (lang, code) => SCHEME_STRINGS[lang]?.[code] ?? SCHEME_STRINGS.en[code]
+@@ -330,0 +431,30 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
 +
 +// --- the Simple / Detailed switch ---------------------------------------------------
 +// /analysis and /advisory carry a two-button switch (DetailSwitch), kept in localStorage
@@ -127,13 +145,20 @@ index 864c305..a4ff7ca 100644
 +]
 +const DETAIL_KEYS = ['detail.label', 'detail.simple', 'detail.detailed', 'detail.simpleNote']
 +
-@@ -335 +450 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
+@@ -335 +465 @@ const CLEARED_KEYS = ['res.changedTitle', 'res.changedButton']
 -for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS)]) {
-+for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS), 'rp.scheduleTitle', 'fs.title', 'fs.caption', ...BANDS.map((b) => `band.${b}`), 'band.basis', 'st.good', 'st.attention_needed', 'st.review', ...DETAIL_KEYS, ...DETAIL_PAGES.flatMap((p) => [...p.keep, ...p.hide])]) {
-@@ -361 +476 @@ const cardProbe = (names) => `(() => {
++for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.values(FIT_KEYS), 'rp.scheduleTitle', 'fs.title', 'fs.caption', 'sc.checkFirst', ...BANDS.map((b) => `band.${b}`), 'band.basis', 'st.good', 'st.attention_needed', 'st.review', ...DETAIL_KEYS, ...DETAIL_PAGES.flatMap((p) => [...p.keep, ...p.hide])]) {
+@@ -337,0 +468,6 @@ for (const key of [...CLEARED_KEYS, ...Object.values(NOT_READY_KEYS), ...Object.
++// A check-first code with no English sentence would be searched for as "undefined".
++for (const scheme of Object.values(RESULTS).flatMap((r) => r?.scheme_matches || [])) {
++  for (const code of scheme.check_first_codes || []) {
++    if (typeof SCHEME_STRINGS.en[code] !== 'string') throw new Error(`${code} is not defined in schemeStrings.js en`)
++  }
++}
+@@ -361 +497 @@ const cardProbe = (names) => `(() => {
 -  const heads = [...document.querySelectorAll('h2, h3')]
 +  const heads = [...document.querySelectorAll('h2, h3')].filter((el) => !el.closest('[data-scheme-funding]'))
-@@ -371 +486,134 @@ const cardProbe = (names) => `(() => {
+@@ -371 +507,134 @@ const cardProbe = (names) => `(() => {
 -const ALL_ROUTES = ['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
 +// Runs in the page. /report draws the schedule of whichever loan its menu names and
 +// does no arithmetic, so this picks one the way a person does (the menu's own change
@@ -269,21 +294,21 @@ index 864c305..a4ff7ca 100644
 +  }
 +})()`
 +const ALL_ROUTES =['/', '/login', '/profile', '/business', '/location', '/finance', ...RESULT_ROUTES, '/privacy', '/no-such-page']
-@@ -439 +687 @@ function textProblems(text, lang) {
+@@ -439 +708 @@ function textProblems(text, lang) {
 -    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed',
 +    'fit_basis', 'wholesale_price_per_kg', 'registered_units', 'count_suppressed', 'egg_price',
-@@ -452 +700,3 @@ function textProblems(text, lang) {
+@@ -452 +721,3 @@ function textProblems(text, lang) {
 -// case, language, routes. 8 passes, 41 page loads: 12 + 4 + 4 + 4 + 4 + 1 + 8 + 4.
 +// case, language, routes. 10 passes, 48 page loads: 12 + 4 + 4 + 4 + 4 + 4 + 1 + 8 + 4 + 3.
 +// Each seeds Detailed (the default is Simple), so it measures the whole page; the
 +// switch itself is checked after them, by checkDetail().
-@@ -458,0 +709 @@ const PASSES = [
+@@ -458,0 +730 @@ const PASSES = [
 +  ['green', 'en', RESULT_ROUTES],
-@@ -466,0 +718,3 @@ const PASSES = [
+@@ -466,0 +739,3 @@ const PASSES = [
 +  // A result stored before the compliance card, the scheme funding card and the
 +  // traffic light existed.
 +  ['old', 'en', ['/analysis', '/advisory', '/report']],
-@@ -586,0 +841,142 @@ async function loadPage(cdp, url) {
+@@ -586,0 +862,142 @@ async function loadPage(cdp, url) {
 +// Runs in the page: the switch as drawn, the mode on <html>, the stored choice, and the text.
 +const detailProbe = `(() => {
 +  const group = document.querySelector('.ui-detail-switch')
@@ -426,10 +451,28 @@ index 864c305..a4ff7ca 100644
 +  return seen
 +}
 +
-@@ -689,0 +1086 @@ async function main() {
+@@ -689,0 +1107 @@ async function main() {
 +        localStorage.setItem('${DETAIL_KEY}', 'detailed');
-@@ -806 +1203,120 @@ async function main() {
+@@ -806 +1224,138 @@ async function main() {
 -        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, detailsOpened, problems })
++        // The check-first lines (see CHECK_FIRST_ROUTES): the heading once per scheme that
++        // carries lines, and each line once per scheme that carries it. "At least" for the
++        // lines, because /report's funding card prints two of the same sentences itself
++        // (elig.pmegp.period, elig.pmfme.upgrade), so a missing copy of those two can hide there.
++        let checkFirstChecked = 0
++        if (CHECK_FIRST_ROUTES.includes(route) && RESULTS[caseName]) {
++          const carrying = schemes.filter((s) => s.check_first_codes?.length)
++          const printed = text.split(resultText(lang, 'sc.checkFirst')).length - 1
++          if (printed !== carrying.length) problems.push(`CHECK-FIRST HEADING: ${printed} printed, ${carrying.length} scheme(s) carry lines`)
++          const wanted = new Map()
++          for (const scheme of carrying) for (const code of scheme.check_first_codes) wanted.set(code, (wanted.get(code) || 0) + 1)
++          for (const [code, count] of wanted) {
++            const got = text.split(schemeLine(lang, code)).length - 1
++            if (got < count) problems.push(`CHECK-FIRST LINE MISSING: ${code} printed ${got} time(s), ${count} scheme(s) carry it`)
++          }
++          checkFirstChecked = carrying.length
++        }
++
 +        // The repayment schedule. Each loan's table on /report must equal the
 +        // response's own rows to the paisa, add up to the totals /advisory prints
 +        // for that loan, and end owing nothing; and /report must draw no schedule
@@ -549,20 +592,21 @@ index 864c305..a4ff7ca 100644
 +          }
 +        }
 +
-+        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, scheduleChecked, fundingChecked, complianceChecked, bandChecked, detailsOpened, problems })
-@@ -812,0 +1329,4 @@ async function main() {
++        report.push({ tag, route, caseName, lang, rendered, chars: text.length, bars: barCount, unitCharts: unitCount, cardsChecked, checkFirstChecked, scheduleChecked, fundingChecked, complianceChecked, bandChecked, detailsOpened, problems })
+@@ -812,0 +1368,5 @@ async function main() {
++            (checkFirstChecked ? ` checkfirst=${checkFirstChecked}` : '') +
 +            (scheduleChecked ? ` schedules=${scheduleChecked}` : '') +
 +            (fundingChecked ? ` funding=${fundingChecked}` : '') +
 +            (complianceChecked ? ` compliance=${complianceChecked}` : '') +
 +            (bandChecked ? ` band=${RESULTS[caseName].mvp_summary.band}` : '') +
-@@ -817,0 +1338,4 @@ async function main() {
+@@ -817,0 +1378,4 @@ async function main() {
 +    // The Simple / Detailed switch, after the passes: they seed Detailed because the default
 +    // is Simple and they would be measuring a shorter page.
 +    const detail = await checkDetail(cdp, deployerPatterns, findings)
 +
-@@ -824 +1348 @@ async function main() {
+@@ -824 +1388 @@ async function main() {
 -      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, findings }, null, 2),
 +      JSON.stringify({ exit, demoMode: deployment.demoMode, neutralised, hydrate: hydrateCheck, report, detail, findings }, null, 2),
-@@ -826 +1350 @@ async function main() {
+@@ -826 +1390 @@ async function main() {
 -    console.log(`\n${report.length} page loads plus the hydrate check, ${findings.length} with problems.`)
 +    console.log(`\n${report.length} page loads plus the hydrate check and ${detail.length} looks at the Simple/Detailed switch, ${findings.length} with problems.`)

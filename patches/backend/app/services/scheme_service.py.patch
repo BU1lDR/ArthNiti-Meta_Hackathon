@@ -1,0 +1,26 @@
+diff --git a/backend/app/services/scheme_service.py b/backend/app/services/scheme_service.py
+index 80205b3..ea0686a 100644
+--- a/backend/app/services/scheme_service.py
++++ b/backend/app/services/scheme_service.py
+@@ -356,0 +357,14 @@ def _scheme_index():
++def _check_first(scheme):
++    """
++    The sentences and the codes of the eligibility lines a reader should check
++    before the trip (gen_schemes.CHECK_FIRST). Found by code, never by position,
++    and returned as new lists, so a consumer cannot reach the shared dataset
++    through them. A scheme without the field, or with a code it does not carry,
++    gives nothing for that code.
++    """
++    codes = scheme.get("eligibility_codes", [])
++    wanted = [code for code in scheme.get("check_first_codes", []) if code in codes]
++
++    return [scheme["eligibility_rules"][codes.index(code)] for code in wanted], wanted
++
++
+@@ -397,0 +412 @@ def match_schemes(
++            check_first, check_first_codes = _check_first(scheme)
+@@ -441,0 +457,4 @@ def match_schemes(
++                    # The few eligibility lines a reader should check first, as
++                    # the same sentence and code pairs as above (new lists).
++                    "check_first": check_first,
++                    "check_first_codes": check_first_codes,

@@ -1,0 +1,9 @@
+diff --git a/frontend/src/i18n/backendText.js b/frontend/src/i18n/backendText.js
+index 7fe1eb5..bf31863 100644
+--- a/frontend/src/i18n/backendText.js
++++ b/frontend/src/i18n/backendText.js
+@@ -231,0 +232,4 @@ export function useBackendText() {
++    // The few eligibility lines worth checking before the trip (gen_schemes.CHECK_FIRST):
++    // a subset of the list above, with the same codes, so it needs no key of its own.
++    schemeCheckFirst: (scheme) => tBackendEach(scheme?.check_first_codes, scheme?.check_first),
++

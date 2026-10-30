@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..301b2ee 100644
+index a874e48..6084e09 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -13,39 +13,165 @@ index a874e48..301b2ee 100644
 -      "elig.pmfme.contribution"
 +      "elig.pmfme.contribution",
 +      "elig.pmfme.upgrade"
-@@ -56 +58,5 @@
+@@ -44,0 +47,3 @@
++    "check_first_codes": [
++      "elig.pmfme.upgrade"
++    ],
+@@ -56 +61,5 @@
 -      "trading"
 +      "trading",
 +      "food processing",
 +      "dairy",
 +      "poultry",
 +      "beekeeping"
-@@ -69 +75,2 @@
+@@ -69 +78,2 @@
 -      "Bank financing and beneficiary contribution are subject to the applicable PMEGP guidelines."
 +      "Bank financing and beneficiary contribution are subject to the applicable PMEGP guidelines.",
 +      "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026."
-@@ -79 +86 @@
+@@ -79 +89 @@
 -    "last_verified": "2026-09-01",
 +    "last_verified": "2026-10-28",
-@@ -84 +91,2 @@
+@@ -84 +94,2 @@
 -      "elig.pmegp.financing"
 +      "elig.pmegp.financing",
 +      "elig.pmegp.period"
-@@ -104,0 +113 @@
+@@ -92,0 +104,3 @@
++    "check_first_codes": [
++      "elig.pmegp.period"
++    ],
+@@ -104,0 +119 @@
 +      "food processing",
-@@ -130 +139 @@
+@@ -130 +145 @@
 -    "last_verified": "2026-09-01",
 +    "last_verified": "2026-10-28",
-@@ -207,0 +217 @@
+@@ -143,0 +159 @@
++    "check_first_codes": [],
+@@ -194,0 +211,4 @@
++    "check_first_codes": [
++      "elig.pmvishwakarma.trades",
++      "elig.common.age18"
++    ],
+@@ -207,0 +228 @@
 +      "poultry",
-@@ -221 +231,2 @@
+@@ -221 +242,2 @@
 -      "Activities allied to agriculture, such as dairy, poultry and food processing, are covered; crop cultivation on its own is not."
 +      "Activities allied to agriculture, such as dairy, poultry and food processing, are covered; crop cultivation on its own is not.",
 +      "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."
-@@ -231 +242 @@
+@@ -231 +253 @@
 -    "last_verified": "2026-09-07",
 +    "last_verified": "2026-10-28",
-@@ -236 +247,2 @@
+@@ -236 +258,2 @@
 -      "elig.standupindia.agriAllied"
 +      "elig.standupindia.agriAllied",
 +      "elig.standupindia.period"
+@@ -244,0 +268,5 @@
++    "check_first_codes": [
++      "elig.standupindia.who",
++      "elig.common.newUnit",
++      "elig.standupindia.period"
++    ],
+@@ -293,0 +322,4 @@
++    "check_first_codes": [
++      "elig.nlm.activities",
++      "elig.nlm.training"
++    ],
+@@ -339,0 +372,3 @@
++    "check_first_codes": [
++      "elig.ahidf.purpose"
++    ],
+@@ -385,0 +421,3 @@
++    "check_first_codes": [
++      "elig.aif.purpose"
++    ],
+@@ -431,0 +470,3 @@
++    "check_first_codes": [
++      "elig.kcc.who"
++    ],
+@@ -484,0 +526,5 @@
++    "check_first_codes": [
++      "elig.common.age21to40",
++      "elig.common.class8",
++      "elig.common.residentState"
++    ],
+@@ -535,0 +582,5 @@
++    "check_first_codes": [
++      "elig.common.traditionalTrade",
++      "elig.common.age18",
++      "elig.common.residentState"
++    ],
+@@ -588,0 +640,4 @@
++    "check_first_codes": [
++      "elig.common.age18to45",
++      "elig.common.newUnit"
++    ],
+@@ -640,0 +696,4 @@
++    "check_first_codes": [
++      "elig.needs.who",
++      "elig.common.residentState"
++    ],
+@@ -689,0 +749,4 @@
++    "check_first_codes": [
++      "elig.ess.who",
++      "elig.common.udyamNeeded"
++    ],
+@@ -740,0 +804,4 @@
++    "check_first_codes": [
++      "elig.common.age18to45",
++      "elig.common.residentState"
++    ],
+@@ -795,0 +863,5 @@
++    "check_first_codes": [
++      "elig.common.womenOnly",
++      "elig.udyogini.income",
++      "elig.common.residentState"
++    ],
+@@ -852,0 +925,4 @@
++    "check_first_codes": [
++      "elig.unnati.register",
++      "elig.common.udyamNeeded"
++    ],
+@@ -903,0 +980,3 @@
++    "check_first_codes": [
++      "elig.vvp.where"
++    ],
+@@ -950,0 +1030 @@
++    "check_first_codes": [],
+@@ -1003,0 +1084,3 @@
++    "check_first_codes": [
++      "elig.common.age18to45"
++    ],
+@@ -1047,0 +1131,3 @@
++    "check_first_codes": [
++      "elig.common.farmerOrLabourer"
++    ],
+@@ -1096,0 +1183,4 @@
++    "check_first_codes": [
++      "elig.odop.product",
++      "elig.common.residentState"
++    ],
+@@ -1147,0 +1238 @@
++    "check_first_codes": [],
+@@ -1193,0 +1285,3 @@
++    "check_first_codes": [
++      "elig.common.farmerOrLabourer"
++    ],
+@@ -1246,0 +1341,3 @@
++    "check_first_codes": [
++      "elig.common.shgMember"
++    ],
+@@ -1295,0 +1393 @@
++    "check_first_codes": [],
+@@ -1339,0 +1438,3 @@
++    "check_first_codes": [
++      "elig.common.farmerOrLabourer"
++    ],
+@@ -1389,0 +1491 @@
++    "check_first_codes": [],
+@@ -1442,0 +1545,3 @@
++    "check_first_codes": [
++      "elig.common.aadhaarBank"
++    ],
+@@ -1491,0 +1597,3 @@
++    "check_first_codes": [
++      "elig.svanidhi.who"
++    ],
