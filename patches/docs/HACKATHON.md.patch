@@ -1,5 +1,5 @@
 diff --git a/docs/HACKATHON.md b/docs/HACKATHON.md
-index a895eda..693c08b 100644
+index a895eda..b6e7a69 100644
 --- a/docs/HACKATHON.md
 +++ b/docs/HACKATHON.md
 @@ -1 +1 @@
@@ -13,7 +13,7 @@ index a895eda..693c08b 100644
 +The product, **अर्थNiti** (repository `ArthNiti`), tells a rural micro-entrepreneur whether a business plan is affordable, which government schemes may apply, and what to do next. The Meta models do two optional jobs in it: they turn what a person says or types into form answers (the person checks every answer before it is used), and they write the wording of a short plan around blanks that the rules fill with their own figures. They compute nothing. Section 3 says exactly where that line is.
 +
 +Sources for the event facts below: the two public event pages, the kickoff session of 26 Oct 2026, and, from the hackathon's Discord, two summaries (the rules, and how the judging runs) and two replies to questions the owner asked about work from before the event, all pasted by the owner on 30 Oct 2026; sections 9.1 and 9.2 paraphrase the summaries and section 9.1 quotes the replies. The Official Rules document is behind a login and is not quoted here; section 9 is the submission checklist.
-@@ -9,5 +11,23 @@ Event: [Meta Global AI Developer Hackathon](https://dev.meta.ai/events/global-ha
+@@ -9,5 +11,24 @@ Event: [Meta Global AI Developer Hackathon](https://dev.meta.ai/events/global-ha
 -| What | ET | IST |
 -|---|---|---|
 -| Hackathon starts | Mon 26 Oct 2026 | Mon 26 Oct 2026 |
@@ -27,6 +27,7 @@ index a895eda..693c08b 100644
 +| Judging | 5 to 8 Nov | | |
 +| Closing ceremony: top five per track judged live from the 3-minute video | Mon 9 Nov | | |
 +| Community-vote winner announced | Mon 16 Nov | | |
++| Code freeze (the owner, 30 Oct 2026; no hour was given) | | | Tue 3 Nov |
 +| Working deadline: everything submitted | | | **Tue 3 Nov, evening** |
 +
 +US daylight time ends on Sun 1 Nov, so the due time is UTC−5, not UTC−4. The working deadline leaves more than a day for a failed upload, a lost key or a broken video.
@@ -42,7 +43,7 @@ index a895eda..693c08b 100644
 +| 3. The hackathon | 26 Oct 12:24 PM ET onward | Section 2.2 | **Yes** |
 +
 +**Layer 1** is the advice engine and everything around it: financial, risk and business analysis, the 30-scheme dataset in 7 tiers, 20 sourced market rows for Lucknow and Varanasi, the advisory text, the eight routers, the eight-language interface, the form and result pages and charts, the consent and notice work for India's DPDP Act, the processing log, `docs/PROCESSOR_SCHEDULE.md`, production mode, and the browser verifier suite. The first commit is from 30 Aug 2026. It began as a six-person team entry for a college round of the Smart India Hackathon (the team was not selected); `git shortlog -sn --all` shows the contributors. The last commit made before the event is from 25 Sept (`4a2307e`). The September data-protection work (consent, notice, processing log, `docs/PROCESSOR_SCHEDULE.md`), the verifier changes and the owner's brand-asset files were still uncommitted in the working tree on 26 Oct. Most of those files were last edited by 1 Oct and a handful of verifier and stylesheet files on the morning of 26 Oct, before 8:03 AM ET. They are committed now, as the first commits of the chain in 2.3.
-@@ -15 +35,60 @@ Event: [Meta Global AI Developer Hackathon](https://dev.meta.ai/events/global-ha
+@@ -15 +36,60 @@ Event: [Meta Global AI Developer Hackathon](https://dev.meta.ai/events/global-ha
 -The working deadline leaves about 34 hours for a failed upload, a lost key or a broken video. Judging runs 4–8 Nov and finals are on 9 Nov (from the event page).
 +### 2.1 Layer 2, in detail
 +
@@ -104,29 +105,29 @@ index a895eda..693c08b 100644
 +| chore: remove OUR_MVP.md | 3 |
 +| feat: repayment schedules, scheme funding, registrations and egg prices | 3 |
 +| docs: everything is on main, CI has run, the repo is public | 3 |
-@@ -17 +96 @@ The working deadline leaves about 34 hours for a failed upload, a lost key or a
+@@ -17 +97 @@ The working deadline leaves about 34 hours for a failed upload, a lost key or a
 -## 2. Built before the hackathon, and built during it
 +Until 29 Oct 2026 this chain was three branches: `feature/dpdp-compliance` ended at the brand-asset commit, `feature/security-hardening` at the spend-cap commit and `feature/voice-assistant` at the tip. `main` now holds the whole chain and the three branches are deleted.
-@@ -19 +98,4 @@ The working deadline leaves about 34 hours for a failed upload, a lost key or a
+@@ -19 +99,4 @@ The working deadline leaves about 34 hours for a failed upload, a lost key or a
 -This must be said plainly in the submission, and the Official Rules decide whether it is allowed.
 +```
 +git log --oneline 4a2307e..main                # the chain, newest first
 +git diff e4708306cab1..main --stat             # everything the hackathon added or changed
 +```
-@@ -21,2 +103 @@ This must be said plainly in the submission, and the Official Rules decide wheth
+@@ -21,2 +104 @@ This must be said plainly in the submission, and the Official Rules decide wheth
 -- **Before 26 Oct:** the whole advice engine, the 30-scheme dataset, the 20 sourced market rows, eight-language interface, the data-protection work and the test and verifier suite. First commit 30 Aug 2026. It began as a six-person team entry for a college round of the Smart India Hackathon (the team was not selected). `git shortlog -sn --all` shows Aryan Verma 201 commits (two spellings of the name), Manjeet 12 and Netra 6.
 -- **During the hackathon (26 Oct to 3 Nov):** the Meta-powered "tell us in your own words" helper (sections 3 to 5), the change from a team project to a solo one across the docs, and the hardening of the verifier scripts' exit codes.
 +`e4708306cab1` is the commit titled *"chore: the project as it stood at the hackathon start"*: a snapshot of the tree at 12:00 PM ET on 26 Oct, 24 minutes before the line the organisers drew (section 2.1). The commits up to and including it are layers 1 and 2; the commits after it are layer 3, and the edits of section 2.1 are inside them.
-@@ -24 +105 @@ This must be said plainly in the submission, and the Official Rules decide wheth
+@@ -24 +106 @@ This must be said plainly in the submission, and the Official Rules decide wheth
 -Update this list when work lands. `git log --since=2026-10-26` is the record.
 +That snapshot was reconstructed, not saved. A full copy of the working tree was taken at 8:03 AM ET; every edit made through the editor tools between then and 12:00 PM ET was replayed from the session transcript; a file last written before 12:00 PM ET is taken as it is on disk; the few shell-script edits are accounted for by hand. Replaying the 205 editor calls made after 12:00 PM ET on top of the snapshot reproduces 26 of the 28 files they touched byte for byte. The other two (`test_network_guard.py`, `talk-lib-test.mjs`) are new in layer 3 and were changed afterwards by shell commands. The snapshot passes its own backend suite: 1,411 tests, 45 files.
-@@ -26 +107 @@ Update this list when work lands. `git log --since=2026-10-26` is the record.
+@@ -26 +108 @@ Update this list when work lands. `git log --since=2026-10-26` is the record.
 -## 3. What the model does, and what it never does
 +## 3. What the models do, and what they never do
-@@ -28 +109 @@ Update this list when work lands. `git log --since=2026-10-26` is the record.
+@@ -28 +110 @@ Update this list when work lands. `git log --since=2026-10-26` is the record.
 -The product helps a micro-entrepreneur understand whether a business plan is affordable, which schemes may apply, and what to do next. **Every number and every advice sentence still comes from hand-written Python rules** (`backend/app/services/`). The model is used for one job: getting a person's answers into the form.
 +Every number and every sentence of advice still comes from hand-written Python rules (`backend/app/services/`). **There is no model call in the analysis** (`POST /api/analysis/run`). Meta's models do two optional jobs, both off unless the server has `ARTHNITI_AI_ENABLED=true`: the intake, and the wording of a written plan.
-@@ -34,3 +115,6 @@ The product helps a micro-entrepreneur understand whether a business plan is aff
+@@ -34,3 +116,6 @@ The product helps a micro-entrepreneur understand whether a business plan is aff
 -| Checking each answer against the person's own words | Python: an answer whose quote is not in the transcript is dropped |
 -| **The person confirming every answer** | The person, on a review screen, quote beside number |
 -| Profit, repayment pressure, household check, scheme matching, market context, advice | Python rules, unchanged |
@@ -136,10 +137,10 @@ index a895eda..693c08b 100644
 +| Writing a summary, steps and cautions in the person's language, with a `{{name}}` blank wherever a figure belongs | Meta's language model, constrained to a JSON schema |
 +| Refusing a plan that carries a figure of its own, then putting the rules' figures into the blanks | Python (`plan_service`) |
 +| **The person asking for the plan** | The person, with a tick on `/advisory` that says what is sent |
-@@ -38 +122 @@ The product helps a micro-entrepreneur understand whether a business plan is aff
+@@ -38 +123 @@ The product helps a micro-entrepreneur understand whether a business plan is aff
 -What this means for what may be claimed:
 +What may be claimed from that:
-@@ -40,3 +124,5 @@ What this means for what may be claimed:
+@@ -40,3 +125,5 @@ What this means for what may be claimed:
 -- Say "AI-assisted intake". Never say "AI-driven advice", "AI-generated advice" or that the model "analyses finances". It does not.
 -- The model never produces or changes a number the engine uses without the person seeing it first. It converts spoken numbers to digits ("pachaas hazaar" to 50000); the code can check that only when the person's words contain the digits themselves (section 4), so the **review screen is the control** and is not skippable.
 -- The model sees no scheme, market or advice data.
@@ -148,10 +149,10 @@ index a895eda..693c08b 100644
 +- **The plan model** is sent no figure, name or place. It is sent: the kind of business, as one word from our own fixed list; whether the business is in a village, a small town or a city; the rules' verdicts as sentences; the rules' own advice sentences, leaving out any that contains a digit (none names a place or a scheme); and for each of up to three schemes only its kind of help and its level of government, never its name. The figures, the state and district, and the scheme names are put into the blanks by Python afterwards. So the model never sees a scheme, market or advice *figure*, but it does read the rules' advice in words, and the plan has to agree with it.
 +- What no code can check, and `plan_service.py` says so: that a plan is wise or promises nothing; that an amount is not spelled out in a word the per-language lists lack; that a name is not written in the language's own script; that a Marathi plan is Marathi and not Hindi.
 +- Why not let a model give the advice or do the arithmetic: a wrong number here is a loan someone cannot repay. Arithmetic stays in code that has tests.
-@@ -44 +130 @@ What this means for what may be claimed:
+@@ -44 +131 @@ What this means for what may be claimed:
 -## 4. Design, with the calls I made (to check)
 +## 4. How the Meta API is used
-@@ -46 +132,14 @@ What this means for what may be claimed:
+@@ -46 +133,14 @@ What this means for what may be claimed:
 -Decided by the owner on 26 Oct: build on Meta's own models for the Indie track; keep it one person's project; keep the deterministic engine. **Everything below marked "my call" was decided by the assistant, not the owner.**
 +| Meta product | Used for | Where |
 +|---|---|---|
@@ -167,10 +168,10 @@ index a895eda..693c08b 100644
 +Facts that shaped the code (from Meta's public docs, read on 26 Oct 2026): reasoning tokens share **one** output cap with the visible answer and are billed as output, so `max_completion_tokens` is 4,000 for the intake and 8,000 for the plan; `reasoning_effort: "none"` returns HTTP 400 on Muse Spark; `stop`, `logprobs`, `n` above 1 and a few more fields are rejected; audio is mono 16-bit PCM WAV, 16 or 24 kHz, up to 10 minutes; Malayalam is not a supported speech language.
 +
 +**What the live API has shown** (the owner ran `python -m app.smoke_meta`, then `--plan`, on 27 Oct 2026): the key is valid; `json_schema` output, `reasoning_effort: "low"`, `prompt_cache_key` and the plan's 8,000-token cap were accepted. Both plans (English, Hindi) passed every check on the first try: 10.6 s and 11.9 s, 1,001 input tokens each (0 and 113 of them cached), 2,357 and 2,514 output tokens, of which 2,179 and 2,348 were reasoning. At the listed prices that is about 1.1 and 1.2 cents a plan. The ledger booked $0.0797 for the pair because it prices the worst case, about 3.5 times the cost, on purpose. The ten seconds a plan takes is why it is written on request and is not part of the analysis. **Not observed:** what the speech `keywords` do to real speech (the speech check sent one second of silence), any real person's speech, and the Billing balance.
-@@ -48 +147 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -48 +148 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -**Backend** (`backend/app/`)
 +## 5. Keeping the spend inside the free credits
-@@ -50,6 +149 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -50,6 +150 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -- `core/meta_client.py`: the only code that talks to Meta. Standard-library HTTP only (no new dependency). Two calls: speech to text, and a chat call that must answer in a JSON schema. Never logs a request or response body or the key.
 -- `services/intake_service.py`: pure functions. Builds the schema and the messages, and validates the model's answer.
 -- `api/routes/intake.py`: `POST /api/intake/transcribe` (raw WAV body, `?language=`) and `POST /api/intake/extract` (`{text, language}`).
@@ -178,25 +179,25 @@ index a895eda..693c08b 100644
 -- Limits: typed text up to 2,000 characters; audio up to 60 seconds of mono 16-bit WAV at 16 or 24 kHz (a header check with the standard `wave` module), body capped while it streams; a process-wide hourly call cap to bound cost. **My call:** the cap is in-process (one worker), so it is a cost brake and not a security control.
 -- Model settings: `reasoning_effort: "low"`, a generous output-token limit (reasoning tokens count against it), no temperature set. **My call**, from Meta's docs.
 +The owner's rule: use only the $150 free credits, never pay, keep the account balance at zero. A payment method has to stay on the account (Meta rejects calls without one), so the protection is in the app and in the owner's own checks.
-@@ -57 +151 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -57 +152 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -**What the validation keeps** (all unit-tested): the field name must be one we asked for; a category or area type must be one of our fixed choices; a rupee amount must be a whole number from 0 to ₹100 crore; the quoted words must appear in the transcript; an amount quoted as bare digits must equal the amount the model returned; a household income of 0 is dropped (a zero income has to be confirmed with its own tick on the finance page); the first answer for a field wins. A state or district the model names is checked by the frontend against the 36 states and 768 districts it already holds.
 +In the app, all enforced by tests:
-@@ -59 +153,5 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -59 +154,5 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -**Frontend**
 +- **A spend ledger** (`backend/app/core/spend.py`): a file with one line per call, in whole micro-dollars; the running total is their sum. Before every call the client adds the call's *worst-case* cost and refuses the call, without sending it, if the total would pass the cap. A call that fails is still charged. A missing, unreadable or corrupt file stops the helper rather than letting it run uncounted.
 +- **Worst-case pricing** (`meta_client._chat_cost`, `_speech_cost`): a chat call is priced as one input token per byte sent plus the entire output allowance of that call (4,000 tokens for the intake, 8,000 for the plan); audio is priced at no less than 10 seconds; a model that is not in the price table is priced as the dearest one. An intake call therefore counts as about $0.02 to $0.03 and one try at a plan as about $0.04, so the default cap of **$10** allows roughly 300 to 500 intake calls, or about 250 plan tries. It can be set from above 0 up to $100 (`ARTHNITI_AI_SPEND_CAP_USD`) and never to the whole $150.
 +- **Other brakes**: an hourly call limit (default 100, in-process, shared by the three model routes; a plan takes one for each try); text up to 2,000 characters; a recording of up to 60 seconds in the page (the server accepts up to 3,000,000 bytes); models named `-contributor` are refused at startup because they let Meta train on the content.
 +- **A guard in the test suite** stops any test from making a real network call to Meta or writing the real ledger, so running the tests cannot cost anything.
 +- The smoke script makes three calls (two chat, one speech). Run with the network blocked, it records $0.0451 at the real price table: that is the worst-case estimate for the run, and what Meta bills will be lower, because a real answer uses a few hundred of the 4,000 output tokens the estimate assumes. `--plan` makes two plan calls instead (English and Hindi); the owner's run recorded $0.0797 in the ledger, against about 2 cents at the listed prices for the tokens Meta reported.
-@@ -61,3 +159 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -61,3 +160 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -- A new optional page, `/talk`, linked from the landing page. Own notice and own consent and age ticks (the helper sends data the main flow does not). Record button, or type; edit the transcript; "Find my answers"; review screen (quote beside the answer, each editable or removable); "Use these answers" writes the answers into the same form pages the person would otherwise type into, and every page that received one says so.
 -- Recording happens in the browser (MediaRecorder, then resampled to 16 kHz mono WAV). Nothing is uploaded until the person presses a button. Hidden where the browser cannot record, and for Malayalam (Meta's speech model does not list it); typing still works in all eight languages.
 -- Switched on by a build flag, `VITE_AI_HELPER=true`. Without it the app is exactly the app it was.
 +What the app cannot do: the ledger counts only this app's calls, on this machine. It does not see the account. Another program using the same key, a second copy of the server with its own ledger file, or a price change on Meta's side is invisible to it. So the owner also sets Meta's email spend limit, looks at the Usage page after the smoke run, and checks that the balance is still ₹0.00. Meta's billing page notes that content sent on free credits may be used to improve Meta's products; the `/talk` page says so to the person before they use it.
-@@ -65 +161 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -65 +162 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -**Data protection (DPDP)**
 +## 6. Design decisions
-@@ -67,3 +163,6 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -67,3 +164,6 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -- The helper sends the recording, or the typed text, to Meta. That is a new processor and a **cross-border transfer**. `docs/PROCESSOR_SCHEDULE.md` and the `/privacy` page get a section for it, and the lawyer items list gets the transfer and Meta's retention terms (unknown to us; do not promise on Meta's behalf).
 -- The transcript and recording are never stored or logged by this app. `tests/test_log_privacy.py` is extended so they cannot reach a log, on success or on error.
 -- The notice text is versioned, so adding the helper's notice bumps `NOTICE_VERSION`. No native speaker has reviewed any non-English notice wording (open item S16); that applies to the new text too.
@@ -206,35 +207,35 @@ index a895eda..693c08b 100644
 +- **Nothing the person says is stored or logged by this app.** The processing log keeps eight fields (event, request id, time, tenant, method, route template, status, duration). `tests/test_log_privacy.py`, `test_intake_log_privacy.py` and `test_advisor_log_privacy.py` check that a transcript, a recording, the answers sent for a plan, the plan or the key cannot reach it, on success or on error. A refused plan is logged as the codes of the checks it failed, never as its words. Run uvicorn with `--no-access-log`: its access log would record the `?language=` query string.
 +- **Its own consent.** `/talk` has its own notice, a consent tick and (when `VITE_REQUIRE_AGE_CHECK` is on) an age tick, held in page state only. The plan card on `/advisory` has its own tick, held in component state and cleared after each plan, and the route refuses a body where `send_to_meta` is not a real `true`. The wording lives in `talk.*` and `plan.*` keys and is not part of the versioned notice, so `NOTICE_VERSION` did not change. Meta is a new processor and a cross-border transfer; `docs/PROCESSOR_SCHEDULE.md` section 10 records it.
 +- **Typing always works.** The recorder is hidden where the browser cannot record and for Malayalam; typing works in all eight languages. If the live API fails, the page says so and the plain form is unchanged.
-@@ -71 +170 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -71 +171 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -## 5. Build order, and what gets cut first
 +## 7. How it was verified
-@@ -73,5 +172 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -73,5 +173 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -1. Backend with a fake model client: settings, validation, routes, tests. Everything except the live call is verified offline.
 -2. A smoke script, `python -m app.smoke_meta`, that the owner runs with their key. Its output is the only proof of the live API shapes (they come from Meta's documentation as summarised, and are **unconfirmed** until it runs).
 -3. The `/talk` page, recorder, strings in all 8 languages, notice and privacy text.
 -4. Docs and counts; browser verification with a fake backend client.
 -5. Demo video and submission.
 +Measured on 28 Oct 2026 on the working tree, before it was committed (re-measure with the commands in the README): backend `pytest` 2,177 passed in 58 test files (17.1 s); `node tools/parity4.mjs` 9 of 9 checks over 890 dictionary keys (7,120 values) in 8 languages; `node tools/keycheck.mjs`; `glyph-audit`; ESLint; `node --test` on `talk-lib-test.mjs` (45), `app-state-test.mjs` (41), `market-lib-test.mjs` (185) and `necc-lib-test.mjs` (74); `npm run build:local` with the helper on and off, and the https build. All 15 browser gates exited 0 on the finished tree, once the registrations card was in it (`report.json` says `exit: 0` for each that writes one). `talk-ui` (the `/talk` page and the plan card in a real Edge against a fake Meta: 24 scenarios, 460 checks, 51 s), `drive` (43 page loads and the hydrate check, with the repayment-table, funding-card and registrations-card arms), `error-banner` (32 cases in 8 languages), `scroll-audit` (38 hops), `market-ui` (42 loads), `mobile-audit` (48), `figure-audit` (352 measurements), `lang-layout` (112 loads), `print-audit` (6 renders), `text-align` (33 loads), `field-align` (96), `motion-audit`, `hero-art`, `brand-mark` and `manual-audit`. `refresh-cases` ran too. The plan card is driven by S16 to S22 of `talk-ui` (section 8 says what they do not cover).
-@@ -79 +174 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
+@@ -79 +175 @@ Decided by the owner on 26 Oct: build on Meta's own models for the Indie track;
 -Cut in this order if time runs short: the "why this?" explainer, per-field markers on the form pages (a note at the top of the page stays), the hourly cap, spoken-language switching on `/talk`. Not cut: the review screen, the evidence check, the notice.
 +The tree was also tried the way a stranger would try it. On 28 Oct 2026 the 249 files that git would commit (nothing ignored, no `.venv`, no `node_modules`, no `.env`) were copied to an empty folder. `npm ci` (151 packages), ESLint and `npm run build:local` passed there, and a build without an https `VITE_API_BASE_URL` refused, as designed. Two new virtual environments were installed from `backend/requirements-dev.txt`, and `pytest` passed all 2,177 tests on Python 3.14.7 and on 3.11.9. `parity4`, `keycheck`, `glyph-audit` and the four `node --test` files passed (344 of the 345 Node tests ran; one skips itself when there is no `.venv` at the repo root). The backend started from the copy and answered the demo input with HTTP 200 and the 10 top-level keys, and the intake route answered 404 with the helper off. Once the work was committed and pushed, a real `git clone` of the public repository (commit `b69a605`, 249 tracked files) was set up the way the README says: a new virtual environment from `backend/requirements-dev.txt` and `pytest` (2,177 passed on Python 3.14.7), then `npm install` (151 packages), ESLint, `npm run build:local`, `parity4`, `keycheck` and the four `node --test` files (185, 74, 45 and 41 tests, none skipped). All passed. `npm install` added one line, `"license": "UNLICENSED"`, to `frontend/package-lock.json`: `package.json` carries a licence field that the lockfile never had, and it went with the open licence question (section 9). That is settled on 29 Oct 2026: both files now say `"license": "MIT"`. GitHub Actions ran the same commit on Linux: the backend job on Python 3.10.22 and on 3.14 (2,177 passed on each) and the frontend job (the same checks as above, with the one Windows-only test of `talk-lib-test` skipped). Not tried on the clone: starting the servers and the browser gates, which need Edge on Windows.
-@@ -81 +176 @@ Cut in this order if time runs short: the "why this?" explainer, per-field marke
+@@ -81 +177 @@ Cut in this order if time runs short: the "why this?" explainer, per-field marke
 -## 6. Demo path
 +Measured again on 30 Oct 2026, on the working tree after the one-at-a-time questions and the landing page's new first button (re-measure with the commands in the README): backend `pytest` 2,216 passed in 58 test files (18.2 s); `node tools/parity4.mjs` 9 of 9 checks over 911 dictionary keys (7,288 values) in 8 languages; `node tools/keycheck.mjs` PASS; `glyph-audit` 3 documented hits; ESLint clean; `npm run build:local` passed; `node --test` on `talk-lib-test.mjs` (71), `speak-lib-test.mjs` (31), `app-state-test.mjs` (41), `market-lib-test.mjs` (185) and `necc-lib-test.mjs` (74), 402 in all with none skipped. `talk-ui` ran 27 scenarios and 688 checks in about 62 s, and each of its 39 refuters makes it exit 1. `read-aloud` ran 99 page loads and 750 checks, and its `--broken` run exits 1 with 146 findings. The other browser gates exited 0 on the same tree (`report.json` says `exit: 0` wherever one is written): `drive` (48 page loads, the hydrate check and 13 looks at the Simple/Detailed switch), `mobile-audit` (50 loads, and 50 again with the helper on), `lang-layout` (112), `field-align` (96), `print-audit` (6 renders), `motion-audit`, `text-align` (33 loads), `hero-art`, `brand-mark`, `manual-audit`, `error-banner` (32 cases), `scroll-audit` (38 hops), `figure-audit` (352 measurements) and `market-ui` (42 loads). `load-perf` exited 0 as well; it is a report, not a verdict: medians of 5 cold loads gave a first contentful paint of 316, 1,324 and 3,260 ms at 1x, 4x and 8x CPU and 374 KB transferred over 10 requests. The ports 8000 and 5173 were in use by another process that day, so the gates that hardcode them were run as copies pointed at 8001 and 5174 (the copies differ from the originals only in port numbers), and `read-aloud` and `mobile-audit` took `--url`. Not run on the fresh-clone path again: that was done on 28 Oct, above.
-@@ -83 +178 @@ Cut in this order if time runs short: the "why this?" explainer, per-field marke
+@@ -83 +179 @@ Cut in this order if time runs short: the "why this?" explainer, per-field marke
 -Reuse the script in `OUR_MVP.md` §16, with the new first minute: open `/talk`, speak or type the situation in Hindi, show the quote beside each answer, correct one, press "Use these answers", walk the form pages to `/finance`, and run the analysis. Safe input for the rest: tailoring in Uttar Pradesh, Lucknow (14 to 16 schemes across 6 tiers, a district market row). A fallback is part of the plan: if the live API fails during the recording, the typed path and the plain form still work and the app says so.
 +`test_model_boundary` was checked by planting 12 imports, one at a time (a connection or the model client in a rules module, a rules module in a helper service, a second place that opens a connection, a new file that imports the client): each one made it fail, and every file was put back byte for byte. New modules were also mutation-tested by hand (change a comparison, delete a check, run the tests, expect a failure). The table of results, with the survivors that were fixed by a new test or explained as equivalent, is in `docs/ENGINEERING_HISTORY.md`, section "The Meta hackathon intake helper". The browser gate has seventy-two refuters (a deliberately broken page that the gate must fail): 13 for `/talk`, 20 for the plan card and, from 30 Oct 2026, 39 for the one-at-a-time questions (35) and the landing page's buttons (4), listed in the header of `tools/verify/talk-ui.mjs`. One of the `/talk` ones survived at first, because the check read the fake backend's call log; the check now watches the page's own requests. A fixed width on the plan card's Write button also survived, because the buttons sit in a row that shrinks them to fit; that refuter was invalid, not the gate, and the listed one uses a minimum width. The first run of the 39 gave nine that ended in an instrument fault (exit 2) instead of a finding and three that the gate missed (the two review buttons stayed enabled while a request was out, and nothing checked the move on after the last answer); the gate was changed for each, and all 39 now make it exit 1 (`tools/README.md` has the table and what was changed).
-@@ -85 +180 @@ Reuse the script in `OUR_MVP.md` §16, with the new first minute: open `/talk`,
+@@ -85 +181 @@ Reuse the script in `OUR_MVP.md` §16, with the new first minute: open `/talk`,
 -## 7. Hosting
 +A defect found late, by reading: the consent box was unlocked when Stop was pressed, not when the recording had been sent, so a person could untick it with their voice already on its way. No test had caught it. Scenario S15 was written first and failed on 2 of its 12 checks; after the fix it passes with 13, and six breakages of the fixed code each fail it. In 40 pairs of S15 runs, a recording stopped at once was reported unusable 3 times, and 0 times with a 1.2 s pause before Stop (a one-sided Fisher test gives p of about 0.12, so this is not significant). The pause stays as a precaution, and the cause, an empty or very short recording that cannot be decoded, is inferred from `record.js`, not observed.
-@@ -87 +182 @@ Reuse the script in `OUR_MVP.md` §16, with the new first minute: open `/talk`,
+@@ -87 +183 @@ Reuse the script in `OUR_MVP.md` §16, with the new first minute: open `/talk`,
 -A production frontend build refuses to build without an https `VITE_API_BASE_URL`, and the browser only allows the microphone on https or localhost, so any hosted demo needs https on both sides. The reliable artifact is a demo video plus a run-it-yourself README. A hosted demo is optional and spends the owner's API quota: set `ARTHNITI_AI_HOURLY_LIMIT` low.
 +Departures from test-first, stated plainly: the original `smoke_meta.py` (layer 2) and the version-5 state code were written before their tests; the microphone-release fix in `record.js` was found by reading and is covered afterwards by the browser gate; the `api.js` helper calls, `record.js`, `TalkPage.jsx` and `HelperFilledBanner.jsx` have no Node unit tests, only the browser gate.
-@@ -89 +184 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
+@@ -89 +185 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
 -## 8. For the owner to check or supply
 +## 8. Known gaps
-@@ -91,4 +186,18 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
+@@ -91,4 +187,18 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
 -1. **Official Rules** (Cerebral Valley page): is work that existed before 26 Oct allowed? Team size and IP terms? Is a person "tied to a government" excluded? (The project began as an entry for an Indian government-run hackathon.) What must the submission contain: repo link, video, text, a live demo?
 -2. A Meta API key (create at <https://dev.meta.ai/platform>, API keys tab). If billing is not set up, a call fails with HTTP 402; look for hackathon credits on the Discord.
 -3. Written agreement from Manjeet, Netra and Anmol about their contributions, before submission if the Rules ask who owns the code. Three other names (Saad, Tripti) appear in the old team list but have no commits under those names.
@@ -257,7 +258,7 @@ index a895eda..693c08b 100644
 +- **The Listen button has met a fake speech engine and nothing else, and it does not show on the author's laptop.** `tools/verify/read-aloud.mjs` replaces the browser's engine with a fake one, so what a real engine does with the Hindi sentences (the voice, the pauses, whether it stops when asked) is unobserved. Only a voice on the device is used, and all 321 voices Windows Edge listed on 29 Oct 2026 were network voices, so on that machine no button is drawn. A phone, or a Hindi voice added in Windows' speech settings, may have a local voice; neither has been tried (section 10.1). No native speaker has reviewed the 3 `ra.*` keys either. Whether any device has a Malayalam voice has not been looked at (the transcription model has none, which is a different matter).
 +- **The one-at-a-time questions have met a fake speech engine and a fake model, and nothing else.** S23 to S25 of `talk-ui` drive the page in a real Edge: the question is read in the page's language, the reply is looked up for the question asked, the person confirms, redoes or skips it, and the page moves on to the form when none is left. No voice has been heard, and the real model has not been asked with `asking` set; both wait for the rehearsal in section 10.1. A voice on the device reads the question when the browser has one, and otherwise a voice over the network does (on the author's Windows Edge all 321 voices are of that kind): the text is the page's own fixed wording, but the browser's speech service sees it, which `docs/PROCESSOR_SCHEDULE.md` section 10 records. Malayalam has no speech input, so there the person types the reply; whether any browser has a Malayalam voice to read the question has not been looked at. The 11 new keys are machine-written in all 8 languages and unreviewed.
 +- Not built: eligibility-rule evaluation for schemes (the page says eligibility is unchecked), a ledger-photo reader, reading the figures aloud (the Listen button leaves out every sentence with a digit in it), Malayalam speech input.
-@@ -98 +207,146 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
+@@ -98 +208,146 @@ A production frontend build refuses to build without an https `VITE_API_BASE_URL
 -Filled in once the Official Rules are read. Do not tick an item that was not checked.
 +The Official Rules and the submission form are behind a login. Each box is ticked only when it has been checked.
 +
@@ -331,7 +332,7 @@ index a895eda..693c08b 100644
 +
 +### 10.1 Before recording
 +
-+1. **Record after the code freeze**, which has no date: the owner calls it, and until then the code is not frozen. Record from the build that will be submitted, so the video matches what a reviewer can clone.
++1. **Record after the code freeze**, which the owner set for 3 Nov 2026 (30 Oct; no hour was given): before then the code is not frozen. Record from the build that will be submitted, so the video matches what a reviewer can clone.
 +2. **Free the ports.** Nothing should listen on 8000 or 5173 (`netstat -ano | grep -E ':8000|:5173'`).
 +3. **For the egg shot (shot 7):** `node tools/fetch-necc-prices.mjs --write`, then `cd backend && ../.venv/Scripts/python.exe -m pytest tests/test_necc_data_guards.py tests/test_necc_market.py -q`. Without it the egg shot shows the 28 Oct list, dated as such.
 +4. **Start the backend with the helper on**, in your own Git Bash, where the key is typed and never saved:
@@ -405,7 +406,7 @@ index a895eda..693c08b 100644
 +Prior work, called out in `docs/HACKATHON.md` section 2: the rules engine, the scheme data and the interface were built before the event began, and so was the first version of the intake service (the Meta client and its two routes), written on the morning of 26 Oct, before the kickoff ended at 12:24 PM ET. Built during it: the voice-and-text page with its recorder and review screen, the spend ledger that keeps the API use inside the free credits, the written plan, the loan options and repayment schedule, the funding card, the registrations card, a green, yellow or red light on the result pages (set by the rules, not by a model), a Simple or Detailed view of them, egg prices and market rows for 29 more districts. Limits, stated on the pages: no scheme's eligibility rules are checked, all figures are estimates and not offers, and the wording in the seven languages other than English is machine-written and has not been reviewed by native speakers. The video labels each screen as new or from before the event. The submitted repository holds only the work done during the event; the earlier code it builds on stays in a separate repository that its README names and explains.
 +
 +## 11. A two-minute path for a reviewer who runs it
-@@ -100,8 +354,13 @@ Filled in once the Official Rules are read. Do not tick an item that was not che
+@@ -100,8 +355,13 @@ Filled in once the Official Rules are read. Do not tick an item that was not che
 -- [ ] Rules read; pre-existing-work policy satisfied
 -- [ ] `MODEL_API_KEY` works: `python -m app.smoke_meta` passes, output kept
 -- [ ] The helper works end to end in the browser against the real API (typed and spoken)
