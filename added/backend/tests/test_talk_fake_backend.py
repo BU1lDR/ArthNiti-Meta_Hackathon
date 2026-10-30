@@ -67,6 +67,17 @@ def test_the_fake_backend_serves_both_real_routes():
     }
 
 
+def test_the_fake_logs_which_question_a_reply_was_for():
+    client = TestClient(load_fake_backend().app)
+    said = {"text": "I owe 4000 on a loan", "language": "en"}
+
+    client.post("/api/intake/extract", json=said)
+    client.post("/api/intake/extract", json={**said, "asking": "existing_debt"})
+
+    asked = [call for call in client.get("/__fake").json() if call["call"] == "extract"]
+    assert [call["asking"] for call in asked] == [None, "existing_debt"]
+
+
 # The plan route. The fake writes the plan the plan tests use, in the language the
 # real prompt asks for, so a browser gate would drive the real route, the real checks
 # and the real rendering of the figures. No gate does yet (see the header of

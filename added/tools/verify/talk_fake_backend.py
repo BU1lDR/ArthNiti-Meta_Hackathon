@@ -42,6 +42,8 @@ KEY = "LLM_1234567_" + "q" * 24
 # and the placeholders the plan has to use. test_talk_fake_backend.py fails if they drift.
 PLAN_LANGUAGE = re.compile(r"Write the plan in (\w+),")
 PLAN_REQUIRED = re.compile(r"at least once: (.+?)\.\n")
+# What intake_service._asking appends to the instructions when a reply answers one question.
+ASKING = re.compile(r"The person was just asked about (\w+):")
 LANGUAGE_CODES = {name: code for code, name in LANGUAGES.items()}
 
 TEXT_RULES = (
@@ -106,7 +108,8 @@ class Fake:
             return self._plan(messages)
 
         text = messages[-1]["content"]
-        self._enter({"call": "extract", "text": text})
+        asking = ASKING.search(messages[0]["content"])
+        self._enter({"call": "extract", "text": text, "asking": asking and asking.group(1)})
 
         if self.mode["extraction"] is not None:
             return self.mode["extraction"]
