@@ -11,7 +11,7 @@ from app.services.risk_service import calculate_repayment_pressure
 # sentence's translation code, and is drawn from there.
 #
 # Every limit is found with the function that made the figure the page prints
-# (calculate_repayment_pressure), one whole rupee at a time, never with the exact
+# (calculate_repayment_pressure), over whole rupees, never with the exact
 # arithmetic. The two disagree at the edges: 30,000 of 100,001 is 29.9997%, which
 # is printed as 30% and called moderate, so exact arithmetic would offer a limit
 # the page then contradicts. Payments are searched in whole rupees and amounts are
