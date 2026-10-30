@@ -1,5 +1,5 @@
 diff --git a/backend/tests/test_intake_log_privacy.py b/backend/tests/test_intake_log_privacy.py
-index 5c0afd6..1f01958 100644
+index 5c0afd6..dd906a7 100644
 --- a/backend/tests/test_intake_log_privacy.py
 +++ b/backend/tests/test_intake_log_privacy.py
 @@ -18 +17,0 @@ import pytest
@@ -29,6 +29,11 @@ index 5c0afd6..1f01958 100644
 -    (MetaError("bad_output", detail="S3NT-output"), 502),
 -]
 -
+@@ -59,2 +41,2 @@ FAILURES = [
+-def extract(client, text=SAID, language="en"):
+-    return client.post(EXTRACT, json={"text": text, "language": language})
++def extract(client, text=SAID, language="en", **more):
++    return client.post(EXTRACT, json={"text": text, "language": language, **more})
 @@ -80,17 +61,0 @@ def route(request):
 -@pytest.fixture(params=[{}, PRODUCTION], ids=["dev", "prod"])
 -def helper(request):
@@ -47,3 +52,24 @@ index 5c0afd6..1f01958 100644
 -        assert line["method"] == "POST"
 -
 -
+@@ -117,0 +83,18 @@ def test_answers_carry_the_words_back_to_the_person_and_to_no_log(sinks, helper)
++def test_the_question_asked_goes_to_the_model_and_to_no_log(sinks, helper):
++    # Which question was on the screen is not a word the person said, but it says
++    # what they were doing. It reaches Meta (PROCESSOR_SCHEDULE.md section 10) and
++    # no log.
++    model = FakeModel()
++    model.extraction = ECHOING
++
++    response = extract(helper(model), asking="available_capital")
++
++    assert response.status_code == 200
++    assert "available_capital" in model.calls[0][2][0]["content"].split("just asked", 1)[1]
++
++    lines, text = sinks()
++    assert_clean(text)
++    assert "available_capital" not in text
++    assert_lines(lines, (EXTRACT, 200))
++
++
+@@ -195,0 +179 @@ REFUSED = [
++    ("a field that is not on the form", lambda c: extract(c, asking="S3NT-xx"), 422),

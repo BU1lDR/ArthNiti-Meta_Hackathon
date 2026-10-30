@@ -1,9 +1,14 @@
 diff --git a/backend/tests/test_intake_routes.py b/backend/tests/test_intake_routes.py
-index e739709..45078ff 100644
+index e739709..eb45aed 100644
 --- a/backend/tests/test_intake_routes.py
 +++ b/backend/tests/test_intake_routes.py
 @@ -26,0 +27 @@ from app.services import intake_service as intake
 +from app.services import plan_service as plan
+@@ -83,2 +84,2 @@ def post_transcribe(client, wav=None, language="hi", **kwargs):
+-def post_extract(client, text=TALK, language="en"):
+-    return client.post("/api/intake/extract", json={"text": text, "language": language})
++def post_extract(client, text=TALK, language="en", **more):
++    return client.post("/api/intake/extract", json={"text": text, "language": language, **more})
 @@ -131,0 +133 @@ PRODUCTION_WITH_THE_HELPER = {
 +    ("post", "/api/advisor/plan"),
 @@ -135 +137 @@ PRODUCTION_WITH_THE_HELPER = {
@@ -109,5 +114,30 @@ index e739709..45078ff 100644
 +    post_transcribe(client)
 +
 +    assert model.keywords == intake.SPEECH_KEYWORDS
++
++
+@@ -473,0 +558,24 @@ def test_the_text_goes_to_the_chat_model_with_our_instructions_and_schema(model,
++def test_the_question_that_was_just_asked_goes_into_our_instructions(model, client):
++    response = post_extract(client, "fifty thousand", "hi", asking="available_capital")
++
++    assert response.status_code == 200
++    assert model.calls[0][2] == intake.extraction_messages("fifty thousand", "hi", asking="available_capital")
++    assert "available_capital" in model.calls[0][2][0]["content"].split("just asked", 1)[1]
++    # Only the instructions change: the reply is held to the same shape.
++    assert model.calls[0][4] == intake.extraction_schema()
++
++
++def test_asking_about_nothing_is_the_same_as_leaving_it_out(model, client):
++    assert post_extract(client, asking=None).status_code == 200
++
++    assert model.calls[0][2] == intake.extraction_messages(TALK, "en")
++
++
++@pytest.mark.parametrize("asking", ["password", "", "Available_Capital", 7, ["state"]])
++def test_only_a_field_of_the_form_can_be_asked_about(model, client, asking):
++    response = post_extract(client, asking=asking)
++
++    assert response.status_code == 422
++    assert model.calls == []
 +
 +

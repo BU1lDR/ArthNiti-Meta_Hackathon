@@ -1,5 +1,5 @@
 diff --git a/backend/app/services/intake_service.py b/backend/app/services/intake_service.py
-index 3efda19..66e340a 100644
+index 3efda19..8c62f5b 100644
 --- a/backend/app/services/intake_service.py
 +++ b/backend/app/services/intake_service.py
 @@ -84,0 +85 @@ CATEGORIES = (
@@ -12,3 +12,28 @@ index 3efda19..66e340a 100644
 +# improves what is heard has not been measured.
 +SPEECH_KEYWORDS = ("lakh", "crore", "EMI", "rupees", "Lucknow", "Varanasi", "Uttar Pradesh", *CATEGORIES)
 +
+@@ -176,2 +184,8 @@ Rules:
+-def extraction_messages(text: str, language: str):
+-    """The two messages for the chat call. An unknown language code is a KeyError.
++def _asking(field: str):
++    return f"""
++
++The person was just asked about {field}: {_MEANING[field]} Their reply may be very short: only an amount, a place, or the word no. If it answers that question, report it for {field} and quote their words. For an amount, no or none means 0, except for household_monthly_income (rule 5). If it does not answer that question, leave {field} out. Anything else they clearly said still goes in its own field. Rules 1 to 6 still apply."""
++
++
++def extraction_messages(text: str, language: str, asking: str | None = None):
++    """The two messages for the chat call. An unknown language code or field is a KeyError.
+@@ -180 +194,3 @@ def extraction_messages(text: str, language: str):
+-    developer message, which words said aloud can never be part of.
++    developer message, which words said aloud can never be part of. `asking` is
++    the form field the screen was on when they spoke: the code chose it, from
++    FORM_ORDER, so a bare "fifty thousand" has a field to belong to.
+@@ -182,0 +199,5 @@ def extraction_messages(text: str, language: str):
++    instructions = _instructions(LANGUAGES[language])
++
++    if asking is not None:
++        instructions += _asking(asking)
++
+@@ -184 +205 @@ def extraction_messages(text: str, language: str):
+-        {"role": "developer", "content": _instructions(LANGUAGES[language])},
++        {"role": "developer", "content": instructions},

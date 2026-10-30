@@ -1,5 +1,5 @@
 diff --git a/docs/PROCESSOR_SCHEDULE.md b/docs/PROCESSOR_SCHEDULE.md
-index ff0c0ca..9ff37d9 100644
+index ff0c0ca..96027cf 100644
 --- a/docs/PROCESSOR_SCHEDULE.md
 +++ b/docs/PROCESSOR_SCHEDULE.md
 @@ -5 +5 @@ This is the technical schedule for an organisation that runs अर्थNiti fo
@@ -112,7 +112,7 @@ index ff0c0ca..9ff37d9 100644
 +| Call | What goes to Meta |
 +|---|---|
 +| Speech | the recording as a WAV (mono, 16-bit, 16 or 24 kHz, at most 3,000,000 bytes; the page stops recording at 60 seconds). The spoken language's name, for example "Hindi", as a hint. 15 fixed words that help it hear numbers and places (`lakh`, `crore`, `EMI`, `rupees`, `Lucknow`, `Varanasi`, `Uttar Pradesh` and the eight kinds of work). The model name |
-+| Words | one message of our fixed instructions, which names the spoken language. One message holding the person's words (1 to 2,000 characters). A fixed JSON schema for the reply. The model name, `reasoning_effort` set to `low`, a cap of 4,000 output tokens and a `prompt_cache_key` of `form_answers` |
++| Words | one message of our fixed instructions, which names the spoken language and, when the page is asking one question at a time, adds a paragraph that names the form field the question was about (one of twelve fixed field names, with its fixed meaning). One message holding the person's words (1 to 2,000 characters). A fixed JSON schema for the reply. The model name, `reasoning_effort` set to `low`, a cap of 4,000 output tokens and a `prompt_cache_key` of `form_answers` |
 +| Plan | one message of our fixed instructions, which names the language to write in and lists the blanks the plan may use, each with a fixed meaning (a scheme blank says who runs the scheme and what kind of help it gives, never its name). One message holding: the kind of business, as one word from our own list and never what the person typed; whether it is in a village, a small town or a city; the rules' verdicts, as fixed sentences; and the rules' own advice sentences, with any sentence that holds a digit left out. On a second try, a fixed hint for each check the last reply failed. A fixed JSON schema for the reply. The model name, `reasoning_effort` set to `low`, a cap of 8,000 output tokens (the model's reasoning counts against it) and a `prompt_cache_key` of `business_plan` |
 +
 +Nothing else is sent: not the other answers, not the name, not the consent record and not the person's IP address. The plan call sends no figure, no state or district, no scheme name and nothing the person typed. **For the speech and words calls, the person can say or type anything.** The page asks them not to say a name, phone number or bank details (`talk.sendsText`), and nothing checks that they do not.

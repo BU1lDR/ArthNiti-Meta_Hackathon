@@ -1,5 +1,5 @@
 diff --git a/backend/app/api/routes/intake.py b/backend/app/api/routes/intake.py
-index e397c07..0a891e5 100644
+index e397c07..164f04c 100644
 --- a/backend/app/api/routes/intake.py
 +++ b/backend/app/api/routes/intake.py
 @@ -14,0 +15,3 @@ nothing the person said is in an error body or a log line.
@@ -32,6 +32,9 @@ index e397c07..0a891e5 100644
 @@ -132 +138 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
 -            raise _refusal(error) from None
 +            raise refusal(error) from None
+@@ -140 +146 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
+-        messages = intake.extraction_messages(body.text, body.language)
++        messages = intake.extraction_messages(body.text, body.language, body.asking)
 @@ -152 +158 @@ def build_router(client, chat_model: str, asr_model: str, hourly_limit: int):
 -            raise _refusal(error) from None
 +            raise refusal(error) from None

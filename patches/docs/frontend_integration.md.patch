@@ -1,5 +1,5 @@
 diff --git a/docs/frontend_integration.md b/docs/frontend_integration.md
-index 2463c76..b4dd2e0 100644
+index 2463c76..92f691c 100644
 --- a/docs/frontend_integration.md
 +++ b/docs/frontend_integration.md
 @@ -3 +3 @@
@@ -94,9 +94,9 @@ index 2463c76..b4dd2e0 100644
 +| Route | Takes | Returns |
 +|---|---|---|
 +| `POST /api/intake/transcribe?language=<code>` | The raw bytes of a WAV as the body: mono, 16-bit, 16 or 24 kHz, at most 3,000,000 bytes. The frontend sends `Content-Type: audio/wav`; the server does not check it. `language` is required and is one of `en`, `hi`, `ta`, `te`, `kn`, `mr`, `bn`. There is no `ml`, because the speech model has no Malayalam | `{"transcript": "…"}` |
-+| `POST /api/intake/extract` | `{"text": "…", "language": "<code>"}`. `text` is 1 to 2,000 characters. `language` is one of the eight interface codes, `ml` included | `{"answers": [{"field", "value", "evidence"}, …], "ignored": <int>}` |
++| `POST /api/intake/extract` | `{"text": "…", "language": "<code>", "asking": "<field>"}`. `text` is 1 to 2,000 characters. `language` is one of the eight interface codes, `ml` included. `asking` is optional (absent or `null` for the open first answer): the form field the page had just asked about, one of the twelve field names below. A name that is not on the form is a 422 | `{"answers": [{"field", "value", "evidence"}, …], "ignored": <int>}` |
 +
-+`answers` holds only what passed the server's checks (`docs/PROCESSOR_SCHEDULE.md` §10.1); `ignored` counts the rest. `field` is a form field: `business_category`, `state`, `district` or `location_type` (each with a string `value`), or one of the money fields (`value` is a whole number of rupees). `evidence` is the stretch of the person's own words the answer rests on. One measured example, with a stand-in model that returned four answers, two of which quoted words the person never said:
++`answers` holds only what passed the server's checks (`docs/PROCESSOR_SCHEDULE.md` §10.1); `ignored` counts the rest. `field` is a form field: `business_category`, `state`, `district` or `location_type` (each with a string `value`), or one of the money fields (`value` is a whole number of rupees). `evidence` is the stretch of the person's own words the answer rests on. `asking` changes only the instructions the model is given, so that a bare "fifty thousand" or "no" can be an answer to the question on the screen; the checks on the reply are the same. One measured example, with a stand-in model that returned four answers, two of which quoted words the person never said:
 +
 +```json
 +{"answers": [

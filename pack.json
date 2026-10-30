@@ -74,6 +74,7 @@
     "backend/app/data/schemes.json",
     "backend/app/main.py",
     "backend/app/schemas/analysis.py",
+    "backend/app/schemas/intake.py",
     "backend/app/schemas/market.py",
     "backend/app/services/analysis_service.py",
     "backend/app/services/intake_service.py",
@@ -148,7 +149,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "98976eb7f691ba6a9f2929302756aac1083e61ae",
-    "tree": "849faa7c638019065a8323b461c80d158931669b"
+    "devCommit": "03feae46ba6fa2cf4e8b202b61cbdc46bc16e936",
+    "tree": "f678132ac5e10dd01242b00c1ac1dddbef8a4a53"
   }
 }

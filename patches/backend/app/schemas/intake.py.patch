@@ -1,0 +1,13 @@
+diff --git a/backend/app/schemas/intake.py b/backend/app/schemas/intake.py
+index db4f763..7a3c258 100644
+--- a/backend/app/schemas/intake.py
++++ b/backend/app/schemas/intake.py
+@@ -12 +12 @@ from app.schemas.limits import MAX_TALK_TEXT
+-from app.services.intake_service import ASR_LANGUAGES, LANGUAGES
++from app.services.intake_service import ASR_LANGUAGES, FORM_ORDER, LANGUAGES
+@@ -18,0 +19 @@ SpokenLanguage = Literal[tuple(ASR_LANGUAGES)]
++FormField = Literal[tuple(FORM_ORDER)]
+@@ -23,0 +25,3 @@ class ExtractRequest(BaseModel):
++    # The field the screen was asking about when the person spoke (the guided
++    # questions on /talk); absent for the open first answer.
++    asking: FormField | None = None

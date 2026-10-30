@@ -1,5 +1,5 @@
 diff --git a/backend/tests/test_intake_service.py b/backend/tests/test_intake_service.py
-index 4d2e02a..938f67d 100644
+index 4d2e02a..a6802d5 100644
 --- a/backend/tests/test_intake_service.py
 +++ b/backend/tests/test_intake_service.py
 @@ -189 +189,7 @@ def test_a_money_field_in_the_text_list_and_a_text_field_in_the_money_list_are_d
@@ -13,7 +13,43 @@ index 4d2e02a..938f67d 100644
 +    ],
 @@ -211,0 +218 @@ def test_the_categories_are_the_ones_the_business_page_offers():
 +        "poultry",
-@@ -468,0 +476,17 @@ def test_speech_recognition_is_offered_in_seven_of_the_eight_languages():
+@@ -462,0 +470,35 @@ def test_an_unknown_language_is_refused():
++# ---------------------------------------------------------------- the question the person was just asked
++
++
++def test_with_no_question_asked_the_instructions_do_not_mention_one():
++    assert "just asked" not in intake.extraction_messages("x", "en")[0]["content"]
++    assert intake.extraction_messages("x", "en", asking=None) == intake.extraction_messages("x", "en")
++
++
++@pytest.mark.parametrize("field", intake.FORM_ORDER)
++def test_the_question_asked_is_named_in_our_message_and_the_words_stay_in_theirs(field):
++    # A bare "fifty thousand" belongs to no field unless the code says which
++    # question the screen was on. The code names the field; the model only reads.
++    messages = intake.extraction_messages(MARKER, "en", asking=field)
++
++    assert field in messages[0]["content"].split("just asked", 1)[1]
++    assert MARKER not in messages[0]["content"]
++    assert messages[1] == {"role": "user", "content": MARKER}
++
++
++def test_a_short_reply_counts_only_when_it_answers_the_question_asked():
++    asked = intake.extraction_messages("x", "en", asking="monthly_emi")[0]["content"].split("just asked", 1)[1]
++
++    assert "answers that question" in asked
++    assert "leave monthly_emi out" in asked
++    # "No" to "do you repay a loan?" is an answer, and it is 0.
++    assert "no or none means 0" in asked
++    # The rule that a spoken zero never stands for a household with no income stays.
++    assert "household_monthly_income" in asked
++
++
++def test_a_field_that_is_not_on_the_form_cannot_be_asked_about():
++    with pytest.raises(KeyError):
++        intake.extraction_messages("x", "en", asking="password")
++
++
+@@ -468,0 +511,17 @@ def test_speech_recognition_is_offered_in_seven_of_the_eight_languages():
 +
 +
 +def test_the_speech_keywords_are_a_short_list_of_plain_words():
