@@ -51,6 +51,7 @@
     "frontend/src/data/planShape.js",
     "frontend/src/data/talkAnswers.js",
     "frontend/src/i18n/adviceAmount.js",
+    "frontend/src/i18n/offerLines.js",
     "frontend/src/pages/TalkPage.jsx",
     "tools/fetch-necc-prices.mjs",
     "tools/make-hero-backdrop.mjs",
@@ -59,7 +60,9 @@
     "tools/verify/amount-lib-test.mjs",
     "tools/verify/app-state-test.mjs",
     "tools/verify/necc-lib-test.mjs",
+    "tools/verify/offer-banned.mjs",
     "tools/verify/offer-lib-test.mjs",
+    "tools/verify/offer-lines-test.mjs",
     "tools/verify/offer_reference.py",
     "tools/verify/read-aloud.mjs",
     "tools/verify/speak-lib-test.mjs",
@@ -164,7 +167,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "8439a5bf615df77ecff5d90977682823535b9a70",
-    "tree": "223b2162c12938dc800f7257b55b352fe96ed06f"
+    "devCommit": "ec6677577aed7e0b383bd1f81f0dd15ea60d5396",
+    "tree": "47ea0e6c3ac28dc46cab37e53c0a5f1ea272c40a"
   }
 }
