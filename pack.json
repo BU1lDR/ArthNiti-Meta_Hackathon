@@ -46,6 +46,7 @@
     "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
     "frontend/src/components/SpeakerIcon.jsx",
+    "frontend/src/data/loanOffer.js",
     "frontend/src/data/marketRows.js",
     "frontend/src/data/planShape.js",
     "frontend/src/data/talkAnswers.js",
@@ -58,6 +59,8 @@
     "tools/verify/amount-lib-test.mjs",
     "tools/verify/app-state-test.mjs",
     "tools/verify/necc-lib-test.mjs",
+    "tools/verify/offer-lib-test.mjs",
+    "tools/verify/offer_reference.py",
     "tools/verify/read-aloud.mjs",
     "tools/verify/speak-lib-test.mjs",
     "tools/verify/talk-lib-test.mjs",
@@ -161,7 +164,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "80cdb27066feacd46c3f9393c4ec0411bf3dec5d",
-    "tree": "419b71510ece3e68cf42ab1b99ee52793d778d70"
+    "devCommit": "7cc595c5cc1949f9b45f753438db06b08a49cd24",
+    "tree": "e9f01e2de6e46886c8f488886fcfa65046951e5f"
   }
 }
