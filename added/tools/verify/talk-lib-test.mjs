@@ -29,6 +29,8 @@ import {
   LABEL_KEY_BY_PATH,
   planFill,
   NO_SPEECH_LANGUAGES,
+  QUESTIONS,
+  pendingQuestions,
 } from '../../frontend/src/data/talkAnswers.js'
 import { LANGUAGES } from '../../frontend/src/i18n/languages.js'
 import { MAX_RUPEES, MAX_AUDIO_BYTES } from '../../frontend/src/data/limits.js'
@@ -475,5 +477,113 @@ describe('patchesFor', () => {
     const patches = patchesFor(rows(said('initial_investment', 100), said('existing_debt', 0)), locationNow)
     assert.equal(typeof patches.business.initialInvestment, 'string')
     assert.equal(typeof patches.business.existingDebt, 'string')
+  })
+})
+
+// ---------------------------------------------------------------- the questions asked aloud
+
+describe('QUESTIONS', () => {
+  test('are the fields the form sends, once each, in the order the form asks them', () => {
+    assert.deepEqual(QUESTIONS.map(([field]) => field), FIELD_ORDER)
+  })
+
+  test('each has the dictionary key of its wording, and no key is used twice', () => {
+    const keys = QUESTIONS.map(([, key]) => key)
+    assert.ok(keys.every((key) => /^[a-z]+\.[A-Za-z]+$/.test(key)), keys)
+    assert.equal(new Set(keys).size, keys.length)
+  })
+})
+
+describe('pendingQuestions', () => {
+  // The form as AppContext starts it: only what has a default is filled in.
+  const form = (over = {}) => ({
+    business: { category: '', initialInvestment: '', monthlyRevenue: '', monthlyOperatingExpenses: '', existingDebt: 0, ...over.business },
+    location: { state: '', district: '', locationType: 'rural', ...over.location },
+    finance: { availableCapital: '', monthlyExpenses: '', monthlyEmi: '', householdIncome: '', ...over.finance },
+  })
+  // Everything the form cannot do without, and nothing it has a default for.
+  const required = form({
+    business: { category: 'tailoring', initialInvestment: '50000', monthlyRevenue: '20000', monthlyOperatingExpenses: '5000' },
+    location: { state: 'Uttar Pradesh', district: 'Lucknow' },
+    finance: { availableCapital: '10000', monthlyExpenses: '8000' },
+  })
+  const fields = (data, done = []) => pendingQuestions(data, new Set(done)).map((q) => q.field)
+
+  test('an empty form is asked everything, in the order of the form', () => {
+    assert.deepEqual(fields(form()), FIELD_ORDER)
+    assert.deepEqual(pendingQuestions(form(), new Set())[0], { field: 'business_category', key: 'business.category' })
+  })
+
+  test('what the form already holds is not asked', () => {
+    const data = form({ business: { category: 'dairy', initialInvestment: '50000' }, location: { state: 'Kerala' } })
+    assert.deepEqual(fields(data), [
+      'expected_monthly_revenue',
+      'monthly_operating_expenses',
+      'existing_debt',
+      'district',
+      'location_type',
+      'available_capital',
+      'monthly_expenses',
+      'monthly_emi',
+      'household_monthly_income',
+    ])
+  })
+
+  test('an amount of 0 is an answer and is held; spaces are not', () => {
+    assert.ok(!fields(form({ business: { initialInvestment: '0' } })).includes('initial_investment'))
+    assert.ok(!fields(form({ business: { initialInvestment: 0 } })).includes('initial_investment'))
+    assert.ok(fields(form({ business: { initialInvestment: '  ' } })).includes('initial_investment'))
+    assert.ok(fields(form({ business: { initialInvestment: null } })).includes('initial_investment'))
+  })
+
+  test('a field the form has a default for is asked until it has been gone through', () => {
+    // The default says nothing about what the person has, so the value cannot tell
+    // an answer from the default.
+    assert.deepEqual(fields(required), ['existing_debt', 'location_type', 'monthly_emi', 'household_monthly_income'])
+    assert.deepEqual(fields(required, ['existing_debt', 'location_type']), ['monthly_emi', 'household_monthly_income'])
+  })
+
+  test('a defaulted field holding anything but its default is an answer, and is held', () => {
+    const held = form({ business: { existingDebt: '5000' }, location: { locationType: 'urban' }, finance: { monthlyEmi: '1200', householdIncome: '15000' } })
+    const none = fields(held)
+    for (const field of ['existing_debt', 'location_type', 'monthly_emi', 'household_monthly_income']) {
+      assert.ok(!none.includes(field), field)
+    }
+    // the default typed back in by hand is still the default
+    assert.ok(fields(form({ business: { existingDebt: '0' } })).includes('existing_debt'))
+  })
+
+  test('a field gone through is not asked again, whatever the form holds', () => {
+    assert.deepEqual(fields(form(), ['business_category', 'state']).slice(0, 2), ['initial_investment', 'expected_monthly_revenue'])
+    assert.ok(!fields(form(), ['state']).includes('state'))
+    // a skipped question stays skipped even though the form is still blank there
+    assert.ok(!fields(form(), FIELD_ORDER).length)
+  })
+
+  test('nothing is left when every question is held or gone through', () => {
+    assert.deepEqual(fields(required, ['existing_debt', 'location_type', 'monthly_emi', 'household_monthly_income']), [])
+  })
+
+  test('walking the questions one by one asks each field once and ends', () => {
+    const done = new Set()
+    const asked = []
+    for (let q = pendingQuestions(form(), done)[0]; q; q = pendingQuestions(form(), done)[0]) {
+      asked.push(q.field)
+      done.add(q.field)
+    }
+    assert.deepEqual(asked, FIELD_ORDER)
+  })
+
+  test('a new state with the district cleared brings the district back', () => {
+    assert.ok(!fields(required).includes('district'))
+    assert.ok(fields(form({ ...required, location: { state: 'Kerala', district: '' } })).includes('district'))
+  })
+
+  test('does not change the set it is given, and copes with a form that is missing sections', () => {
+    const done = new Set(['state'])
+    pendingQuestions(form(), done)
+    assert.deepEqual([...done], ['state'])
+    assert.equal(pendingQuestions({}, new Set()).length, FIELD_ORDER.length)
+    assert.equal(pendingQuestions(undefined, new Set()).length, FIELD_ORDER.length)
   })
 })

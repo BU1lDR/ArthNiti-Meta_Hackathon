@@ -162,6 +162,41 @@ export function patchesFor(rows, location = {}) {
   return patches
 }
 
+// The questions /talk asks aloud, one at a time: [request field, dictionary key of
+// the wording]. Same fields and order as SENT_FIELDS (the test fails otherwise).
+// Where the form already has a question's wording, that wording is reused.
+export const QUESTIONS = [
+  ['business_category', 'business.category'],
+  ['initial_investment', 'business.investment'],
+  ['expected_monthly_revenue', 'business.revenue'],
+  ['monthly_operating_expenses', 'business.opex'],
+  ['existing_debt', 'talk.askDebt'],
+  ['state', 'talk.askState'],
+  ['district', 'talk.askDistrict'],
+  ['location_type', 'location.areaType'],
+  ['available_capital', 'finance.capital'],
+  ['monthly_expenses', 'finance.expenses'],
+  ['monthly_emi', 'finance.emiSummary'],
+  ['household_monthly_income', 'finance.householdIncome'],
+]
+
+// What the form starts a question's answer as, where that is not blank. An answer
+// equal to it says nothing about what the person has, so that question is asked
+// until it has been gone through.
+const STARTS_AS = { existing_debt: '0', location_type: 'rural' }
+
+// The questions still to ask, in order, as {field, key}. `done` holds the fields the
+// person has answered or skipped on this page: a question is never asked twice, and
+// a skipped one stays skipped although the form is still blank there.
+export function pendingQuestions(data, done = new Set()) {
+  return QUESTIONS.filter(([field]) => {
+    if (done.has(field)) return false
+    const [section, key] = FIELD_TARGETS[field]
+    const value = String(data?.[section]?.[key] ?? '').trim()
+    return value === '' || value === STARTS_AS[field]
+  }).map(([field, key]) => ({ field, key }))
+}
+
 // What applying `patches` to the form's answers would change, and which of those
 // answers the helper put there for the reader to check.
 //   changed  the patches with the values the form already holds taken out
