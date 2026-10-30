@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 6bedb8a..707f2f1 100644
+index 6bedb8a..f2abbdb 100644
 --- a/README.md
 +++ b/README.md
 @@ -5 +5 @@ Hyper-local business advice and financial structuring for rural micro-entreprene
@@ -185,7 +185,7 @@ index 6bedb8a..707f2f1 100644
 +| [docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md) | the formulas, the matching rules and the dataset notes, with their sources, and the known limits of the advice and the data | you're editing `backend/app/services/` or the data files |
 @@ -258 +315 @@ Run the browser verifiers after any UI change, and `refresh-cases.mjs` after tou
 -| [OUR_MVP.md](OUR_MVP.md) | the product view: what's built and what isn't | you need the product picture |
-+| [docs/HINDI_REVIEW.md](docs/HINDI_REVIEW.md) | the Hindi on the screens the video shows, in a table to read and correct, with its status (no one has read it yet) | you read Hindi and can check the wording |
++| [docs/HINDI_REVIEW.md](docs/HINDI_REVIEW.md) | the Hindi on the screens the video shows, in a table to read and correct, with its status (the author has read the two rows on the scheme page; no one has read the rest) | you read Hindi and can check the wording |
 @@ -260 +317 @@ Run the browser verifiers after any UI change, and `refresh-cases.mjs` after tou
 -| [LICENSE](LICENSE) | proprietary licence: all rights reserved by the owner | before you copy, share or deploy any of it |
 +| [LICENSE](LICENSE) | the MIT licence (the data it leaves out is under "Licence" below) | before you copy, reuse or deploy any of it |

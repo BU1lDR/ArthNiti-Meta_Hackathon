@@ -1,6 +1,6 @@
 # Hindi wording to read
 
-**Status: not yet read.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. Nobody has read it yet. Once it has been read, this line will say who read it and when. That will mean “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other seven languages have not been read by anyone.
+**Status: two rows read, the rest not yet read.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. On 31 Oct 2026 the author read rows 230 and 231 and left them as they are; no other row has been reported as read. Once the whole sheet has been read, this line will say who read it and when. That will mean “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other seven languages have not been read by anyone.
 
 ## What is here
 
@@ -341,7 +341,7 @@ The helper page now asks the form's questions one at a time, in the order of the
 
 ## The scheme page: “Check these first” (new this week, shown in English in the video)
 
-Each scheme on the scheme page and on the printout now opens with the few of its own eligibility lines that decide whether it fits a person. The lines themselves are the scheme's existing sentences (the scheme texts are not in this sheet); these two are the heading and the sentence under it. Nothing is checked for the reader, and the second sentence says so. (2 strings)
+Each scheme on the scheme page and on the printout now opens with the few of its own eligibility lines that decide whether it fits a person. The lines themselves are the scheme's existing sentences (the scheme texts are not in this sheet); these two are the heading and the sentence under it. Nothing is checked for the reader, and the second sentence says so. The author read both rows on 31 Oct 2026 and left them as they are. (2 strings)
 
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
