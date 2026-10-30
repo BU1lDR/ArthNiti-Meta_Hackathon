@@ -1,110 +1,131 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..c8fd6cc 100644
+index b8e7eb3..6b1ba7e 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
 -28 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`).
-+37 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
-+one Python helper, `verify/talk_fake_backend.py`.
++42 zero-dependency `.mjs` files (`ls tools/*.mjs tools/verify/*.mjs | wc -l`), and
++two Python helpers, `verify/talk_fake_backend.py` and `verify/offer_reference.py`.
 @@ -11 +12 @@ neighbours'.
 -Not all 28 are gates. Counted by class:
-+Not all 37 are gates. Counted by class:
++Not all 42 are gates. Counted by class:
 @@ -15 +16 @@ Not all 28 are gates. Counted by class:
 -| **Gates**: exit 1 on a finding, 2 when they could not measure | 18 | `parity4`, `keycheck`, `market-lib-test` (via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf` |
-+| **Gates**: exit 1 on a finding, 2 when they could not measure | 24 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test`, `app-state-test`, `necc-lib-test` and `speak-lib-test` (the five via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui`, `read-aloud` |
++| **Gates**: exit 1 on a finding, 2 when they could not measure | 28 | `parity4`, `keycheck`, `market-lib-test`, `talk-lib-test`, `app-state-test`, `necc-lib-test`, `speak-lib-test`, `amount-lib-test`, `offer-lib-test` and `offer-lines-test` (the eight via `node --test`), `drive`, `mobile-audit`, `lang-layout`, `field-align`, `print-audit`, `motion-audit`, `scroll-audit`, `text-align`, `hero-art`, `brand-mark`, `manual-audit`, `error-banner`, `market-ui`, `figure-audit`, `load-perf`, `talk-ui`, `read-aloud`, `offer-ui` |
 @@ -17,2 +18,2 @@ Not all 28 are gates. Counted by class:
 -| **Helpers**: not gates | 6 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen` and `svgcheck` (asset tools), `fetch-market-data` (data fetch), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
 -| **Library**: not run directly | 1 | `market-lib` |
 +| **Helpers**: not gates | 8 | `refresh-cases` (fixture generator), `art-contrast` (retired, exits 2), `assetgen`, `svgcheck` and `make-hero-backdrop` (asset tools), `fetch-market-data` and `fetch-necc-prices` (data fetches), `third-party-notices` (writes `THIRD_PARTY_NOTICES.md`) |
-+| **Library**: not run directly | 2 | `market-lib`, `necc-lib` |
++| **Library**: not run directly | 3 | `market-lib`, `necc-lib`, `offer-banned` (the words the loan-offer card must not use, read by `offer-lines-test` and `offer-ui`) |
 @@ -47,2 +48,2 @@ fall into four groups.
 -  `figure-audit`'s `--broken=` naming a refuter it does not have, `mobile-audit`'s
 -  `--out=` naming a folder that does not start with `mobile`;
-+  `figure-audit`'s or `read-aloud`'s `--broken=` naming a refuter it does not have,
++  `figure-audit`'s, `read-aloud`'s or `offer-ui`'s `--broken=` naming a refuter it does not have,
 +  `mobile-audit`'s `--out=` naming a folder that does not start with `mobile`;
 @@ -55,2 +56,3 @@ fall into four groups.
 -  its own Vite never coming up;
 -- a seed version `AppContext.jsx` no longer reads, in the nine gates that seed
 +  its own Vite never coming up; 8012, 5182 to 5184 or 9379 for `talk-ui`, or its
-+  own backend or Vite never coming up; 9381 for `read-aloud`;
-+- a seed version `AppContext.jsx` no longer reads, in the ten gates that seed
-@@ -58,2 +60,4 @@ fall into four groups.
++  own backend or Vite never coming up; 9381 for `read-aloud`; 9383 for `offer-ui`;
++- a seed version `AppContext.jsx` no longer reads, in the eleven gates that seed
+@@ -58,2 +60,6 @@ fall into four groups.
 -- an input that is not there: a `case_*.json`, `market-lib.mjs` for `market-ui`,
 -  a dictionary `load-perf` cannot read in all 8 languages.
 +- an input that is not there: a `case_*.json` (`read-aloud` needs three, the green,
-+  yellow and red results, and also stops when one is not the colour its name says),
++  yellow and red results, and also stops when one is not the colour its name says;
++  `offer-ui` needs four, `case_empty`, `case_good`, `case_green` and `case_pressure`,
++  and stops when one is not the kind of result its name says),
 +  `market-lib.mjs` for `market-ui`, a dictionary `load-perf` cannot read in all 8
 +  languages.
-@@ -79,3 +83,3 @@ fall into four groups.
+@@ -79,3 +85,3 @@ fall into four groups.
 -  empty state, in the seven gates that seed a result (`figure-audit`,
 -  `lang-layout`, `mobile-audit`, `motion-audit`, `print-audit`, `scroll-audit`,
 -  `text-align`) and in `market-ui`; a `/finance` box without its seeded value in
-+  empty state, in the eight gates that seed a result (`figure-audit`,
-+  `lang-layout`, `mobile-audit`, `motion-audit`, `print-audit`, `read-aloud`,
++  empty state, in the nine gates that seed a result (`figure-audit`,
++  `lang-layout`, `mobile-audit`, `motion-audit`, `offer-ui`, `print-audit`, `read-aloud`,
 +  `scroll-audit`, `text-align`) and in `market-ui`; a `/finance` box without its seeded value in
-@@ -87 +91,2 @@ fall into four groups.
+@@ -87 +93,2 @@ fall into four groups.
 -  `motion-audit`, `print-audit`) and `NOT-MOUNTED` (`figure-audit`, `text-align`):
-+  `motion-audit`, `print-audit`, `read-aloud`) and `NOT-MOUNTED` (`figure-audit`,
++  `motion-audit`, `offer-ui`, `print-audit`, `read-aloud`) and `NOT-MOUNTED` (`figure-audit`,
 +  `text-align`):
-@@ -100,2 +105,2 @@ fall into four groups.
+@@ -100,2 +107,2 @@ fall into four groups.
 -in `figure-audit`, `field-align`, `market-ui`, `motion-audit`, `scroll-audit` and
 -`text-align` (see "When a new check reports zero").
-+in `figure-audit`, `field-align`, `market-ui`, `motion-audit`, `read-aloud`,
++in `figure-audit`, `field-align`, `market-ui`, `motion-audit`, `offer-ui`, `read-aloud`,
 +`scroll-audit` and `text-align` (see "When a new check reports zero").
-@@ -132,2 +137,3 @@ Three are narrower:
+@@ -132,2 +139,4 @@ Three are narrower:
 -- `market-lib-test` runs under `node --test`, which exits 1 for a failing test and
 -  for a crash alike. Read its output to tell the two apart.
-+- `market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test` and
-+  `speak-lib-test` run under `node --test`, which exits 1 for a failing test and for
-+  a crash alike. Read the output to tell the two apart.
-@@ -145 +151 @@ reason differs by script:
++- `market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test`,
++  `speak-lib-test`, `amount-lib-test`, `offer-lib-test` and `offer-lines-test` run
++  under `node --test`, which exits 1 for a failing test and for a crash alike. Read
++  the output to tell the two apart.
+@@ -145 +154 @@ reason differs by script:
 -  `print-audit`;
-+  `print-audit`, `read-aloud`;
-@@ -276 +282 @@ a wait you can hit:
++  `offer-ui`, `print-audit`, `read-aloud`;
+@@ -276 +285 @@ a wait you can hit:
 -| **Edge** | All 19 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit` and `market-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
-+| **Edge** | All 21 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui`, `read-aloud` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
-@@ -290 +296 @@ tracked** — they are backend-derived and go stale silently, so they are genera
++| **Edge** | All 22 browser scripts hardcode `C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe` and speak Chrome DevTools Protocol to it. Nothing is installed for you. `drive`, `figure-audit`, `mobile-audit`, `market-ui`, `offer-ui`, `read-aloud` and `talk-ui` also find their own Edge with PowerShell's `Get-CimInstance Win32_Process`. So **the browser scripts run on Windows only**, and none of them is in CI. |
+@@ -290,3 +299,3 @@ tracked** — they are backend-derived and go stale silently, so they are genera
 -rather than committed. That means a fresh clone has none, and eight of the drivers
-+rather than committed. That means a fresh clone has none, and nine of the drivers
-@@ -292 +298 @@ rather than committed. That means a fresh clone has none, and eight of the drive
+-(`drive`, `lang-layout`, `market-ui`, `mobile-audit`, `motion-audit`, `print-audit`,
 -`scroll-audit`, `text-align`) cannot run until you make them.
-+`read-aloud`, `scroll-audit`, `text-align`) cannot run until you make them.
-@@ -300 +306 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
++rather than committed. That means a fresh clone has none, and ten of the drivers
++(`drive`, `lang-layout`, `market-ui`, `mobile-audit`, `motion-audit`, `offer-ui`,
++`print-audit`, `read-aloud`, `scroll-audit`, `text-align`) cannot run until you make them.
+@@ -300 +309 @@ node tools/verify/refresh-cases.mjs        # 3. generates screenshots/verify/cas
 -node tools/verify/drive.mjs                # 4. the main gate, 41 page loads
-+node tools/verify/drive.mjs                # 4. the main gate, 48 page loads and 13 Simple/Detailed looks
-@@ -310,0 +317,4 @@ fixture if the backend still echoes a field the page no longer sends (a
++node tools/verify/drive.mjs                # 4. the main gate, 59 page loads, 13 Simple/Detailed looks and 3 amount-line looks
+@@ -310,0 +320,7 @@ fixture if the backend still echoes a field the page no longer sends (a
 +It also exits 1 if a case's traffic-light band is not the one that case exists
 +to show (`EXPECTED_BAND`: `good` yellow, `nulls` red, `empty` red, `green`
-+green), which is the same fault from the other side: a backend that predates
-+the band.
-@@ -317,4 +327,4 @@ need re-measuring, not the script.
++green, `pressure` red, `household` red), which is the same fault from the other
++side: a backend that predates the band. The same goes for the amounts printed
++beside the advice (`EXPECTED_AMOUNTS`: the kind of amount each case must carry,
++by the code of the sentence it sits beside, and none for `good`, `empty` and
++`green`): a backend that predates them sends no `advisory.amounts` at all.
+@@ -317,4 +333,4 @@ need re-measuring, not the script.
 -The three cases give three different answers to the optional household income
 -question, so a verifier seeding from any one of them sees a different
 -`household_check`. Repayments are the entered EMI plus a new EMI for the funding
 -gap, priced at 12% a year over 60 months:
-+The four cases answer the optional household income question in three ways, so
++The six cases answer the optional household income question in three ways, so
 +a verifier seeding from one of them can see a different `household_check`.
 +Repayments are the entered EMI plus a new EMI for the funding gap, priced at
 +12% a year over 60 months:
-@@ -326,0 +337 @@ gap, priced at 12% a year over 60 months:
-+| `green` (retail, Pune) | 30000 | 11.11%, low | 0 | 6.67%, `within_limit` | `adv.maintainExpand` | `adv.maintainExpand`, `adv.healthyMargin` |
-@@ -328 +339,4 @@ gap, priced at 12% a year over 60 months:
+@@ -327,2 +343,16 @@ gap, priced at 12% a year over 60 months:
+-
 -All three are `attention_needed`, and every `risk_analysis` has 19 keys. `empty` is
-+The first three are `attention_needed`; `green` is `good`, with no funding gap, so
++| `green` (retail, Pune) | 30000 | 11.11%, low | 0 | 6.67%, `within_limit` | `adv.maintainExpand` | `adv.maintainExpand`, `adv.healthyMargin` |
++| `pressure` (tailoring, Lucknow; Bengali) | blank, sent as `null` | 68.52%, high | 222 | `not_checked`, percent `null` | `nxt.reducePressure` | `adv.fundingGap` |
++| `household` (tailoring, Lucknow; Telugu) | 16000 | 25%, low | 0 | 62.5%, `over_limit` | `nxt.householdOverLimit` | `adv.householdAlreadyOver` |
++
++`pressure` and `household` exist for the amounts printed beside the advice
++(`advisory.amounts`): between them and `nulls` the fixtures reach all four kinds
++(`break_even` and `cash_reserve` from `nulls`, `loan_payments` from `pressure`,
++`household_payments` from `household`), and `good`, `empty` and `green` carry none.
++In `pressure` the 8000 already paid is `high` on its own, so it is the payments
++already being made that have to come down, and not the new loan; in `household` the
++business carries its loan (25%) and the household does not (62.5% of 16000).
++
++Five of the six are `attention_needed`; `green` is `good`, with no funding gap, so
 +it is the case that reaches the green light. The lights: `good` is priority
-+medium, so yellow; `nulls` and `empty` are priority high, so red; `green` is
-+priority low, so green. Every `risk_analysis` has 19 keys. `empty` is
-@@ -343,0 +358,2 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
++medium, so yellow; `nulls`, `empty`, `pressure` and `household` are priority high,
++so red; `green` is priority low, so green. Every `risk_analysis` has 19 keys. `empty` is
+@@ -343,0 +374,5 @@ node --test tools/verify/market-lib-test.mjs   # the market fetch's logic, 185 t
 +node --test tools/verify/necc-lib-test.mjs     # the egg-price parser and checks, 74 tests, no network
 +node --test tools/verify/speak-lib-test.mjs    # the read-aloud voice choice and speech queue, 31 tests, no network
-@@ -446,3 +462,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
++node --test tools/verify/amount-lib-test.mjs   # the amount printed beside a piece of advice (adviceAmount.js): 17 tests, no network
++node --test tools/verify/offer-lib-test.mjs    # the yearly cost of a loan offer (loanOffer.js): 58 tests, no network
++node --test tools/verify/offer-lines-test.mjs  # the words of the loan-offer card (offerLines.js) and the banned-word list: 48 tests, no network
+@@ -446,3 +481,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
 -frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`
 -and `market-lib-test`, then `glyph-audit`, which exits 0 whenever it ran and is there to be
 -read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
 +frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`,
-+`market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test` and `speak-lib-test`, then `glyph-audit`,
++`market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test`, `speak-lib-test`, `amount-lib-test`, `offer-lib-test` and `offer-lines-test`, then `glyph-audit`,
 +which exits 0 whenever it ran and is there to be read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
-@@ -453,3 +469,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
+@@ -453,3 +488,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
 -text. **None of the browser scripts is in CI.** **CI has never run, on GitHub or
 -on Linux**, because the branch has not been pushed. Two scripts were changed for
 -Linux, by reading the code, not by running it there. `keycheck` turns every `\`
@@ -112,20 +133,21 @@ index b8e7eb3..c8fd6cc 100644
 +machine with no Linux and no Python 3.10, and has run on Linux since 27 Oct 2026
 +(the Actions tab has every run). Two scripts were changed for Linux by reading
 +the code, and both have since run there in CI. `keycheck` turns every `\`
-@@ -466,2 +483,2 @@ Need the **Vite dev server** on 5173:
+@@ -466,2 +502,2 @@ Need the **Vite dev server** on 5173:
 -node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
 -node tools/verify/mobile-audit.mjs   # 360/390/412 px, 48 page loads
-+node tools/verify/drive.mjs          # hydrate check + 10 passes, 48 page loads + scheme cards + 13 Simple/Detailed looks — the main gate; exits 1 on a finding
++node tools/verify/drive.mjs          # hydrate check + 13 passes, 59 page loads + scheme cards + 13 Simple/Detailed looks + 3 amount-line looks — the main gate; exits 1 on a finding
 +node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
-@@ -479,0 +497 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
+@@ -479,0 +516,2 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
 +node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 99 page loads, 750 checks; Vite only
-@@ -533 +551 @@ until the 422 check was added.
++node tools/verify/offer-ui.mjs       # the loan-offer card on /advisory: 12 scenarios, 74 page loads, 13,400 checks; Vite only, needs 4 case_*.json
+@@ -533 +571 @@ until the 422 check was added.
 -`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
 +`drive`'s ninth pass, `cleared`, loads the four result pages in Hindi with the
-@@ -550 +568 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+@@ -550 +588 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
-+result byte for byte. `/privacy` is one of the 48 loads, in every pass that loads
-@@ -569,0 +588,225 @@ exited 0 with `neutralised` naming both.
++result byte for byte. `/privacy` is one of the 59 loads, in every pass that loads
+@@ -569,0 +608,225 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -280,10 +302,10 @@ index b8e7eb3..c8fd6cc 100644
 +(`components/DetailSwitch.jsx`): `<html data-detail>` and `localStorage['sih-detail']`,
 +and `index.css` hides every `.ui-detail-only` section in `simple`. The page opens in Simple
 +(the owner's call, 29 Oct 2026), so a verifier that has to see the loan options, the scheme
-+funding, the registrations or the local prices seeds `'detailed'`: the ten passes of
-+`drive` and the ten other verifiers that visit those pages do, beside their `sih-textsize`
++funding, the registrations or the local prices seeds `'detailed'`: the thirteen passes of
++`drive` and the eleven other verifiers that visit those pages do, beside their `sih-textsize`
 +seed. A pass that does not shows `LOAN TOTAL NOT TO THE PAISA` for options it cannot see.
-+One check runs after the ten passes (`checkDetail`), in English on the `good` answers, and
++One check runs after the thirteen passes (`checkDetail`), in English on the `good` answers, and
 +puts 13 looks in `report.json` under `detail` (`{tag, route, want, chars, problems}`). A
 +page's looks, in order: `carried` (the second page only: loaded cold with the first page's
 +last choice, which is a press of Detailed, so it must already be Detailed), `default`
@@ -351,7 +373,7 @@ index b8e7eb3..c8fd6cc 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +824,6 @@ correct app.
+@@ -581,2 +844,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -360,17 +382,17 @@ index b8e7eb3..c8fd6cc 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -594 +841,2 @@ is `FinancePage` local state, never stored.
+@@ -594 +861,2 @@ is `FinancePage` local state, never stored.
 -- Each of those nine declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
-+- `read-aloud` seeds 6, the current shape: a result and nothing else.
-+- Each of those ten declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
-@@ -597 +845 @@ is `FinancePage` local state, never stored.
++- `read-aloud` and `offer-ui` seed 6, the current shape: a result and nothing else.
++- Each of those eleven declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
+@@ -597 +865 @@ is `FinancePage` local state, never stored.
 -- The seven that seed a result read the stored state back on each result route
-+- The eight that seed a result read the stored state back on each result route
-@@ -735 +983 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
++- The nine that seed a result read the stored state back on each result route
+@@ -735 +1003 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +994,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +1014,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -384,7 +406,7 @@ index b8e7eb3..c8fd6cc 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1078,270 @@ is still slow or unbounded" above).
+@@ -817 +1098,547 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -655,12 +677,289 @@ index b8e7eb3..c8fd6cc 100644
 +that the page shows the dictionary's words, not that the words are right. `read-aloud` is
 +not in CI (it needs Edge); `speak-lib-test` is, as a step that has not run on Linux yet.
 +
++**The loan-offer card.** `/advisory` draws an `OfferCheck` card (`components/OfferCheck.jsx`;
++the sums are in `data/loanOffer.js` and the sentences in `i18n/offerLines.js`): the reader says
++how a loan offer was told, types what they were told, and the tab works out what they get in
++hand, what they pay back in all and what it costs a year, beside the loan the rules priced and
++the same money at the rate the app assumes for its own loans (12% a year, read from the result).
++It runs in the tab: nothing is sent, nothing is stored, no model is involved, and print leaves
++the card out. It says what an offer costs and never calls one illegal, too high or unfair. It has
++two Node test files, a list of words it may not use, a Python reference and one browser gate.
++
++`offer-lib-test` (58 tests, `node --test`, no browser, no network) holds the sums. The yearly
++cost is checked three ways: against `offer_reference.py`, which finds it by another road (60-digit
++`Decimal` arithmetic, a loop that adds up the discounted payments one by one and 400 halvings,
++where the module uses a closed form (`expm1` and `log1p`) and 200 halvings), so the two cannot share
++a mistake; against the equation it was solved from, over a sweep of more than 1,000 offers; and
++against properties a right answer has (the same payments cost more a year the oftener they fall,
++doubling the loan and the payment changes nothing, a bigger payment is a dearer offer, payments
++that add up to the money in hand cost nothing extra, no figure is ever NaN or infinite). It also
++pins what is a blank and what is a mistake, the caps (₹100 crore, ten years of payments, 120
++months, a rate of 100), the half rupee that goes up even where floating point would drop it, and
++which of the priced loans is shown. `offer-lines-test` (48 tests) holds the sentences: each status
++gives the lines it should and no others, a mistake names its limit, every sentence exists in all
++8 languages with the placeholders the module fills, and none uses a word of `offer-banned.mjs`.
++That file is the one list of the words the card may not use (for English `illegal`, `too high`,
++`cheat`, `should`, `avoid` and the like; shorter lists for the other 7 languages), matched from the
++start of a word, and the gate reads it too. It is a guard against a slip and not a proof that a
++sentence cannot mislead; the tests check that it can fire.
++
++`offer-ui.mjs` needs Vite on 5173 and nothing else: no backend and no model. The result page is
++seeded (version 6) from the saved responses `case_empty.json` (the rules priced part of the gap),
++`case_good.json` (the whole gap), `case_green.json` (no gap) and `case_pressure.json` (no room),
++with copies of the last for the other two reasons no loan is priced, and two made from
++`case_good` (one saved without the loan options, one whose 60-month loan is the largest the
++schedule can price). It exits 2 if one of the four files is missing or is not what its name says.
++Every figure the page must print is written down in the gate, and the totals and yearly costs come
++from `offer_reference.py`, so a sum that is wrong in the app and in its own test is still caught;
++the words come from the dictionary itself. 74 page loads and 13,400 checks in 12 scenarios: the
++card appears empty, in all 8 languages, in Simple and in Detailed view (O1); the figures of every
++kind of offer: three frequencies, a cost, the same, less, the comparison more, less and the same,
++a half rupee and the largest numbers (O2); every mistake a box can hold and its message, the edge
++of what a box takes, and forty nines typed into every box (O3); the loan the rules priced, for
++each of the six statuses a response has, for the largest loan the schedule can price and for a
++response saved without the loan options (O4); a whole sitting sends and stores nothing, away to
++`/analysis` and back by the app's own links, and a reload (O5); results in the 8 languages (O6);
++layout at 320 px with the largest text in the dark in all 8 languages, at 390 px, on a desktop,
++and beside the largest priced loan (O7); what was typed for one way of telling an offer stays
++with it (O8); typing one digit at a time, backspacing, and an empty box (O9); a language switch
++with a result shown (O10); print (O11); and that the card is on no other page (O12). The script's
++header lists its 27 finding kinds. Port 9383, profile `screenshots/verify/edge-profile-offer`,
++output `screenshots/verify/offer-ui` (`offer-ui-broken` with `--broken`). `--only=O1,O9` runs just
++those scenarios to find out why one fails; it exits 1 on a finding and 2 otherwise, never 0, so
++it cannot be mistaken for a verdict.
++
++**The card was broken on purpose, to find out what the gate misses.** This was done in two ways:
++defects planted in the app's source, in the table below, and defects planted in the page as it runs,
++the `--broken` arms, after the table. There were 57 source defects, put in one at a time by a script
++that is not in the repo: 48 in `OfferCheck.jsx` (`C01` to `C48`), 6 in the pages that mount it (`P01`
++to `P06`: five in `AdvisoryPage.jsx` and one in `AnalysisPage.jsx`) and 3 in `index.css` (`S01` to
++`S03`). For each defect the script changes one piece of text in one file, or two pieces where the
++defect needs both, and stops without running anything if the text it expects is not found exactly
++once. It runs the scenarios named for the defect (`--only=`), runs the whole gate if they report
++nothing, and puts the file back after every run, a crash included. A defect is *caught* when the
++gate reports at least one finding, any finding and not only the kind the defect was written for (the
++last column of the table says which came), and it *survives* when the whole gate reports none. A gate
++fault, or no report, in the run of the named scenarios is recorded as a fault and not as a catch; the
++whole-gate run is judged on its findings alone.
++
++One run more, `R00`, is not a defect: it takes the card out of `AdvisoryPage.jsx`, which is the page
++as it was before the card existed, and the gate has to fail on it. It does: exit 1, 74 page loads,
++1,331 checks and 1,220 findings (NO-CARD 264, STRUCTURE 928, FOCUS-LOST 14, LANG-SWITCH 12, HIDDEN 1
++and PRINT 1).
++
++The last full run (30 Oct 2026, on the finished gate: the 57 defects, then `R00`) caught 55 of the 57
++and had no fault. 45 were caught by the scenarios named for them. 10 were caught only by the whole
++gate, because the scenarios named reported nothing: `C03`, `C04`, `C06`, `C10`, `C15`, `C17`, `C36`,
++`C37`, `C38` and `C44`. The two that survived, `C30` and `C39`, are argued below to be defects that
++nothing the gate opens can show, which is an argument and not a proof. It took four runs to get
++there. The first had 53 defects (`C01` to `C44`, `P01` to `P06`, `S01` to `S03`): 41 caught and 12
++not (`C15`, `C18`, `C19`, `C26`, `C30`, `C32`, `C34`, `C35`, `C39`, `C44`, `P04`, `S03`). Ten of the
++12 were defects the gate should have caught, and the gate was changed until it did: a second run of
++the 12 caught those ten and left `C30` and `C39` again. `C45` to `C47` were added and caught in a run
++of their own, and `C48` ran for the first time in the last one. The gate grew between the runs, so the
++counts in the table are the last run's and not what the first gave (`C03` gave STRUCTURE 478 in the
++first run and gives 493 in the last).
++
++What each row says: *Scenarios run* are the scenarios named for the defect. "Whole gate (O1 saw
++nothing)" means the named scenarios reported nothing and the whole gate was run next. *What the
++gate reported* is the findings by kind of the run that caught the defect, so a row can show kinds
++the defect was not written for.
++
++| ID | File | What was changed | Scenarios run | What the gate reported |
++|---|---|---|---|---|
++| C01 | `OfferCheck.jsx` | Boxes not described by their error | O3, O1 | ARIA 54 |
++| C02 | `OfferCheck.jsx` | Rate hint not linked to its box | O1, O3 | ARIA 16 |
++| C03 | `OfferCheck.jsx` | Money keyboard is a text one | whole gate (O1 saw nothing) | STRUCTURE 493 |
++| C04 | `OfferCheck.jsx` | Rate keyboard has no decimal point | whole gate (O1 saw nothing) | STRUCTURE 80 |
++| C05 | `OfferCheck.jsx` | Boxes are number inputs | O1, O3 | STRUCTURE 141, STATE 14, ARIA 28, WRONG-ERROR 27, GUESSED 4, PRICED-MISMATCH 4, CAPTION 4 |
++| C06 | `OfferCheck.jsx` | Autocomplete left on | whole gate (O1 saw nothing) | STRUCTURE 573 |
++| C07 | `OfferCheck.jsx` | Errors are not announced | O3, O1 | WRONG-ERROR 72 |
++| C08 | `OfferCheck.jsx` | Result area is not a status | O1, O2 | LIVE-REGION 43 |
++| C09 | `OfferCheck.jsx` | A way is already chosen | O1 | STRUCTURE 32, DEFAULT-CHOSEN 16, ARIA 16 |
++| C10 | `OfferCheck.jsx` | A frequency is already chosen | whole gate (O1, O2 saw nothing) | DEFAULT-CHOSEN 3, ARIA 2, WRONG-ERROR 1, GUESSED 1, PRICED-MISMATCH 1, CAPTION 1 |
++| C11 | `OfferCheck.jsx` | Both ways share what was typed | O8 | STATE 2, LINES 1, WRONG-FIGURE 1 |
++| C12 | `OfferCheck.jsx` | Card is printed | O11 | PRINT 1 |
++| C13 | `OfferCheck.jsx` | Priced loan shown before a result | O1, O4 | PRICED-MISMATCH 25, CAPTION 22 |
++| C14 | `OfferCheck.jsx` | Daily caption on every result | O2 | CAPTION 24 |
++| C15 | `OfferCheck.jsx` | Rupee marker is read out | whole gate (O1 saw nothing) | ARIA 191 |
++| C16 | `OfferCheck.jsx` | Radio buttons are not a group | O1, O8 | STRUCTURE 40, STATE 5, ARIA 5, LINES 4, PRICED-MISMATCH 4, CAPTION 3 |
++| C17 | `OfferCheck.jsx` | Label not tied to its box | whole gate (O1 saw nothing) | LABEL 573 |
++| C18 | `OfferCheck.jsx` | Card has no name | O1 | ARIA 16 |
++| C19 | `OfferCheck.jsx` | No length limit on the boxes | O1, O3 | STRUCTURE 141 |
++| C20 | `OfferCheck.jsx` | Letters are thrown away silently | O3 | STATE 19, ARIA 30, WRONG-ERROR 31, GUESSED 5, PRICED-MISMATCH 5, CAPTION 5 |
++| C21 | `OfferCheck.jsx` | A request on every keystroke | O5 | NETWORK 2 |
++| C22 | `OfferCheck.jsx` | What is typed is stored | O5 | STORAGE 2 |
++| C23 | `OfferCheck.jsx` | A box is rebuilt on every key | O9 | FOCUS-LOST 14, STATE 10, LINES 1, WRONG-FIGURE 4, GUESSED 6, PRICED-MISMATCH 6, CAPTION 6, ARIA 4, WRONG-ERROR 4 |
++| C24 | `OfferCheck.jsx` | A language switch clears the card | O10 | LANG-SWITCH 6, STRUCTURE 9, STATE 6, ARIA 6, LINES 6, PRICED-MISMATCH 6, CAPTION 3 |
++| C25 | `OfferCheck.jsx` | The cost is shown with paise | O2 | WRONG-FIGURE 50 |
++| C26 | `OfferCheck.jsx` | The priced loan is shown to the rupee | O4 | PRICED-MISMATCH 4 |
++| C27 | `OfferCheck.jsx` | The not-advice line is missing | O1 | CAPTION 16 |
++| C28 | `OfferCheck.jsx` | The second paragraph of the working is missing | O1 | LABEL 16 |
++| C29 | `OfferCheck.jsx` | Card wider than a phone | O7 | STRUCTURE 104, LAYOUT 72 |
++| C30 | `OfferCheck.jsx` | Figures of the priced loan may wrap | whole gate (O7, O4 saw nothing) | nothing (see C30 below) |
++| C31 | `OfferCheck.jsx` | A wrong box is not marked invalid | O3 | ARIA 38 |
++| C32 | `OfferCheck.jsx` | The title is a third-level heading | O1 | STRUCTURE 16 |
++| C33 | `OfferCheck.jsx` | A group of choices has no legend | O1 | LABEL 16 |
++| C34 | `OfferCheck.jsx` | Payments box takes any length | O1, O3 | STRUCTURE 30 |
++| C35 | `OfferCheck.jsx` | Rate box takes any length | O1, O3 | STRUCTURE 17 |
++| C36 | `OfferCheck.jsx` | The money in hand is labelled as the money borrowed | whole gate (O1 saw nothing) | LABEL 111 |
++| C37 | `OfferCheck.jsx` | The rate hint is missing | whole gate (O1 saw nothing) | LABEL 80, ARIA 80 |
++| C38 | `OfferCheck.jsx` | The rate note is missing | whole gate (O1 saw nothing) | CAPTION 80 |
++| C39 | `OfferCheck.jsx` | The grid is not rebuilt when the way changes | whole gate (O8, O9 saw nothing) | nothing (see C39 below) |
++| C40 | `OfferCheck.jsx` | Errors are never shown | O3 | ARIA 76, WRONG-ERROR 72 |
++| C41 | `OfferCheck.jsx` | Every box shows the first box's error | O3 | ARIA 82, WRONG-ERROR 57 |
++| C42 | `OfferCheck.jsx` | The frequency is ignored in the sums | O2 | WRONG-FIGURE 12, ARIA 2, WRONG-ERROR 1, LINES 1, PRICED-MISMATCH 1, CAPTION 1 |
++| C43 | `OfferCheck.jsx` | The assumed rate is fixed in the card | O2, O4 | LINES 1 |
++| C44 | `OfferCheck.jsx` | A result needs no frequency in the card | whole gate (O1, O2 saw nothing) | GUESSED 1, PRICED-MISMATCH 1, CAPTION 1 |
++| C45 | `OfferCheck.jsx` | What is typed outlives leaving the page | O5 | DEFAULT-CHOSEN 1, STRUCTURE 1, LABEL 1, STATE 3, ARIA 1, GUESSED 1, PRICED-MISMATCH 1, CAPTION 1 |
++| C46 | `OfferCheck.jsx` | Something is stored when the page is left | O5 | STORAGE 1 |
++| C47 | `OfferCheck.jsx` | A request is sent when the page is left | O5 | NETWORK 1 |
++| C48 | `OfferCheck.jsx` | The result area exists only once there is a result | O2, O1 | LIVE-REGION 59, GUESSED 16 |
++| P01 | `AdvisoryPage.jsx` | Card inside the Detailed-only block | O1 | HIDDEN 24 |
++| P02 | `AdvisoryPage.jsx` | The priced loan is not passed to the card | O4 | LINES 10, PRICED-MISMATCH 18 |
++| P03 | `AdvisoryPage.jsx` | The card prints money its own way | O2 | WRONG-FIGURE 50, PRICED-MISMATCH 27 |
++| P04 | `AdvisoryPage.jsx` | The exact money is the rounded one | O4 | PRICED-MISMATCH 4 |
++| P05 | `AnalysisPage.jsx` | The card is also on the results page | O12 | NO-CARD 1 |
++| P06 | `AdvisoryPage.jsx` | The card is shown with no result | O12 | NO-CARD 1 |
++| S01 | `index.css` | Radio buttons lose the 44px target | O7 | LAYOUT 36 |
++| S02 | `index.css` | Eyebrow back at 0.78rem | O7 | LAYOUT 18 |
++| S03 | `index.css` | Radio buttons lose the base size | O7, O1 | LAYOUT 8 |
++
++**`C30` survived.** It removes `whitespace-nowrap` from the figure on each row of the priced loan,
++so that a figure is allowed to wrap. In the three windows of O7 that open beside the largest priced
++loan (₹99,99,96,000; English only), no figure of the priced loan is on two lines with the class, and
++none is without it. Both were measured on 30 Oct 2026 with a copy of the gate on another port (the
++copy is not in the repo) that measures the figures, takes the class off in the page and measures
++again. The priced loan has four figures; the widest of them in each window:
++
++| Window | Widest figure | The row it sits in | Lines, with the class and without |
++|---|---|---|---|
++| 320 px, largest text, dark | 145.83 px | 214.25 px | 1 and 1, all four figures |
++| 390 px, smallest text | 116.25 px | 291.94 px | 1 and 1, all four figures |
++| 1280 px | 123.66 px | 1,072 px | 1 and 1, all four figures |
++
++By the rules of flex layout and not by a measurement: each row is `flex flex-wrap`, so a figure that
++does not fit beside its label moves to a line of its own, and the figure's computed `overflow-wrap`
++is `anywhere` (read in the page), so only a figure wider than the whole row would break inside the
++number. No window the gate opens holds a figure that wide. That is an argument that the defect
++cannot show in what the gate opens, not a proof for narrower windows, larger figures, other
++languages or other fonts. The class stays.
++
++**`C39` survived.** It removes `key={mode}` from the grid of boxes, so the grid is no longer
++rebuilt when the way of telling the offer changes. By reading the code and not by a test: only the
++first two boxes sit at the same place in both ways with the same component, and each takes its
++value from what was typed for the way shown (O8 checks that), so the reader sees the same thing;
++the third and fourth differ in type between the ways and are rebuilt either way. What the gate
++cannot see is how a screen reader treats an error message that stays on the page while its words
++change, and it does not look at what the browser holds inside an input box. Untested. The key
++stays.
++
++The gate's own refuters are ten `--broken` arms that plant a defect in the page, from a script
++that runs before the app's own, and not in the source. Each must be seen to cause the finding
++it is named for, or the run exits 2, and bare `--broken` applies all ten (the command lines are
++with the other refuters, under "When a new check reports zero"). Measured on 30 Oct 2026 on the
++finished gate, each arm alone and then all ten, 74 loads each; every run exited 1, with no
++fault and nothing unrefuted:
++
++| Arm | Plants | Must show | Found |
++|---|---|---|---|
++| `network` | a request on every keystroke | NETWORK | NETWORK 26 |
++| `storage` | every keystroke stored | STORAGE | STORAGE 26 |
++| `default` | the way (instalments) and the frequency (monthly) already ticked | DEFAULT-CHOSEN | 128: STRUCTURE 58, DEFAULT-CHOSEN 32, ARIA 31, WRONG-FIGURE 2, and 1 each of WRONG-ERROR, GUESSED, PRICED-MISMATCH, CAPTION and STATE |
++| `banned` | the language's first banned word on the first line | BANNED-WORD | WRONG-FIGURE 132, BANNED-WORD 128 |
++| `figure` | a digit of the first figure changed | WRONG-FIGURE | WRONG-FIGURE 132 |
++| `wrap` | the lines squeezed so that every figure breaks | FIGURE-WRAP | FIGURE-WRAP 25, LAYOUT 7 |
++| `overflow` | the card wider than the screen | LAYOUT | STRUCTURE 104, LAYOUT 72 |
++| `print` | the card shown in print | PRINT | PRINT 1 |
++| `live` | the sentences carried by a copy of the result area, not the area that was on the page | LIVE-REGION | LIVE-REGION 177, CAPTION 11 |
++| `leak` | `{total}` left on the first line | LEAK | WRONG-FIGURE 132, LEAK 132 |
++| all ten | | all ten | 900 findings in 17 kinds |
++
++The findings that are not an arm's own kind have causes that were looked up and not guessed:
++
++- `default` runs 14,009 checks and not 13,400. With a radio button already pressed the card
++  shows its boxes, so the per-box checks of O1, O4 and O5 find something to check (609 more).
++  Its 58 STRUCTURE findings are 29 "# groups of choices, not #" and 29 "the boxes are
++  [received, instalment, payments], not []".
++- `banned` and `leak` also give WRONG-FIGURE 132, because the first sentence is no longer the
++  dictionary's. `banned` gives 128 BANNED-WORD and not 132: after a language switch (O10) the
++  planted English word is looked for in the new language's list, so it is found on the 2 of 6
++  switches that go back to English and on none of the other 4.
++- `overflow`'s STRUCTURE 104 are all "nothing at <selector> to press" (86 at a box, 18 at the
++  frequency choice): the gate went to press a control of the card and the page had nothing
++  there. They are in O7, 52 at 320 px and 52 at 390 px. Its 72 LAYOUT are 36 "the page scrolls
++  sideways" and 36 "the card runs from # to # px", 36 of the 72 at 320 px and 36 at 390 px.
++  The 1280 px window gave neither.
++- `live` also gives CAPTION 11. The note on 365 payments a year sits inside the result area, so
++  the page holds it twice (the copy and the hidden original) in the 11 states that carry it
++  (3 in O2, 8 in O6).
++- The all-ten run gives 900 findings, not the 1,233 that the ten add up to (26 + 26 + 128 + 260 +
++  132 + 32 + 176 + 1 + 188 + 264). The 333 were traced on 30 Oct 2026 by comparing the ten single
++  runs with the all-ten run kind by kind (every kind not named below has the same count in both)
++  and by running some arms together in the scenario where they differ (the scripts for that are
++  not in the repo):
++  - WRONG-FIGURE, 264 fewer. `banned`, `figure` and `leak` each give 132, on the same 132 checks,
++    and `default` gives 2 on one check. On their own that is 398; the all-ten run gives 134.
++  - STRUCTURE, 72 fewer. `default` gives 58 and `overflow` 104; the all-ten run gives 90. In O7,
++    `overflow` alone gives STRUCTURE 104 and `overflow` with `default` gives 32.
++  - FIGURE-WRAP, 4 fewer. In O7, `wrap` alone gives 25, `wrap` with `overflow` gives 5, and `wrap`
++    with `overflow` and `default` gives 21, as the all-ten run does.
++  - LIVE-REGION 5 more, BANNED-WORD 1 more and LEAK 1 more. In O3, `banned`, `leak` and `live`
++    together give LIVE-REGION 31, BANNED-WORD 9 and LEAK 9; with `default` also on they give 36,
++    10 and 10.
++
++  264 + 72 + 4 − 5 − 1 − 1 = 333. Why one arm changes what another finds was not examined, apart
++  from the 132 checks that three arms share.
++
++Ten of the 27 kinds have no arm: LINES, LABEL, HIDDEN, NO-CARD, DIGITS, DUPLICATE-ID, COVERED,
++FOCUS-LOST, LANG-SWITCH and PAGE-ERROR. Six of them were seen firing in the source defects above
++or in `R00`: LINES, LABEL, HIDDEN, NO-CARD, FOCUS-LOST and LANG-SWITCH. The other four, DIGITS,
++DUPLICATE-ID, COVERED and PAGE-ERROR, had been seen nowhere, so five more defects (`K01` to `K05`)
++were written for them and run the same way, with one change: a defect counts as caught only when
++the kind it was written for appears. All five were caught on 30 Oct 2026, each by the scenarios
++named:
++
++| ID | What was changed | Scenarios run | Kind wanted | What the gate reported |
++|---|---|---|---|---|
++| K01 | The term line of the priced loan printed in Devanagari digits | O4, O2 | DIGITS | PRICED-MISMATCH 39, DIGITS 39 |
++| K02 | The heading of the priced loan given the id of the card's title | O4, O2 | DUPLICATE-ID | DUPLICATE-ID 45 |
++| K03 | A layer laid over the choices (the fieldset made `relative`, with an `absolute inset-0` span inside it) | O8 | COVERED | COVERED 5, STRUCTURE 14, STATE 5, ARIA 5, LINES 4, PRICED-MISMATCH 4, CAPTION 3 |
++| K04 | A box given `undefined` for an empty value, so that React logs a switch from uncontrolled to controlled | O9 | PAGE-ERROR | PAGE-ERROR 14 |
++| K05 | A box that throws when the entry is longer than three characters | O3 | PAGE-ERROR | STATE 50, ARIA 26, WRONG-ERROR 26, PAGE-ERROR 44, LINES 9, PRICED-MISMATCH 9, STRUCTURE 6 |
++
++That makes 27 of 27: 17 kinds seen in the arms, 6 in the source defects or `R00`, 4 in the `K`
++defects.
++
++The arms did not work on the first full try. Bare `--broken` exited 2 with `NOT REFUTED` for
++`wrap`, `overflow`, `print` and `leak`, and the cause was three bugs in the plant script (a
++stylesheet added before the page had a root element, one record of planted nodes shared by three
++observers so that the first hid the other two (they now plant through one observer), and
++`default` setting a radio button's `checked` flag so that the app's own state never changed (it
++now presses the radio button). The first `live` arm replaced the area that React holds, which
++blanked the page and gave 3 faults; it now inserts a copy that a mutation observer keeps in step
++and hides the original.
++
++What none of this reaches: the gate drives Edge headless on Windows, never a real phone, screen
++reader or keyboard; the result it opens is a stored response, so the backend's loan options are
++for `pytest` and not for this gate; the banned-word scan covers only the words on the lists, and
++leaves out the priced-loan block, whose sentences are the page's own and older than the card; and
++the 7 non-English sets of `offer.*` words are machine-written and nobody who reads those
++languages has checked them (the gate checks that the page shows the dictionary's words, not that
++the words are right). `offer-ui` is not in CI (it needs Edge); `offer-lib-test` and
++`offer-lines-test` are, as steps that have not run on Linux yet. The scripts that planted the 57
++source defects and the five `K` defects are not in the repo: they edit the app's own files in
++place, and are not something to leave where a stray run could break a checkout. Nor are the
++scripts that took the measurements for `C30` and for the comparison of the arms. The two tables of
++defects and the `C30` table are therefore a record of what was done and found, and not something a
++fresh clone can re-run. The ten arms can be re-run with `--broken` (one arm, or all ten).
++
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1354 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1651 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1357 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1654 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1387,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1684,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -670,7 +969,7 @@ index b8e7eb3..c8fd6cc 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1401,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1698,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -688,32 +987,45 @@ index b8e7eb3..c8fd6cc 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1418,2 @@ a script to run.
+@@ -866,2 +1715,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
-+**Run `refresh-cases.mjs` after any backend change.** Nine scripts, `drive.mjs`
++**Run `refresh-cases.mjs` after any backend change.** Ten scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1450,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1747,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-+`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui` and `read-aloud` find their own Edge by its
++`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui`, `read-aloud` and `offer-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1466 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1763 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
-+`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381 — plus `assetgen` 9377
-@@ -933 +1485 @@ working one.
++`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381, `offer-ui` 9383 — plus `assetgen` 9377
+@@ -933 +1782 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
-+Seven scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1493 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
++Eight scripts have that refuter built in as a flag, and each **must exit 1** with it:
+@@ -941 +1790 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1497,4 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
+@@ -944,0 +1794,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
 +node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 99 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
 +node tools/verify/read-aloud.mjs   --broken        # all three: 146 findings; exit 2 names an arm whose findings did not appear
-@@ -948 +1504,3 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
++node tools/verify/offer-ui.mjs     --broken=network  # a request on every keystroke: NETWORK, 26 findings across 74 loads
++node tools/verify/offer-ui.mjs     --broken=storage  # every keystroke stored: STORAGE, 26 findings
++node tools/verify/offer-ui.mjs     --broken=default  # a way and a frequency already ticked: 128 findings (STRUCTURE 58, DEFAULT-CHOSEN 32, ARIA 31, WRONG-FIGURE 2, WRONG-ERROR, GUESSED, PRICED-MISMATCH, CAPTION and STATE 1 each); 14,009 checks
++node tools/verify/offer-ui.mjs     --broken=banned   # the language's first banned word on the first line: 260 findings (WRONG-FIGURE 132, BANNED-WORD 128)
++node tools/verify/offer-ui.mjs     --broken=figure   # a digit of the first figure changed: WRONG-FIGURE, 132 findings
++node tools/verify/offer-ui.mjs     --broken=wrap     # the lines squeezed so that every figure breaks: 32 findings (FIGURE-WRAP 25, LAYOUT 7)
++node tools/verify/offer-ui.mjs     --broken=overflow # the card wider than the screen: 176 findings (STRUCTURE 104, LAYOUT 72)
++node tools/verify/offer-ui.mjs     --broken=print    # the card shown in print: PRINT, 1 finding
++node tools/verify/offer-ui.mjs     --broken=live     # the sentences carried by a copy of the result area: 188 findings (LIVE-REGION 177, CAPTION 11)
++node tools/verify/offer-ui.mjs     --broken=leak     # "{total}" left on the first line: 264 findings (WRONG-FIGURE 132, LEAK 132)
++node tools/verify/offer-ui.mjs     --broken          # all ten: 900 findings in 17 kinds; exit 2 names an arm whose own kind did not appear
+@@ -948 +1812,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
-+again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s, measured on
-+30 Oct 2026 on the finished gate.
++again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s and
++`offer-ui`'s, measured on 30 Oct 2026 on the finished gates. `offer-ui`'s arms plant
++their defect in the page, from a script that runs before the app's own; the app's
++source was broken separately, one defect at a time (see the loan-offer card above).

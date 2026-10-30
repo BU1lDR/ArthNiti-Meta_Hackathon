@@ -1,5 +1,5 @@
 diff --git a/docs/PROCESSOR_SCHEDULE.md b/docs/PROCESSOR_SCHEDULE.md
-index ff0c0ca..b03e7a1 100644
+index ff0c0ca..f8266d6 100644
 --- a/docs/PROCESSOR_SCHEDULE.md
 +++ b/docs/PROCESSOR_SCHEDULE.md
 @@ -5 +5 @@ This is the technical schedule for an organisation that runs अर्थNiti fo
@@ -11,21 +11,27 @@ index ff0c0ca..b03e7a1 100644
 @@ -40 +40 @@ The journey asks 19 questions over four steps, or 20 when the reader picks "Othe
 -The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. The frontend makes no other network request, and it loads no third-party font, script, stylesheet or CDN asset. Exactly 12 answers are sent:
 +The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. With the helper off, the frontend makes no other network request. With it on, the `/talk` page also calls the backend's two intake routes (§10), still at `VITE_API_BASE_URL`: the browser contacts no other address. The frontend loads no third-party font, script, stylesheet or CDN asset in either case. Exactly 12 answers are sent:
-@@ -83,0 +84,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
+@@ -58,0 +59,2 @@ The consent record goes with them (§5.3).
++The result that comes back carries, beside some pieces of advice, a figure the rules work out from these same answers (`advisory.amounts`: a shortfall to close, a payment that would bring the pressure to low, the most a household can pay, a cash reserve). It adds no request field, so the list above, the notice and the payload code are unchanged, and like the rest of the response it is not logged (§4.1).
++
+@@ -83,0 +86,4 @@ The backend still accepts eight more fields for other API callers: `employees`,
 +The **Listen button** on `/analysis` and `/advisory` (`frontend/src/components/ReadAloud.jsx`, `frontend/src/audio/speak.js`) sends nothing, and the app makes no request for it. A press reads out sentences already on the page, with the browser's own speech engine: the light's word, the note under it and two sentences of the page, and a sentence with a digit in it is left out. Only a voice that the browser reports as running on the device (`localService`) is used. A voice reached over the network would send the sentence to a speech service this schedule does not list, so where the device has no such voice for the page's language the button is not drawn. The app relies on the browser's own `localService` flag and cannot check it. There is no setting that turns the button off; a deployer who wants it gone removes `ReadAloud` from the two pages. On Windows Edge on 29 Oct 2026 every voice listed was a network voice, so the button did not appear there. The question voice on `/talk` is the one exception and does use a network voice when the device has none (§10.2).
 +
-@@ -88,2 +90,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
++The **loan-offer card** on `/advisory` (`frontend/src/components/OfferCheck.jsx`, with the sums in `frontend/src/data/loanOffer.js`) also sends nothing, and the app makes no request for it. The reader types what a lender has offered them: the money in hand, a payment, how often and how many, or a rate and a number of months. The two figures it prints, the total paid back and the cost for a year, are worked out in the browser tab as they type, by plain code with no model. What is typed lives in the card's component memory only: it is not one of the 12 answers, it is not in the consent record, it is never written to `sessionStorage` or `localStorage`, and it is gone when the reader leaves the page or reloads it. The card does show the loan the rules priced for the reader, which came back with the result. `tools/verify/offer-ui.mjs` fails if filling the card makes a request of any kind or writes to browser storage or a cookie, or if the card still holds what was typed after the reader goes to another page and back, or reloads.
++
+@@ -88,2 +94,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
 -| Browser `sessionStorage`, key `sih-application` | every answer, the ones never sent included, and the last result, as `{v: 4, data}` | until **Start over** is pressed, or the tab is closed. It survives a page refresh. A browser that restores tabs after a restart may restore it too. | anyone using that tab on that device |
 -| Browser `localStorage` | `sih-language`, `sih-dialect`, `sih-theme`, `sih-textsize` (and an inert `sih-contrast` left by older builds). Interface preferences only; no answers | no expiry. Start over does not clear them, and the notice says so (`common.startOverText`) | the next person on the same browser profile |
 +| Browser `sessionStorage`, key `sih-application` | every answer, the ones never sent included, and the last result, as `{v: 6, data}`. When the helper filled a field, `data` also names that field (`aiFilled`: field names, not words) | until **Start over** is pressed, or the tab is closed. It survives a page refresh. A browser that restores tabs after a restart may restore it too. | anyone using that tab on that device |
 +| Browser `localStorage` | `sih-language`, `sih-dialect`, `sih-theme`, `sih-textsize`, `sih-detail` (Simple or Detailed, written only once a button is pressed) and an inert `sih-contrast` left by older builds. Interface preferences only; no answers | no expiry. Start over does not clear them, and the notice says so (`common.startOverText`) | the next person on the same browser profile |
-@@ -90,0 +93 @@ The backend still accepts eight more fields for other API callers: `employees`,
+@@ -90,0 +97,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
 +| `/talk` page memory (helper on) | the consent and age ticks, the recording until it is sent, the transcript, the answers found and which of them are ticked | until the reader leaves `/talk`. Never written to storage. The answers the reader chooses to use go into the `sessionStorage` copy above, as any other answer | that page |
-@@ -92 +95,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
++| Loan-offer card memory (`/advisory`) | the numbers the reader types about an offer, and which way they chose to tell it | until the reader leaves `/advisory`. Never written to storage, never sent | that page |
+@@ -92 +100,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
 -| Server process memory | the request and the computed response | the length of the request. The app writes nothing to disk and has no database. Its only cache holds the bundled scheme and market files | the server process |
 +| Server process memory | the request and the computed response | the length of the request. With the helper off, the app writes nothing to disk and has no database. Its only cache holds the bundled scheme and market files | the server process |
 +| Spend file (helper on) | one whole number per model call, in millionths of a dollar. No words, no key, no identity (§10.3) | until someone deletes it. The app deletes nothing | whoever can read the server's disk |
-@@ -115,0 +120,7 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
+@@ -115,0 +125,7 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
 +| `ARTHNITI_AI_ENABLED` | exactly `true` or `false`. When true, the two `/api/intake` routes are mounted, in production too, and the server refuses to start without `MODEL_API_KEY` (§10) | `false` |
 +| `MODEL_API_KEY` | the Meta Model API key: 1 to 512 visible ASCII characters, environment only (the backend reads no file for it). It is a secret: keep it out of the repo and out of any `VITE_*` value. It is dropped at startup while the helper is off | unset |
 +| `ARTHNITI_AI_MODEL` | the chat model. A name ending in `-contributor` is refused (§10.3) | `muse-spark-1.3` |
@@ -33,40 +39,40 @@ index ff0c0ca..b03e7a1 100644
 +| `ARTHNITI_AI_HOURLY_LIMIT` | a whole number from 1 to 100000: the model calls the whole process makes in an hour (§10.7) | `100` |
 +| `ARTHNITI_AI_SPEND_CAP_USD` | dollars, written like `10` or `2.50`, above 0 and at most 100 (§10.7) | `10` |
 +| `ARTHNITI_AI_SPEND_FILE` | the full path of the file that keeps the running total (§10.7). A relative path is refused | `backend/.ai_spend` |
-@@ -117 +128 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
+@@ -117 +133 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
 -**Production** serves only `GET /health` and `POST /api/analysis/run`. `/docs`, `/redoc` and `/openapi.json` are switched off, and the other six routers are not mounted, so their routes return 404.
 +**Production** serves only `GET /health` and `POST /api/analysis/run`. `/docs`, `/redoc` and `/openapi.json` are switched off, and the other six routers are not mounted, so their routes return 404. With `ARTHNITI_AI_ENABLED=true` it also serves `POST /api/intake/transcribe` and `POST /api/intake/extract` (§10).
-@@ -119 +130 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
+@@ -119 +135 @@ The browser's own form history is a separate store. `autoComplete="off"` is set
 -**Development** serves all 8 routers and the API docs, and logs a startup warning that lists what is open. Development `/docs` loads Swagger UI's JavaScript from a public CDN.
 +**Development** serves all 8 routers (10 with the helper on) and the API docs, and logs a startup warning that lists what is open. Development `/docs` loads Swagger UI's JavaScript from a public CDN.
-@@ -135 +146,2 @@ With consent switched off in production, the server logs one INFO line at startu
+@@ -135 +151,2 @@ With consent switched off in production, the server logs one INFO line at startu
 -| `VITE_REQUIRE_AGE_CHECK` | exactly `true` adds the age box and the age paragraph | no age question |
 +| `VITE_REQUIRE_AGE_CHECK` | exactly `true` adds the age box and the age paragraph. On `/talk` it adds its own age box (§10.5) | no age question |
 +| `VITE_AI_HELPER` | exactly `true` shows the `/talk` page, its landing button and its profile card. Set it only when the backend runs with `ARTHNITI_AI_ENABLED=true` (§10) | the page does not exist: `/talk` shows the not-found page |
-@@ -143 +155 @@ Set `VITE_RECORD_RETENTION_DAYS` only to the period after which the organisation
+@@ -143 +160 @@ Set `VITE_RECORD_RETENTION_DAYS` only to the period after which the organisation
 -| `--no-access-log` | uvicorn's access log goes to stdout by default, between the processing-log lines, and carries the client IP address and the query string. In production the app logs a startup warning while it is on. Leave it on only if the organisation wants that record, and send it elsewhere with `--log-config` |
 +| `--no-access-log` | uvicorn's access log goes to stdout by default, between the processing-log lines, and carries the client IP address and the query string. In production the app logs a startup warning while it is on. Leave it on only if the organisation wants that record, and send it elsewhere with `--log-config`. With the helper on, the query string holds `?language=` (the language a person said they would speak) on every call to `/api/intake/transcribe` |
-@@ -166,0 +179 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-access-log --no
+@@ -166,0 +184 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-access-log --no
 +- [ ] The AI helper is off (`ARTHNITI_AI_ENABLED` unset, `VITE_AI_HELPER` unset), or every item in §10.8 is done.
-@@ -381 +394 @@ CORS stops other websites from calling the API from a reader's browser. It does
+@@ -381 +399 @@ CORS stops other websites from calling the API from a reader's browser. It does
 -| C4 | **Naming processors** (s. 11(1)(b)) | the software calls no third party at runtime. The only other parties are the host, the proxy and any CDN the organisation adds | names the processor and every host and service in its rights responses |
 +| C4 | **Naming processors** (s. 11(1)(b)) | with the helper off, the software calls no third party at runtime, and the only other parties are the host, the proxy and any CDN the organisation adds. With the helper on, Meta also receives what a person says or types on `/talk` (§10.6) | names the processor and every host and service in its rights responses, and Meta if the helper is on |
-@@ -399 +412 @@ CORS stops other websites from calling the API from a reader's browser. It does
+@@ -399 +417 @@ CORS stops other websites from calling the API from a reader's browser. It does
 -| D4 | **Abuse limits** | none in the app. The 20-second timeout in the browser protects nothing on the server | sets body-size, rate and concurrency limits at the proxy (and `--limit-concurrency`) |
 +| D4 | **Abuse limits** | none on the analysis route. The 20-second timeout in the browser protects nothing on the server. With the helper on, its two routes have an hourly call limit per process and a spend cap (§10.7). Those bound the cost and not the traffic: the routes have no sign-in and no limit per person | sets body-size, rate and concurrency limits at the proxy (and `--limit-concurrency`). With the helper on, limits the intake routes harder, because each call can cost money |
-@@ -403 +416 @@ CORS stops other websites from calling the API from a reader's browser. It does
+@@ -403 +421 @@ CORS stops other websites from calling the API from a reader's browser. It does
 -| D8 | **Hardening** | production mounts 2 routes and no API docs (§3.1) | starts uvicorn with `--no-server-header` and `--no-access-log` |
 +| D8 | **Hardening** | production mounts 2 routes and no API docs (§3.1), or 4 routes with the helper on (measured with a stand-in model client: `/health`, `/api/analysis/run` and the two `/api/intake` routes answer, and the other routers and `/docs` return 404) | starts uvicorn with `--no-server-header` and `--no-access-log` |
-@@ -435,0 +449,2 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
+@@ -435,0 +454,2 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
 +**The egg prices are a second static file.** `backend/app/data/necc_egg_prices.json` holds 30 prices from the National Egg Co-ordination Committee (NECC), each with a centre name and a date and nothing else from NECC's public rate sheet. `tools/fetch-necc-prices.mjs` needs no key, runs offline on the owner's machine and never in a deployment, and the backend makes no call to NECC. The file holds no record about any person. NECC's permission to use the prices is an e-mail, not a licence. **Lawyer:** whether that agreement reaches a client who deploys the app (`DATA_SOURCES.md`).
 +
-@@ -443,0 +459 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
+@@ -443,0 +464 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
 +- whether NECC's e-mailed permission for the egg prices reaches a client who deploys the app (§9.2);
-@@ -450 +466,2 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
+@@ -450 +471,2 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
 -- whether the processor has direct duties, or only duties through the contract. s. 8(1) puts responsibility on the Fiduciary, but Rule 6(1) and Rule 8(3) Case 2 reach the processor.
 +- whether the processor has direct duties, or only duties through the contract. s. 8(1) puts responsibility on the Fiduciary, but Rule 6(1) and Rule 8(3) Case 2 reach the processor;
 +- if the AI helper is switched on (§10): Meta as a further processor of what a person says or types, sent outside India; the term in Meta's free-credit programme that lets Meta use that content to improve its products; and whether the helper needs its own consent text, since the versioned notice does not mention it (§10.5, §10.6).
-@@ -460,0 +478,124 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
+@@ -460,0 +483,124 @@ The fetch runs offline on the owner's machine and never in a deployment. **Lawye
 +- **The helper's wording is outside the versioned notice, and `/privacy` does not mention the helper** (§10.5).
 +- **The helper's two routes have no sign-in, no server-side consent record and no limit per person** (§10.5, §10.7).
 +
