@@ -197,6 +197,19 @@ export function pendingQuestions(data, done = new Set()) {
   }).map(([field, key]) => ({ field, key }))
 }
 
+// The fields among the kept `rows` that `patches` really sets on the form, for `done`
+// above. A kept row is not enough: patchesFor leaves a district out when it does not
+// belong to the state the form will hold, and that question has to be asked again. An
+// unmatched row has no value and no patch, which are equal, so it is ruled out by `ok`.
+export function landedFields(rows, patches) {
+  return rows
+    .filter((row) => {
+      const [section, key] = FIELD_TARGETS[row.field]
+      return row.ok && patches[section]?.[key] === row.value
+    })
+    .map((row) => row.field)
+}
+
 // What applying `patches` to the form's answers would change, and which of those
 // answers the helper put there for the reader to check.
 //   changed  the patches with the values the form already holds taken out

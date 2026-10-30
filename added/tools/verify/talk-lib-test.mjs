@@ -31,6 +31,7 @@ import {
   NO_SPEECH_LANGUAGES,
   QUESTIONS,
   pendingQuestions,
+  landedFields,
 } from '../../frontend/src/data/talkAnswers.js'
 import { LANGUAGES } from '../../frontend/src/i18n/languages.js'
 import { MAX_RUPEES, MAX_AUDIO_BYTES } from '../../frontend/src/data/limits.js'
@@ -586,4 +587,96 @@ describe('pendingQuestions', () => {
     assert.equal(pendingQuestions({}, new Set()).length, FIELD_ORDER.length)
     assert.equal(pendingQuestions(undefined, new Set()).length, FIELD_ORDER.length)
   })
+})
+
+// A question counts as answered only if its answer reached the form. patchesFor leaves a
+// district out when it does not belong to the state the form will hold, so "the reader kept
+// this row" is not enough to stop asking.
+describe('landedFields', () => {
+  const rows = (...answers) => matchAnswers(answers, '')
+  const nowhere = { state: '', district: '' }
+
+  test('are the kept rows the patches write, in the order of the form', () => {
+    const kept = rows(
+      said('district', 'Lucknow'),
+      said('state', 'Uttar Pradesh'),
+      said('initial_investment', 60000),
+      said('business_category', 'dairy'),
+    )
+    assert.deepEqual(
+      landedFields(kept, patchesFor(kept, nowhere)),
+      ['business_category', 'initial_investment', 'state', 'district'],
+    )
+  })
+
+  test('an answer equal to what the form starts with is one, because it was written', () => {
+    const kept = rows(said('existing_debt', 0), said('location_type', 'rural'))
+    assert.deepEqual(landedFields(kept, patchesFor(kept, nowhere)), ['existing_debt', 'location_type'])
+  })
+
+  test('a district kept without the state it was heard with is not one', () => {
+    const heard = matchAnswers([said('state', 'Kerala'), said('district', districtsForState('Kerala')[0])])
+    const keptDistrictOnly = heard.filter((row) => row.field === 'district')
+    const now = { state: 'Uttar Pradesh', district: '' }
+    assert.equal(keptDistrictOnly.length, 1)
+    assert.deepEqual(landedFields(keptDistrictOnly, patchesFor(keptDistrictOnly, now)), [])
+  })
+
+  test('a district alone is one when it belongs to the state on the form', () => {
+    const kept = matchAnswers([said('district', 'Varanasi')], 'Uttar Pradesh')
+    const now = { state: 'Uttar Pradesh', district: '' }
+    assert.deepEqual(landedFields(kept, patchesFor(kept, now)), ['district'])
+  })
+
+  test('a row the form cannot hold is never one, though it and its patch are both blank', () => {
+    const kept = rows(said('business_category', 'jewellery'), said('state', 'Narnia'))
+    assert.equal(kept.every((row) => !row.ok && row.value === undefined), true)
+    assert.deepEqual(landedFields(kept, patchesFor(kept, nowhere)), [])
+  })
+
+  test('no rows, or no patches, is none', () => {
+    assert.deepEqual(landedFields([], {}), [])
+    assert.deepEqual(landedFields(rows(said('monthly_emi', 1200)), {}), [])
+  })
+})
+
+// The question is read aloud by speakLines, which leaves out any line with a digit in it
+// (a voice may say a digit string wrongly). A question worded with one would be silent in
+// that language, for the very person who cannot read it. The dictionaries are read line by
+// line, as tools/parity4.mjs does, because strings.js imports its siblings without an
+// extension and plain Node cannot follow that.
+function dictionaries() {
+  const found = {}
+  for (const file of ['strings.js', 'resultStrings.js']) {
+    let lang = null
+    for (const line of readText(`frontend/src/i18n/${file}`).split('\n')) {
+      if (line.startsWith('}')) { lang = null; continue }
+      if (lang) {
+        const entry = line.match(/^ {2}'([^']+)': '((?:[^'\\]|\\.)*)',$/)
+        if (entry) found[lang].set(entry[1], entry[2].replaceAll("\\'", "'"))
+        continue
+      }
+      const opener = line.match(/^const (\w+) = \{\s*(?:\/\/.*)?$/)
+      if (opener && LANGUAGES.some((l) => l.code === opener[1])) {
+        lang = opener[1]
+        found[lang] ??= new Map()
+      }
+    }
+  }
+  return found
+}
+
+describe('the wording of the questions', () => {
+  const dict = dictionaries()
+  const keys = ['talk.askOpen', ...QUESTIONS.map(([, key]) => key)]
+
+  for (const { code } of LANGUAGES) {
+    test(`${code}: every question is worded, and without a digit`, () => {
+      for (const key of keys) {
+        const text = dict[code]?.get(key)
+        assert.ok(text && text.trim(), `${code} has no wording for ${key}`)
+        assert.ok(!/\p{Nd}/u.test(text), `${code} ${key} holds a digit, so it would not be read aloud: ${text}`)
+      }
+    })
+  }
 })
