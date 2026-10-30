@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..f758ace 100644
+index d6ab002..a9f3eae 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -471,6 +471,6 @@ index d6ab002..f758ace 100644
 -- The brand-asset working-tree changes, dated 13 Sept (`tools/assetgen.mjs`, `frontend/src/assets/README.md`, two regenerated lockups, and two untracked `arthniti-wordmark-on-*.png` files), are the owner's to commit. Leave them out of other commits.
 -- Ignored: `.venv/`, `venv/`, `node_modules/`, `dist/`, `.env*` except `.env.example`, `.claude/`, `screenshots/` (verifier output, 8 GB) and `.market-cache/`.
 -- **Team:** none. Aryan Verma works alone since 26 Oct 2026; the September build had six contributors (`DATA_SOURCES.md`, People).
-+- **`main` is the trunk and the only branch on the remote**, one line of history on top of `4a2307e`. The commit titled "chore: the project as it stood at the hackathon start" is the 12:00 PM ET start of the hackathon on 26 Oct 2026; `docs/HACKATHON.md` §2.3 shows how to diff against it.
++- **`main` is the trunk and the only branch on the remote**, one line of history on top of `4a2307e`. The commit titled "chore: the project as it stood at the hackathon start" is the tree at 12:00 PM ET on 26 Oct 2026, 24 minutes before the 12:24 PM ET start the organisers name (the end of the kickoff); `docs/HACKATHON.md` §2.1 says what that leaves and §2.3 shows how to diff against it.
 +- **New work goes on a new branch cut from `main`.** Never commit on `main` itself: it moves only by a push the owner has approved, as a fast-forward. A clone from before 29 Oct may hold a local `main` with unpushed scaffolding commits: compare `origin/` refs. **Commit messages carry no Co-Authored-By line and no Claude attribution.**
 +- Ignored (`.gitignore`): `.env*` except `.env.example`, and `screenshots/` (verifier output, 8 GB). **Team:** none; the September build had six contributors (`DATA_SOURCES.md`, People).
