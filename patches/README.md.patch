@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 6bedb8a..aef86a5 100644
+index 6bedb8a..bd40db1 100644
 --- a/README.md
 +++ b/README.md
 @@ -5 +5 @@ Hyper-local business advice and financial structuring for rural micro-entreprene
@@ -69,7 +69,7 @@ index 6bedb8a..aef86a5 100644
 +
 @@ -113 +146 @@ Two switches turn the demo into something a real person can use.
 -- **frontend**: on Node 24, `npm ci`, lint, build (with a placeholder `https://api.example.invalid` as `VITE_API_BASE_URL`, which a production build requires), `parity4.mjs`, `keycheck.mjs` and `market-lib-test.mjs`, plus `glyph-audit.mjs`, which only reports and exits 0 whenever it runs.
-+- **frontend**: on Node 24, `npm ci`, lint, build (with a placeholder `https://api.example.invalid` as `VITE_API_BASE_URL`, which a production build requires), `parity4.mjs`, `keycheck.mjs`, `market-lib-test.mjs`, `necc-lib-test.mjs`, `talk-lib-test.mjs` and `app-state-test.mjs`, plus `glyph-audit.mjs`, which only reports and exits 0 whenever it runs. One test in `talk-lib-test.mjs` runs only where the Windows `.venv` exists, so CI skips it.
++- **frontend**: on Node 24, `npm ci`, lint, build (with a placeholder `https://api.example.invalid` as `VITE_API_BASE_URL`, which a production build requires), `parity4.mjs`, `keycheck.mjs`, `market-lib-test.mjs`, `necc-lib-test.mjs`, `talk-lib-test.mjs`, `app-state-test.mjs` and `speak-lib-test.mjs`, plus `glyph-audit.mjs`, which only reports and exits 0 whenever it runs. One test in `talk-lib-test.mjs` runs only where the Windows `.venv` exists, so CI skips it.
 @@ -115 +148 @@ Two switches turn the demo into something a real person can use.
 -**It has not run yet.** The branch that adds it has not been pushed, so it has never run on GitHub or on Linux, and Python 3.10 has not been tried at all. The browser gates in `tools/verify/` are not in it: they drive a local Edge at a hardcoded Windows path, so they only run on a Windows machine with Edge installed. There's still no Makefile and no Dockerfile.
 +**It has run.** It was written on a machine with no Linux and no Python 3.10, and its first three runs (27 and 28 October 2026) all passed. In the run of 28 October, Python 3.10.22 and 3.14 each ran the whole backend suite on Linux and passed, and the frontend job passed. The Actions tab has every run, and it, not this file, is the evidence for the latest commit. The browser gates in `tools/verify/` are not in it: they drive a local Edge at a hardcoded Windows path, so they only run on a Windows machine with Edge installed. There's still no Makefile and no Dockerfile.
