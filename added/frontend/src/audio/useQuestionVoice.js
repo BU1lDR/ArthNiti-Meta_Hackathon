@@ -50,9 +50,10 @@ export default function useQuestionVoice(code, text, enabled) {
     [code],
   )
 
+  // The cleanup is returned in every case: speech the person started with the button
+  // must also end when the line changes or the page is left.
   useEffect(() => {
-    if (!enabled || !voiceKey || !text) return undefined
-    start(text)
+    if (enabled && voiceKey && text) start(text)
     return stop
   }, [enabled, voiceKey, text, start, stop])
 

@@ -42,6 +42,7 @@
     "frontend/src/components/ReadAloud.jsx",
     "frontend/src/components/ResultBand.jsx",
     "frontend/src/components/SchemeFunding.jsx",
+    "frontend/src/components/SpeakerIcon.jsx",
     "frontend/src/data/marketRows.js",
     "frontend/src/data/planShape.js",
     "frontend/src/data/talkAnswers.js",
@@ -150,7 +151,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "6407943dd7b56e70fe87d37c51d5766f2ce6ff26",
-    "tree": "231a6ff517566ae89a291c39abc50d9196be0a4c"
+    "devCommit": "eec8d2123f40de32f53255e3f10929812da10720",
+    "tree": "674743fed01170e055dfb25eeddacf85bfd1b4ce"
   }
 }
