@@ -1,5 +1,5 @@
 diff --git a/docs/HACKATHON.md b/docs/HACKATHON.md
-index a895eda..9ed3ab7 100644
+index a895eda..929904e 100644
 --- a/docs/HACKATHON.md
 +++ b/docs/HACKATHON.md
 @@ -1 +1 @@
@@ -27,7 +27,7 @@ index a895eda..9ed3ab7 100644
 +| Judging | 5 to 8 Nov | | |
 +| Closing ceremony: top five per track judged live from the 3-minute video | Mon 9 Nov | | |
 +| Community-vote winner announced | Mon 16 Nov | | |
-+| Code freeze (the owner, 30 Oct 2026; no hour was given) | | | Tue 3 Nov |
++| Code freeze (the owner: the date on 30 Oct 2026, the hour on 31 Oct) | | | **Tue 3 Nov, 12:00 (noon)** |
 +| Working deadline: everything submitted | | | **Tue 3 Nov, evening** |
 +
 +US daylight time ends on Sun 1 Nov, so the due time is UTC−5, not UTC−4. The working deadline leaves more than a day for a failed upload, a lost key or a broken video.
@@ -335,7 +335,7 @@ index a895eda..9ed3ab7 100644
 +
 +### 10.1 Before recording
 +
-+1. **Record after the code freeze**, which the owner set for 3 Nov 2026 (30 Oct; no hour was given): before then the code is not frozen. Record from the build that will be submitted, so the video matches what a reviewer can clone.
++1. **Record after the code freeze**, which the owner set for noon IST on 3 Nov 2026 (the date on 30 Oct, the hour on 31 Oct): before then the code is not frozen. Record from the build that will be submitted, so the video matches what a reviewer can clone.
 +2. **Free the ports.** Nothing should listen on 8000 or 5173 (`netstat -ano | grep -E ':8000|:5173'`).
 +3. **For the egg shot (shot 7):** `node tools/fetch-necc-prices.mjs --write`, then `cd backend && ../.venv/Scripts/python.exe -m pytest tests/test_necc_data_guards.py tests/test_necc_market.py -q`. Without it the egg shot shows the 28 Oct list, dated as such.
 +4. **Start the backend with the helper on**, in your own Git Bash, where the key is typed and never saved:

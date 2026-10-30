@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..d1c1bd5 100644
+index d6ab002..6193fa3 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -10,7 +10,7 @@ index d6ab002..d1c1bd5 100644
 +**Status:** an **individual project**: Aryan Verma builds it alone since 26 Oct 2026, entered in the **Meta Global AI Developer Hackathon, Indie Track**, 26 Oct to 4 Nov 2026. **Submission is due 4 Nov, 9:00 PM ET = 5 Nov, 07:30 IST**: finish by the evening of 3 Nov IST. Until 26 Oct it was a six-person team project for the SIH 2026 college round. It is still a prototype. Work in this order:
 @@ -12 +12 @@
 -Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HACKATHON.md` holds the demo path, the built-before-vs-during note and the submission checklist.
-+**Code freeze: 3 Nov 2026** (the owner, 30 Oct; no hour given). Until then "demo path over refactors" applies to new work. The posted rules want the demo to show only what was built during the event, so the video labels each screen new or from before and dwells only on the new. The rules, the organisers' reply on prior work (30 Oct 2026), the judging stages, the submission repository, the demo path and the submission checklist are in `docs/HACKATHON.md` (§9, §9.1, §9.2, §9.3, §10).
++**Code freeze: 3 Nov 2026, noon IST** (the owner, 30 and 31 Oct). Until then "demo path over refactors" applies to new work. The posted rules want the demo to show only what was built during the event, so the video labels each screen new or from before and dwells only on the new. The rules, the organisers' reply on prior work (30 Oct 2026), the judging stages, the submission repository, the demo path and the submission checklist are in `docs/HACKATHON.md` (§9, §9.1, §9.2, §9.3, §10).
 @@ -16,5 +16,5 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -- **23 Sept 2026. Purpose: a portfolio piece, and mainly a B2B product** for NBFCs, MFIs, SHG federations, CSC operators and similar. **Real people will act on the output**, so correctness, data honesty, DPDP compliance and security are requirements, not polish.
 -- **Ownership: Aryan Verma** owns the project and the scheme data. The repo is proprietary (`LICENSE`). The earlier team's work (Manjeet, Netra and others) needs written permission before the submission and a written assignment before any sale: a legal item, not a code one.
