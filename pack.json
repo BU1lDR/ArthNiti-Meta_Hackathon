@@ -9,6 +9,7 @@
     "backend/app/core/spend.py",
     "backend/app/data/necc_egg_prices.json",
     "backend/app/schemas/plan.py",
+    "backend/app/services/amounts_service.py",
     "backend/app/services/compliance_service.py",
     "backend/app/services/options_service.py",
     "backend/app/services/plan_service.py",
@@ -16,6 +17,7 @@
     "backend/app/services/structuring_service.py",
     "backend/tests/necc_fixtures.py",
     "backend/tests/plan_fixtures.py",
+    "backend/tests/test_advice_amounts.py",
     "backend/tests/test_advisor_log_privacy.py",
     "backend/tests/test_advisor_route.py",
     "backend/tests/test_check_first.py",
@@ -79,6 +81,7 @@
     "backend/app/schemas/analysis.py",
     "backend/app/schemas/intake.py",
     "backend/app/schemas/market.py",
+    "backend/app/services/advisory_service.py",
     "backend/app/services/analysis_service.py",
     "backend/app/services/intake_service.py",
     "backend/app/services/market_service.py",
@@ -156,7 +159,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "7160ddcb286eb1a7b36735f958a1816afdb8b1f1",
-    "tree": "09e1cf420c95904bd8ffe2119fd17fa21bfd6bad"
+    "devCommit": "fe47ec7411974936de50378cf5749aa2be625e00",
+    "tree": "8222bc522c4c29ffc9154dbd439f198351f8e8cb"
   }
 }

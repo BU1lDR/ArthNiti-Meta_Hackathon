@@ -1,5 +1,5 @@
 diff --git a/backend/app/services/analysis_service.py b/backend/app/services/analysis_service.py
-index 6da989b..13d3bc0 100644
+index 6da989b..071bce3 100644
 --- a/backend/app/services/analysis_service.py
 +++ b/backend/app/services/analysis_service.py
 @@ -2,0 +3 @@ from app.services.risk_service import calculate_repayment_pressure
@@ -7,12 +7,14 @@ index 6da989b..13d3bc0 100644
 @@ -5,0 +7,2 @@ from app.services.scheme_service import match_schemes
 +from app.services.structuring_service import build_scheme_funding
 +from app.services.compliance_service import build_compliance
-@@ -30,0 +34 @@ def run_unified_analysis(
+@@ -6,0 +10 @@ from app.services.advisory_service import generate_advice
++from app.services.amounts_service import build_advice_amounts
+@@ -30,0 +35 @@ def run_unified_analysis(
 +    - Financing options for the funding gap
-@@ -33,0 +38,2 @@ def run_unified_analysis(
+@@ -33,0 +39,2 @@ def run_unified_analysis(
 +    - What the matched schemes ask the reader to put in, and what they pay
 +    - The registrations to ask about (Udyam, the local office, FSSAI, GST)
-@@ -60,0 +67,9 @@ def run_unified_analysis(
+@@ -60,0 +68,9 @@ def run_unified_analysis(
 +    # 2b. Financing options for the funding gap. Priced through the same
 +    # function as step 2, so the 60-month option is the loan step 2 prices.
 +    financing_options = build_financing_options(
@@ -22,7 +24,7 @@ index 6da989b..13d3bc0 100644
 +        household_monthly_income=household_monthly_income,
 +    )
 +
-@@ -87,0 +103,22 @@ def run_unified_analysis(
+@@ -87,0 +104,22 @@ def run_unified_analysis(
 +    # 5b. For the PMEGP, PMFME and Mudra matches only: the own money each asks
 +    # for, the subsidy it pays and what is left to borrow, from the terms the
 +    # schemes publish (structuring_service). Priced from the same two figures as
@@ -45,8 +47,19 @@ index 6da989b..13d3bc0 100644
 +        scheme_matches=scheme_matches,
 +    )
 +
-@@ -112,0 +150 @@ def run_unified_analysis(
+@@ -109,0 +148,10 @@ def run_unified_analysis(
++    # 8. A number beside the advice that has one (amounts_service). It is added
++    # after the summary is built because the summary chooses the next step, and the
++    # amounts are keyed by the codes of the sentences that were chosen.
++    advisory["amounts"] = build_advice_amounts(
++        financial_analysis=financial_analysis,
++        risk_analysis=risk_analysis,
++        advisory=advisory,
++        mvp_summary=mvp_summary,
++    )
++
+@@ -112,0 +161 @@ def run_unified_analysis(
 +        "financing_options": financing_options,
-@@ -115,0 +154,2 @@ def run_unified_analysis(
+@@ -115,0 +165,2 @@ def run_unified_analysis(
 +        "scheme_funding": scheme_funding,
 +        "compliance": compliance,

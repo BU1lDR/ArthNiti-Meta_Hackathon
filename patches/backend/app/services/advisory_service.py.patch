@@ -1,0 +1,14 @@
+diff --git a/backend/app/services/advisory_service.py b/backend/app/services/advisory_service.py
+index 6415bdc..8efaa3b 100644
+--- a/backend/app/services/advisory_service.py
++++ b/backend/app/services/advisory_service.py
+@@ -0,0 +1,6 @@
++# The money in hand below which the advice says to keep a cash reserve. It is this
++# app's own mark, not a published rule; amounts_service reads it so that the
++# amount printed beside the advice is measured against the line that raised it.
++CASH_RESERVE_RUPEES = 10000
++
++
+@@ -100 +106 @@ def generate_advice(
+-    if available_capital < 10000:
++    if available_capital < CASH_RESERVE_RUPEES:
