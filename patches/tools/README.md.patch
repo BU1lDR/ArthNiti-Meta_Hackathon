@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..6b1ba7e 100644
+index b8e7eb3..4e9229c 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -406,7 +406,7 @@ index b8e7eb3..6b1ba7e 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1098,547 @@ is still slow or unbounded" above).
+@@ -817 +1098,548 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -944,7 +944,8 @@ index b8e7eb3..6b1ba7e 100644
 +reader or keyboard; the result it opens is a stored response, so the backend's loan options are
 +for `pytest` and not for this gate; the banned-word scan covers only the words on the lists, and
 +leaves out the priced-loan block, whose sentences are the page's own and older than the card; and
-+the 7 non-English sets of `offer.*` words are machine-written and nobody who reads those
++the 7 non-English sets of `offer.*` words began as machine-written, and only the Hindi has been
++returned by the owner (31 Oct 2026, 5 of the 35 lines changed): nobody who reads the other 6
 +languages has checked them (the gate checks that the page shows the dictionary's words, not that
 +the words are right). `offer-ui` is not in CI (it needs Edge); `offer-lib-test` and
 +`offer-lines-test` are, as steps that have not run on Linux yet. The scripts that planted the 57
@@ -955,11 +956,11 @@ index b8e7eb3..6b1ba7e 100644
 +fresh clone can re-run. The ten arms can be re-run with `--broken` (one arm, or all ten).
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1651 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1652 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1654 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1655 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1684,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1685,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -969,7 +970,7 @@ index b8e7eb3..6b1ba7e 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1698,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1699,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -987,26 +988,26 @@ index b8e7eb3..6b1ba7e 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1715,2 @@ a script to run.
+@@ -866,2 +1716,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +**Run `refresh-cases.mjs` after any backend change.** Ten scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1747,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1748,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui`, `read-aloud` and `offer-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1763 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1764 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381, `offer-ui` 9383 — plus `assetgen` 9377
-@@ -933 +1782 @@ working one.
+@@ -933 +1783 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
 +Eight scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1790 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1791 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1794,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
+@@ -944,0 +1795,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
 +node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 99 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
@@ -1022,7 +1023,7 @@ index b8e7eb3..6b1ba7e 100644
 +node tools/verify/offer-ui.mjs     --broken=live     # the sentences carried by a copy of the result area: 188 findings (LIVE-REGION 177, CAPTION 11)
 +node tools/verify/offer-ui.mjs     --broken=leak     # "{total}" left on the first line: 264 findings (WRONG-FIGURE 132, LEAK 132)
 +node tools/verify/offer-ui.mjs     --broken          # all ten: 900 findings in 17 kinds; exit 2 names an arm whose own kind did not appear
-@@ -948 +1812,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1813,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s and
