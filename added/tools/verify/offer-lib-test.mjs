@@ -258,6 +258,27 @@ describe('paying by a quoted rate', () => {
     assert.equal(result.totalPaid, 1076)
   })
 
+  test('more than half a rupee goes up and less than half goes down', () => {
+    assert.equal(checkOffer(BY_RATE({ received: '1010', rate: '2.5', months: '3' })).extra, 76) // 75.75
+    assert.equal(checkOffer(BY_RATE({ received: '1001', rate: '2.5', months: '3' })).extra, 75) // 75.075
+  })
+
+  test('exactly half a rupee goes up, even where plain floating-point arithmetic would drop it', () => {
+    // 3000 x 0.29 x 5 / 100 is exactly 43.5, but Math.round(3000 * 0.29 * 5 / 100) is 43.
+    for (const [received, rate, months, extra] of [
+      [50, '1', 1, 1],
+      [3000, '0.29', 5, 44],
+      [1500, '0.29', 10, 44],
+      [750, '0.29', 20, 44],
+      [3000, '0.29', 15, 131],
+      [350, '0.35', 20, 25],
+    ]) {
+      const result = checkOffer(BY_RATE({ received: String(received), rate, months: String(months) }))
+      assert.equal(result.extra, extra, `${received} at ${rate} for ${months} months`)
+      assert.equal(result.totalPaid, received + extra)
+    }
+  })
+
   test('the comparison is the same money at the assumed rate, charged the same way', () => {
     assert.deepEqual(checkOffer(BY_RATE(), 12).atAssumed, { ratePercent: 12, totalPaid: 10600 })
     assert.deepEqual(checkOffer(BY_RATE(), 18).atAssumed, { ratePercent: 18, totalPaid: 10900 })
@@ -304,9 +325,13 @@ describe('what is a blank, what is a mistake', () => {
   })
 
   test('a mode that is not one of the two works nothing out', () => {
+    // Every box of both ways is filled in, so only the mode can be what stops the working out.
+    const everything = { ...BY_INSTALMENTS(), ...BY_RATE() }
     for (const mode of [undefined, '', 'both', 'constructor']) {
-      assert.deepEqual(checkOffer({ ...BY_INSTALMENTS(), mode }), { status: 'incomplete' }, String(mode))
+      assert.deepEqual(checkOffer({ ...everything, mode }), { status: 'incomplete' }, String(mode))
     }
+    assert.equal(checkOffer({ ...everything, mode: 'instalments' }).mode, 'instalments')
+    assert.equal(checkOffer({ ...everything, mode: 'rate' }).mode, 'rate')
     assert.deepEqual(checkOffer(undefined), { status: 'incomplete' })
     assert.deepEqual(checkOffer(null), { status: 'incomplete' })
   })
