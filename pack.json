@@ -34,6 +34,7 @@
     "frontend/public/hero-backdrop.svg",
     "frontend/src/audio/record.js",
     "frontend/src/audio/speak.js",
+    "frontend/src/audio/useQuestionVoice.js",
     "frontend/src/audio/wav.js",
     "frontend/src/components/Compliance.jsx",
     "frontend/src/components/DetailSwitch.jsx",
@@ -149,7 +150,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "2ce7b4c4f4a7427364a21b51ed61d4e8ed36b7a6",
-    "tree": "b60237ca80396fb8ca9d2da772b0db7136bc2622"
+    "devCommit": "94ed012cba088ff0c676d2c788dad764c2809ced",
+    "tree": "c39475bc5b01d4c3bd5c78e804c3733e4be211b3"
   }
 }

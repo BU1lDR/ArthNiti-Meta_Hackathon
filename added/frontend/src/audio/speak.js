@@ -8,6 +8,10 @@
 // nothing is read. The line is drawn at the device, and this module opens no connection
 // of its own (tools/verify/speak-lib-test.mjs greps its source for the usual ways).
 //
+// The one exception is the question /talk asks aloud (promptVoiceFor, below): that line is
+// the page's own fixed wording and carries nothing the person said, so it may use a voice
+// over the network. No sentence from a result, and nothing the person said, takes that road.
+//
 // What is spoken is only text the page already shows, each line as its own utterance
 // (some engines have been reported to stop a long one part-way). No figure is read: a
 // voice may say a digit string wrongly, and the verdict sentences carry none, so a line
@@ -30,12 +34,14 @@ export const SPEECH_LANG = {
 // Android reports `hi_IN`, other systems `hi-IN`; case is not meaningful.
 const parts = (tag) => String(tag).toLowerCase().replace(/_/g, '-').split('-')
 
-export function localVoiceFor(voices, code) {
+// The Indian voice of the language if there is one, else any of it, among the voices
+// `usable` accepts.
+function pick(voices, code, usable) {
   if (!Object.hasOwn(SPEECH_LANG, code) || !Array.isArray(voices)) return null
   const [language, region] = parts(SPEECH_LANG[code])
   let sameLanguage = null
   for (const voice of voices) {
-    if (voice?.localService !== true) continue
+    if (!voice || !usable(voice)) continue
     const [l, r] = parts(voice.lang)
     if (l !== language) continue
     if (r === region) return voice
@@ -43,6 +49,16 @@ export function localVoiceFor(voices, code) {
   }
   return sameLanguage
 }
+
+export const localVoiceFor = (voices, code) => pick(voices, code, (voice) => voice.localService === true)
+
+// The voice for the questions /talk asks aloud. Those are the page's own fixed wording
+// (the dictionary's question strings) and carry nothing the person said, so a voice the
+// browser reaches over the network may read them where the device has none of the
+// language: Edge lists no other kind for most of the eight. A voice on the device still
+// comes first. What the person says never goes to a speech engine, and the result
+// sentences keep to localVoiceFor; this must not be used for either.
+export const promptVoiceFor = (voices, code) => localVoiceFor(voices, code) ?? pick(voices, code, () => true)
 
 // Speaks the lines one after another and returns a function that stops them, or null
 // when there is nothing to say. `onEnd` runs once, when the last line ends or any line

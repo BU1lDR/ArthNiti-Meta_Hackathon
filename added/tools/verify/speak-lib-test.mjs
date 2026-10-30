@@ -15,7 +15,7 @@
 import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { SPEECH_LANG, localVoiceFor, speakLines } from '../../frontend/src/audio/speak.js'
+import { SPEECH_LANG, localVoiceFor, promptVoiceFor, speakLines } from '../../frontend/src/audio/speak.js'
 import { LANGUAGES } from '../../frontend/src/i18n/languages.js'
 
 const voice = (lang, localService = true, name = `${lang} voice`) => ({ name, lang, localService })
@@ -95,6 +95,57 @@ describe('localVoiceFor', () => {
     const before = JSON.stringify(list)
     localVoiceFor(list, 'bn')
     assert.equal(JSON.stringify(list), before)
+  })
+})
+
+// The questions /talk asks aloud are the page's own fixed wording, nothing the person
+// said, so they may be read by a voice the browser reaches over the network (the only
+// kind Edge lists for most of the eight languages). The result sentences may not
+// (localVoiceFor above), and this must not become a way round that.
+describe('promptVoiceFor', () => {
+  test('is null when the browser lists no voices, or has no list at all', () => {
+    assert.equal(promptVoiceFor([], 'hi'), null)
+    assert.equal(promptVoiceFor(undefined, 'hi'), null)
+    assert.equal(promptVoiceFor(null, 'hi'), null)
+  })
+
+  test('takes a voice on the device before one over the network, whatever the order', () => {
+    const local = voice('hi-IN', true, 'local')
+    const remote = voice('hi-IN', false, 'remote')
+    assert.equal(promptVoiceFor([remote, local], 'hi'), local)
+    assert.equal(promptVoiceFor([local, remote], 'hi'), local)
+  })
+
+  test('takes a voice over the network when none of the language is on the device', () => {
+    const remote = voice('ta-IN', false)
+    assert.equal(promptVoiceFor([voice('en-US'), remote], 'ta'), remote)
+    assert.equal(localVoiceFor([voice('en-US'), remote], 'ta'), null, 'the result sentences still refuse it')
+  })
+
+  test('prefers the Indian voice among voices of the same kind', () => {
+    const bd = voice('bn-BD', false)
+    const inn = voice('bn-IN', false)
+    assert.equal(promptVoiceFor([bd, inn], 'bn'), inn)
+    assert.equal(promptVoiceFor([bd], 'bn'), bd)
+  })
+
+  test('never takes a voice of another language', () => {
+    assert.equal(promptVoiceFor([voice('hil-PH', false), voice('en-IN')], 'hi'), null)
+    assert.equal(promptVoiceFor([voice('mri-NZ', false)], 'mr'), null)
+  })
+
+  test('is null for a language the app does not have', () => {
+    assert.equal(promptVoiceFor([voice('fr-FR', false)], 'fr'), null)
+    assert.equal(promptVoiceFor([voice('hi-IN')], undefined), null)
+    assert.equal(promptVoiceFor([voice('hi-IN')], '__proto__'), null)
+  })
+
+  test('copes with an empty entry in the list, and does not change the list', () => {
+    const v = voice('hi-IN', false)
+    const list = [null, undefined, v]
+    assert.equal(promptVoiceFor(list, 'hi'), v)
+    assert.equal(localVoiceFor(list, 'hi'), null)
+    assert.deepEqual(list, [null, undefined, v])
   })
 })
 
@@ -207,12 +258,14 @@ describe('speakLines', () => {
   })
 })
 
-describe('the module', () => {
-  const src = readFileSync(new URL('../../frontend/src/audio/speak.js', import.meta.url), 'utf8')
-
-  test('opens no connection', () => {
-    for (const word of ['fetch(', 'XMLHttpRequest', 'WebSocket', 'sendBeacon', 'EventSource', 'import(']) {
-      assert.equal(src.includes(word), false, `speak.js mentions ${word}`)
-    }
-  })
+describe('the modules', () => {
+  // The hook is the only other file that drives the speech engine.
+  for (const file of ['speak.js', 'useQuestionVoice.js']) {
+    test(`${file} opens no connection`, () => {
+      const src = readFileSync(new URL(`../../frontend/src/audio/${file}`, import.meta.url), 'utf8')
+      for (const word of ['fetch(', 'XMLHttpRequest', 'WebSocket', 'sendBeacon', 'EventSource', 'import(']) {
+        assert.equal(src.includes(word), false, `${file} mentions ${word}`)
+      }
+    })
+  }
 })

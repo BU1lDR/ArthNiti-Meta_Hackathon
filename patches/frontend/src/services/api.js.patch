@@ -1,11 +1,11 @@
 diff --git a/frontend/src/services/api.js b/frontend/src/services/api.js
-index 521338c..6db6f57 100644
+index 521338c..7a0ed4d 100644
 --- a/frontend/src/services/api.js
 +++ b/frontend/src/services/api.js
 @@ -0,0 +1,2 @@
 +import { isPlan } from '../data/planShape'
 +
-@@ -222,0 +225,140 @@ function readError(data) {
+@@ -222,0 +225,142 @@ function readError(data) {
 +
 +// The voice-and-text helper on /talk: two calls, and the app works without them.
 +// The backend's status code is the contract and its sentence is not, so every
@@ -93,14 +93,16 @@ index 521338c..6db6f57 100644
 +}
 +
 +// Resolves to { answers, ignored }. The answers are checked a second time by
-+// matchAnswers() before anything reaches the form.
-+export async function extractAnswers(text, languageCode, { signal } = {}) {
++// matchAnswers() before anything reaches the form. `asking` is the request field
++// the screen had just asked about (a one-word reply is then an answer to it); left
++// undefined it is not sent, and the reply is read as the open first answer.
++export async function extractAnswers(text, languageCode, { signal, asking } = {}) {
 +  const data = await callHelper(
 +    '/api/intake/extract',
 +    {
 +      method: 'POST',
 +      headers: { 'Content-Type': 'application/json' },
-+      body: JSON.stringify({ text, language: languageCode }),
++      body: JSON.stringify({ text, language: languageCode, asking }),
 +    },
 +    signal,
 +  )
