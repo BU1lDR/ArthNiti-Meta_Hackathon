@@ -1,0 +1,11 @@
+diff --git a/tools/parity4.mjs b/tools/parity4.mjs
+index 9123012..25c9c81 100644
+--- a/tools/parity4.mjs
++++ b/tools/parity4.mjs
+@@ -119,0 +120,6 @@ const DIGIT_ALLOW = {
++  'offer.errWhole': {
++    langs: ['hi'],
++    en: [],
++    value: ['0', '9'],
++    reason: 'the Hindi line names the digits the box takes, "0-9", so a reader who types Devanagari digits knows why they are refused; the English says only "digits"',
++  },

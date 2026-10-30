@@ -149,6 +149,7 @@
     "tools/README.md",
     "tools/keycheck.mjs",
     "tools/market-crosswalk.json",
+    "tools/parity4.mjs",
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
     "tools/verify/figure-audit.mjs",
@@ -169,7 +170,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "cd1a452647f5de79f3ee5ef18abf0550c5c2f252",
-    "tree": "f327a984bfef532d59fcb4805c99526e4edc82e4"
+    "devCommit": "246a23d86830038ec5546810c7eeefcc2a6aea1b",
+    "tree": "7e58c2a3df145a42af15250585920bcaae79d262"
   }
 }
