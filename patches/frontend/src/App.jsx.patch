@@ -1,5 +1,5 @@
 diff --git a/frontend/src/App.jsx b/frontend/src/App.jsx
-index 268d6b7..b76ccce 100644
+index 268d6b7..18823bf 100644
 --- a/frontend/src/App.jsx
 +++ b/frontend/src/App.jsx
 @@ -7,0 +8 @@ import InstructionManual from './components/InstructionManual'
@@ -9,14 +9,18 @@ index 268d6b7..b76ccce 100644
 @@ -417 +419 @@ function AppShell({ children }) {
 -const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy' }
 +const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy', '/talk': 'talk.title' }
-@@ -598 +600 @@ function LandingPage() {
+@@ -598,2 +600,8 @@ function LandingPage() {
 -          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+-            <Button to="/profile" size="lg" className="w-full sm:w-auto">
++          {/* With the helper on, speaking is the way in and the form is the other way. */}
 +          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-@@ -601,0 +604,5 @@ function LandingPage() {
 +            {DEPLOYMENT.aiHelper && (
-+              <Button to="/talk" variant="secondary" size="lg" className="w-full sm:w-auto">
++              <Button to="/talk" size="lg" className="w-full sm:w-auto">
 +                <span aria-hidden="true">🎤</span> {t('talk.title')}
 +              </Button>
 +            )}
-@@ -726,0 +734 @@ function App() {
++            <Button to="/profile" variant={DEPLOYMENT.aiHelper ? 'secondary' : 'primary'} size="lg" className="w-full sm:w-auto">
+@@ -601,0 +610 @@ function LandingPage() {
++
+@@ -726,0 +736 @@ function App() {
 +        {DEPLOYMENT.aiHelper && <Route path="/talk" element={<TalkPage />} />}

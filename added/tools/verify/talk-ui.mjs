@@ -17,8 +17,10 @@
 //
 // Run from the repo root. Needs .venv, Edge and frontend/node_modules.
 //
-//   S0   helper off: no link to /talk anywhere, and /talk is the not-found page
-//   S1   helper on: the links, the page, the first (open) question, the starting state
+//   S0   helper off: no link to /talk anywhere, the form is the landing page's main button,
+//        and /talk is the not-found page
+//   S1   helper on: the links, /talk as the landing page's main button and the form as the
+//        second, the page, the first (open) question, the starting state
 //   S2   consent gate: Find and Record both refuse, say why, focus the box, and send nothing
 //   S2b  age gate (a copy built with VITE_REQUIRE_AGE_CHECK=true)
 //   S3   typed sentence -> 12 answers to review -> nothing applied until the button ->
@@ -166,6 +168,11 @@
 //   TalkPage.jsx  the question heading gets a min-width of 420 px                     -> S25  [7]
 //   TalkPage.jsx  the "Question n of 12" line at 10 px                                -> S25  [4]
 //   TalkPage.jsx  the language box 20 px high                                         -> S25  [6]
+// S0 and S1, the landing page's buttons, run the same day (App.jsx), all four exit 1:
+//   App.jsx       the /talk button gets variant="secondary"                           -> S1  [1]
+//   App.jsx       the two buttons in the old order, the form first and /talk second   -> S1  [2]
+//   App.jsx       the form button is always secondary, also with the helper off       -> S0  [1]
+//   App.jsx       the form button is always primary, also with the helper on          -> S1  [1]
 // The first run of the 35, against the first version of the gate, was not a pass: 6 exited
 // 1, 9 exited 2, 3 survived (the two locks on the review buttons and the navigation after
 // the last answer) and 17 never ran, because the next one started before the ports of the
@@ -1211,12 +1218,20 @@ const progressOf = (n) => norm(en('talk.progress', { n, total: QUESTIONS.length 
 // The one voice S24 and S25 give the page: an online Hindi one, which the question may
 // use (it is the page's own wording) although a result's read-aloud may not.
 const NET_HINDI = { voices: [{ name: 'Net Hindi', lang: 'hi-IN', local: false }], delay: 400 }
+// The landing page's buttons in the order they stand: where each leads, and whether it
+// has the filled (main) look. Run in the page, so it must stand alone.
+const heroButtons = () => [...document.querySelectorAll('.ui-hero a')].map((a) => ({
+  href: a.getAttribute('href'),
+  main: a.className.includes('bg-[var(--color-btn)]'),
+}))
 
 // --- the scenarios ------------------------------------------------------------
 async function s0() {
   await open(OFF, '/')
   expect('the landing page has no link to /talk', !(await has('a[href="/talk"]')))
   expect('(sanity) the landing page links to /profile', await has('a[href="/profile"]'))
+  const hero = await inPage(heroButtons)
+  expect('the first button of the landing page leads to the form, in the main look', hero[0]?.href === '/profile' && hero[0].main === true, hero)
   await open(OFF, '/profile', { keep: true })
   expect('the profile page has no link to /talk', !(await has('a[href="/talk"]')))
   expect('(sanity) the profile page has its form', await has('#main input'))
@@ -1229,6 +1244,9 @@ async function s0() {
 async function s1() {
   await open(ON, '/')
   expect('the landing page links to /talk', await has('a[href="/talk"]'))
+  const hero = await inPage(heroButtons)
+  expect('the first button of the landing page leads to /talk, in the main look', hero[0]?.href === '/talk' && hero[0].main === true, hero)
+  expect('the form is the second, in the plain look', hero[1]?.href === '/profile' && hero[1].main === false, hero)
   await open(ON, '/profile', { keep: true })
   expect('the profile page links to /talk', await has('a[href="/talk"]'))
   await open(ON, '/talk', { keep: true })
