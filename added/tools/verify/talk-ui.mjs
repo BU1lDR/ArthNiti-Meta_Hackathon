@@ -1,5 +1,5 @@
-// The /talk gate: the optional "say or type your answers" page, driven in a real
-// Edge. The Node tests (talk-lib-test, app-state-test, the pytest suite) cover the
+// The /talk gate: the "say or type your answers" page, which asks the form's questions
+// one at a time, driven in a real Edge. The Node tests (talk-lib-test, app-state-test, the pytest suite) cover the
 // parts that need no browser; this covers what only a browser has: the permission
 // question, the microphone itself, focus, the React state that locks the boxes, and
 // the way AppContext and the form pages show what the helper filled in.
@@ -18,11 +18,12 @@
 // Run from the repo root. Needs .venv, Edge and frontend/node_modules.
 //
 //   S0   helper off: no link to /talk anywhere, and /talk is the not-found page
-//   S1   helper on: the links, the page, the starting state
+//   S1   helper on: the links, the page, the first (open) question, the starting state
 //   S2   consent gate: Find and Record both refuse, say why, focus the box, and send nothing
 //   S2b  age gate (a copy built with VITE_REQUIRE_AGE_CHECK=true)
 //   S3   typed sentence -> 12 answers to review -> nothing applied until the button ->
-//        the form fields, the "filled from what you said" banners, a full reload
+//        the form fields, the "filled from what you said" banners, a full reload; the page
+//        then asks the one question left, and "use the form" leads on
 //   S4   voice: record, stop, the WAV the backend got, the microphone released, a second
 //        recording adds to the text
 //   S5   the boxes stay locked while the browser asks for the microphone; Cancel and a
@@ -46,6 +47,15 @@
 //   S20  Cancel while the plan is being written
 //   S21  a plan in each of the 8 languages
 //   S22  360 px phone: the plan card at rest and with a plan
+//   S23  the questions one at a time: Skip, a typed reply (the model is told which question),
+//        "Yes, that is right" / "No, I will say it again", a reply that answers another
+//        question, a reply with no answer, a spoken reply, one reply that answers several
+//        questions, the end of the questions
+//   S24  the question read aloud (a fake speech engine): nothing before consent, one line at a
+//        time, the speaker button, Skip / Find / Record change or stop it, the voice chosen (a
+//        local one first), no button when the browser has no voice for the language
+//   S25  360 px phone: the open question, a question under review, no answer found, the end
+//        of the questions
 //
 // S16-S22 reach /advisory the way a reader does, by typing the answers into /business,
 // /location and /finance, because the card only exists once there is a result. The plan
@@ -116,6 +126,57 @@
 // S15 also waits 1.2 s before pressing Stop: a recording stopped at once is sometimes
 // reported as unusable (3 of 40 runs without the wait, 0 of 40 with it, too few to
 // call significant), and that report is correct but is not what part 1 is testing.
+// S23-S25, run on 30 Oct 2026: 35 changes, made one at a time, each file put back byte for
+// byte after its run. TalkPage.jsx unless another file is named; in brackets, how many
+// checks failed. All 35 fail the gate with exit 1. S23, the questions one at a time:
+//   TalkPage.jsx  lookFor() no longer sends `asking`                                  -> S23  [6]
+//   TalkPage.jsx  `asking` also sent in the open turn (`?? 'state'`)                  -> S3   [1]
+//   TalkPage.jsx  apply() marks the question asked as answered, landed or not         -> S23  [1]
+//   TalkPage.jsx  apply() marks nothing as answered                                   -> S23  [1]
+//   TalkPage.jsx  Skip in the open turn does nothing                                  -> S23  [1]
+//   TalkPage.jsx  Skip on a form question does not mark it done                       -> S23  [1]
+//   TalkPage.jsx  Skip not disabled while a request is out                            -> S23  [1]
+//   TalkPage.jsx  a spoken reply waits for Find (`if (question)` becomes `if (false)`) -> S23  [1]
+//   TalkPage.jsx  the text box is not emptied for the next question                   -> S23  [1]
+//   TalkPage.jsx  a reply is written to the form when found, before "that is right"   -> S23  [4]
+//   TalkPage.jsx  the "nothing found" line is always the open turn's                  -> S23  [1]
+//   TalkPage.jsx  the end of the list shows the open question's line                  -> S23  [1]
+//   TalkPage.jsx  "use the form instead" always leads to /finance                     -> S23  [2]
+//   TalkPage.jsx  the question is not given focus after a step                        -> S23  [14]
+//   TalkPage.jsx  the number counts from 0 instead of 1                               -> S23  [15]
+//   TalkPage.jsx  `open` is always false: the open turn never happens                 -> S1, S3, S23  [5]
+//   TalkPage.jsx  the confirming button always says "Use these answers"               -> S23  [2]
+//   TalkPage.jsx  the note about the form is shown on every turn                      -> S23  [1]
+//   TalkPage.jsx  "No, I will say it again" is never offered                          -> S23  [2]
+//   TalkPage.jsx  "Yes, that is right" not disabled while a request is out            -> S23  [1]
+//   TalkPage.jsx  "No, I will say it again" not disabled while a request is out       -> S23  [1]
+//   TalkPage.jsx  no navigation after the last answer                                 -> S3, S23  [1]
+// S24, the question read aloud:
+//   TalkPage.jsx  the voice starts without the consent tick                           -> S24  [3]
+//   TalkPage.jsx  the question is always read in English                              -> S24  [2]
+//   TalkPage.jsx  agreed() (Find, Record) no longer stops the voice                   -> S24  [1]
+//   TalkPage.jsx  the spoken line includes the typed words                            -> S24  [1]
+//   useQuestionVoice.js  the line before is not stopped when the line changes         -> S24  [4]
+//   useQuestionVoice.js  the speaker button is offered with no voice                  -> S24  [2]
+//   useQuestionVoice.js  no listener for `voiceschanged`                              -> S24  [1]
+//   useQuestionVoice.js  leaving the page does not cut the line off                   -> S24  [1]
+//   speak.js      delete the `if (!live) return` in finish()                          -> S24  [2]
+//   speak.js      a local voice is no longer preferred to a network voice             -> S24  [1]
+// S25, 360 px:
+//   TalkPage.jsx  the question heading gets a min-width of 420 px                     -> S25  [7]
+//   TalkPage.jsx  the "Question n of 12" line at 10 px                                -> S25  [4]
+//   TalkPage.jsx  the language box 20 px high                                         -> S25  [6]
+// The first run of the 35, against the first version of the gate, was not a pass: 6 exited
+// 1, 9 exited 2, 3 survived (the two locks on the review buttons and the navigation after
+// the last answer) and 17 never ran, because the next one started before the ports of the
+// last were free. What fixed it: a state the page owes is awaited with reach() and
+// pressOwed(), which record a finding and stop the scenario instead of faulting; S23 presses
+// the review buttons while a request is out; S3 and S23 check the navigation after the last
+// answer; the runner waits up to 90 s for the ports. "Open is always false" then exited 2
+// once more: untickLucknowAndApply() in S3 still used press() and waitSnap(), which fault on
+// a button the page no longer has. It uses pressOwed() and reach() now, and exits 1.
+// S24 waits for the silence after leaving the page, not for the new address: the path changes
+// a moment before the page is unmounted and the voice stopped.
 import { spawn, spawnSync } from 'node:child_process'
 import { closeSync, existsSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:net'
@@ -145,6 +206,9 @@ const ONLY = (process.argv.slice(2).find((a) => a.startsWith('--only=')) ?? '')
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 class Fault extends Error {}
+// A finding has been recorded and the walk cannot go on without the state it was waiting
+// for (see reach). Not a fault: the instrument measured, and the page failed.
+class Halt extends Error {}
 
 // --- every process this script starts, and how it dies ----------------------
 // By PID tree and nothing else (see market-ui.mjs for why, and for the Edge
@@ -235,10 +299,10 @@ try {
 } catch (err) {
   refuse(`the dictionaries in ${I18N} did not load (${err.message}).`)
 }
-let SENT_FIELDS, FIELD_LABEL_KEYS, LANGUAGES
+let SENT_FIELDS, FIELD_LABEL_KEYS, QUESTIONS, LANGUAGES
 try {
   ;({ SENT_FIELDS } = await import(pathToFileURL(resolve('frontend/src/config/notice.js')).href))
-  ;({ FIELD_LABEL_KEYS } = await import(pathToFileURL(resolve('frontend/src/data/talkAnswers.js')).href))
+  ;({ FIELD_LABEL_KEYS, QUESTIONS } = await import(pathToFileURL(resolve('frontend/src/data/talkAnswers.js')).href))
   ;({ LANGUAGES } = await import(pathToFileURL(resolve('frontend/src/i18n/languages.js')).href))
 } catch (err) {
   refuse(`a frontend module this gate imports did not load (${err.message}).`)
@@ -256,7 +320,9 @@ const T = (lang, key, params) => {
 const en = (key, params) => T('en', key, params)
 
 const USED_KEYS = [
-  'talk.title', 'talk.optional', 'talk.record', 'talk.stop', 'talk.cancel', 'talk.find', 'talk.apply',
+  'talk.title', 'talk.record', 'talk.stop', 'talk.cancel', 'talk.find', 'talk.apply',
+  'talk.askOpen', 'talk.progress', 'talk.skip', 'talk.right', 'talk.again', 'talk.toForm', 'talk.allDone', 'talk.noneHere', 'talk.applyNote',
+  'talk.noneFound', 'common.continue', 'nav.home', 'ra.listen', 'ra.stop', ...QUESTIONS.map(([, key]) => key),
   'talk.reviewTitle', 'talk.consentRequired', 'talk.errMicDenied', 'talk.errMicNone', 'talk.errUnavailable',
   'talk.errBusy', 'talk.errUnclear', 'talk.errRecording', 'talk.errGeneric', 'talk.langNoSpeech',
   'talk.finding', 'talk.listening', 'talk.recording', 'talk.filledTitle', 'talk.said', 'nf.title',
@@ -271,6 +337,11 @@ for (const key of USED_KEYS) {
 }
 if (JSON.stringify(SENT_FIELDS.map(([field]) => field)) !== JSON.stringify(Object.keys(FIELD_LABEL_KEYS))) {
   refuse('SENT_FIELDS and FIELD_LABEL_KEYS no longer list the same fields in the same order.')
+}
+// S23-S25 find the line the page is on by its words, so no two may read alike.
+const LINES = ['talk.askOpen', ...QUESTIONS.map(([, key]) => key), 'talk.allDone']
+if (new Set(LINES.map((key) => norm(en(key)))).size !== LINES.length) {
+  refuse('two of the lines /talk asks read the same in English, so S23 could not tell which one is on screen.')
 }
 
 // --- what the typed sentence must turn into ----------------------------------
@@ -483,7 +554,70 @@ function pageLibrary() {
         return partial ? text.includes(label) : text === label
       })
     },
+    // A Button given a `to` is an <a>, not a <button>: "use the form instead" and the
+    // Continue of the finished page are links, which button() cannot see.
+    link(label) {
+      return [...document.querySelectorAll('#main a')].find((a) => this.norm(a.innerText) === label)
+    },
   }
+}
+
+// The browser's speech engine, as /talk's spoken question meets it. Runs in the page
+// before the app's scripts, like pageLibrary. With nothing in sessionStorage under
+// 'talk-ui-speech' it HIDES the engine, so a scenario that did not ask for one has no
+// speaker button on screen (a real Edge may list voices, and every question would
+// then be read aloud and wear a second "Stop" next to Record's). With a config,
+// {"voices": [{"name", "lang", "local"}], "delay": 0}, it installs a fake that keeps
+// what it was asked to say. The page can be steered through window.__speech:
+//   state()           what was spoken, how often the engine was cancelled, who is speaking
+//   finish()          the engine has read the line out: the utterance's onend
+//   setVoices(list)   the browser lists its voices late: voiceschanged
+// `delay` is how long after a cancel the cancelled line reports its error, as a real
+// engine does a moment late; the page must not take it for the new line failing.
+function speechFake() {
+  let config = null
+  try { config = JSON.parse(sessionStorage.getItem('talk-ui-speech') || 'null') } catch { config = null }
+  if (!config) {
+    Object.defineProperty(window, 'speechSynthesis', { value: undefined, configurable: true })
+    window.SpeechSynthesisUtterance = undefined
+    return
+  }
+  const make = (v) => ({ name: v.name, lang: v.lang, localService: v.local === true, default: false, voiceURI: v.name })
+  let voices = config.voices.map(make)
+  const said = []
+  const queue = []
+  const listeners = new Set()
+  let cancels = 0
+  class Utterance {
+    constructor(text) { this.text = text; this.voice = null; this.lang = ''; this.onend = null; this.onerror = null }
+  }
+  const synth = {
+    get speaking() { return queue.length > 0 },
+    get pending() { return queue.length > 1 },
+    getVoices: () => voices,
+    speak(u) { said.push({ text: u.text, lang: u.lang, voice: u.voice ? u.voice.name : null }); queue.push(u) },
+    cancel() {
+      cancels += 1
+      const dropped = queue.splice(0)
+      setTimeout(() => dropped.forEach((u) => u.onerror && u.onerror({ error: 'canceled' })), config.delay || 0)
+    },
+    addEventListener(type, fn) { if (type === 'voiceschanged') listeners.add(fn) },
+    removeEventListener(type, fn) { listeners.delete(fn) },
+  }
+  window.__speech = {
+    state: () => ({ said: said.map((x) => ({ ...x })), cancels, speaking: queue.length > 0, voices: voices.map((v) => v.name) }),
+    finish() {
+      const u = queue.shift()
+      if (u && u.onend) u.onend({})
+      return Boolean(u)
+    },
+    setVoices(list) {
+      voices = list.map(make)
+      listeners.forEach((fn) => fn(new Event('voiceschanged')))
+    },
+  }
+  Object.defineProperty(window, 'speechSynthesis', { value: synth, configurable: true })
+  window.SpeechSynthesisUtterance = Utterance
 }
 
 // What the page shows, as plain data. Runs in the page.
@@ -500,6 +634,8 @@ function snapshot() {
   const active = document.activeElement
   const gum = window.__gum
   const each = (selector) => (main ? [...main.querySelectorAll(selector)] : [])
+  const heading = q('#main h3[tabindex="-1"]')
+  const above = heading ? heading.previousElementSibling : null
   return {
     path: location.pathname,
     h1: h1 ? norm(h1.innerText) : '',
@@ -523,6 +659,13 @@ function snapshot() {
           buttons: [...section.querySelectorAll('button')].map((b) => ({ text: norm(b.innerText), disabled: b.disabled })),
         }
       : null,
+    // The question the page is asking: its words, whether it has focus, and the
+    // "Question n of N" line above it (there is none on the open turn or when all are done).
+    question: heading
+      ? { heading: norm(heading.innerText), focused: active === heading, progress: above && above.tagName === 'P' ? norm(above.innerText) : '' }
+      : null,
+    links: each('a').map((a) => ({ text: norm(a.innerText), href: a.getAttribute('href') })),
+    speech: window.__speech ? window.__speech.state() : null,
     focus: active ? (active.id || active.tagName.toLowerCase()) : '',
     tracks: gum ? gum.tracks() : [],
     gumCalls: gum ? gum.calls : 0,
@@ -729,13 +872,16 @@ async function run(id, title, fn) {
   const errorsBefore = cdp.pageErrors.length
   try {
     await fn()
-    const fresh = cdp.pageErrors.slice(errorsBefore)
-    expect('no uncaught error in the page', fresh.length === 0, fresh.join(' | '))
   } catch (err) {
     if (cdp.closed) throw err
-    current.fault = String(err.message || err)
-    console.log(`  FAULT ${id}: ${current.fault}`)
+    if (!(err instanceof Halt)) {
+      current.fault = String(err.message || err)
+      console.log(`  FAULT ${id}: ${current.fault}`)
+      return
+    }
   }
+  const fresh = cdp.pageErrors.slice(errorsBefore)
+  expect('no uncaught error in the page', fresh.length === 0, fresh.join(' | '))
 }
 
 const inPage = (fn, ...args) => cdp.evaluate(`(${fn.toString()})(...${JSON.stringify(args)})`)
@@ -772,16 +918,46 @@ async function settleSnap(ms, predicate, read = snap) {
   }
 }
 
+// A step of a walk where the page owes the reader a state. If it never comes that is a
+// finding, recorded here, and the walk stops: the steps after it need that state.
+// waitSnap is for what the instrument owes, and says it could not measure.
+async function reach(what, ms, predicate, read = snap) {
+  const s = await settleSnap(ms, predicate, read)
+  const ok = predicate(s)
+  expect(`reaches ${what}`, ok, ok ? '' : JSON.stringify(s).slice(0, 700))
+  if (!ok) throw new Halt(what)
+  return s
+}
+
+const tryPress = (label, partial = false) => inPage((want, loose) => {
+  const b = window.__t.button(want, loose)
+  if (!b) return 'absent'
+  const disabled = b.disabled
+  b.click()
+  return disabled ? 'disabled' : 'clicked'
+}, norm(label), partial)
+
 async function press(label, partial = false) {
-  const state = await inPage((want, loose) => {
-    const b = window.__t.button(want, loose)
-    if (!b) return 'absent'
-    const disabled = b.disabled
-    b.click()
-    return disabled ? 'disabled' : 'clicked'
-  }, norm(label), partial)
+  const state = await tryPress(label, partial)
   if (state === 'absent') throw new Fault(`there is no button "${norm(label)}" on ${(await snap()).path}`)
   return state
+}
+// press() for a button the page owes the reader at this point: absent is a finding.
+async function pressOwed(label) {
+  const state = await tryPress(label)
+  expect(`has the button "${norm(label)}"`, state !== 'absent', state === 'absent' ? (await snap()).buttons : '')
+  if (state === 'absent') throw new Halt(label)
+  return state
+}
+// A Button with a `to` is a link (see window.__t.link), so press() cannot find it.
+async function pressLink(label) {
+  const state = await inPage((want) => {
+    const a = window.__t.link(want)
+    if (!a) return 'absent'
+    a.click()
+    return 'clicked'
+  }, norm(label))
+  if (state === 'absent') throw new Fault(`there is no link "${norm(label)}" on ${(await snap()).path}`)
 }
 async function tick(selector, want = true) {
   const state = await inPage((sel, wanted) => {
@@ -843,7 +1019,9 @@ async function navigate(url) {
 
 // A fresh visit: the fake forgotten, this language, nothing stored. `keep` goes
 // straight to the route and leaves the tab's storage as the last page left it.
-async function open(base, route, { lang = 'en', keep = false } = {}) {
+// `speech` is a config for speechFake: without one the page has no speech engine,
+// and a visit that keeps the tab's storage keeps whatever the last fresh visit chose.
+async function open(base, route, { lang = 'en', keep = false, speech = null } = {}) {
   if (!keep) {
     await fake.reset()
     await navigate(base + '/')
@@ -855,6 +1033,8 @@ async function open(base, route, { lang = 'en', keep = false } = {}) {
       localStorage.setItem('sih-textsize', 'md')
       localStorage.setItem('sih-detail', 'detailed')
       sessionStorage.removeItem(${JSON.stringify(STORAGE_KEY)})
+      sessionStorage.removeItem('talk-ui-speech')
+      ${speech ? `sessionStorage.setItem('talk-ui-speech', ${JSON.stringify(JSON.stringify(speech))})` : ''}
       return true
     })()`)
   }
@@ -1024,6 +1204,14 @@ async function writePlan(label) {
 // The language picker in the utility bar: the one select with a Malayalam option.
 const chooseLanguage = (code) => choose('select:has(option[value="ml"])', code)
 
+// The i-th question in the form's order (0 is the kind of business) as the page words it,
+// and the "Question n of N" line over it.
+const ask = (i) => norm(en(QUESTIONS[i][1]))
+const progressOf = (n) => norm(en('talk.progress', { n, total: QUESTIONS.length }))
+// The one voice S24 and S25 give the page: an online Hindi one, which the question may
+// use (it is the page's own wording) although a result's read-aloud may not.
+const NET_HINDI = { voices: [{ name: 'Net Hindi', lang: 'hi-IN', local: false }], delay: 400 }
+
 // --- the scenarios ------------------------------------------------------------
 async function s0() {
   await open(OFF, '/')
@@ -1046,7 +1234,10 @@ async function s1() {
   await open(ON, '/talk', { keep: true })
   const s = await snap()
   expect('the title', s.h1 === norm(en('talk.title')), s.h1)
-  expect('it says the page is optional', s.mainText.includes(norm(en('talk.optional'))))
+  expect('it opens by asking the open question, with no number on it', s.question?.heading === norm(en('talk.askOpen')) && s.question.progress === '', s.question)
+  expect('"use the form instead" leads to the form', s.links.some((l) => l.text === norm(en('talk.toForm')) && l.href === '/profile'), s.links)
+  expect('Skip is offered', buttonOf(s, en('talk.skip'))?.disabled === false)
+  expect('with no speech engine the question is text only', !buttonOf(s, en('ra.listen')) && !buttonOf(s, en('ra.stop')), s.buttons)
   expect('the consent box starts unticked', s.consent?.checked === false, s.consent)
   expect('there is no age box on this build', s.age === null, s.age)
   expect('Find waits for some text', buttonOf(s, en('talk.find'))?.disabled === true)
@@ -1106,7 +1297,9 @@ async function s2b() {
 }
 
 // The review is on screen: untick the Lucknow row (the sentence names it, so it
-// is there to untick), press the apply button and wait for the page it leads to.
+// is there to untick) and press the apply button. The page stays on /talk and asks
+// the one question the sentence left open, the district, and that is what this waits
+// for (it returns that state).
 async function untickLucknowAndApply() {
   const found = await inPage(() => {
     const norm = window.__t.norm
@@ -1121,12 +1314,19 @@ async function untickLucknowAndApply() {
   if (!found) throw new Fault('no Lucknow row with a box to untick in the review')
   const s = await waitSnap('the Lucknow box to be unticked', 3000, (x) => x.review.rows.some((row) => row.spans[1] === 'Lucknow' && row.checked === false))
   expect('only the Lucknow box was unticked', s.review.rows.filter((row) => row.checked === false).length === 1, s.review.rows)
-  await press(en('talk.apply'))
+  await pressOwed(en('talk.apply'))
+  return reach('the district question', 5000, (x) => x.question?.heading === norm(en('talk.askDistrict')))
+}
+
+// "Use the form instead", the link in the page's header: to the first page that
+// has an answer missing.
+async function goToForm() {
+  await pressLink(en('talk.toForm'))
   await waitSnap('the first unanswered page', 5000, (x) => x.path !== '/talk')
 }
 
-// The typed sentence, through the review, to the page the button leads to. Leaves
-// the application data in the tab's storage.
+// The typed sentence, through the review and out of the page by its "use the form"
+// link, to the page that comes next. Leaves the application data in the tab's storage.
 async function typeAndApply() {
   await open(ON, '/talk')
   await tick('#talk-consent')
@@ -1134,6 +1334,7 @@ async function typeAndApply() {
   await find()
   await waitSnap('the review', 4000, (x) => x.review !== null)
   await untickLucknowAndApply()
+  await goToForm()
 }
 
 async function s3() {
@@ -1141,6 +1342,8 @@ async function s3() {
   await tick('#talk-consent')
   await type('#talk-text', SENTENCE)
   await find()
+  const sent = await fake.calls()
+  expect('the open turn names no question to the model', sent.length === 1 && sent[0].call === 'extract' && sent[0].asking === null, sent)
   let s = await waitSnap('the review', 4000, (x) => x.review !== null)
   expect('the review is titled and has focus', s.review.title === norm(en('talk.reviewTitle')) && s.review.focused, s.review)
   expect('12 answers', s.review.rows.length === 12, s.review.rows.length)
@@ -1156,7 +1359,11 @@ async function s3() {
   const beforeApply = await stored()
   expect('nothing is applied before the button', !beforeApply || (beforeApply.data.business.initialInvestment === '' && beforeApply.data.aiFilled.length === 0), beforeApply?.data)
 
-  await untickLucknowAndApply()
+  const asking = await untickLucknowAndApply()
+  expect('the page stays on /talk', asking.path === '/talk', asking.path)
+  expect('and asks the one question left, the district, as the last of the list', asking.question.progress === norm(en('talk.progress', { n: QUESTIONS.length, total: QUESTIONS.length })), asking.question)
+  expect('the question has focus', asking.question.focused === true, { question: asking.question, focus: asking.focus })
+  expect('the review is gone', asking.review === null, asking.review)
   const saved = await stored()
   if (!saved) throw new Fault('the application data is not in the tab storage after the button')
   const d = saved.data
@@ -1173,7 +1380,8 @@ async function s3() {
   expect('the unticked district was not written', d.location.district === '', d.location.district)
   expect('location.locationType', d.location.locationType === 'rural', d.location.locationType)
   expect('aiFilled names exactly what was written', sameSet(d.aiFilled, FILLED_PATHS), d.aiFilled)
-  expect('the profile page is next (no name yet)', (await snap()).path === '/profile')
+  await goToForm()
+  expect('"use the form instead" leads to the profile page (no name yet)', (await snap()).path === '/profile')
 
   // Full reloads: the banner has to come from storage, not from component state.
   const banner = (section) => inPage((name) => {
@@ -1823,6 +2031,314 @@ async function s22() {
   }
 }
 
+async function s23() {
+  // The questions, one at a time. The page has no speech engine here: this is about the
+  // asking, the confirming and the skipping, and S24 is about the voice.
+  //
+  // First visit: every question skipped, in the form's order, to the end of the list.
+  await open(ON, '/talk')
+  await tick('#talk-consent')
+  let s = await snap()
+  expect('it opens on the open question, with no number on it', s.question?.heading === norm(en('talk.askOpen')) && s.question.progress === '', s.question)
+
+  await pressOwed(en('talk.skip'))
+  s = await reach('the first question', 4000, (x) => x.question?.heading === ask(0))
+  expect('Skip on the open question starts the form questions, at number 1', s.question.progress === progressOf(1), s.question)
+  expect('the question has focus', s.question.focused === true, { question: s.question, focus: s.focus })
+  expect('the text box is empty', s.text === '', s.text)
+
+  for (let i = 1; i < QUESTIONS.length; i++) {
+    await pressOwed(en('talk.skip'))
+    s = await reach(`question ${i + 1}`, 4000, (x) => x.question?.heading === ask(i))
+    expect(`Skip goes on to question ${i + 1}, with its number and the focus`, s.question.progress === progressOf(i + 1) && s.question.focused === true, s.question)
+  }
+
+  // Skipping the last question ends the list.
+  await pressOwed(en('talk.skip'))
+  s = await reach('the end of the questions', 4000, (x) => x.question?.heading === norm(en('talk.allDone')))
+  expect('it says all the questions are done, with no number, and has focus', s.question.progress === '' && s.question.focused === true, s.question)
+  expect('there is no text box, no Find and no Skip', s.text === null && !buttonOf(s, en('talk.find')) && !buttonOf(s, en('talk.skip')), { text: s.text, buttons: s.buttons })
+  expect('"Continue" leads to the first page with an answer missing: the profile, for the name', s.links.some((l) => l.text === norm(en('common.continue')) && l.href === '/profile'), s.links)
+  expect('thirteen skips sent nothing', (await fake.calls()).length === 0)
+  const leaks = await inPage(leakScan)
+  expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
+  await pressLink(en('common.continue'))
+  await reach('the profile page', 5000, (x) => x.path === '/profile')
+  expect('(sanity) the profile page has its form', await has('#main input'))
+
+  // Second visit: the answers. A typed reply: the model is told which question it
+  // answers, and the reader is asked whether it is right, not to apply it to a form.
+  await open(ON, '/talk')
+  await tick('#talk-consent')
+  await pressOwed(en('talk.skip'))
+  await reach('the first question, second visit', 4000, (x) => x.question?.heading === ask(0))
+
+  await type('#talk-text', 'I do tailoring.')
+  await find()
+  s = await reach('the review of the first reply', 4000, (x) => x.review !== null)
+  let calls = await fake.calls()
+  expect('the model was told the reply is about the kind of business', calls.length === 1 && calls[0].asking === 'business_category', calls)
+  expect('one answer to confirm', s.review.rows.length === 1, s.review.rows)
+  expect('the buttons are "that is right" and "say it again"', canon(s.review.buttons.map((b) => b.text)) === canon([norm(en('talk.right')), norm(en('talk.again'))]), s.review.buttons)
+  expect('there is no note about the form', !s.mainText.includes(norm(en('talk.applyNote'))))
+  const before = await stored()
+  expect('nothing is on the form before "that is right"', !before || before.data.business.category === '', before?.data.business)
+
+  // "No, I will say it again": what was found is dropped and the question stays.
+  await pressOwed(en('talk.again'))
+  s = await reach('the question again', 4000, (x) => x.review === null && x.question?.focused === true)
+  expect('it is the same question, with the same number', s.question.heading === ask(0) && s.question.progress === progressOf(1), s.question)
+  expect('the text box was emptied', s.text === '', s.text)
+  expect('nothing reached the form', (await stored())?.data.business.category !== 'tailoring')
+
+  await type('#talk-text', 'I do tailoring.')
+  await find()
+  await reach('the review of the second try', 4000, (x) => x.review?.rows.length === 1)
+  await pressOwed(en('talk.right'))
+  s = await reach('the second question', 4000, (x) => x.question?.heading === ask(1))
+  expect('"that is right" moves on, to number 2', s.question.progress === progressOf(2) && s.review === null, { question: s.question, review: s.review })
+  expect('the next question has focus', s.question.focused === true, s.question)
+  let data = (await stored()).data
+  expect('the kind of business is on the form', data.business.category === 'tailoring', data.business.category)
+  expect('and marked as filled by the helper', data.aiFilled.includes('business.category'), data.aiFilled)
+
+  // A reply to another question than the one asked: it is shown and written all the same,
+  // and the question that was asked stays open, so the number goes up.
+  await type('#talk-text', 'I earn 20000 a month.')
+  await find()
+  s = await reach('the review of the earnings', 4000, (x) => x.review?.rows.length === 1)
+  calls = await fake.calls()
+  expect('the model was told the reply is about the money to start', calls.at(-1).asking === 'initial_investment', calls.at(-1))
+  expect('what was found is the monthly earnings, which was not asked', s.review.rows[0].spans[0].toLowerCase() === norm(en(FIELD_LABEL_KEYS.expected_monthly_revenue)).toLowerCase(), s.review.rows[0])
+  await pressOwed(en('talk.right'))
+  s = await reach('the review to go', 4000, (x) => x.review === null && x.question?.progress === progressOf(3))
+  data = (await stored()).data
+  expect('the earnings are on the form', String(data.business.monthlyRevenue) === '20000', data.business.monthlyRevenue)
+  expect('the money to start is still the question, with the number up', s.question.heading === ask(1), s.question)
+
+  // Skip: the question is left out and the next one still open comes.
+  await pressOwed(en('talk.skip'))
+  s = await reach('the next question', 4000, (x) => x.question?.heading === ask(3))
+  expect('the earnings are answered, so Skip goes to the monthly costs, number 4', s.question.progress === progressOf(4) && s.question.focused === true, s.question)
+  expect('the skipped answer stays blank', (await stored()).data.business.initialInvestment === '')
+
+  // While a reply is being looked at nothing else can be pressed.
+  await fake.set({ delay: 1.5 })
+  await type('#talk-text', 'Hello there')
+  await pressOwed(en('talk.find'))
+  s = await reach('the busy line', 4000, (x) => isBusy(x))
+  expect('Skip, Find and the consent box are locked meanwhile', buttonOf(s, en('talk.skip'))?.disabled === true && buttonOf(s, en('talk.find'))?.disabled === true && s.consent.disabled === true, { buttons: s.buttons, consent: s.consent })
+  s = await reach('the answer', 10000, (x) => !isBusy(x) && x.review !== null)
+  await fake.set({ delay: 0 })
+  expect('a reply with no answer in it says so', s.notices.includes(norm(en('talk.noneHere'))), s.notices)
+  expect('and offers nothing to confirm', s.review.rows.length === 0 && s.review.buttons.length === 0, s.review)
+  expect('what was said is kept, to change or to say again', s.text === 'Hello there', s.text)
+  expect('the question is the same', s.question.heading === ask(3), s.question)
+
+  // A spoken reply goes straight on to be looked at: the question is known, so there is
+  // no Find to press.
+  await fake.set({ transcript: 'My costs are 5000 a month.' })
+  await recordFor(1300)
+  s = await reach('the spoken reply to be looked at', 15000, (x) => x.review?.rows.length === 1 && !isBusy(x))
+  expect('the words it heard are in the text box', s.text === 'My costs are 5000 a month.', s.text)
+  calls = await fake.calls()
+  expect('the recording went first, then its words', calls.slice(-2).map((c) => c.call).join() === 'transcribe,extract', calls.slice(-2))
+  expect('and the model was told the question', calls.at(-1).asking === 'monthly_operating_expenses', calls.at(-1))
+
+  // The same words looked at again while their review is on screen: the two buttons of the
+  // review wait as well. Otherwise "that is right" could move on to the next question
+  // before the answer on its way back, which belongs to this one, has come.
+  await fake.set({ delay: 1.5 })
+  await pressOwed(en('talk.find'))
+  s = await reach('the busy line, with the review still on screen', 4000, (x) => isBusy(x) && x.review !== null)
+  expect('the two buttons of that review are locked meanwhile', s.review.buttons.length === 2 && s.review.buttons.every((b) => b.disabled === true), s.review.buttons)
+  await reach('the review again', 10000, (x) => !isBusy(x) && x.review?.rows.length === 1)
+  await fake.set({ delay: 0 })
+  await pressOwed(en('talk.right'))
+  s = await reach('the next question after the spoken one', 4000, (x) => x.question?.heading === ask(4))
+  expect('"that is right" moves on to the debt, number 5', s.question.progress === progressOf(5), s.question)
+  expect('the monthly costs are on the form', String((await stored()).data.business.monthlyOperatingExpenses) === '5000')
+
+  // One reply that answers several questions: all of it is shown, and the questions it
+  // answered are not asked again.
+  await type('#talk-text', 'I owe 30000 on a loan. Uttar Pradesh. Lucknow. village. I have 10000 saved. I spend 8000 at home. I pay 1500 EMI.')
+  await find()
+  s = await reach('the review of seven answers', 4000, (x) => x.review?.rows.length === 7)
+  expect('seven answers are shown, all ticked', s.review.rows.every((row) => row.checked === true), s.review.rows)
+  expect('and the model was told the debt question', (await fake.calls()).at(-1).asking === 'existing_debt')
+  await pressOwed(en('talk.right'))
+  s = await reach('the last question', 5000, (x) => x.review === null && x.question?.heading === ask(11))
+  expect('only the household income is left, number 12', s.question.progress === progressOf(12), s.question)
+  expect('the page stays on /talk while a question is open', s.path === '/talk', s.path)
+  data = (await stored()).data
+  const got = {
+    debt: String(data.business.existingDebt), state: data.location.state, district: data.location.district, area: data.location.locationType,
+    capital: String(data.finance.availableCapital), spending: String(data.finance.monthlyExpenses), emi: String(data.finance.monthlyEmi), household: String(data.finance.householdIncome),
+  }
+  const want = { debt: '30000', state: 'Uttar Pradesh', district: 'Lucknow', area: 'rural', capital: '10000', spending: '8000', emi: '1500', household: '' }
+  expect('the form holds what was said, and no household income', canon(got) === canon(want), { got, want })
+
+  // Answering the last question ends the list. The reader is taken on at once to the first
+  // page with something missing, the profile for the name; there is no end page to read.
+  await type('#talk-text', 'My household earns 12000.')
+  await find()
+  await reach('the review of the last answer', 4000, (x) => x.review?.rows.length === 1)
+  expect('and the model was told the household question', (await fake.calls()).at(-1).asking === 'household_monthly_income')
+  await pressOwed(en('talk.right'))
+  await reach('the profile page, taken there', 5000, (x) => x.path === '/profile')
+  expect('(sanity) the profile page has its form', await has('#main input'))
+  expect('the household income is on the form', String((await stored()).data.finance.householdIncome) === '12000', (await stored()).data.finance)
+
+  const asked = (await fake.calls()).filter((c) => c.call === 'extract').map((c) => c.asking)
+  expect('every look at a reply named its question', canon(asked) === canon(['business_category', 'business_category', 'initial_investment', 'monthly_operating_expenses', 'monthly_operating_expenses', 'monthly_operating_expenses', 'existing_debt', 'household_monthly_income']), asked)
+}
+
+async function s24() {
+  const hi = (key) => norm(T('hi', key))
+  const lineHi = (i) => hi(QUESTIONS[i][1])
+
+  // An online Hindi voice only, which is what many Windows browsers have.
+  await open(ON, '/talk', { lang: 'hi', speech: NET_HINDI })
+  let s = await snap()
+  expect('the question has a speaker button, reading Listen in Hindi', Boolean(buttonOf(s, T('hi', 'ra.listen'))), s.buttons)
+  expect('nothing is read before the box is ticked', s.speech.said.length === 0, s.speech)
+
+  await tick('#talk-consent')
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('ticking the box reads the open question, in Hindi', norm(s.speech.said[0].text) === hi('talk.askOpen'), s.speech.said)
+  expect('in the browser\'s online Hindi voice', s.speech.said[0].voice === 'Net Hindi' && s.speech.said[0].lang === 'hi-IN', s.speech.said)
+  expect('while it is read the button says Stop', Boolean(buttonOf(s, T('hi', 'ra.stop'))) && s.speech.speaking === true, { buttons: s.buttons, speech: s.speech })
+
+  // The speaker button: stop, then read it again.
+  const cancelled = s.speech.cancels
+  await pressOwed(T('hi', 'ra.stop'))
+  s = await reach('the speaker to stop', 3000, (x) => Boolean(buttonOf(x, T('hi', 'ra.listen'))))
+  expect('Stop cancels the engine and the button goes back to Listen', s.speech.cancels > cancelled && s.speech.speaking === false, s.speech)
+  await pressOwed(T('hi', 'ra.listen'))
+  s = await reach('the line to be read again', 3000, (x) => x.speech.said.length === 2)
+  expect('Listen reads the same line again', norm(s.speech.said[1].text) === hi('talk.askOpen'), s.speech.said)
+  await inPage(() => window.__speech.finish())
+  s = await reach('the end of the line', 3000, (x) => Boolean(buttonOf(x, T('hi', 'ra.listen'))))
+  expect('once the engine has read it out the button is Listen again', s.speech.speaking === false, s.speech)
+
+  // Skip while a line is being read: the new question is read, and the engine reporting
+  // the cancelled line a moment late does not end it.
+  await pressOwed(T('hi', 'ra.listen'))
+  await reach('the line to be read a third time', 3000, (x) => x.speech.said.length === 3)
+  await pressOwed(T('hi', 'talk.skip'))
+  s = await reach('the first question to be read', 3000, (x) => x.question?.heading === lineHi(0) && x.speech.said.length === 4)
+  expect('Skip moves to the next question and reads that one', norm(s.speech.said[3].text) === lineHi(0), s.speech.said)
+  await sleep(900)
+  s = await snap()
+  expect('the cancelled line reporting late does not stop the new one', s.speech.speaking === true && Boolean(buttonOf(s, T('hi', 'ra.stop'))), { speech: s.speech, buttons: s.buttons })
+
+  // Find stops the question: the reader's words are being sent and a voice over them
+  // helps nobody. "That is right" brings the next question, which is read at once.
+  await type('#talk-text', 'I do tailoring.')
+  expect('(sanity) a question is being read when Find is pressed', (await snap()).speech.speaking === true)
+  await find('hi')
+  s = await reach('the review', 4000, (x) => x.review?.rows.length === 1)
+  expect('Find stopped the question being read', s.speech.speaking === false && Boolean(buttonOf(s, T('hi', 'ra.listen'))), { speech: s.speech, buttons: s.buttons })
+  await pressOwed(T('hi', 'talk.right'))
+  s = await reach('the next question to be read', 3000, (x) => x.question?.heading === lineHi(1) && x.speech.said.length === 5)
+  expect('after "that is right" the next question is read without a press', norm(s.speech.said[4].text) === lineHi(1) && s.speech.speaking === true, s.speech)
+
+  const lines = new Set(LINES.map(hi))
+  expect('only the page\'s own wording was ever read, never what the reader said', s.speech.said.every((x) => lines.has(norm(x.text))) && !s.speech.said.some((x) => /tailoring/i.test(x.text)), s.speech.said)
+  const leaks = await inPage(leakScan)
+  expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
+
+  // Taking the tick away takes the voice away: the line being read is cut off. So is a
+  // line being read when the reader leaves the page.
+  s = await snap()
+  expect('(sanity) the next question is still being read', s.speech.speaking === true, s.speech)
+  const beforeUntick = s.speech.cancels
+  await tick('#talk-consent', false)
+  s = await reach('the voice to stop when the box is unticked', 3000, (x) => x.speech.speaking === false)
+  expect('unticking the consent box cuts the question off', s.speech.cancels > beforeUntick, s.speech)
+  await tick('#talk-consent')
+  s = await reach('the question to be read again when the box is ticked again', 3000, (x) => x.speech.speaking === true)
+  const beforeLeaving = s.speech.cancels
+  await inPage(() => document.querySelector('#main a[href="/"]')?.click())
+  // The address changes before the page is torn down, so wait for the silence, not for the address.
+  s = await reach('the landing page, with nothing being read', 4000, (x) => x.path === '/' && x.speech.speaking === false)
+  expect('leaving the page cut the question off', s.speech.cancels > beforeLeaving, s.speech)
+
+  // A voice on the device is chosen before an online one, even of another region.
+  await open(ON, '/talk', { speech: { voices: [{ name: 'Net English India', lang: 'en-IN', local: false }, { name: 'Local English US', lang: 'en-US', local: true }], delay: 0 } })
+  await tick('#talk-consent')
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('the voice on the device is chosen over the online one', s.speech.said[0].voice === 'Local English US' && s.speech.said[0].lang === 'en-US', s.speech.said)
+  expect('and it reads the English question', norm(s.speech.said[0].text) === norm(en('talk.askOpen')), s.speech.said)
+
+  // No voice for the page's language (Tamil, with only Hindi on offer): no button, no sound.
+  await open(ON, '/talk', { lang: 'ta', speech: NET_HINDI })
+  await tick('#talk-consent')
+  await sleep(500)
+  s = await snap()
+  expect('(sanity) this is the Tamil page', s.h1 === norm(T('ta', 'talk.title')), s.h1)
+  expect('with no Tamil voice there is no speaker button', !buttonOf(s, T('ta', 'ra.listen')) && !buttonOf(s, T('ta', 'ra.stop')), s.buttons)
+  expect('and nothing is read', s.speech.said.length === 0, s.speech)
+
+  // The browser has not listed its voices yet (some fill the list late): the question that
+  // was waiting is read once they come.
+  await open(ON, '/talk', { speech: { voices: [], delay: 0 } })
+  await tick('#talk-consent')
+  await sleep(500)
+  s = await snap()
+  expect('with no voice listed yet there is no speaker button and nothing is read', !buttonOf(s, en('ra.listen')) && !buttonOf(s, en('ra.stop')) && s.speech.said.length === 0, { buttons: s.buttons, speech: s.speech })
+  await inPage(() => window.__speech.setVoices([{ name: 'Late Voice', lang: 'en-IN', local: true }]))
+  s = await reach('the waiting question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('once the voices arrive the waiting question is read, with its button', s.speech.said[0].voice === 'Late Voice' && norm(s.speech.said[0].text) === norm(en('talk.askOpen')) && Boolean(buttonOf(s, en('ra.stop'))), { speech: s.speech, buttons: s.buttons })
+}
+
+async function s25() {
+  await cdp.send('Emulation.setDeviceMetricsOverride', { width: 360, height: 740, deviceScaleFactor: 2, mobile: true })
+  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 })
+  const measure = async (what) => {
+    const probe = await inPage(mobileProbe)
+    expect(`${what}: nothing sticks out past the right edge`, probe.overflow.length === 0 && probe.scrollWidth <= probe.vw + 1, probe)
+    expect(`${what}: every tap target is at least 44 px`, probe.taps.length === 0, probe.taps)
+    expect(`${what}: no text under 12 px`, probe.small.length === 0, probe.small)
+  }
+  try {
+    // English with no speech engine; then Hindi, with the speaker button the voice brings.
+    await open(ON, '/talk', { lang: 'en' })
+    await measure('en, the open question')
+    await tick('#talk-consent')
+    await pressOwed(en('talk.skip'))
+    await reach('the first question', 4000, (x) => x.question?.heading === ask(0))
+    await measure('en, a question with its number')
+
+    await open(ON, '/talk', { lang: 'hi', speech: NET_HINDI })
+    await measure('hi, the open question with its speaker button')
+    await tick('#talk-consent')
+    await pressOwed(T('hi', 'talk.skip'))
+    await reach('the first question', 4000, (x) => x.question?.heading === norm(T('hi', QUESTIONS[0][1])))
+    await measure('hi, a question with its number and its speaker button')
+    await type('#talk-text', 'I do tailoring.')
+    await find('hi')
+    await reach('the review', 4000, (x) => x.review?.rows.length === 1)
+    await measure('hi, a question under review')
+    await pressOwed(T('hi', 'talk.again'))
+    await reach('the question again', 4000, (x) => x.review === null)
+    await type('#talk-text', 'Hello there')
+    await find('hi')
+    await reach('the answer', 4000, (x) => x.review?.rows.length === 0)
+    await measure('hi, no answer found')
+    // Skip to the end: question 1 is on screen, so it is 12 skips to "all done".
+    for (let i = 1; i <= QUESTIONS.length; i++) {
+      await pressOwed(T('hi', 'talk.skip'))
+      const line = i < QUESTIONS.length ? QUESTIONS[i][1] : 'talk.allDone'
+      await reach(`the line ${line}`, 4000, (x) => x.question?.heading === norm(T('hi', line)))
+    }
+    await measure('hi, all the questions done')
+  } finally {
+    await cdp.send('Emulation.clearDeviceMetricsOverride')
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: false })
+  }
+}
+
 // --- main ---------------------------------------------------------------------
 async function main() {
   for (const [what, port] of [['the debugging port', DEBUG_PORT], ['the fake backend', FAKE_PORT], ['Vite (helper on)', VITES.on], ['Vite (helper off)', VITES.off], ['Vite (age box)', VITES.age]]) {
@@ -1864,7 +2380,7 @@ async function main() {
   await cdp.send('Page.enable')
   await cdp.send('Runtime.enable')
   await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true })
-  await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${pageLibrary.toString()})()` })
+  await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${pageLibrary.toString()})();(${speechFake.toString()})()` })
 
   await run('S0', 'helper off: no link, /talk is the not-found page', s0)
   await run('S1', 'helper on: links, page, starting state', s1)
@@ -1890,6 +2406,9 @@ async function main() {
   await run('S20', 'Cancel while the plan is being written', s20)
   await run('S21', 'a plan in each of the 8 languages', s21)
   await run('S22', '360 px phone: the plan card at rest and with a plan', s22)
+  await run('S23', 'the questions one at a time', s23)
+  await run('S24', 'the question read aloud', s24)
+  await run('S25', '360 px phone: the guided questions', s25)
 
   cdp.ws.close()
   cleanup()
