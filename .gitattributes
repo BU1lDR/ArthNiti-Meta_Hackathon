@@ -1,0 +1,3 @@
+# Byte for byte on every machine. git apply fails on a patch whose lines end in CRLF,
+# and the tree hash that assemble.mjs checks is over files with LF endings.
+* -text

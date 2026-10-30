@@ -1,0 +1,3 @@
+# assemble.mjs builds the full app here by default. Anchored: an unanchored
+# "app/" would also hide added/backend/app/ and patches/backend/app/.
+/app/
