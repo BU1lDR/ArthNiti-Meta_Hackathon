@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..783558f 100644
+index 4ea17de..2221fe4 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..783558f 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,326 @@ SPEC = [
+@@ -615,3 +624,441 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -351,6 +351,121 @@ index 4ea17de..783558f 100644
 +        ["doc.aadhaar", "doc.bank"],
 +        "https://www.myscheme.gov.in/schemes/nps-tsep",
 +    ),
++    # ---- central subsidy, training and equipment schemes ----
++    (
++        "cuy",
++        "Coir Udyami Yojana (CUY)",
++        # The page lists a title deed, a project profile and, for SC or ST applicants, a caste certificate;
++        # its other items (proof of coir experience, machinery invoice, workshed plan) have no document code.
++        "central", ["ALL"], [MFG, HC],
++        "Individuals and groups setting up a unit that makes coir fibre, yarn or products",
++        "A credit-linked subsidy scheme of the Coir Board, under the Ministry of MSME, for setting up a coir unit with a project cost of up to Rs.10 lakh, plus one cycle of working capital of up to 25% of the project cost. The beneficiary contributes 5% of the project cost, a bank gives a term loan of 55%, and the Coir Board deposits a subsidy of 40% with the bank; working capital gets no subsidy.",
++        "Credit-linked subsidy of 40% of the project cost",
++        [
++            ("elig.cuy.coir", "The unit must produce coir fibre, yarn or coir products, and the applicant can be an individual or a group such as a company, self-help group, NGO, society, production co-operative, joint liability group or charitable trust."),
++            ("elig.cuy.nosub", "The applicant must not be getting another government subsidy for the same purpose."),
++            ("elig.cuy.edp", "The applicant must complete a mandatory five-day Entrepreneurship Development Programme, before or after applying but before the bank recommends the application."),
++        ],
++        ["doc.projectReport", "doc.landOrRent", "doc.caste"],
++        "https://www.myscheme.gov.in/schemes/cuy",
++    ),
++    (
++        "sclcss",
++        "Special Credit Linked Capital Subsidy Scheme (SCLCSS) for SC/ST",
++        # The page names Udyam and GST copies, a PAN, a caste certificate and shareholding details;
++        # the PAN is covered by the identity proof and GST has no document code.
++        # The page also excludes fabricated or second-hand machinery without saying why, so it is left out.
++        "central", ["ALL"], [MFG, SVC],
++        "Scheduled Caste and Scheduled Tribe owned micro and small enterprises that buy machinery with a loan",
++        "A sub-scheme of the National Scheduled Caste and Scheduled Tribe Hub scheme of the Ministry of MSME. Scheduled Caste and Scheduled Tribe owned micro and small enterprises in manufacturing or services that buy plant and machinery or equipment with institutional finance get a capital subsidy of 25% of that finance, up to a subsidy of Rs.25 lakh. The application goes to the bank or institution that gave the term loan.",
++        "Capital subsidy of 25% on the machinery loan",
++        [
++            ("elig.sclcss.owner", "The enterprise must be a sole proprietorship, partnership, co-operative or company in manufacturing or services, owned by Scheduled Caste or Scheduled Tribe entrepreneurs, who must hold more than 51% of a partnership or company."),
++            "elig.common.udyamNeeded",
++            ("elig.sclcss.loan", "The subsidy is for plant and machinery or equipment bought with a loan from a bank or other lending institution, and it is not given for machinery that another Central or State Government scheme already supports."),
++        ],
++        ["doc.udyam", "doc.caste", "doc.identity"],
++        "https://www.myscheme.gov.in/schemes/sclcss",
++    ),
++    (
++        "midh",
++        "Mission on Integrated Development of Horticulture (MIDH)",
++        # The page says the documents may vary by activity and by State.
++        "central", ["ALL"], [AGR],
++        "Farmers and registered societies growing or handling fruit, vegetables, flowers, spices and similar crops",
++        "A centrally sponsored mission of the Ministry of Agriculture and Farmers Welfare, carried out in every State and Union Territory through the State Horticulture Missions, for fruits, vegetables, root and tuber crops, mushrooms, spices, flowers, aromatic plants, coconut, cashew, cocoa and bamboo. It gives financial assistance for nurseries, new orchards and gardens, protected cultivation, organic farming, water-resource structures, beekeeping for pollination, mechanisation, and post-harvest and marketing infrastructure.",
++        "Financial assistance for horticulture work",
++        [
++            ("elig.midh.who", "Farmers, registered societies and State Governments can take part, and a farmer applies through the District or Block Horticulture Officer."),
++            ("elig.midh.activities", "The assistance is for the horticulture crops and activities the mission lists, and the rates differ by activity and by region."),
++            "elig.common.askLocalOffice",
++        ],
++        ["doc.aadhaar", "doc.landRecord", "doc.caste", "doc.bank", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/midh",
++    ),
++    (
++        "acandabc",
++        "Agri-Clinics and Agri-Business Centres Scheme (AC&ABC)",
++        # The page also asks for an e-mail ID, which has no document code.
++        "central", ["ALL"], [AGR, SVC],
++        "Agriculture graduates and diploma holders who want to start their own farm advice or farm services business",
++        "A scheme of the Ministry of Agriculture and Farmers Welfare that helps agriculture graduates and others with agriculture-related qualifications start their own Agri-Clinics, which advise farmers on soil health, cropping, plant protection and crop insurance, and Agri-Business Centres, which offer services such as custom hiring of farm equipment and the sale of inputs. It offers start-up training, loans and a credit-linked back-ended subsidy, which NABARD channels.",
++        "Start-up training, loans and a credit-linked subsidy",
++        [
++            ("elig.acandabc.age", "The applicant must be between 18 and 60 years of age."),
++            ("elig.acandabc.qualification", "The applicant must have a degree in agriculture or an allied subject, a diploma (with at least 50% marks) or post-graduate diploma in these subjects, or an agriculture-related intermediate (plus two) qualification with at least 55% marks; some other agriculture-related courses are also accepted."),
++            ("elig.acandabc.pension", "A retired employee who gets a pension cannot get the subsidy."),
++        ],
++        ["doc.aadhaar", "doc.education", "doc.bank", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/acandabc",
++    ),
++    (
++        "mszcs",
++        "MSME Sustainable (ZED) Certification Scheme",
++        # Registration asks for the Udyam number, an associated mobile number and an e-mail ID.
++        "central", ["ALL"], [MFG, FP, HC, TLR],
++        "Registered micro, small and medium units that want a ZED quality certificate",
++        "A scheme of the Ministry of MSME that helps micro, small and medium enterprises earn ZED (Zero Defect Zero Effect) certification for quality products. The subsidy on the certification cost is 80% for a micro enterprise, 60% for a small enterprise and 50% for a medium enterprise, with a further 10% for enterprises owned by women, Scheduled Castes or Scheduled Tribes, or located in special areas such as the North Eastern Region, the Himalayan region, island territories and aspirational districts.",
++        "Subsidy on the cost of ZED certification",
++        [
++            "elig.common.udyamNeeded",
++            ("elig.mszcs.unit", "The applicant must be a micro, small or medium enterprise that registers online and takes the ZED pledge."),
++        ],
++        ["doc.udyam"],
++        "https://www.myscheme.gov.in/schemes/mszcs",
++    ),
++    (
++        "rkvy_vlstl",
++        "RKVY Soil Health and Fertility Village Level Soil Testing Lab",
++        # The page names Aadhaar, land documents, bank details and photographs.
++        "central", ["ALL"], [AGR, SVC],
++        "Rural youth, agriculture graduates and village-level entrepreneurs who want to run a village soil testing lab",
++        "A scheme under the Rashtriya Krishi Vikas Yojana of the Ministry of Agriculture and Farmers Welfare that helps rural youth, village-level entrepreneurs, self-help groups, agriculture graduates and primary agricultural co-operative societies set up a village level soil testing lab. A one-time assistance of Rs.1.5 lakh is paid through direct benefit transfer towards the soil testing equipment, reagents and other equipment.",
++        "One-time assistance of Rs.1.5 lakh",
++        [
++            ("elig.rkvyvlstl.age", "The applicant must be between 18 and 27 years of age and have passed Class 10 with science, with some knowledge of computers."),
++            ("elig.rkvyvlstl.premises", "The applicant or group must have its own premises or a rented building with a lease agreement for at least four years."),
++        ],
++        ["doc.aadhaar", "doc.landOrRent", "doc.bank", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/rkvyshfvlstl",
++    ),
++    (
++        "smam",
++        "Sub-Mission on Agricultural Mechanization (SMAM)",
++        # The guideline lists no documents for buying a machine, so two generic ones are shown.
++        "central", ["ALL"], [AGR],
++        "Farmers buying farm machines, and rural entrepreneurs and farmer groups setting up custom hiring centres",
++        "A sub-mission of the Department of Agriculture and Farmers Welfare, carried out by the State Governments as a part of the Rashtriya Krishi Vikas Yojana, to bring farm machinery within reach of small farmers. A farmer who buys a machine gets assistance of 40% or 50% of its cost, and a custom hiring centre for farm machines gets 40% of the project cost for projects costing up to Rs.250 lakh.",
++        "Assistance of 40% to 50% of the cost of a farm machine",
++        [
++            ("elig.smam.farmers", "The assistance is 50% of the cost of the machine for small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and farmers of the North Eastern and Himalayan States, and 40% for all other farmers, up to a limit set for each machine."),
++            ("elig.smam.chc", "A rural entrepreneur, self-help group, farmer producer organisation, panchayat or farmers' co-operative society can set up a custom hiring centre, with assistance of 40% of the project cost for projects costing up to Rs.250 lakh."),
++            ("elig.smam.plan", "Each State decides, through its own Annual Action Plan, which machines are supported and how many farmers are helped, and when applications exceed the target they are approved by an online lottery."),
++            "elig.common.askLocalOffice",
++        ],
++        ["doc.identity", "doc.bank"],
++        "https://agrimachinery.nic.in/Files/Guidelines/SMAM_2026.pdf",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -360,11 +475,12 @@ index 4ea17de..783558f 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +951 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +1066 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +964 @@ LOCATION_TYPES = {
+@@ -630,0 +1079,2 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
-@@ -634,0 +969,59 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
++    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
+@@ -634,0 +1085,66 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -422,20 +538,27 @@ index 4ea17de..783558f 100644
 +    "pmsby": ["elig.pmsby.age"],
 +    "pmjjby": ["elig.pmjjby.age"],
 +    "nps_tsep": ["elig.npstsep.turnover", "elig.npstsep.excluded"],
++    "cuy": ["elig.cuy.coir", "elig.cuy.nosub"],
++    "sclcss": ["elig.sclcss.owner", "elig.common.udyamNeeded"],
++    "midh": ["elig.midh.who", "elig.midh.activities"],
++    "acandabc": ["elig.acandabc.age", "elig.acandabc.qualification"],
++    "mszcs": ["elig.common.udyamNeeded"],
++    "rkvy_vlstl": ["elig.rkvyvlstl.age"],
++    "smam": ["elig.smam.plan"],
 +}
 +
-@@ -652,0 +1046,4 @@ def build():
+@@ -652,0 +1169,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +1061,4 @@ def build():
+@@ -663,0 +1184,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1089 @@ def build():
+@@ -688 +1212 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1092 @@ def build():
+@@ -690,0 +1215 @@ def build():
 +                "check_first_codes": check_first,

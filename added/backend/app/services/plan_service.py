@@ -170,6 +170,13 @@ HELP_BY_SCHEME = {
     "pmsby": ("insurance",),
     "pmjjby": ("insurance",),
     "nps_tsep": ("pension",),
+    "cuy": ("subsidy",),
+    "sclcss": ("subsidy",),
+    "midh": ("subsidy",),
+    "acandabc": ("training", "loan", "subsidy"),
+    "mszcs": ("subsidy",),
+    "rkvy_vlstl": ("subsidy",),
+    "smam": ("subsidy",),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

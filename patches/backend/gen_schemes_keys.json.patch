@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..77bbb47 100644
+index 220d74e..733ac8b 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..77bbb47 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,39 @@
+@@ -96 +99,55 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -48,8 +48,24 @@ index 220d74e..77bbb47 100644
 +  "elig.pmjjby.consent": "The member must sign a consent form for the yearly premium to be deducted automatically from the account.",
 +  "elig.npstsep.trade": "The applicant must be a small trader, shopkeeper, retailer or self-employed person, such as the owner of a mill, workshop, small hotel or restaurant.",
 +  "elig.npstsep.turnover": "The applicant must be between 18 and 40 years of age, with an annual turnover not above Rs.1.5 crore.",
-+  "elig.npstsep.excluded": "A member of EPFO, ESIC, the government-funded NPS or PM-SYM, or an income tax payer, cannot join."
-@@ -151 +192,21 @@
++  "elig.npstsep.excluded": "A member of EPFO, ESIC, the government-funded NPS or PM-SYM, or an income tax payer, cannot join.",
++  "elig.cuy.coir": "The unit must produce coir fibre, yarn or coir products, and the applicant can be an individual or a group such as a company, self-help group, NGO, society, production co-operative, joint liability group or charitable trust.",
++  "elig.cuy.nosub": "The applicant must not be getting another government subsidy for the same purpose.",
++  "elig.cuy.edp": "The applicant must complete a mandatory five-day Entrepreneurship Development Programme, before or after applying but before the bank recommends the application.",
++  "elig.sclcss.owner": "The enterprise must be a sole proprietorship, partnership, co-operative or company in manufacturing or services, owned by Scheduled Caste or Scheduled Tribe entrepreneurs, who must hold more than 51% of a partnership or company.",
++  "elig.sclcss.loan": "The subsidy is for plant and machinery or equipment bought with a loan from a bank or other lending institution, and it is not given for machinery that another Central or State Government scheme already supports.",
++  "elig.midh.who": "Farmers, registered societies and State Governments can take part, and a farmer applies through the District or Block Horticulture Officer.",
++  "elig.midh.activities": "The assistance is for the horticulture crops and activities the mission lists, and the rates differ by activity and by region.",
++  "elig.acandabc.age": "The applicant must be between 18 and 60 years of age.",
++  "elig.acandabc.qualification": "The applicant must have a degree in agriculture or an allied subject, a diploma (with at least 50% marks) or post-graduate diploma in these subjects, or an agriculture-related intermediate (plus two) qualification with at least 55% marks; some other agriculture-related courses are also accepted.",
++  "elig.acandabc.pension": "A retired employee who gets a pension cannot get the subsidy.",
++  "elig.mszcs.unit": "The applicant must be a micro, small or medium enterprise that registers online and takes the ZED pledge.",
++  "elig.rkvyvlstl.age": "The applicant must be between 18 and 27 years of age and have passed Class 10 with science, with some knowledge of computers.",
++  "elig.rkvyvlstl.premises": "The applicant or group must have its own premises or a rented building with a lease agreement for at least four years.",
++  "elig.smam.farmers": "The assistance is 50% of the cost of the machine for small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and farmers of the North Eastern and Himalayan States, and 40% for all other farmers, up to a limit set for each machine.",
++  "elig.smam.chc": "A rural entrepreneur, self-help group, farmer producer organisation, panchayat or farmers' co-operative society can set up a custom hiring centre, with assistance of 40% of the project cost for projects costing up to Rs.250 lakh.",
++  "elig.smam.plan": "Each State decides, through its own Annual Action Plan, which machines are supported and how many farmers are helped, and when applications exceed the target they are approved by an online lottery."
+@@ -151 +208,28 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -71,4 +87,11 @@ index 220d74e..77bbb47 100644
 +  "apy",
 +  "pmsby",
 +  "pmjjby",
-+  "nps_tsep"
++  "nps_tsep",
++  "cuy",
++  "sclcss",
++  "midh",
++  "acandabc",
++  "mszcs",
++  "rkvy_vlstl",
++  "smam"

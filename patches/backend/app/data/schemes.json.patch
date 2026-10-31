@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..28d80ac 100644
+index a874e48..c5b039b 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..28d80ac 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,984 @@
+@@ -1493,0 +1602,1296 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -1160,3 +1160,315 @@ index a874e48..28d80ac 100644
 +    ],
 +    "description_code": "sdata.nps_tsep.description",
 +    "support_type_code": "sdata.nps_tsep.support"
++  },
++  {
++    "id": "cuy",
++    "name": "Coir Udyami Yojana (CUY)",
++    "description": "A credit-linked subsidy scheme of the Coir Board, under the Ministry of MSME, for setting up a coir unit with a project cost of up to Rs.10 lakh, plus one cycle of working capital of up to 25% of the project cost. The beneficiary contributes 5% of the project cost, a bank gives a term loan of 55%, and the Coir Board deposits a subsidy of 40% with the bank; working capital gets no subsidy.",
++    "target_segment": "Individuals and groups setting up a unit that makes coir fibre, yarn or products",
++    "business_categories": [
++      "manufacturing",
++      "handicrafts"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The unit must produce coir fibre, yarn or coir products, and the applicant can be an individual or a group such as a company, self-help group, NGO, society, production co-operative, joint liability group or charitable trust.",
++      "The applicant must not be getting another government subsidy for the same purpose.",
++      "The applicant must complete a mandatory five-day Entrepreneurship Development Programme, before or after applying but before the bank recommends the application."
++    ],
++    "support_type": "Credit-linked subsidy of 40% of the project cost",
++    "documents": [
++      "Project report",
++      "Ownership or rent agreement for the work premises",
++      "Caste certificate, where applicable"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.cuy.coir",
++      "elig.cuy.nosub",
++      "elig.cuy.edp"
++    ],
++    "document_codes": [
++      "doc.projectReport",
++      "doc.landOrRent",
++      "doc.caste"
++    ],
++    "check_first_codes": [
++      "elig.cuy.coir",
++      "elig.cuy.nosub"
++    ],
++    "description_code": "sdata.cuy.description",
++    "support_type_code": "sdata.cuy.support"
++  },
++  {
++    "id": "sclcss",
++    "name": "Special Credit Linked Capital Subsidy Scheme (SCLCSS) for SC/ST",
++    "description": "A sub-scheme of the National Scheduled Caste and Scheduled Tribe Hub scheme of the Ministry of MSME. Scheduled Caste and Scheduled Tribe owned micro and small enterprises in manufacturing or services that buy plant and machinery or equipment with institutional finance get a capital subsidy of 25% of that finance, up to a subsidy of Rs.25 lakh. The application goes to the bank or institution that gave the term loan.",
++    "target_segment": "Scheduled Caste and Scheduled Tribe owned micro and small enterprises that buy machinery with a loan",
++    "business_categories": [
++      "manufacturing",
++      "services"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The enterprise must be a sole proprietorship, partnership, co-operative or company in manufacturing or services, owned by Scheduled Caste or Scheduled Tribe entrepreneurs, who must hold more than 51% of a partnership or company.",
++      "Udyam registration is required.",
++      "The subsidy is for plant and machinery or equipment bought with a loan from a bank or other lending institution, and it is not given for machinery that another Central or State Government scheme already supports."
++    ],
++    "support_type": "Capital subsidy of 25% on the machinery loan",
++    "documents": [
++      "Udyam registration number, where already held",
++      "Caste certificate, where applicable",
++      "Identity proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.sclcss.owner",
++      "elig.common.udyamNeeded",
++      "elig.sclcss.loan"
++    ],
++    "document_codes": [
++      "doc.udyam",
++      "doc.caste",
++      "doc.identity"
++    ],
++    "check_first_codes": [
++      "elig.sclcss.owner",
++      "elig.common.udyamNeeded"
++    ],
++    "description_code": "sdata.sclcss.description",
++    "support_type_code": "sdata.sclcss.support"
++  },
++  {
++    "id": "midh",
++    "name": "Mission on Integrated Development of Horticulture (MIDH)",
++    "description": "A centrally sponsored mission of the Ministry of Agriculture and Farmers Welfare, carried out in every State and Union Territory through the State Horticulture Missions, for fruits, vegetables, root and tuber crops, mushrooms, spices, flowers, aromatic plants, coconut, cashew, cocoa and bamboo. It gives financial assistance for nurseries, new orchards and gardens, protected cultivation, organic farming, water-resource structures, beekeeping for pollination, mechanisation, and post-harvest and marketing infrastructure.",
++    "target_segment": "Farmers and registered societies growing or handling fruit, vegetables, flowers, spices and similar crops",
++    "business_categories": [
++      "agriculture"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "Farmers, registered societies and State Governments can take part, and a farmer applies through the District or Block Horticulture Officer.",
++      "The assistance is for the horticulture crops and activities the mission lists, and the rates differ by activity and by region.",
++      "Rates and conditions vary by location, so confirm them at the local office."
++    ],
++    "support_type": "Financial assistance for horticulture work",
++    "documents": [
++      "Aadhaar card",
++      "Land record extract",
++      "Caste certificate, where applicable",
++      "Bank-related documents",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.midh.who",
++      "elig.midh.activities",
++      "elig.common.askLocalOffice"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.landRecord",
++      "doc.caste",
++      "doc.bank",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.midh.who",
++      "elig.midh.activities"
++    ],
++    "description_code": "sdata.midh.description",
++    "support_type_code": "sdata.midh.support"
++  },
++  {
++    "id": "acandabc",
++    "name": "Agri-Clinics and Agri-Business Centres Scheme (AC&ABC)",
++    "description": "A scheme of the Ministry of Agriculture and Farmers Welfare that helps agriculture graduates and others with agriculture-related qualifications start their own Agri-Clinics, which advise farmers on soil health, cropping, plant protection and crop insurance, and Agri-Business Centres, which offer services such as custom hiring of farm equipment and the sale of inputs. It offers start-up training, loans and a credit-linked back-ended subsidy, which NABARD channels.",
++    "target_segment": "Agriculture graduates and diploma holders who want to start their own farm advice or farm services business",
++    "business_categories": [
++      "agriculture",
++      "services"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be between 18 and 60 years of age.",
++      "The applicant must have a degree in agriculture or an allied subject, a diploma (with at least 50% marks) or post-graduate diploma in these subjects, or an agriculture-related intermediate (plus two) qualification with at least 55% marks; some other agriculture-related courses are also accepted.",
++      "A retired employee who gets a pension cannot get the subsidy."
++    ],
++    "support_type": "Start-up training, loans and a credit-linked subsidy",
++    "documents": [
++      "Aadhaar card",
++      "Educational or training documents where applicable",
++      "Bank-related documents",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.acandabc.age",
++      "elig.acandabc.qualification",
++      "elig.acandabc.pension"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.education",
++      "doc.bank",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.acandabc.age",
++      "elig.acandabc.qualification"
++    ],
++    "description_code": "sdata.acandabc.description",
++    "support_type_code": "sdata.acandabc.support"
++  },
++  {
++    "id": "mszcs",
++    "name": "MSME Sustainable (ZED) Certification Scheme",
++    "description": "A scheme of the Ministry of MSME that helps micro, small and medium enterprises earn ZED (Zero Defect Zero Effect) certification for quality products. The subsidy on the certification cost is 80% for a micro enterprise, 60% for a small enterprise and 50% for a medium enterprise, with a further 10% for enterprises owned by women, Scheduled Castes or Scheduled Tribes, or located in special areas such as the North Eastern Region, the Himalayan region, island territories and aspirational districts.",
++    "target_segment": "Registered micro, small and medium units that want a ZED quality certificate",
++    "business_categories": [
++      "manufacturing",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "Udyam registration is required.",
++      "The applicant must be a micro, small or medium enterprise that registers online and takes the ZED pledge."
++    ],
++    "support_type": "Subsidy on the cost of ZED certification",
++    "documents": [
++      "Udyam registration number, where already held"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.udyamNeeded",
++      "elig.mszcs.unit"
++    ],
++    "document_codes": [
++      "doc.udyam"
++    ],
++    "check_first_codes": [
++      "elig.common.udyamNeeded"
++    ],
++    "description_code": "sdata.mszcs.description",
++    "support_type_code": "sdata.mszcs.support"
++  },
++  {
++    "id": "rkvy_vlstl",
++    "name": "RKVY Soil Health and Fertility Village Level Soil Testing Lab",
++    "description": "A scheme under the Rashtriya Krishi Vikas Yojana of the Ministry of Agriculture and Farmers Welfare that helps rural youth, village-level entrepreneurs, self-help groups, agriculture graduates and primary agricultural co-operative societies set up a village level soil testing lab. A one-time assistance of Rs.1.5 lakh is paid through direct benefit transfer towards the soil testing equipment, reagents and other equipment.",
++    "target_segment": "Rural youth, agriculture graduates and village-level entrepreneurs who want to run a village soil testing lab",
++    "business_categories": [
++      "agriculture",
++      "services"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "rural"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be between 18 and 27 years of age and have passed Class 10 with science, with some knowledge of computers.",
++      "The applicant or group must have its own premises or a rented building with a lease agreement for at least four years."
++    ],
++    "support_type": "One-time assistance of Rs.1.5 lakh",
++    "documents": [
++      "Aadhaar card",
++      "Ownership or rent agreement for the work premises",
++      "Bank-related documents",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.rkvyvlstl.age",
++      "elig.rkvyvlstl.premises"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.landOrRent",
++      "doc.bank",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.rkvyvlstl.age"
++    ],
++    "description_code": "sdata.rkvy_vlstl.description",
++    "support_type_code": "sdata.rkvy_vlstl.support"
++  },
++  {
++    "id": "smam",
++    "name": "Sub-Mission on Agricultural Mechanization (SMAM)",
++    "description": "A sub-mission of the Department of Agriculture and Farmers Welfare, carried out by the State Governments as a part of the Rashtriya Krishi Vikas Yojana, to bring farm machinery within reach of small farmers. A farmer who buys a machine gets assistance of 40% or 50% of its cost, and a custom hiring centre for farm machines gets 40% of the project cost for projects costing up to Rs.250 lakh.",
++    "target_segment": "Farmers buying farm machines, and rural entrepreneurs and farmer groups setting up custom hiring centres",
++    "business_categories": [
++      "agriculture"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The assistance is 50% of the cost of the machine for small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and farmers of the North Eastern and Himalayan States, and 40% for all other farmers, up to a limit set for each machine.",
++      "A rural entrepreneur, self-help group, farmer producer organisation, panchayat or farmers' co-operative society can set up a custom hiring centre, with assistance of 40% of the project cost for projects costing up to Rs.250 lakh.",
++      "Each State decides, through its own Annual Action Plan, which machines are supported and how many farmers are helped, and when applications exceed the target they are approved by an online lottery.",
++      "Rates and conditions vary by location, so confirm them at the local office."
++    ],
++    "support_type": "Assistance of 40% to 50% of the cost of a farm machine",
++    "documents": [
++      "Identity proof",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.smam.farmers",
++      "elig.smam.chc",
++      "elig.smam.plan",
++      "elig.common.askLocalOffice"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.smam.plan"
++    ],
++    "description_code": "sdata.smam.description",
++    "support_type_code": "sdata.smam.support"
