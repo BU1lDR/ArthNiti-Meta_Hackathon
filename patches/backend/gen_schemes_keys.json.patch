@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..1ec292d 100644
+index 220d74e..77bbb47 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..1ec292d 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,29 @@
+@@ -96 +99,39 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -38,8 +38,18 @@ index 220d74e..1ec292d 100644
 +  "elig.esdp.fee": "The organisation running the programme sets the fee, which is waived for Scheduled Caste, Scheduled Tribe, differently-abled, ex-servicemen, below-poverty-line participants and women.",
 +  "elig.esdp.office": "Programmes are held through the MSME Development Institutes and Technology Centres; contact the nearest one to learn when the next programme runs.",
 +  "elig.gvyoj.khadi": "The applicant must be a Khadi artisan, or a Khadi institution, registered with the Khadi and Village Industries Commission (KVIC) or a State Khadi and Village Industries Board (KVIB).",
-+  "elig.gvyoj.age": "The applicant must be between 18 and 55 years of age, and only one person from a family can benefit."
-@@ -151 +182,17 @@
++  "elig.gvyoj.age": "The applicant must be between 18 and 55 years of age, and only one person from a family can benefit.",
++  "elig.apy.age": "The applicant must be between 18 and 40 years of age when joining; the pension starts at the age of 60.",
++  "elig.apy.tax": "A person who is or has been an income tax payer cannot join.",
++  "elig.apy.account": "The applicant must hold a savings account in a bank or post office, from which the contribution is deducted automatically.",
++  "elig.pmsby.age": "The applicant must hold an individual bank or post office account and be between 18 and 70 years of age.",
++  "elig.pmsby.consent": "The member must agree to the yearly premium being deducted automatically from the account, and the cover ends if the account is closed or does not hold enough balance for the premium.",
++  "elig.pmjjby.age": "The applicant must hold an individual bank or post office account and be between 18 and 50 years of age.",
++  "elig.pmjjby.consent": "The member must sign a consent form for the yearly premium to be deducted automatically from the account.",
++  "elig.npstsep.trade": "The applicant must be a small trader, shopkeeper, retailer or self-employed person, such as the owner of a mill, workshop, small hotel or restaurant.",
++  "elig.npstsep.turnover": "The applicant must be between 18 and 40 years of age, with an annual turnover not above Rs.1.5 crore.",
++  "elig.npstsep.excluded": "A member of EPFO, ESIC, the government-funded NPS or PM-SYM, or an income tax payer, cannot join."
+@@ -151 +192,21 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -57,4 +67,8 @@ index 220d74e..1ec292d 100644
 +  "pm_daksh",
 +  "pm_vikas",
 +  "esdp",
-+  "gvyoj"
++  "gvyoj",
++  "apy",
++  "pmsby",
++  "pmjjby",
++  "nps_tsep"

@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..4458094 100644
+index a874e48..28d80ac 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..4458094 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,787 @@
+@@ -1493,0 +1602,984 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -963,3 +963,200 @@ index a874e48..4458094 100644
 +    ],
 +    "description_code": "sdata.gvyoj.description",
 +    "support_type_code": "sdata.gvyoj.support"
++  },
++  {
++    "id": "apy",
++    "name": "Atal Pension Yojana (APY)",
++    "description": "An old-age pension scheme for workers in the unorganised sector. A savings account holder aged 18 to 40 who does not pay income tax pays the prescribed amount every month, quarter or half-year, and from the age of 60 receives a fixed monthly pension of Rs.1,000, Rs.2,000, Rs.3,000, Rs.4,000 or Rs.5,000 as chosen at joining; the spouse then receives the same pension.",
++    "target_segment": "Workers in informal work who have a savings account and do not pay income tax",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping",
++      "street vending"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be between 18 and 40 years of age when joining; the pension starts at the age of 60.",
++      "A person who is or has been an income tax payer cannot join.",
++      "The applicant must hold a savings account in a bank or post office, from which the contribution is deducted automatically."
++    ],
++    "support_type": "A fixed monthly pension in old age",
++    "documents": [
++      "Bank-related documents",
++      "Aadhaar card"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.apy.age",
++      "elig.apy.tax",
++      "elig.apy.account"
++    ],
++    "document_codes": [
++      "doc.bank",
++      "doc.aadhaar"
++    ],
++    "check_first_codes": [
++      "elig.apy.age",
++      "elig.apy.tax"
++    ],
++    "description_code": "sdata.apy.description",
++    "support_type_code": "sdata.apy.support"
++  },
++  {
++    "id": "pmsby",
++    "name": "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
++    "description": "An accident insurance scheme for bank or post office account holders aged 18 to 70. For a premium of Rs.20 a year, deducted from the account by auto-debit, it pays Rs.2 lakh to the nominee on accidental death, Rs.2 lakh to the member on total loss of both eyes, both hands or both feet, or of one eye and one hand or foot, and Rs.1 lakh to the member on loss of sight of one eye or loss of use of one hand or foot.",
++    "target_segment": "Individual bank or post office account holders who want accident insurance",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping",
++      "street vending"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must hold an individual bank or post office account and be between 18 and 70 years of age.",
++      "The member must agree to the yearly premium being deducted automatically from the account, and the cover ends if the account is closed or does not hold enough balance for the premium."
++    ],
++    "support_type": "Accident insurance for Rs.20 a year",
++    "documents": [
++      "Identity proof",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.pmsby.age",
++      "elig.pmsby.consent"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.pmsby.age"
++    ],
++    "description_code": "sdata.pmsby.description",
++    "support_type_code": "sdata.pmsby.support"
++  },
++  {
++    "id": "pmjjby",
++    "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
++    "description": "A life insurance scheme, renewed every year, for individual bank or post office account holders aged 18 to 50. For a premium of Rs.436 a year, deducted from the account by auto-debit, it pays Rs.2 lakh to the nominee on death from any cause.",
++    "target_segment": "Individual bank or post office account holders who want life insurance",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping",
++      "street vending"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must hold an individual bank or post office account and be between 18 and 50 years of age.",
++      "The member must sign a consent form for the yearly premium to be deducted automatically from the account."
++    ],
++    "support_type": "Life insurance cover of Rs.2 lakh",
++    "documents": [
++      "Identity proof",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.pmjjby.age",
++      "elig.pmjjby.consent"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.pmjjby.age"
++    ],
++    "description_code": "sdata.pmjjby.description",
++    "support_type_code": "sdata.pmjjby.support"
++  },
++  {
++    "id": "nps_tsep",
++    "name": "National Pension Scheme for Traders and Self-Employed Persons",
++    "description": "A voluntary pension scheme for small traders, shopkeepers and self-employed persons aged 18 to 40 whose yearly turnover is not above Rs.1.5 crore. The member pays Rs.55 to Rs.200 a month, depending on the age of joining, until the age of 60, the Government of India adds a matching contribution each month, and the member then receives a monthly pension of Rs.3,000.",
++    "target_segment": "Small traders and self-employed persons with a modest yearly turnover",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be a small trader, shopkeeper, retailer or self-employed person, such as the owner of a mill, workshop, small hotel or restaurant.",
++      "The applicant must be between 18 and 40 years of age, with an annual turnover not above Rs.1.5 crore.",
++      "A member of EPFO, ESIC, the government-funded NPS or PM-SYM, or an income tax payer, cannot join.",
++      "An Aadhaar card and a bank account in the applicant's own name are required."
++    ],
++    "support_type": "Monthly pension of Rs.3,000 from the age of 60",
++    "documents": [
++      "Aadhaar card",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.npstsep.trade",
++      "elig.npstsep.turnover",
++      "elig.npstsep.excluded",
++      "elig.common.aadhaarBank"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.npstsep.turnover",
++      "elig.npstsep.excluded"
++    ],
++    "description_code": "sdata.nps_tsep.description",
++    "support_type_code": "sdata.nps_tsep.support"

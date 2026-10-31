@@ -114,6 +114,8 @@ HELP = {
     "permission": "a trade permission",
     "livelihood": "support to build local earning work",
     "loanhelp": "help getting a loan",
+    "insurance": "insurance cover for accident or death",
+    "pension": "a pension for old age",
 }
 
 # One entry per scheme in data/schemes.json; a test fails when a scheme has none.
@@ -164,6 +166,10 @@ HELP_BY_SCHEME = {
     "pm_vikas": ("training",),
     "esdp": ("training",),
     "gvyoj": ("training", "tools"),
+    "apy": ("pension",),
+    "pmsby": ("insurance",),
+    "pmjjby": ("insurance",),
+    "nps_tsep": ("pension",),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

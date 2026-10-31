@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..21ca6e3 100644
+index 4ea17de..783558f 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..21ca6e3 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,260 @@ SPEC = [
+@@ -615,3 +624,326 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -285,6 +285,72 @@ index 4ea17de..21ca6e3 100644
 +        ["doc.identity", "doc.caste", "doc.bank"],
 +        "https://www.myscheme.gov.in/schemes/gvyoj",
 +    ),
++    # ---- central pension and insurance schemes ----
++    (
++        "apy",
++        "Atal Pension Yojana (APY)",
++        # The page lists no documents beyond the KYC taken from the savings account;
++        # Aadhaar is named for joining online.
++        "central", ["ALL"], ALL_WORK + [SV],
++        "Workers in informal work who have a savings account and do not pay income tax",
++        "An old-age pension scheme for workers in the unorganised sector. A savings account holder aged 18 to 40 who does not pay income tax pays the prescribed amount every month, quarter or half-year, and from the age of 60 receives a fixed monthly pension of Rs.1,000, Rs.2,000, Rs.3,000, Rs.4,000 or Rs.5,000 as chosen at joining; the spouse then receives the same pension.",
++        "A fixed monthly pension in old age",
++        [
++            ("elig.apy.age", "The applicant must be between 18 and 40 years of age when joining; the pension starts at the age of 60."),
++            ("elig.apy.tax", "A person who is or has been an income tax payer cannot join."),
++            ("elig.apy.account", "The applicant must hold a savings account in a bank or post office, from which the contribution is deducted automatically."),
++        ],
++        ["doc.bank", "doc.aadhaar"],
++        "https://www.myscheme.gov.in/schemes/apy",
++    ),
++    (
++        "pmsby",
++        "Pradhan Mantri Suraksha Bima Yojana (PMSBY)",
++        # The page lists no documents, so two generic ones are shown.
++        "central", ["ALL"], ALL_WORK + [SV],
++        "Individual bank or post office account holders who want accident insurance",
++        "An accident insurance scheme for bank or post office account holders aged 18 to 70. For a premium of Rs.20 a year, deducted from the account by auto-debit, it pays Rs.2 lakh to the nominee on accidental death, Rs.2 lakh to the member on total loss of both eyes, both hands or both feet, or of one eye and one hand or foot, and Rs.1 lakh to the member on loss of sight of one eye or loss of use of one hand or foot.",
++        "Accident insurance for Rs.20 a year",
++        [
++            ("elig.pmsby.age", "The applicant must hold an individual bank or post office account and be between 18 and 70 years of age."),
++            ("elig.pmsby.consent", "The member must agree to the yearly premium being deducted automatically from the account, and the cover ends if the account is closed or does not hold enough balance for the premium."),
++        ],
++        ["doc.identity", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/pmsby",
++    ),
++    (
++        "pmjjby",
++        "Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY)",
++        # The page lists no documents, so two generic ones are shown.
++        "central", ["ALL"], ALL_WORK + [SV],
++        "Individual bank or post office account holders who want life insurance",
++        "A life insurance scheme, renewed every year, for individual bank or post office account holders aged 18 to 50. For a premium of Rs.436 a year, deducted from the account by auto-debit, it pays Rs.2 lakh to the nominee on death from any cause.",
++        "Life insurance cover of Rs.2 lakh",
++        [
++            ("elig.pmjjby.age", "The applicant must hold an individual bank or post office account and be between 18 and 50 years of age."),
++            ("elig.pmjjby.consent", "The member must sign a consent form for the yearly premium to be deducted automatically from the account."),
++        ],
++        ["doc.identity", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/pmjjby",
++    ),
++    (
++        "nps_tsep",
++        "National Pension Scheme for Traders and Self-Employed Persons",
++        # The page also asks for a self-declaration of turnover and, above Rs.40 lakh, a GSTIN;
++        # there is no document code for either, so they are left out.
++        "central", ["ALL"], [MFG, SVC, TRD, FP],
++        "Small traders and self-employed persons with a modest yearly turnover",
++        "A voluntary pension scheme for small traders, shopkeepers and self-employed persons aged 18 to 40 whose yearly turnover is not above Rs.1.5 crore. The member pays Rs.55 to Rs.200 a month, depending on the age of joining, until the age of 60, the Government of India adds a matching contribution each month, and the member then receives a monthly pension of Rs.3,000.",
++        "Monthly pension of Rs.3,000 from the age of 60",
++        [
++            ("elig.npstsep.trade", "The applicant must be a small trader, shopkeeper, retailer or self-employed person, such as the owner of a mill, workshop, small hotel or restaurant."),
++            ("elig.npstsep.turnover", "The applicant must be between 18 and 40 years of age, with an annual turnover not above Rs.1.5 crore."),
++            ("elig.npstsep.excluded", "A member of EPFO, ESIC, the government-funded NPS or PM-SYM, or an income tax payer, cannot join."),
++            "elig.common.aadhaarBank",
++        ],
++        ["doc.aadhaar", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/nps-tsep",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -294,11 +360,11 @@ index 4ea17de..21ca6e3 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +885 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +951 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +898 @@ LOCATION_TYPES = {
+@@ -630,0 +964 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
-@@ -634,0 +903,55 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
+@@ -634,0 +969,59 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -352,20 +418,24 @@ index 4ea17de..21ca6e3 100644
 +    "pm_vikas": ["elig.pmvikas.community", "elig.pmvikas.age"],
 +    "esdp": ["elig.common.age18", "elig.esdp.office"],
 +    "gvyoj": ["elig.gvyoj.khadi", "elig.gvyoj.age"],
++    "apy": ["elig.apy.age", "elig.apy.tax"],
++    "pmsby": ["elig.pmsby.age"],
++    "pmjjby": ["elig.pmjjby.age"],
++    "nps_tsep": ["elig.npstsep.turnover", "elig.npstsep.excluded"],
 +}
 +
-@@ -652,0 +976,4 @@ def build():
+@@ -652,0 +1046,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +991,4 @@ def build():
+@@ -663,0 +1061,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1019 @@ def build():
+@@ -688 +1089 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1022 @@ def build():
+@@ -690,0 +1092 @@ def build():
 +                "check_first_codes": check_first,
