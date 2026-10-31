@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..6084e09 100644
+index a874e48..da28bb2 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,3 +175,456 @@ index a874e48..6084e09 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
+@@ -1493,0 +1602,452 @@
++  },
++  {
++    "id": "cgtmse",
++    "name": "Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)",
++    "description": "Provides a credit guarantee cover to member lending institutions for loans of up to Rs.10 crore given to micro and small enterprises in manufacturing, services and trade without collateral security or a third-party guarantee; a hybrid product lets the lender take collateral for part of the loan.",
++    "target_segment": "Micro and small enterprises in manufacturing, services and trade, through member lending institutions",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
++      "The loan must be given by a member lending institution, which applies for the guarantee cover."
++    ],
++    "support_type": "Credit guarantee for the lender",
++    "documents": [
++      "Identity proof",
++      "Business/project details"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.cgtmse.scope",
++      "elig.cgtmse.lender"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.businessDetails"
++    ],
++    "check_first_codes": [
++      "elig.cgtmse.scope"
++    ],
++    "description_code": "sdata.cgtmse.description",
++    "support_type_code": "sdata.cgtmse.support"
++  },
++  {
++    "id": "nsic_credit",
++    "name": "NSIC Raw Material Assistance and Bank Credit Facilitation",
++    "description": "Helps micro, small and medium enterprises finance the purchase of raw material with credit support of up to 180 days against a bank guarantee, and helps any MSME unit get a bank loan through the nearest NSIC branch office, at no cost.",
++    "target_segment": "Micro, small and medium enterprises buying raw material",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "Raw material assistance is given against a bank guarantee, and a concessional rate applies only to units with a good rating that repay on time.",
++      "NSIC appraises the proposal and inspects the unit before sanctioning the assistance."
++    ],
++    "support_type": "Raw material finance and help with a bank loan",
++    "documents": [
++      "Business/project details",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.nsiccredit.security",
++      "elig.nsiccredit.inspect"
++    ],
++    "document_codes": [
++      "doc.businessDetails",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.nsiccredit.security"
++    ],
++    "description_code": "sdata.nsic_credit.description",
++    "support_type_code": "sdata.nsic_credit.support"
++  },
++  {
++    "id": "nsic_spr",
++    "name": "NSIC Single Point Registration Scheme (SPRS)",
++    "description": "Registers micro and small enterprises with NSIC so they can take part in government purchases, with tender documents free of cost, exemption from the earnest money deposit and other benefits under the Public Procurement Policy.",
++    "target_segment": "Micro and small enterprises selling to government departments",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "Udyam registration is required.",
++      "The enterprise must manufacture goods or provide services; the scheme does not register traders."
++    ],
++    "support_type": "Registration for government purchases",
++    "documents": [
++      "Udyam registration number, where already held",
++      "Identity proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.udyamNeeded",
++      "elig.nsicspr.noTraders"
++    ],
++    "document_codes": [
++      "doc.udyam",
++      "doc.identity"
++    ],
++    "check_first_codes": [
++      "elig.nsicspr.noTraders"
++    ],
++    "description_code": "sdata.nsic_spr.description",
++    "support_type_code": "sdata.nsic_spr.support"
++  },
++  {
++    "id": "nsfdc",
++    "name": "National Scheduled Castes Finance and Development Corporation (NSFDC) loans",
++    "description": "Provides loans through State Channelising Agencies for income-generating activities in agriculture and allied work, small industries, and service and transport, to Scheduled Caste applicants.",
++    "target_segment": "Scheduled Caste applicants setting up or growing an income-generating activity",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must belong to a Scheduled Caste, and the annual family income must be up to Rs.5 lakh.",
++      "Applications go through the PM-SURAJ portal or the nearest State Channelising Agency office; the corporation does not take direct applications."
++    ],
++    "support_type": "Term loans and micro-finance loans",
++    "documents": [
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Identity proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.nsfdc.caste",
++      "elig.nsfdc.route"
++    ],
++    "document_codes": [
++      "doc.caste",
++      "doc.income",
++      "doc.identity"
++    ],
++    "check_first_codes": [
++      "elig.nsfdc.caste"
++    ],
++    "description_code": "sdata.nsfdc.description",
++    "support_type_code": "sdata.nsfdc.support"
++  },
++  {
++    "id": "nbcfdc",
++    "name": "National Backward Classes Finance and Development Corporation (NBCFDC) loans",
++    "description": "Provides loans through channel partners such as State Channelising Agencies, banks and NBFC-MFIs for income-generating activities, to members of notified Backward Classes whose family income is within the scheme's limit, and to their self-help groups.",
++    "target_segment": "Members of notified Backward Classes and their self-help groups",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must belong to a notified Backward Class, and the family income must be within the limit the scheme sets.",
++      "Loans are delivered through channel partners such as State Channelising Agencies, banks and NBFC-MFIs."
++    ],
++    "support_type": "Individual and group loans",
++    "documents": [
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Identity proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.nbcfdc.class",
++      "elig.nbcfdc.channel"
++    ],
++    "document_codes": [
++      "doc.caste",
++      "doc.income",
++      "doc.identity"
++    ],
++    "check_first_codes": [
++      "elig.nbcfdc.class"
++    ],
++    "description_code": "sdata.nbcfdc.description",
++    "support_type_code": "sdata.nbcfdc.support"
++  },
++  {
++    "id": "nssw",
++    "name": "New Swarnima Scheme",
++    "description": "Provides a term loan of up to Rs.2 lakh through State Channelising Agencies to women of notified Backward Classes for an enterprise; no contribution is needed from the beneficiary for projects up to Rs.2 lakh.",
++    "target_segment": "Women of notified Backward Classes who run or plan an enterprise",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be a woman aged 18 to 55 of a notified Backward Class who runs or plans an enterprise, with family income within the scheme's limit.",
++      "Applications are made at the nearest State Channelising Agency office, which reviews the application and decides on the loan."
++    ],
++    "support_type": "Term loan for women entrepreneurs",
++    "documents": [
++      "Aadhaar card",
++      "Caste certificate, where applicable",
++      "Domicile or residence certificate for the state",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.nssw.who",
++      "elig.nssw.route"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.caste",
++      "doc.domicile",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.nssw.who"
++    ],
++    "description_code": "sdata.nssw.description",
++    "support_type_code": "sdata.nssw.support"
++  },
++  {
++    "id": "tls_nmdfc",
++    "name": "NMDFC Term Loan Scheme (minority communities)",
++    "description": "Provides term loans through State Channelising Agencies and banking partners to members of the six notified minority communities for an economically viable project.",
++    "target_segment": "Members of the six notified minority communities with a viable project",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The applicant must be at least 18 years old.",
++      "The applicant must belong to the Muslim, Christian, Sikh, Buddhist, Parsi or Jain community.",
++      "The annual family income must not exceed Rs.3 lakh under Credit Line-1 or Rs.8 lakh under Credit Line-2.",
++      "The applicant must have no outstanding loan or default under any central or state government financing scheme."
++    ],
++    "support_type": "Term loan",
++    "documents": [
++      "Identity proof",
++      "Address proof",
++      "Income certificate",
++      "Recent passport-size photograph",
++      "Bank-related documents",
++      "Project report",
++      "Quotations for machinery, tools or equipment"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.age18",
++      "elig.nmdfc.community",
++      "elig.nmdfc.income",
++      "elig.nmdfc.noDefault"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.address",
++      "doc.income",
++      "doc.photo",
++      "doc.bank",
++      "doc.projectReport",
++      "doc.quotation"
++    ],
++    "check_first_codes": [
++      "elig.nmdfc.community",
++      "elig.nmdfc.income",
++      "elig.nmdfc.noDefault"
++    ],
++    "description_code": "sdata.tls_nmdfc.description",
++    "support_type_code": "sdata.tls_nmdfc.support"
++  },
++  {
++    "id": "mfs_nmdfc",
++    "name": "NMDFC Micro Finance Scheme (SHG members of minority communities)",
++    "description": "Provides small loans of up to Rs.1.5 lakh per member through State Channelising Agencies and banking partners to members of self-help groups in which most members belong to the notified minority communities.",
++    "target_segment": "Self-help groups with mostly minority-community members",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "Membership of a self-help group is required.",
++      "At least 75 per cent of the group's members must belong to the Muslim, Christian, Sikh, Buddhist, Parsi or Jain community, and the group must have a savings and credit record of at least 6 months.",
++      "The annual family income must not exceed Rs.3 lakh under Credit Line-1 or Rs.8 lakh under Credit Line-2."
++    ],
++    "support_type": "Micro-finance loan for group members",
++    "documents": [
++      "Proof of self-help group membership",
++      "Income certificate",
++      "Address proof",
++      "Recent passport-size photograph",
++      "Bank-related documents",
++      "Business/project details"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.shgMember",
++      "elig.nmdfc.shg",
++      "elig.nmdfc.income"
++    ],
++    "document_codes": [
++      "doc.shgMembership",
++      "doc.income",
++      "doc.address",
++      "doc.photo",
++      "doc.bank",
++      "doc.businessDetails"
++    ],
++    "check_first_codes": [
++      "elig.nmdfc.shg",
++      "elig.nmdfc.income"
++    ],
++    "description_code": "sdata.mfs_nmdfc.description",
++    "support_type_code": "sdata.mfs_nmdfc.support"
++  },
++  {
++    "id": "pmjdy",
++    "name": "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
++    "description": "Opens a basic savings bank deposit account at any bank branch or through a Business Correspondent for a person who has no other account, with a RuPay debit card, accident insurance cover, and an overdraft of up to Rs.10,000 for eligible account holders.",
++    "target_segment": "Persons without a bank account",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture",
++      "dairy",
++      "poultry",
++      "beekeeping",
++      "street vending"
++    ],
++    "states": [
++      "ALL"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "central",
++    "eligibility_rules": [
++      "The account is for a person who does not already have a bank account.",
++      "The overdraft facility of up to Rs.10,000 is available only to eligible account holders."
++    ],
++    "support_type": "Bank account with insurance and an overdraft facility",
++    "documents": [
++      "Identity proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.pmjdy.noAccount",
++      "elig.pmjdy.overdraft"
++    ],
++    "document_codes": [
++      "doc.identity"
++    ],
++    "check_first_codes": [
++      "elig.pmjdy.noAccount"
++    ],
++    "description_code": "sdata.pmjdy.description",
++    "support_type_code": "sdata.pmjdy.support"

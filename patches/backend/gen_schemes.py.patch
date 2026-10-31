@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..5033529 100644
+index 4ea17de..e5ba366 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,15 +30,164 @@ index 4ea17de..5033529 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,4 @@ SPEC = [
+@@ -615,3 +624,151 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
++# The schemes below were read on 31 Oct 2026, each on the page of the body that
++# runs it or on the National Portal (myScheme.gov.in), and carry that date. They
++# sit in their own list so the date follows from the list and not from a second
++# place that could fall out of step.
++SPEC_31_OCT = [
++    # ---- central finance and credit ----
++    (
++        "cgtmse",
++        "Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)",
++        # The pages read list no documents for the borrower, so two generic ones are shown.
++        "central", ["ALL"], GENERAL,
++        "Micro and small enterprises in manufacturing, services and trade, through member lending institutions",
++        "Provides a credit guarantee cover to member lending institutions for loans of up to Rs.10 crore given to micro and small enterprises in manufacturing, services and trade without collateral security or a third-party guarantee; a hybrid product lets the lender take collateral for part of the loan.",
++        "Credit guarantee for the lender",
++        [
++            ("elig.cgtmse.scope", "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered."),
++            ("elig.cgtmse.lender", "The loan must be given by a member lending institution, which applies for the guarantee cover."),
++        ],
++        ["doc.identity", "doc.businessDetails"],
++        "https://www.cgtmse.in/Home/VS/95",
++    ),
++    (
++        "nsic_credit",
++        "NSIC Raw Material Assistance and Bank Credit Facilitation",
++        # The document list sits in a linked PDF that could not be read, so two generic ones are shown.
++        "central", ["ALL"], [MFG, SVC, FP, HC, TLR],
++        "Micro, small and medium enterprises buying raw material",
++        "Helps micro, small and medium enterprises finance the purchase of raw material with credit support of up to 180 days against a bank guarantee, and helps any MSME unit get a bank loan through the nearest NSIC branch office, at no cost.",
++        "Raw material finance and help with a bank loan",
++        [
++            ("elig.nsiccredit.security", "Raw material assistance is given against a bank guarantee, and a concessional rate applies only to units with a good rating that repay on time."),
++            ("elig.nsiccredit.inspect", "NSIC appraises the proposal and inspects the unit before sanctioning the assistance."),
++        ],
++        ["doc.businessDetails", "doc.bank"],
++        "https://www.nsic.co.in/Schemes/RawMaterialAgainstBG",
++    ),
++    (
++        "nsic_spr",
++        "NSIC Single Point Registration Scheme (SPRS)",
++        "central", ["ALL"], [MFG, SVC, FP, HC, TLR],
++        "Micro and small enterprises selling to government departments",
++        "Registers micro and small enterprises with NSIC so they can take part in government purchases, with tender documents free of cost, exemption from the earnest money deposit and other benefits under the Public Procurement Policy.",
++        "Registration for government purchases",
++        [
++            "elig.common.udyamNeeded",
++            ("elig.nsicspr.noTraders", "The enterprise must manufacture goods or provide services; the scheme does not register traders."),
++        ],
++        ["doc.udyam", "doc.identity"],
++        "https://www.nsic.co.in/Schemes/SinglePointRegistration",
++    ),
++    (
++        "nsfdc",
++        "National Scheduled Castes Finance and Development Corporation (NSFDC) loans",
++        "central", ["ALL"], ALL_WORK,
++        "Scheduled Caste applicants setting up or growing an income-generating activity",
++        "Provides loans through State Channelising Agencies for income-generating activities in agriculture and allied work, small industries, and service and transport, to Scheduled Caste applicants.",
++        "Term loans and micro-finance loans",
++        [
++            ("elig.nsfdc.caste", "The applicant must belong to a Scheduled Caste, and the annual family income must be up to Rs.5 lakh."),
++            ("elig.nsfdc.route", "Applications go through the PM-SURAJ portal or the nearest State Channelising Agency office; the corporation does not take direct applications."),
++        ],
++        ["doc.caste", "doc.income", "doc.identity"],
++        "https://nsfdc.nic.in/scheme",
++    ),
++    (
++        "nbcfdc",
++        "National Backward Classes Finance and Development Corporation (NBCFDC) loans",
++        # The pages read list no documents, so three generic ones are shown.
++        "central", ["ALL"], ALL_WORK,
++        "Members of notified Backward Classes and their self-help groups",
++        "Provides loans through channel partners such as State Channelising Agencies, banks and NBFC-MFIs for income-generating activities, to members of notified Backward Classes whose family income is within the scheme's limit, and to their self-help groups.",
++        "Individual and group loans",
++        [
++            ("elig.nbcfdc.class", "The applicant must belong to a notified Backward Class, and the family income must be within the limit the scheme sets."),
++            ("elig.nbcfdc.channel", "Loans are delivered through channel partners such as State Channelising Agencies, banks and NBFC-MFIs."),
++        ],
++        ["doc.caste", "doc.income", "doc.identity"],
++        "https://nbcfdc.gov.in/nbcfdc/web/en/individual-loan-scheme",
++    ),
++    (
++        "nssw",
++        "New Swarnima Scheme",
++        # The page also lists a ration card, which has no document code here.
++        "central", ["ALL"], ALL_WORK,
++        "Women of notified Backward Classes who run or plan an enterprise",
++        "Provides a term loan of up to Rs.2 lakh through State Channelising Agencies to women of notified Backward Classes for an enterprise; no contribution is needed from the beneficiary for projects up to Rs.2 lakh.",
++        "Term loan for women entrepreneurs",
++        [
++            ("elig.nssw.who", "The applicant must be a woman aged 18 to 55 of a notified Backward Class who runs or plans an enterprise, with family income within the scheme's limit."),
++            ("elig.nssw.route", "Applications are made at the nearest State Channelising Agency office, which reviews the application and decides on the loan."),
++        ],
++        ["doc.aadhaar", "doc.caste", "doc.domicile", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/nssw",
++    ),
++    (
++        "tls_nmdfc",
++        "NMDFC Term Loan Scheme (minority communities)",
++        # The page also lists proof of minority status, a no-dues certificate and an affidavit, which have no document code here.
++        "central", ["ALL"], ALL_WORK,
++        "Members of the six notified minority communities with a viable project",
++        "Provides term loans through State Channelising Agencies and banking partners to members of the six notified minority communities for an economically viable project.",
++        "Term loan",
++        [
++            "elig.common.age18",
++            ("elig.nmdfc.community", "The applicant must belong to the Muslim, Christian, Sikh, Buddhist, Parsi or Jain community."),
++            ("elig.nmdfc.income", "The annual family income must not exceed Rs.3 lakh under Credit Line-1 or Rs.8 lakh under Credit Line-2."),
++            ("elig.nmdfc.noDefault", "The applicant must have no outstanding loan or default under any central or state government financing scheme."),
++        ],
++        ["doc.identity", "doc.address", "doc.income", "doc.photo", "doc.bank", "doc.projectReport", "doc.quotation"],
++        "https://www.myscheme.gov.in/schemes/tls-nmdfc",
++    ),
++    (
++        "mfs_nmdfc",
++        "NMDFC Micro Finance Scheme (SHG members of minority communities)",
++        # The page also lists a group resolution, a member list, minority certificates and the group's registers, which have no document code here.
++        "central", ["ALL"], ALL_WORK,
++        "Self-help groups with mostly minority-community members",
++        "Provides small loans of up to Rs.1.5 lakh per member through State Channelising Agencies and banking partners to members of self-help groups in which most members belong to the notified minority communities.",
++        "Micro-finance loan for group members",
++        [
++            "elig.common.shgMember",
++            ("elig.nmdfc.shg", "At least 75 per cent of the group's members must belong to the Muslim, Christian, Sikh, Buddhist, Parsi or Jain community, and the group must have a savings and credit record of at least 6 months."),
++            ("elig.nmdfc.income", "The annual family income must not exceed Rs.3 lakh under Credit Line-1 or Rs.8 lakh under Credit Line-2."),
++        ],
++        ["doc.shgMembership", "doc.income", "doc.address", "doc.photo", "doc.bank", "doc.businessDetails"],
++        "https://www.myscheme.gov.in/schemes/mfs-nmdfc",
++    ),
++    (
++        "pmjdy",
++        "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
++        # The page read lists no documents, so the generic one is shown.
++        "central", ["ALL"], ALL_WORK + [SV],
++        "Persons without a bank account",
++        "Opens a basic savings bank deposit account at any bank branch or through a Business Correspondent for a person who has no other account, with a RuPay debit card, accident insurance cover, and an overdraft of up to Rs.10,000 for eligible account holders.",
++        "Bank account with insurance and an overdraft facility",
++        [
++            ("elig.pmjdy.noAccount", "The account is for a person who does not already have a bank account."),
++            ("elig.pmjdy.overdraft", "The overdraft facility of up to Rs.10,000 is available only to eligible account holders."),
++        ],
++        ["doc.identity"],
++        "https://pmjdy.gov.in/scheme",
++    ),
++]
++READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
++SPEC = SPEC + SPEC_31_OCT
++
 +# Everything added on 7 Sept 2026 carries that date, and the UI prints it on every
 +# card. The four schemes the funding calculation prices or describes had their
 +# official pages read again on 28 Oct 2026 and carry that date instead.
++# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -634,0 +645,39 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
+@@ -618,0 +776 @@ LAST_VERIFIED = "2026-09-07"
++READ_ON = "2026-10-31"
+@@ -634,0 +793,48 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -76,17 +225,29 @@ index 4ea17de..5033529 100644
 +    "atma_block": ["elig.common.farmerOrLabourer"],
 +    "csc": ["elig.common.aadhaarBank"],
 +    "svanidhi": ["elig.svanidhi.who"],
++    "cgtmse": ["elig.cgtmse.scope"],
++    "nsic_credit": ["elig.nsiccredit.security"],
++    "nsic_spr": ["elig.nsicspr.noTraders"],
++    "nsfdc": ["elig.nsfdc.caste"],
++    "nbcfdc": ["elig.nbcfdc.class"],
++    "nssw": ["elig.nssw.who"],
++    "tls_nmdfc": ["elig.nmdfc.community", "elig.nmdfc.income", "elig.nmdfc.noDefault"],
++    "mfs_nmdfc": ["elig.nmdfc.shg", "elig.nmdfc.income"],
++    "pmjdy": ["elig.pmjdy.noAccount"],
 +}
 +
-@@ -652,0 +702,4 @@ def build():
+@@ -652,0 +859,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +717,4 @@ def build():
+@@ -663,0 +874,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -690,0 +748 @@ def build():
+@@ -688 +902 @@ def build():
+-                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
++                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
+@@ -690,0 +905 @@ def build():
 +                "check_first_codes": check_first,

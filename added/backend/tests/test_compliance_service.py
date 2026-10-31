@@ -329,7 +329,10 @@ def test_a_real_request_counts_the_udyam_schemes_it_was_actually_shown():
     # A branch no real request can reach is a branch nobody has tested.
     assert shown > 0
     assert _step(result["compliance"], "udyam")["schemes_requiring"] == shown
-    assert _step(_analysis(state="Uttar Pradesh")["compliance"], "udyam")["schemes_requiring"] == 0
+    # Agriculture is a category no Udyam-requiring scheme lists, so the count is a real zero.
+    nothing = _analysis(business_category="agriculture", state="Uttar Pradesh")
+    assert not any(UDYAM_CODE in match["eligibility_codes"] for match in nothing["scheme_matches"])
+    assert _step(nothing["compliance"], "udyam")["schemes_requiring"] == 0
 
 
 def test_every_result_in_a_sweep_of_real_requests_has_the_same_shape():

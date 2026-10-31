@@ -146,6 +146,15 @@ HELP_BY_SCHEME = {
     "gp_licence": ("permission",),
     "csc": ("papers",),
     "svanidhi": ("loan",),
+    "cgtmse": ("loanhelp",),
+    "nsic_credit": ("loan", "loanhelp"),
+    "nsic_spr": ("papers",),
+    "nsfdc": ("loan",),
+    "nbcfdc": ("loan",),
+    "nssw": ("loan",),
+    "tls_nmdfc": ("loan",),
+    "mfs_nmdfc": ("loan", "funds"),
+    "pmjdy": ("loanhelp",),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

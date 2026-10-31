@@ -1,5 +1,5 @@
 diff --git a/frontend/src/data/reviewDates.js b/frontend/src/data/reviewDates.js
-index 298eafb..2495de8 100644
+index 298eafb..5aeb4b0 100644
 --- a/frontend/src/data/reviewDates.js
 +++ b/frontend/src/data/reviewDates.js
 @@ -13 +13 @@
@@ -7,4 +7,4 @@ index 298eafb..2495de8 100644
 +export const SCHEMES_CHECKED_FROM = '2026-09-07'
 @@ -15 +15 @@ export const SCHEMES_CHECKED_FROM = '2026-09-01'
 -export const SCHEMES_CHECKED_TO = '2026-09-07'
-+export const SCHEMES_CHECKED_TO = '2026-10-28'
++export const SCHEMES_CHECKED_TO = '2026-10-31'
