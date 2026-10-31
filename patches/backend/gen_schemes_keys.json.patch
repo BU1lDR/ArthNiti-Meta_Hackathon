@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..5749b34 100644
+index 220d74e..1ec292d 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..5749b34 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,18 @@
+@@ -96 +99,29 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -27,8 +27,19 @@ index 220d74e..5749b34 100644
 +  "elig.nmdfc.noDefault": "The applicant must have no outstanding loan or default under any central or state government financing scheme.",
 +  "elig.nmdfc.shg": "At least 75 per cent of the group's members must belong to the Muslim, Christian, Sikh, Buddhist, Parsi or Jain community, and the group must have a savings and credit record of at least 6 months.",
 +  "elig.pmjdy.noAccount": "The account is for a person who does not already have a bank account.",
-+  "elig.pmjdy.overdraft": "The overdraft facility of up to Rs.10,000 is available only to eligible account holders."
-@@ -151 +171,10 @@
++  "elig.pmjdy.overdraft": "The overdraft facility of up to Rs.10,000 is available only to eligible account holders.",
++  "elig.daynrlm.group": "The group must generally have been active for at least 6 months, with regular meetings, savings and up-to-date books, and must meet the grading norms fixed by NABARD.",
++  "elig.samadhaan.delay": "The claim must be for goods or services supplied to a buyer who has not paid within 45 days of accepting them.",
++  "elig.enam.register": "A farmer must register on the e-NAM portal, through the mobile app or at the gate of an e-NAM mandi; registration is free and needs a bank passbook or cheque leaf and any government identity proof.",
++  "elig.enam.mandi": "Produce can be sold through e-NAM only at mandis that have joined the platform, so the nearest mandi must be one of them.",
++  "elig.pmdaksh.group": "The applicant must belong to a Scheduled Caste, Other Backward Class, Economically Weaker Section, or a Denotified or Nomadic Tribe, or be a Safai Mitra (sanitation worker, including waste pickers); for Other Backward Class and Economically Weaker Section applicants the annual family income must be below Rs.3 lakh.",
++  "elig.pmvikas.community": "The scheme is meant for the six notified minority communities (Muslim, Christian, Sikh, Buddhist, Jain and Parsi); a small share of seats goes to non-minority candidates from economically weaker sections.",
++  "elig.pmvikas.age": "The age limit is 14 to 45 years for skill training and education, and 18 to 45 years for women's leadership and entrepreneurship training.",
++  "elig.esdp.fee": "The organisation running the programme sets the fee, which is waived for Scheduled Caste, Scheduled Tribe, differently-abled, ex-servicemen, below-poverty-line participants and women.",
++  "elig.esdp.office": "Programmes are held through the MSME Development Institutes and Technology Centres; contact the nearest one to learn when the next programme runs.",
++  "elig.gvyoj.khadi": "The applicant must be a Khadi artisan, or a Khadi institution, registered with the Khadi and Village Industries Commission (KVIC) or a State Khadi and Village Industries Board (KVIB).",
++  "elig.gvyoj.age": "The applicant must be between 18 and 55 years of age, and only one person from a family can benefit."
+@@ -151 +182,17 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -39,4 +50,11 @@ index 220d74e..5749b34 100644
 +  "nssw",
 +  "tls_nmdfc",
 +  "mfs_nmdfc",
-+  "pmjdy"
++  "pmjdy",
++  "day_nrlm",
++  "samadhaan",
++  "enam",
++  "pm_daksh",
++  "pm_vikas",
++  "esdp",
++  "gvyoj"

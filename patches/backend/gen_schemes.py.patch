@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..e5ba366 100644
+index 4ea17de..21ca6e3 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..e5ba366 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,151 @@ SPEC = [
+@@ -615,3 +624,260 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -176,6 +176,115 @@ index 4ea17de..e5ba366 100644
 +        ["doc.identity"],
 +        "https://pmjdy.gov.in/scheme",
 +    ),
++    # ---- central livelihoods, services and training ----
++    (
++        "day_nrlm",
++        "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission (DAY-NRLM)",
++        "central", ["ALL"], ALL_WORK,
++        "Self-help groups of poor rural households, preferably women",
++        "Brings poor rural households, preferably through a woman member, into self-help groups and supports the groups with a revolving fund, training, bank loans and help to start or grow livelihood activities; in the mission's intensive blocks a community investment fund also supports them through their federations.",
++        "Support for self-help groups and their livelihoods",
++        [
++            "elig.common.ruralArea",
++            ("elig.daynrlm.group", "The group must generally have been active for at least 6 months, with regular meetings, savings and up-to-date books, and must meet the grading norms fixed by NABARD."),
++        ],
++        ["doc.aadhaar", "doc.identity", "doc.address", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/day-nrlm",
++    ),
++    (
++        "samadhaan",
++        "MSME Samadhaan (Delayed Payment Claims)",
++        # The page lists no documents, so two generic ones are shown.
++        "central", ["ALL"], [MFG, SVC, FP, HC, TLR],
++        "Micro and small enterprises with an unpaid bill from a buyer",
++        "Lets a micro or small enterprise with a valid Udyam registration file a claim when a buyer has not paid for goods or services; the state's Micro and Small Enterprise Facilitation Council examines the claim and can direct the buyer to pay the due amount with interest at three times the bank rate.",
++        "Help to recover an unpaid bill from a buyer",
++        [
++            "elig.common.udyamNeeded",
++            ("elig.samadhaan.delay", "The claim must be for goods or services supplied to a buyer who has not paid within 45 days of accepting them."),
++        ],
++        ["doc.udyam", "doc.businessDetails"],
++        "https://samadhaan.msme.gov.in/MyMsme/MSEFC/MSEFC_Welcome.aspx",
++    ),
++    (
++        "enam",
++        "National Agriculture Market (e-NAM)",
++        "central", ["ALL"], [AGR],
++        "Farmers selling their produce at mandis that have joined e-NAM",
++        "An online trading platform that links the mandis which have joined it, so a farmer can sell through transparent bidding to more buyers, see live prices and arrivals in nearby mandis, and be paid directly into the bank account.",
++        "Online selling and payment at joined mandis",
++        [
++            ("elig.enam.register", "A farmer must register on the e-NAM portal, through the mobile app or at the gate of an e-NAM mandi; registration is free and needs a bank passbook or cheque leaf and any government identity proof."),
++            ("elig.enam.mandi", "Produce can be sold through e-NAM only at mandis that have joined the platform, so the nearest mandi must be one of them."),
++        ],
++        ["doc.identity", "doc.bank"],
++        "https://enam.gov.in/stakeholders-Involved/farmers",
++    ),
++    (
++        "pm_daksh",
++        "Pradhan Mantri Dakshta Aur Kushalta Sampann Hitgrahi (PM-DAKSH)",
++        # Proof of age and an occupation certificate are also asked for; they have no document code, so they are left out.
++        "central", ["ALL"], [MFG, SVC, FP, HC, TLR],
++        "People from Scheduled Caste, Backward Class, Economically Weaker Section, Denotified Tribe and Safai Mitra groups who want job skills or self-employment",
++        "Free skill training in job roles such as tailoring, furniture making, food processing, carpet weaving, beautician work and leather work, with a stipend during the course, a certificate and help with placement; entrepreneurship development courses are also run.",
++        "Free skill training with a stipend",
++        [
++            "elig.common.age18to45",
++            ("elig.pmdaksh.group", "The applicant must belong to a Scheduled Caste, Other Backward Class, Economically Weaker Section, or a Denotified or Nomadic Tribe, or be a Safai Mitra (sanitation worker, including waste pickers); for Other Backward Class and Economically Weaker Section applicants the annual family income must be below Rs.3 lakh."),
++            "elig.common.aadhaarBank",
++            "elig.common.freeOfCost",
++        ],
++        ["doc.aadhaar", "doc.photo", "doc.caste", "doc.income", "doc.address", "doc.education", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/pm-daksh",
++    ),
++    (
++        "pm_vikas",
++        "Pradhan Mantri Virasat ka Samvardhan (PM VIKAS)",
++        # An EWS certificate is asked for non-minority candidates only; it has no document code, so it is left out.
++        "central", ["ALL"], [MFG, SVC, FP, HC, TLR],
++        "People of the six notified minority communities, with a focus on women",
++        "Trains people of the six notified minority communities in traditional and modern skills, and trains minority women in leadership and entrepreneurship, including support to start an enterprise; the training is funded by the central government and trainees can get a stipend.",
++        "Skill and enterprise training with a stipend",
++        [
++            ("elig.pmvikas.community", "The scheme is meant for the six notified minority communities (Muslim, Christian, Sikh, Buddhist, Jain and Parsi); a small share of seats goes to non-minority candidates from economically weaker sections."),
++            ("elig.pmvikas.age", "The age limit is 14 to 45 years for skill training and education, and 18 to 45 years for women's leadership and entrepreneurship training."),
++            "elig.common.aadhaarBank",
++        ],
++        ["doc.aadhaar", "doc.bank", "doc.education"],
++        "https://www.myscheme.gov.in/schemes/pm-vikas",
++    ),
++    (
++        "esdp",
++        "Entrepreneurship and Skill Development Programme (ESDP)",
++        # Proof of age and a disability certificate are also asked for; they have no document code, so they are left out.
++        "central", ["ALL"], GENERAL,
++        "Youth and others who want to start their own business or self-employment",
++        "Short training programmes held through the offices of the Development Commissioner (MSME), the MSME Development Institutes and Technology Centres for people who want to start or run their own enterprise: a 1-day awareness programme, a 6-week skills and entrepreneurship course and a 1-week management course.",
++        "Short training courses, fee waived for some groups",
++        [
++            "elig.common.age18",
++            ("elig.esdp.fee", "The organisation running the programme sets the fee, which is waived for Scheduled Caste, Scheduled Tribe, differently-abled, ex-servicemen, below-poverty-line participants and women."),
++            ("elig.esdp.office", "Programmes are held through the MSME Development Institutes and Technology Centres; contact the nearest one to learn when the next programme runs."),
++        ],
++        ["doc.identity", "doc.caste"],
++        "https://www.myscheme.gov.in/schemes/esdp",
++    ),
++    (
++        "gvyoj",
++        "Gramodyog Vikas Yojana (Khadi Gramodyog Vikas Yojana)",
++        # Age proof, the Khadi artisan card or institution certificate and a BPL certificate are also asked for; they have no document code, so they are left out.
++        "central", ["ALL"], [MFG, SVC, FP, HC, BEE],
++        "Khadi artisans and Khadi institutions registered with KVIC or KVIB",
++        "Trains Khadi artisans and gives the trained ones machinery, tools or a tool kit to start or expand work such as agarbatti making, pottery, leather footwear, beekeeping, wood craft, handmade paper, food processing, and trades like electrician, plumber and tea vending.",
++        "Training and machinery or tool kits",
++        [
++            ("elig.gvyoj.khadi", "The applicant must be a Khadi artisan, or a Khadi institution, registered with the Khadi and Village Industries Commission (KVIC) or a State Khadi and Village Industries Board (KVIB)."),
++            ("elig.gvyoj.age", "The applicant must be between 18 and 55 years of age, and only one person from a family can benefit."),
++            "elig.common.trainingIncluded",
++        ],
++        ["doc.identity", "doc.caste", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/gvyoj",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -185,9 +294,11 @@ index 4ea17de..e5ba366 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +776 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +885 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -634,0 +793,48 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
+@@ -630,0 +898 @@ LOCATION_TYPES = {
++    "day_nrlm": ["rural"],  # elig.common.ruralArea
+@@ -634,0 +903,55 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -234,20 +345,27 @@ index 4ea17de..e5ba366 100644
 +    "tls_nmdfc": ["elig.nmdfc.community", "elig.nmdfc.income", "elig.nmdfc.noDefault"],
 +    "mfs_nmdfc": ["elig.nmdfc.shg", "elig.nmdfc.income"],
 +    "pmjdy": ["elig.pmjdy.noAccount"],
++    "day_nrlm": ["elig.daynrlm.group"],
++    "samadhaan": ["elig.samadhaan.delay"],
++    "enam": ["elig.enam.mandi"],
++    "pm_daksh": ["elig.pmdaksh.group", "elig.common.age18to45"],
++    "pm_vikas": ["elig.pmvikas.community", "elig.pmvikas.age"],
++    "esdp": ["elig.common.age18", "elig.esdp.office"],
++    "gvyoj": ["elig.gvyoj.khadi", "elig.gvyoj.age"],
 +}
 +
-@@ -652,0 +859,4 @@ def build():
+@@ -652,0 +976,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +874,4 @@ def build():
+@@ -663,0 +991,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +902 @@ def build():
+@@ -688 +1019 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +905 @@ def build():
+@@ -690,0 +1022 @@ def build():
 +                "check_first_codes": check_first,

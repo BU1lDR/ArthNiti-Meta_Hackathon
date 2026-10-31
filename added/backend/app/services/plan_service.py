@@ -109,6 +109,8 @@ HELP = {
     "papers": "help with papers and forms",
     "funds": "funds for a group",
     "complaint": "a place to complain about a refused or delayed loan",
+    "payment": "a place to claim a payment that a buyer has held back",
+    "market": "a way to reach more buyers",
     "permission": "a trade permission",
     "livelihood": "support to build local earning work",
     "loanhelp": "help getting a loan",
@@ -155,6 +157,13 @@ HELP_BY_SCHEME = {
     "tls_nmdfc": ("loan",),
     "mfs_nmdfc": ("loan", "funds"),
     "pmjdy": ("loanhelp",),
+    "day_nrlm": ("funds", "livelihood"),
+    "samadhaan": ("payment",),
+    "enam": ("market",),
+    "pm_daksh": ("training",),
+    "pm_vikas": ("training",),
+    "esdp": ("training",),
+    "gvyoj": ("training", "tools"),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is
