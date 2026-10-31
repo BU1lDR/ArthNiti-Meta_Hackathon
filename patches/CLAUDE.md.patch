@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..1a19e97 100644
+index d6ab002..d92f73e 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -405,7 +405,7 @@ index d6ab002..1a19e97 100644
 +- **Read aloud** (`ReadAloud`, `audio/speak.js`, under the light on `/analysis` and `/advisory`): the browser's speech engine and a voice with `localService === true` only (a network voice would send the sentence off the device), no sentence with a digit, nothing starts without a press (`speak-lib-test` pins it). On the owner's Windows Edge all 321 voices were network voices (29 Oct 2026), so the button does not appear there. **`/talk`'s fixed question text is the one exception** (`useQuestionVoice`, `promptVoiceFor`): a device voice if there is one, else a network voice, because the sentence is ours and holds nothing the person said; it starts only once the consent box is ticked (when it stops: `PROCESSOR_SCHEDULE.md` §2, §10.2, §10.8).
 @@ -376 +261 @@ python -m pip install -r backend/requirements-dev.txt
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed, ~5s
-+cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2245 passed, ~18s
++cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2245 passed, ~30s
 @@ -379,5 +264,3 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Backend tests only; there are no frontend tests.** Some tests pin user-visible wording, so edit them together with a copy change.
 -- **When you add a branch, add a test proving a real request can reach it**, a sweep through `run_unified_analysis`, and not only a unit call.

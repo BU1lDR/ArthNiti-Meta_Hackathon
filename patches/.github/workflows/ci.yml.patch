@@ -1,12 +1,12 @@
 diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
-index 6cb6cca..856c4e4 100644
+index 6cb6cca..669e33e 100644
 --- a/.github/workflows/ci.yml
 +++ b/.github/workflows/ci.yml
 @@ -95,0 +96,24 @@ jobs:
 +      - name: egg-price fetch maths and guards (no network)
 +        run: node --test tools/verify/necc-lib-test.mjs
 +
-+      # The three below need no server and no key. One test in talk-lib-test
++      # The six below need no server and no key. One test in talk-lib-test
 +      # hands a recording to the backend through the Windows virtual
 +      # environment, so it is skipped here and runs on the owner's machine.
 +      - name: /talk recording and answer logic

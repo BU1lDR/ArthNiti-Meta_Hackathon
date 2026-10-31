@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 6bedb8a..48e7170 100644
+index 6bedb8a..2d71be2 100644
 --- a/README.md
 +++ b/README.md
 @@ -5 +5 @@ Hyper-local business advice and financial structuring for rural micro-entreprene
@@ -36,7 +36,7 @@ index 6bedb8a..48e7170 100644
 +You never have to *activate* the venv. Every command in this file calls `.venv/Scripts/python.exe` directly, which works from any shell. The snippets assume Windows and Git Bash, which is where all of this was written and run. On macOS or Linux, read `.venv/bin/python` wherever this file says `.venv/Scripts/python.exe`; only the backend tests and the no-server frontend checks have been run on Linux, by CI (see [CI](#ci)).
 @@ -76 +81,2 @@ taskkill //F //T //PID <pid>          # yes, doubled slashes, that's Git Bash
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q   # 867 tests, a few seconds
-+cd backend && ../.venv/Scripts/python.exe -m pytest tests -q   # 2245 tests in 60 files, about 18 seconds
++cd backend && ../.venv/Scripts/python.exe -m pytest tests -q   # 2245 tests in 60 files, about 30 seconds
 +node --test tools/verify/talk-lib-test.mjs tools/verify/app-state-test.mjs tools/verify/market-lib-test.mjs tools/verify/necc-lib-test.mjs tools/verify/speak-lib-test.mjs tools/verify/amount-lib-test.mjs tools/verify/offer-lib-test.mjs tools/verify/offer-lines-test.mjs   # no server, no key
 @@ -90 +96 @@ Two switches turn the demo into something a real person can use.
 -  - it mounts only `GET /health` and `POST /api/analysis/run`;
