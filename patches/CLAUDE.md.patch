@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..ee1904f 100644
+index d6ab002..c374eac 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -11,7 +11,7 @@ index d6ab002..ee1904f 100644
 @@ -12 +12 @@
 -Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HACKATHON.md` holds the demo path, the built-before-vs-during note and the submission checklist.
 +**Code freeze: 3 Nov 2026, noon IST** (the owner, 30 and 31 Oct). Until then "demo path over refactors" applies to new work. The posted rules want the demo to show only what was built during the event, so the video labels each screen new or from before and dwells only on the new. The rules, the organisers' replies on prior work, the judging stages, the submission repository, the demo path and the checklist are in `docs/HACKATHON.md` (§9 to §10).
-@@ -16,5 +16,5 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
+@@ -16,5 +16,6 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -- **23 Sept 2026. Purpose: a portfolio piece, and mainly a B2B product** for NBFCs, MFIs, SHG federations, CSC operators and similar. **Real people will act on the output**, so correctness, data honesty, DPDP compliance and security are requirements, not polish.
 -- **Ownership: Aryan Verma** owns the project and the scheme data. The repo is proprietary (`LICENSE`). The earlier team's work (Manjeet, Netra and others) needs written permission before the submission and a written assignment before any sale: a legal item, not a code one.
 -- **26 Oct 2026. Solo, and entered in the Meta hackathon.**
@@ -22,10 +22,13 @@ index d6ab002..ee1904f 100644
 +- **Solo, in the Meta hackathon** (26 Oct 2026). Spend only the free Meta credits ($150), never pay, keep the account balance at ₹0.00: the spend cap enforces it for this app's calls (see Data protection).
 +- **The hyperlocal claim stays, backed by real data**: 291 sourced market rows for 31 districts from data.gov.in under GODL-India (`DATA_SOURCES.md`). `match_level` marks how local a figure is.
 +- **DPDP is in scope.** In a B2B deployment the client is the Data Fiduciary and we are its Data Processor. Never write "compliant", "secure", "anonymous" or "untraceable"; the Rules apply from 13 May 2027. What a deployer needs: `docs/PROCESSOR_SCHEDULE.md`.
-@@ -24 +24 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
++- **`/login` is a name entry** (1 Nov 2026). No new non-affiliation line; `common.disclaimer`, `mk.notEndorsed` stay.
+@@ -22,3 +23 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
+-**Still open:** whether an on-screen non-affiliation line comes back or the government look goes, and what `/login` becomes.
+-
 -**Repo:** `https://github.com/BU1lDR/SIH_2026` (**private**; the name dates from the team build, and a rename or going public is a GitHub change).
 +**Repo:** `https://github.com/BU1lDR/ArthNiti`, **public** (anything pushed is published at once). The repo name is ASCII (the local folder is still `SIH_2026` until after submission); the product name in the app stays `अर्थNiti` (`APP_NAME`). The organisers (30 Oct 2026) want the submitted repo to be a fresh public one holding only event work, so this repo becomes the named earlier code: keep it public with its history intact (no force-push, rename or privacy change), because the rebuild pins one commit of it (`docs/HACKATHON.md` §9.3).
-@@ -34,4 +34,3 @@ This file loads into every session and every subagent. **The long-form history 
+@@ -34,4 +33,3 @@ This file loads into every session and every subagent. **The long-form history 
 -- **Never read that file whole.** List its sections with `grep -n "^## \|^### " docs/ENGINEERING_HISTORY.md` and read only the one you need, using offset and limit. Where it disagrees with this file, this file wins, and its counts are not maintained.
 -- A code comment that says "see CLAUDE.md" for a long explanation points at a section of the history file.
 -- **Do not grow this file back.** Put a dated narrative ("what happened on X, and why") in the history file and keep only the resulting rule here. Keep this file under about 40 KB.
@@ -33,7 +36,7 @@ index d6ab002..ee1904f 100644
 +- **Never read that file whole.** List its sections with `grep -n "^## \|^### " docs/ENGINEERING_HISTORY.md`, then read one with offset and limit. Where it disagrees with this file, this file wins; its counts are not maintained. A code comment that says "see CLAUDE.md" points at a section of it.
 +- **Do not grow this file back.** A dated narrative goes in the history file and only the resulting rule here; formulas, sources and lists go in the docs below. The aim is under 40 KB (`wc -c CLAUDE.md`; it was 59.3 KB before the trim of 30 Oct 2026, as git stores it).
 +- Don't read a source file over about 300 lines in one go: grep, then read a range. Redirect long command output to a file under `D:/tmp`.
-@@ -45,7 +44,8 @@ This file loads into every session and every subagent. **The long-form history 
+@@ -45,7 +43,8 @@ This file loads into every session and every subagent. **The long-form history 
 -| `README.md` | front door: what it is, how to run it, where things live | anyone with a fresh clone |
 -| `CLAUDE.md` (this file) | code view: the rules, current facts and traps | whoever edits the code next |
 -| `docs/ENGINEERING_HISTORY.md` | the archive: why each rule exists, measured at the time | read by section, on demand |
@@ -49,36 +52,36 @@ index d6ab002..ee1904f 100644
 +| `docs/PROCESSOR_SCHEDULE.md` | what is sent, held and logged; config; C1–C11, D1–D10; lawyer items | the deployer, their staff and lawyer |
 +| `docs/HACKATHON.md` | the Meta entry: dates, built before vs during, where the model is used, demo path, checklist | the owner, a judge |
 +| `tools/README.md` | what each verifier checks, its exit codes and refuters | whoever runs a verifier |
-@@ -53 +53 @@ This file loads into every session and every subagent. **The long-form history 
+@@ -53 +52 @@ This file loads into every session and every subagent. **The long-form history 
 -**Standing instruction: update `README.md` every time the MVP changes.** A change that adds a route, a language, a scheme tier, an endpoint, a verifier script or a dependency is not finished until the README reflects it. **README, CLAUDE.md and OUR_MVP.md state counts, and every count is measured, never carried forward.** When a count changes, `grep -rn "<number>" README.md CLAUDE.md OUR_MVP.md`. Measure with:
 +**Standing instruction: update `README.md` every time the MVP changes.** A change that adds a route, a language, a scheme tier, an endpoint, a verifier script or a dependency is not finished until the README reflects it. **README, CLAUDE.md and `docs/BUSINESS_RULES.md` state counts, and every count is measured, never carried forward.** When a count changes, `grep -rn "<number>" README.md CLAUDE.md docs/BUSINESS_RULES.md`. Measure with `node tools/parity4.mjs` (dictionary keys), `cd backend && ../.venv/Scripts/python.exe -m pytest tests -q` (tests) and `ls tools/*.mjs tools/verify/*.mjs | wc -l` (scripts).
-@@ -55,3 +55 @@ This file loads into every session and every subagent. **The long-form history 
+@@ -55,3 +54 @@ This file loads into every session and every subagent. **The long-form history 
 -- `node tools/parity4.mjs` for the dictionary keys;
 -- `cd backend && ../.venv/Scripts/python.exe -m pytest tests -q` for the tests;
 -- `ls tools/*.mjs tools/verify/*.mjs | wc -l` for the scripts.
 +Stale docs: `frontend/README.md` is Vite boilerplate; `docs/requirements.txt` is unrelated to `backend/requirements.txt`.
-@@ -59 +57 @@ This file loads into every session and every subagent. **The long-form history 
+@@ -59 +56 @@ This file loads into every session and every subagent. **The long-form history 
 -A doc that contradicts itself by one does not look broken. Readers take it as a puzzle and invent an explanation.
 +### The model's job
-@@ -61 +59 @@ A doc that contradicts itself by one does not look broken. Readers take it as a
+@@ -61 +58 @@ A doc that contradicts itself by one does not look broken. Readers take it as a
 -Stale docs: `frontend/README.md` is Vite boilerplate. `docs/requirements.txt` is unrelated to `backend/requirements.txt`.
 +The analysis has **no model**: every number, risk band, scheme match and sentence of advice is hand-written `if`/`else` code, in Python in `backend/app/services/` (the figure beside a piece of advice, `amounts_service.py`, too). Sums in the browser: `frontend/src/data/loanOffer.js` works out what an offer typed into the loan-offer card on `/advisory` costs (it sends and stores nothing), and Step 4 adds up the funding gap and the monthly surplus as a running summary the result does not use. The model is used in two optional places, both off unless the server has `ARTHNITI_AI_ENABLED=true` **and** the build has `VITE_AI_HELPER=true`, both added for the Meta hackathon:
-@@ -63 +61,2 @@ Stale docs: `frontend/README.md` is Vite boilerplate. `docs/requirements.txt` is
+@@ -63 +60,2 @@ Stale docs: `frontend/README.md` is Vite boilerplate. `docs/requirements.txt` is
 -### The model's job
 +- **Intake** (`/talk`): Muse Voice Transcribe turns a recording into text and Muse Spark proposes form answers from it (asked one question at a time, it is told which field the question was about). Each answer carries the person's own words, `validate_extraction` drops one whose words are not in the transcript, and nothing reaches the form before the person has seen it.
 +- **The written plan** (`/advisory`, `POST /api/advisor/plan`): Muse Spark writes a short plan in the reader's language around `{{blanks}}` that the rules fill. It is shown no figure, name or place: only the rules' verdict words, their advice sentences (one with a digit in it is left out), and the kind and level of each matched scheme. `verify_plan` refuses a reply with a digit in any script, a number word, a link, an abbreviation, the wrong script or an unknown blank; the route tries at most twice and otherwise shows no plan.
-@@ -65 +64 @@ Stale docs: `frontend/README.md` is Vite boilerplate. `docs/requirements.txt` is
+@@ -65 +63 @@ Stale docs: `frontend/README.md` is Vite boilerplate. `docs/requirements.txt` is
 -As of 26 Oct 2026 there is **no model**: every number and sentence the user sees comes from hand-written Python `if`/`else` in `backend/app/services/`, and the repo has no model call, SDK, API key or inference client. A Meta Model API intake layer for the hackathon is **planned, not built**: rewrite this section and the README's when the code lands. `OUR_MVP.md` §15 sets out why the core stays rules. What holds whatever is added: a model may transcribe speech and propose values for the form's fields, which the person checks and edits. **It never computes a figure, a risk band, a scheme match or the advice.** **Do not describe the build as AI-driven advice.** Never move arithmetic into a model.
 +**A model never computes a figure, a risk band, a scheme match or the advice.** `tests/test_model_boundary.py` pins it in the imports: a module under `services/` other than the helper's two can import neither the Meta client, those two services nor anything that opens a connection. Say "AI-assisted intake" and "AI-written, rule-verified plan", **never "AI-driven advice"**. Detail: `docs/HACKATHON.md` §3–§6.
-@@ -72 +71 @@ As of 26 Oct 2026 there is **no model**: every number and sentence the user sees
+@@ -72 +70 @@ As of 26 Oct 2026 there is **no model**: every number and sentence the user sees
 -# Backend, from ./backend (venv at ./.venv, Python 3.14.6; floor 3.10)
 +# Backend, from ./backend (venv at ./.venv, Python 3.14.7; floor 3.10)
-@@ -76,2 +75,2 @@ npm run dev      # Vite, port 5173, binds [::1]: use http://localhost:5173
+@@ -76,2 +74,2 @@ npm run dev      # Vite, port 5173, binds [::1]: use http://localhost:5173
 -npm run build    # into frontend/dist (gitignored); refuses unless VITE_API_BASE_URL is https://
 -npm run build:local   # the same build pointed at http://127.0.0.1:8000 (mode "loopback")
 +npm run build    # into frontend/dist; refuses unless VITE_API_BASE_URL is https://
 +npm run build:local   # the same build pointed at http://127.0.0.1:8000
-@@ -81,6 +80 @@ npm run lint     # ESLint 10
+@@ -81,6 +79 @@ npm run lint     # ESLint 10
 -`ARTHNITI_ENV` defaults to `development`:
 -
 -- **development** serves all 8 routers and Swagger at `/docs`;
@@ -86,13 +89,13 @@ index d6ab002..ee1904f 100644
 -
 -The backend variables are in `core/settings.py`. The `VITE_*` ones are in `frontend/.env.example`; with none set, the build runs in demo mode.
 +`ARTHNITI_ENV` defaults to `development` (8 routers, Swagger at `/docs`); **production** serves only `/health` and `/api/analysis/run`. With `ARTHNITI_AI_ENABLED=true` both also serve the 2 intake routes and the plan route. Backend variables: `core/settings.py`; `VITE_*` ones: `frontend/.env.example` (none set = demo mode). **The Meta helper spends the owner's free credits**: read `docs/HACKATHON.md` §5 before setting `MODEL_API_KEY` (the README has the key entry and the capped smoke test).
-@@ -88 +82 @@ The backend variables are in `core/settings.py`. The `VITE_*` ones are in `front
+@@ -88 +81 @@ The backend variables are in `core/settings.py`. The `VITE_*` ones are in `front
 -**Always clean up processes you start, by PID and never by image name.** A stray listener on 8000 gives `[Errno 10048]`, and a stray Vite gives confusing CORS failures. `netstat -ano | grep -E ':8000|:5173'`, then `taskkill //F //T //PID <pid>` (the slashes are doubled under Git Bash). Killing `msedge.exe` by image name also kills the owner's own browser.
 +**Always clean up processes you start, by PID and never by image name.** A stray listener on 8000 gives `[Errno 10048]`; a stray Vite, CORS failures. `netstat -ano | grep -E ':8000|:5173'`, then `taskkill //F //T //PID <pid>` (the slashes are doubled under Git Bash). Killing `msedge.exe` by image name also kills the owner's own browser.
-@@ -90 +84 @@ The backend variables are in `core/settings.py`. The `VITE_*` ones are in `front
+@@ -90 +83 @@ The backend variables are in `core/settings.py`. The `VITE_*` ones are in `front
 -The Bash tool's cwd persists between calls and every verifier resolves paths against the repo root, so prefix an explicit `cd` to it. Never pipe a driver through `| head` (`EPIPE` stops it before `report.json`); redirect to a file. `report.json` is the authority for a pass, not the terminal.
 +The Bash tool's cwd persists between calls and every verifier resolves paths against the repo root, so prefix an explicit `cd` to it. Never pipe a driver through `| head` (`EPIPE` stops it before `report.json`); redirect to a file.
-@@ -100,31 +94,20 @@ backend/app/
+@@ -100,31 +93,20 @@ backend/app/
 -  main.py               create_app(settings): CORS, the 422 handler (_public_error), a response-
 -                        validation handler, the log middleware; 8 routers in dev, 2 in production
 -  core/                 settings.py (ARTHNITI_* env), processing_log.py (JSON lines on stdout),
@@ -144,15 +147,18 @@ index d6ab002..ee1904f 100644
 +                 SENT_FIELDS), audio/, i18n/ (dictionaries, backendText.js, brand.js, adviceAmount.js,
 +                 offerLines.js), data/loanOffer.js (the loan-offer sums), index.css
 +tools/           verifiers (tools/verify/), parity4, keycheck, notice-version.json, the data fetches
-@@ -133 +116 @@ tools/                  verifiers (tools/verify/), parity4, keycheck, notice-ver
+@@ -133 +115 @@ tools/                  verifiers (tools/verify/), parity4, keycheck, notice-ver
 -**The backend has 8 routers, and the frontend calls exactly one endpoint: `POST /api/analysis/run`.** The others, `GET /health` and `POST /api/{entrepreneur/profile, business/analyze, financial/analyze, schemes/match, advisory/recommend, market/context}`, are thin wrappers with tests. Don't delete them, and don't assume a change there reaches the UI. Production does not mount them.
 +**The backend has 10 routers. The frontend calls `POST /api/analysis/run`, and, only with the helper on, `POST /api/intake/transcribe`, `/api/intake/extract` and `/api/advisor/plan`.** The others, `GET /health` and `POST /api/{entrepreneur/profile, business/analyze, financial/analyze, schemes/match, advisory/recommend, market/context}`, are thin wrappers with tests. Don't delete them, and don't assume a change there reaches the UI. Production does not mount them.
-@@ -135,3 +118 @@ tools/                  verifiers (tools/verify/), parity4, keycheck, notice-ver
+@@ -135,3 +117 @@ tools/                  verifiers (tools/verify/), parity4, keycheck, notice-ver
 -CORS is `ARTHNITI_CORS_ORIGINS`, a list of exact origins (https-only and required in production; `*` refused in both modes). Unset in development, it is the loopback regex `http://(localhost|127\.0\.0\.1)(:\d+)?`. Credentials off, GET and POST, `Content-Type` only.
 -
 -**Routes:** `/` → optional `/login` → `/profile` → `/business` → `/location` → `/finance` → `/analysis`, `/schemes`, `/advisory`, `/report` (print view), plus `/privacy` (the full notice) and `*` → `NotFoundPage`. `/login` asks only for a name, authenticates nothing and has no password. Nothing guards the journey order, so `/finance` can be submitted empty and gets a 422, which `api.js` renders as a sentence. The single API call fires on the `/finance` submit, and only with the consent box ticked.
 +**Routes:** `/` → optional `/login` → `/profile` → `/business` → `/location` → `/finance` → `/analysis`, `/schemes`, `/advisory`, `/report` (print view), plus `/privacy`, `/talk` (the helper; with `VITE_AI_HELPER` off it falls to `*`, with it on it is the landing page's first button and asks the form's questions one at a time, aloud) and `*` → `NotFoundPage`. `/login` asks only for a name and authenticates nothing. Nothing guards the journey order, so `/finance` can be submitted empty and gets a 422, which `api.js` renders as a sentence. The analysis call fires on the `/finance` submit, and only with the consent box ticked. `/advisory` also holds the loan options, the loan-offer card and, with the helper on, the plan card; `advisory.amounts` (a figure beside a piece of advice) shows on `/analysis`, `/advisory` and `/report`.
-@@ -153,7 +134,5 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
+@@ -145 +125 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
+-- masthead: lotus mark, the `अर्थNiti` wordmark, tagline, login;
++- masthead: lotus mark, the `अर्थNiti` wordmark, tagline, name link;
+@@ -153,7 +133,5 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
 -- **The prototype notice was removed at the owner's instruction (8 Sept).** `manual-audit.mjs` fails if `.ui-prototype-pill` comes back. Don't re-add it without the owner.
 -  - `mk.notEndorsed` reads like that notice and is a different thing: a GODL-India licence condition. It stays, as do `common.disclaimer`, `common.schemesChecked`, the market attribution and `mk.warranty`.
 -  - The demo-mode `notice.demo` is not the pill either. It lives only in `ShortNotice`.
@@ -164,11 +170,11 @@ index d6ab002..ee1904f 100644
 +- **High contrast mode was removed at the owner's instruction (8 Sept).** Two presentation switches remain on `<html>`: `data-theme="dark"` (`sih-theme`) and `--ui-scale` (`sih-textsize`: 0.94, 1 or 1.18). Everything in `index.css` has to work under both; sizes that should scale use `rem` (`0.75rem` at 0.94 is under the 12px floor).
 +- **Simple or Detailed** (`DetailSwitch`, `/analysis` and `/advisory` only) sets `<html data-detail>` and `localStorage['sih-detail']`; `index.css` hides every `.ui-detail-only` section in `simple`. `DEFAULT_DETAIL` is `'simple'` (the owner's call, 29 Oct 2026), which hides the loan options, scheme funding, registrations and local prices: every browser verifier that seeds localStorage seeds `'detailed'`.
 +- **The outbound government links were removed at the owner's instruction (10 Sept)**, a legal call. Schemes carry no `official_url` (tests assert it), and market attribution URLs print as plain text, never `<a>` (`market-ui.mjs`). The only outbound links are the Fiduciary's own on `/privacy`, which Rule 3 requires.
-+- **The product name is `APP_NAME` in `i18n/brand.js`: `अर्थNiti`, mixed script, never translated, never `ArthNiti`.** A sentence that names it uses an `{app}` placeholder (`login.title`); the notice does the same with `{fiduciary}`, `{contact}` and `{days}`.
-@@ -163 +142 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
++- **The product name is `APP_NAME` in `i18n/brand.js`: `अर्थNiti`, mixed script, never translated, never `ArthNiti`.** A sentence that names it uses an `{app}` placeholder (`mk.notEndorsed`); the notice does the same with `{fiduciary}`, `{contact}` and `{days}`.
+@@ -163 +141 @@ The look is deliberately modelled on Indian e-governance portals. `AppShell` ren
 -Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSION, data}`**, on purpose: on a shared laptop, financial answers must not outlive the tab. `profile` = name, language, dialect. State and district live only on `location`. `location.marketType` is an array.
 +Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSION, data}`**, on purpose: on a shared laptop, financial answers must not outlive the tab. `profile` = name, language, dialect; state and district live only on `location` (`marketType` is an array).
-@@ -165,11 +144,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -165,11 +143,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **`STORAGE_VERSION` is 4, and `READABLE_VERSIONS` is {1, 2, 3, 4}.** Bump the version whenever `EMPTY`'s shape changes. A bump that **renames or moves** a field must drop the older versions from the set.
 -- **`hydrate()` merges section by section over `EMPTY`**, `pick()` drops keys `EMPTY` no longer has, and `result` passes through untouched. A field left `undefined` would silently turn a controlled input into an uncontrolled one.
 -- **`isStarted(data)` is a difference from `EMPTY`, not a truthiness test**, because several defaults are not blank ('rural', 'Hindi', 0). `marketType` needs its own arm.
@@ -189,10 +195,10 @@ index d6ab002..ee1904f 100644
 +- **`aiFilled`** lists the form paths the helper filled; `applyEdit` drops a path once the reader edits it. It never leaves the tab and is not part of `isStarted`. The helper writes string values and never a household income of 0.
 +- **`request` and `plan`** sit beside `result` (`request` is the 12 fields as sent). `hydrate` reads them back only with a result, and `applyPlan` keeps a plan only for the request it was written for. A plan stays in the language it was written in.
 +- localStorage holds UI preferences only: `sih-language`, `sih-dialect`, `sih-theme`, `sih-textsize`, `sih-detail` (`sih-contrast` is inert).
-@@ -179 +156 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -179 +155 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -**8 languages:** `en`, `hi`, `ta`, `te`, `ml`, `kn`, `mr`, `bn`. **`DEFAULT_LANGUAGE` is `hi`.** Four dictionary files, merged in this order by `merge()` in `strings.js`, so a later file wins:
 +**8 languages:** `en`, `hi`, `ta`, `te`, `ml`, `kn`, `mr`, `bn`; **`DEFAULT_LANGUAGE` is `hi`.** Four dictionary files, merged in this order by `merge()` in `strings.js`, so a later file wins:
-@@ -183,20 +160,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -183,20 +159,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -| `strings.js` | 222 | chrome, landing, the four form steps, `notice.*`, `consent.*`, `errf.*` |
 -| `resultStrings.js` | 263 | result pages, `/login`, `/privacy`, `/404`, the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
 -| `backendStrings.js` | 59 | sentences a **Python service composes** (`adv.*`, `obs.*`, `rsn.*`, `sum.*`, `nxt.*`, `why.*`, `src.*`, `cmd.*`, `mknote.*`) |
@@ -214,7 +220,7 @@ index d6ab002..ee1904f 100644
 -  `DIGIT_ALLOW`/`SOURCE_ALLOW` entries must carry a reason, and an entry that is no longer needed fails the run. **`node tools/keycheck.mjs`** checks that every key the code uses exists, and flags leaked keys, untranslated codes and unmapped enums (6 keys are unreferenced, on purpose). Run both after touching a dictionary.
 -- **`t(key)`** falls back from the dialect to the language to `en` to **the key itself**, so a typo shows up on the page as a dotted name. **`tBackend(code, english)`** falls back to the backend's English and never prints a code.
 +| `strings.js` | 223 | chrome, landing, the four form steps, `notice.*`, `consent.*`, `errf.*` |
-+| `resultStrings.js` | 479 | result pages, `/login`, `/privacy`, `/404`, `talk.*`, the cards (`fo.*`, `fs.*`, `cl.*`, `plan.*`, `amt.*`, `offer.*`), `band.*`, `detail.*`, `ra.*`, and the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
++| `resultStrings.js` | 476 | result pages, `/login`, `/privacy`, `/404`, `talk.*`, the cards (`fo.*`, `fs.*`, `cl.*`, `plan.*`, `amt.*`, `offer.*`), `band.*`, `detail.*`, `ra.*`, and the enum→label targets (`st.*`, `risk.*`, `lvl.*`, `lvlnote.*`) |
 +| `backendStrings.js` | 60 | sentences a **Python service composes** (`adv.*`, `obs.*`, `rsn.*`, `sum.*`, `nxt.*`, `why.*`, `src.*`, `cmd.*`, `mknote.*`) |
 +| `schemeStrings.js` | 540 | prose **typed into schemes.json** (`sdata.*`, `elig.*`, `doc.*`, `scat.*`) |
 +
@@ -222,7 +228,7 @@ index d6ab002..ee1904f 100644
 +
 +- **`node tools/parity4.mjs`** runs 9 checks and exits 1 on a failure (`tools/README.md` lists them); **`node tools/keycheck.mjs`** checks that every key the code uses exists and flags leaked keys, untranslated codes and unmapped enums (5 keys are unreferenced, on purpose). Run both after touching a dictionary.
 +- **`t(key)`** falls back from the dialect to the language to `en` to **the key itself**, so a typo shows up as a dotted name. **`tBackend(code, english)`** falls back to the backend's English and never prints a code.
-@@ -204,6 +170,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -204,6 +169,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- Placeholder filling is plain string replacement, with no plural rules and no number formatting. **Digits stay Latin, and money is grouped `en-IN` in every language.**
 -- **Dialects** are a curated phrase layer covering 9 of 30 varieties, not translations. Say "dialect-aware phrasing". `setLanguage` clears the dialect.
 -- **Translation codes:** every generated sentence carries a code, resolved in one place: `useBackendText()` in `backendText.js`. **`eligibility_codes`/`eligibility_rules` and `document_codes`/`documents` are index-aligned.** The test checks only that each pair is the same length, so an insertion at the wrong index reads fluently, is wrong, and needs to be checked by eye.
@@ -233,7 +239,7 @@ index d6ab002..ee1904f 100644
 +- **Dialects** are a curated phrase layer covering 9 of 30 varieties, not translations: say "dialect-aware phrasing". `setLanguage` clears the dialect.
 +- **Every generated sentence carries a translation code**, resolved in one place (`useBackendText()` in `backendText.js`). **`eligibility_codes`/`eligibility_rules` and `document_codes`/`documents` are index-aligned**; the test checks only that each pair is the same length, so an insertion at the wrong index reads fluently, is wrong, and needs a check by eye.
 +- **Enums stay English internally** (`financial_status`, `risk_level`, `feasibility_status`, `match_level`, `level`, `fit_basis`, `household_check`) and are mapped to labels at render time; **category and location-type values sent to the backend stay English**.
-@@ -217,8 +181 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -217,8 +180 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Required:** `business_category` (at least 2 characters), `state` (at least 2), `available_capital`, `monthly_expenses`, `expected_monthly_revenue`, `monthly_emi`, `initial_investment` and `monthly_operating_expenses` (all ≥ 0).
 -- **Optional:**
 -  - `existing_debt` 0;
@@ -243,7 +249,7 @@ index d6ab002..ee1904f 100644
 -  - `consent` None, which is required when `ARTHNITI_REQUIRE_CONSENT` is on.
 -- **`IGNORED_FIELDS` are accepted, validated and capped for other callers, then dropped by the route.** They are `employees`, `village`, `market_type`, `customers`, `user_language`, `preferred_dialect`, `literacy_level` and `entrepreneur_type`. The UI sends none of them. It sends exactly the 12 fields in `SENT_FIELDS`, plus `consent`.
 +- **Fields:** `schemas/analysis.py` lists the required and optional ones (the money fields are all ≥ 0); `consent` is required when `ARTHNITI_REQUIRE_CONSENT` is on. **`IGNORED_FIELDS`** are accepted, validated and capped for other callers, then dropped by the route: the UI sends exactly the 12 fields in `SENT_FIELDS`, plus `consent`.
-@@ -226,25 +183,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -226,25 +182,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Every number is capped:** `le=MAX_RUPEES, allow_inf_nan=False`, and `employees` `le=MAX_EMPLOYEES`, on all five request models, and every `str` field has a `max_length` from `limits.py` (`test_string_limits.py`). `test_input_bounds.py` reads the routes from OpenAPI and fails if `limits.py` and `limits.js` disagree.
 -- **A 422 `detail` is a list of `{type, loc, msg}`** (`_public_error` strips `input` and `ctx`). `loc` must stay, because `readError` in `api.js` names the field from its last element through `FIELD_LABELS`. **Each label echoes the wording of the question** that collects the field ("the money you already have", never "available capital"). The `errf.*` translations follow the same rule.
 -
@@ -271,19 +277,19 @@ index d6ab002..ee1904f 100644
 -**Repayment pressure**
 +- **Every number is capped** (`le=MAX_RUPEES, allow_inf_nan=False`; `employees` `le=MAX_EMPLOYEES`) on all five request models, and every `str` field has a `max_length` from `limits.py`; `test_input_bounds.py` fails if `limits.py` and `limits.js` disagree.
 +- **A 422 `detail` is a list of `{type, loc, msg}`** (`_public_error` strips `input` and `ctx`). `loc` must stay: `readError` in `api.js` names the field from its last element through `FIELD_LABELS`. **Each label echoes the wording of the question** that collects the field ("the money you already have", never "available capital"), and so do the `errf.*` translations.
-@@ -252,4 +186 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -252,4 +185 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- `pressure_ratio = total_monthly_emi / monthly_surplus × 100`, where `total_monthly_emi = monthly_emi + estimated_new_emi`.
 -- `estimated_new_emi` prices the funding gap as a loan at an assumed **12% a year over 60 months** (annuity). The pages say it is an assumption (`ch.pressureIncludesNew`).
 -- Bands: **under 30 low, 30–50 moderate, over 50 high**, classified on the *rounded* figure. A surplus ≤ 0 gives `high` with a `None` ratio.
 -- **`existing_debt` is excluded**: it is the principal of the loan `monthly_emi` already repays.
 +**Response: 10 top-level keys** (`analysis_service.py`): `financial_analysis`, `risk_analysis`, `business_analysis`, `market_context` (a list), `scheme_matches` (a list), `scheme_funding`, `compliance`, `advisory`, `financing_options`, `mvp_summary`.
-@@ -257 +188,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -257 +187,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -**Household check** (RBI Master Direction on microfinance loans, 2022, paras 5.1–5.3 and 3.1; Annex I)
 +- **`docs/frontend_integration.md` lists every key and enum. Update it with any change to them.** Contract tests subscript the keys, so an *added* key passes silently: confirm the set by printing the service's keys.
 +- `household_check_without_new_loan` drives advice and is not rendered; `mvp_summary` echoes nothing the UI does not send.
 +- **A `response_model` filters silently**: a key added to a service is dropped from a typed route until the model declares it.
 +- `monthly_expenses` drives `monthly_profit`, and `monthly_operating_expenses` drives `monthly_operating_surplus`; they are separate inputs and can disagree. `money.left` is the surplus before EMI, `money.leftAfterEmi` after it. Never label the two alike.
-@@ -259,6 +193 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -259,6 +192 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- `household_repayment_percent = total_monthly_emi / household_monthly_income × 100`.
 -- Over 50 is `over_limit`; exactly 50 is `within_limit`. A `None` income gives `not_checked`. An income of 0 gives `over_limit` if any EMI is paid.
 -- `household_in_microfinance_range` = income × 12 ≤ ₹3,00,000 (`None` when there is no income).
@@ -291,10 +297,10 @@ index d6ab002..ee1904f 100644
 -- **Never call a result RBI-compliant, and never say a lender will lend** (`ch.householdEstimate`). Above ₹3 lakh a year, `ch.householdRbiNotCovered` applies.
 -- **Who counts as the household for an unmarried adult is our own reading of RBI**, and nobody has checked it.
 +### The rules, in short
-@@ -266 +195 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -266 +194 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -**Summary, next step and advice**
 +The formulas, the matching rules, the dataset notes and their sources are in [docs/BUSINESS_RULES.md](docs/BUSINESS_RULES.md); read the block you are about to edit. The traps:
-@@ -268,43 +197,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -268,43 +196,9 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Status chain** (`mvp_service`): profitability first, then risk moderate or high, then household `over_limit`, then a funding gap on a profitable, feasible plan (`sum.needsFunding`), then `review`.
 -- `good` requires profitable, feasible, low risk, no gap and a household check that is not `over_limit`.
 -- **Next step:** not profitable, then risk high (`nxt.gapTooLarge` when only the gap loan tips it over), then household (`nxt.householdNewLoanOver` / `nxt.householdOverLimit`).
@@ -347,12 +353,12 @@ index d6ab002..ee1904f 100644
 +- **Matching:** `if scheme_category in phrase`, so the scheme's word must be a substring of the user's phrase. `CATEGORY_SYNONYMS` bridges wording and must never widen eligibility. The availability gates (`serves_state`, `serves_location`) run before scoring, an empty user value means "do not filter", and the two functions stay separate. A scheme must never claim `livestock` or `other` as a category.
 +- **Market context:** never render a `state` row as local (`match_level`). **Another district's row is never returned**: don't widen the fallback, grow `tools/market-crosswalk.json` and fetch again. `stale` is decided at fetch time, so **refetch before a demo** (an egg price goes stale in 8 days; Lucknow's and Varanasi's mandi prices show no warning until then). The egg-price unit is our reading, unconfirmed.
 +- **The scheme dataset:** edit `SPEC`, `LOCATION_TYPES` or `CHECK_FIRST` in `backend/gen_schemes.py` and run it from `./backend`; a hand edit to `schemes.json` fails `test_gen_schemes.py`. New codes need all 8 `schemeStrings.js` entries by hand (keycheck reports a missing one).
-@@ -316,2 +211,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -316,2 +210,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **The notice text is versioned.** Editing any of the 60 `NOTICE_KEYS` in any language, or reordering `SENT_FIELDS`, fails parity4 check 9. Fix it by bumping `NOTICE_VERSION` and recording the printed hash in `tools/notice-version.json`. Commit `notice.js`, that JSON and the dictionaries together.
 -- **A new request field goes in `SENT_FIELDS`, with an `errf.*` label in `FIELD_LABELS`, or in `IGNORED_FIELDS`.** `test_notice_sent_fields.py` enforces this. Either way the field changes every payload code, so redo the schedule's test vector (§4.3).
 +- **The notice text is versioned.** Editing any of the 60 `NOTICE_KEYS` in any language, or reordering `SENT_FIELDS`, fails parity4 check 9. Fix it by bumping `NOTICE_VERSION` and recording the printed hash in `tools/notice-version.json`; commit `notice.js`, that JSON and the dictionaries together.
 +- **A new request field goes in `SENT_FIELDS`, with an `errf.*` label in `FIELD_LABELS`, or in `IGNORED_FIELDS`** (`test_notice_sent_fields.py` enforces it). Either way the field changes every payload code, so redo the schedule's test vector (§4.3).
-@@ -319,4 +214,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -319,4 +213,4 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Never call the payload code anonymous.** It is pseudonymous.
 -- **A field the backend never reads must not claim to shape the result** (`form.localOnly`).
 -- **`settings.py` refuses a bad value at startup.** Add no silent fallback.
@@ -361,11 +367,11 @@ index d6ab002..ee1904f 100644
 +- **The helper sends the person's words to Meta and nothing else of theirs** (typed text, or a recording of up to 60 s; asking one question at a time adds the name of the field asked, one of twelve fixed names). `talk.sendsText` says so before use, free-credit data use included. Meta is a new processor and a cross-border transfer (`PROCESSOR_SCHEDULE.md` §10). The helper routes keep no text and record no consent (`test_intake_log_privacy.py`). **The plan route sends Meta no figure, name or place**, only a description the rules built (the kind of business from a fixed list, village, town or city, and what "The model's job" lists), never a scheme's name. A refused reply is logged as the codes of the checks it failed (`test_advisor_log_privacy.py`).
 +- **Every Meta call is charged to the spend ledger first** (`core/spend.py`, worst-case cost) and refused once the total would pass `ARTHNITI_AI_SPEND_CAP_USD` (default $10, at most $100, never the whole $150). It fails closed, counts this app's calls only, and deleting the file resets it. `settings.py` refuses `-contributor` models, which let Meta train on content. Add no Meta call that bypasses `MetaClient`.
 +- **Never write a Meta key into a file, test, doc, log or message.** Environment only; the backend reads no `.env`. Tests use fake keys, and `conftest.py` fails any test that connects off this machine or writes the real ledger.
-@@ -330,2 +225 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -330,2 +224 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- Plain module-level functions, no classes. Type hints on parameters, none on returns.
 -- Services return plain dicts and round with `round(x, 2)`.
 +- Plain module-level functions, no classes; type hints on parameters, none on returns. Services return plain dicts and round with `round(x, 2)`.
-@@ -339,4 +233,3 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -339,4 +232,3 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Formatters are duplicated per page on purpose, so they drift.** A negative amount prints as `-₹5,000` (sign before the symbol) in all four copies: `AnalysisPage`, `AdvisoryPage`, `ReportPage` and `FinancePage`'s `rupees`. Change one, change all four.
 -- **Guard numbers with `hasNumber(value)`, never with `Number.isFinite` alone.** `Number(null)` is 0, so a backend `None` would render as a confident `0%`. Five numeric fields can be null: `pressure_ratio_percent`, `estimated_roi_percent`, `profit_margin_percent`, `operating_margin_percent` and `household_repayment_percent`. Also `household_in_microfinance_range` (a boolean), for which only a strict `true`/`false` prints. A real 0 still prints as 0.
 -- **Every UI string goes through `t()`.** Decorative glyphs get `aria-hidden="true"` (`glyph-audit` expects exactly 3 documented hits).
@@ -373,7 +379,7 @@ index d6ab002..ee1904f 100644
 +- **Formatters are duplicated per page on purpose, so they drift.** A negative amount prints as `-₹5,000` (sign before the symbol) in all four copies: `AnalysisPage`, `AdvisoryPage`, `ReportPage` and `FinancePage`'s `rupees`. Change one, change all four (`TalkPage`'s `valueText` (non-negative amounts only), `SchemeFunding`'s `money` and `Compliance`'s `money` are three more; `OfferCheck` and `amountLine` take the page's formatter as an argument).
 +- **Guard numbers with `hasNumber(value)`, never with `Number.isFinite` alone.** `Number(null)` is 0, so a backend `None` would render as a confident `0%`. Five numeric fields can be null (`pressure_ratio_percent`, `estimated_roi_percent`, `profit_margin_percent`, `operating_margin_percent`, `household_repayment_percent`), and `household_in_microfinance_range` (a boolean) prints only for a strict `true`/`false`. A real 0 still prints as 0.
 +- **Every UI string goes through `t()`.** Decorative glyphs get `aria-hidden="true"` (`glyph-audit` expects exactly 3 documented hits). ESLint's `preserve-caught-error` requires `{ cause }` when rethrowing.
-@@ -346,16 +239,7 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -346,16 +238,7 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Colours always go through `var(--color-*)`**, never a hex.
 -- **`Button` takes `variant` (primary/secondary), `size` (md/lg) and `to`, and never colour or padding classes**: two utilities for one property resolve by stylesheet order. Never nest a `<Button>` in a `<Link>`; use `to`.
 -- **Cascade layers:** unlayered author CSS beats every `@layer`, whatever the specificity.
@@ -397,16 +403,16 @@ index d6ab002..ee1904f 100644
 +- **Motion:** `--motion-fast`, `--motion`, `--motion-ease`, never a literal duration; name the transitioned properties, never `all`. An undefined token silently deletes the whole declaration. The `prefers-reduced-motion` guard stays in `@layer base` (an unlayered `!important` is the weakest important).
 +- **Charts** are hand-rolled in `Charts.jsx` and always print the figure as text next to the bar.
 +- **A figure must never wrap mid-number** (cards set `overflow-wrap: anywhere`; `.ui-bar-value` sets `word-break: keep-all`). A tile or hero figure goes in `<Figure>`, which shrinks to fit the nearest `@container`; the /analysis hero is `max-lg:@container`, because containment collapses its `auto` column at lg.
-@@ -365,2 +249,3 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
+@@ -365,2 +248,3 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **Scroll:** `useOpenAtTop()` in `App.jsx` uses a layout effect with `behavior:'instant'`, bails out when there is a hash, and sets `scrollRestoration = 'manual'`. Run `scroll-audit` after adding anything that navigates.
 -- **Copy is written for low-literacy readers:** plain language, and detail inside `<details className="ui-disclosure">`. Every page has a back link and a "Step N of 4" marker. Don't turn labels into financial jargon in any language.
 +- **Scroll:** `useOpenAtTop()` in `App.jsx` owns it. Run `scroll-audit` after adding anything that navigates.
 +- **Copy is written for low-literacy readers:** plain language, detail inside `<details className="ui-disclosure">`, a back link and a "Step N of 4" marker on every page, no financial jargon in any language.
 +- **Read aloud** (`ReadAloud`, `audio/speak.js`, under the light on `/analysis` and `/advisory`): the browser's speech engine and a voice with `localService === true` only (a network voice would send the sentence off the device), no sentence with a digit, nothing starts without a press (`speak-lib-test` pins it). On the owner's Edge (1 Nov 2026) 5 of 326 voices are on the device, all English, so the button shows in English only. **`/talk`'s fixed question text is the one exception** (`useQuestionVoice`, `promptVoiceFor`): a device voice if there is one, else a network voice, because the sentence is ours and holds nothing the person said. A device voice starts once the consent box is ticked, a network voice on a press of Listen (when it stops: `PROCESSOR_SCHEDULE.md` §2, §10.2, §10.8).
-@@ -376 +261 @@ python -m pip install -r backend/requirements-dev.txt
+@@ -376 +260 @@ python -m pip install -r backend/requirements-dev.txt
 -cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed, ~5s
 +cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 2245 passed, ~30s
-@@ -379,5 +264,3 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+@@ -379,5 +263,3 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -- **Backend tests only; there are no frontend tests.** Some tests pin user-visible wording, so edit them together with a copy change.
 -- **When you add a branch, add a test proving a real request can reach it**, a sweep through `run_unified_analysis`, and not only a unit call.
 -- Market tests bring their own rows from `tests/market_fixtures.py`.
@@ -415,10 +421,10 @@ index d6ab002..ee1904f 100644
 +- **The backend is tested with pytest.** The frontend has no test framework: `node --test` covers eight pure modules and the browser gates cover the pages. Some tests pin user-visible wording, so edit them together with a copy change.
 +- **When you add a branch, add a test proving a real request can reach it** (a sweep through `run_unified_analysis`, not only a unit call).
 +- Market tests bring their own rows (`tests/market_fixtures.py`) and Meta tests the fake model client (`tests/intake_fixtures.py`). `conftest.py` pins `ARTHNITI_ENV=development`, clears the other `ARTHNITI_*` variables and `MODEL_API_KEY`, and blocks any connection off this machine and any write to the real ledger (sockets only, not asyncio on Windows). Build a production app with `create_app(load_settings({...}))`. Verifiers that submit `/finance` tick the consent box first.
-@@ -385 +268 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+@@ -385 +267 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, `node --test tools/verify/market-lib-test.mjs` (185 tests).
 +**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (71), `app-state-test.mjs` (41), `necc-lib-test.mjs` (74), `speak-lib-test.mjs` (31), `amount-lib-test.mjs` (17), `offer-lib-test.mjs` (58) and `offer-lines-test.mjs` (48), all in `tools/verify/`. **Backend up:** `node tools/verify/refresh-cases.mjs` regenerates the `case_*.json` fixtures (untracked, they go stale silently): run it after any change to services, schemas or data.
-@@ -387,12 +270 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
+@@ -387,12 +269 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**Backend up:**
 -
 -- `node tools/verify/refresh-cases.mjs` regenerates the `case_*.json` fixtures. Run it after any change to services, schemas or data. The fixtures are untracked and go stale silently.
@@ -432,18 +438,18 @@ index d6ab002..ee1904f 100644
 -
 -Traps:
 +**Vite up** (`http://localhost:5173`): the browser gates in `tools/verify/`; `tools/README.md` lists each, what it checks and which `--broken` refuters must exit 1. `offer-ui` needs only Vite; `error-banner`, `scroll-audit` and `figure-audit` also need the backend; `talk-ui` needs neither server (it starts its own backend with a fake model client, so it never reaches Meta, plus Vites and Edge, and kills them by PID). Each gate has its own CDP port and Edge profile (**port 9369 is kept free for one-off probes**). They drive Edge at a hardcoded Windows path: Windows-only, not in CI.
-@@ -399,0 +272 @@ Traps:
+@@ -399,0 +271 @@ Traps:
 +- **Exit 2 is an instrument fault, never a finding or a pass** (the causes: `tools/README.md`, Exit codes), a seed the app discards among them (it measures clean as a blank page). **`report.json` is the authority for a pass, not the terminal**; it starts with `exit`, and a run stopped by a thrown fault leaves none. Only the `node --test` files exit 1 on a crash.
-@@ -401,3 +274,2 @@ Traps:
+@@ -401,3 +273,2 @@ Traps:
 -- `drive` reads `innerText`, so it cannot see inside a closed `<details>`. Verify changes there with a probe that opens every disclosure first.
 -- Edge's `--user-data-dir` must be an absolute path. Create your own target through `Target.createTarget`.
 -- Keep `process.exitCode = 2` first in every verifier, and never `process.exit()` just after a `fetch()` (Node 24 aborts, 127); use `crashExit()`.
 +- **A "nothing was sent" check must watch the page's own requests** (`talk-ui` hooks `fetch` in the page): the fake backend logs a call only when the model client is reached.
 +- `drive` reads `innerText`, so it cannot see inside a closed `<details>`: open every disclosure with a probe first. Keep `process.exitCode = 2` first in every verifier, and never `process.exit()` just after a `fetch()` (Node 24 aborts, 127); use `crashExit()`.
-@@ -405 +277 @@ Traps:
+@@ -405 +276 @@ Traps:
 -`tools/fetch-market-data.mjs` refetches the market rows. It is a dry run unless `--write` is passed, and it reads the key from `.env`. `script_sha256` hashes `market-lib.mjs` + `fetch-market-data.mjs`, which `.gitattributes` pins to LF, so don't edit either without refetching.
 +`tools/fetch-market-data.mjs` refetches the market rows (a dry run unless `--write`) and `tools/fetch-necc-prices.mjs` the egg prices (no key; `--from FILE` refuses `--write`). `script_sha256` hashes `market-lib.mjs` + `fetch-market-data.mjs`, which `.gitattributes` pins to LF: don't edit either without refetching.
-@@ -411,9 +283 @@ Traps:
+@@ -411,9 +282 @@ Traps:
 -**Advice and data:** a household income of 0 needs a tick and then gives "do not take a new loan"; the household income is self-reported; the pressure figure errs high when another earner pays their own loan; **no eligibility rule is evaluated anywhere** (`sc.eligUnchecked` says so on the page); `stale` is decided at fetch time; the Udyam counts cannot be reproduced; the scheme rules have no re-check schedule (the footer date and `test_review_dates.py` are the only guard); there is no helpline number.
 -
 -**Build and verification:** the verifier gaps (Edge leaks, unrefuted arms, narrow coverage, slow blank-page 2s) are in the history section "Verifier exit codes". The dependencies have no hashes. `backend/venv/` is stale; `.venv` is in use. The print PDF and the `api.js` timeout have not been clicked through by hand. Phones: landscape, real touch and the on-screen keyboard are unverified.
@@ -454,7 +460,7 @@ index d6ab002..ee1904f 100644
 -
 -**DPDP** (the full list is `docs/PROCESSOR_SCHEDULE.md` §9):
 +Full lists: `README.md` (What this doesn't do), `docs/HACKATHON.md` §8, `docs/PROCESSOR_SCHEDULE.md` §9, `docs/BUSINESS_RULES.md` (Known limits). What changes what you may say or ship:
-@@ -421,7 +285,6 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -421,7 +284,6 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- **S16:** no native speaker has reviewed the 60 notice keys in the 7 other languages. This blocks shipping a non-English notice.
 -- **S17**, deferred to the next refetch: the Udyam fetch does not reject fields it did not request. The two fetch scripts are frozen by `script_sha256`.
 -- The app has no rate, body-size or `Host` check and no HSTS, which leaves them to the proxy. It deletes no logs.
@@ -468,7 +474,7 @@ index d6ab002..ee1904f 100644
 +- **Build:** the dependencies have no hashes; the print PDF and the `api.js` timeout have not been clicked through by hand; phones in landscape, real touch and the on-screen keyboard are unverified.
 +- **Legal:** the owner states that Manjeet and Netra agree to the MIT licence and confirmed the Official Rules and the NECC use (29 Oct 2026); nothing is on file.
 +- **DPDP:** no rate, body-size or `Host` check and no HSTS (the proxy's job), no log deletion; uvicorn needs `--no-server-header` and `--no-access-log`; stderr tracebacks are unaudited for answer values.
-@@ -433,6 +296,3 @@ Also open, stated where they apply: the household definition, market coverage, d
+@@ -433,6 +295,3 @@ Also open, stated where they apply: the household definition, market coverage, d
 -- **Branch state:** as of 26 Oct 2026, `feature/dpdp-compliance` is at `4a2307e`, 6 local commits ahead of `origin/before-main`, none pushed (`git rev-list --left-right --count origin/before-main...HEAD` gives `0 6`). **The DPDP work, the verifier exit-code work and the hackathon edits are uncommitted in the working tree.** The other 17 `feature/*` branches hold no work of their own (16 at `cf1c775`, `feature/real-market-data` at `053a99e`, both already in HEAD's history).
 -- **The remote has two branches, `before-main` and `main`.** `origin/before-main` is a fast-forward of `origin/main`. Compare `origin/` refs, not local names: local `main` carries 6 unpushed scaffolding commits.
 -- Never commit to `main`. **Commit messages carry no Co-Authored-By line and no Claude attribution.**

@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..bc4a9c9 100644
+index b8e7eb3..f2f3756 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -126,14 +126,14 @@ index b8e7eb3..bc4a9c9 100644
 -Measured on 25 Sept 2026 (`node tools/parity4.mjs`), after the notice, consent
 -and privacy keys were added and the `/login` contact keys removed, over **732
 -keys, 5,856 strings** (222 + 263 + 59 + 188 keys in `strings`, `resultStrings`,
-+Measured on 1 Nov 2026 (`node tools/parity4.mjs`), over **1,226 keys, 9,808
-+strings** (223 + 479 + 60 + 464 keys in `strings`, `resultStrings`,
++Measured on 1 Nov 2026 (`node tools/parity4.mjs`), over **1,223 keys, 9,784
++strings** (223 + 476 + 60 + 464 keys in `strings`, `resultStrings`,
 @@ -399,3 +433,3 @@ keys, 5,856 strings** (222 + 263 + 59 + 188 keys in `strings`, `resultStrings`,
 -| 6. figures vs English | 5,124 translated values | 0 | 4: `elig.common.class8` in hi, ml, mr, bn |
 -| 7. Latin digits only | 5,856 values | 0 | none |
 -| 8. figures vs schemes.json | 312 sentences across 30 schemes | 0 | 1: `sdata.pmvishwakarma.description` |
-+| 6. figures vs English | 8,582 translated values | 0 | 5: `offer.errWhole` in hi, `elig.common.class8` in hi, ml, mr, bn |
-+| 7. Latin digits only | 9,808 values | 0 | none |
++| 6. figures vs English | 8,561 translated values | 0 | 5: `offer.errWhole` in hi, `elig.common.class8` in hi, ml, mr, bn |
++| 7. Latin digits only | 9,784 values | 0 | none |
 +| 8. figures vs schemes.json | 883 sentences across 86 schemes | 0 | 1: `sdata.pmvishwakarma.description` |
 @@ -411,0 +446,7 @@ record a new version, so it has to be caught in review.
 +Measured again on 1 Nov 2026, after the scheme batches, over **1,302 keys,

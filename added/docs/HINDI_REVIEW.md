@@ -1,6 +1,6 @@
 # Hindi wording to read
 
-**Status: two rows read, the rest not yet read.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. On 31 Oct 2026 the author read rows 230 and 231 and left them as they are; no other row has been reported as read. Once the whole sheet has been read, this line will say who read it and when. That will mean “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other seven languages have not been read by anyone.
+**Status: two rows read, the rest not yet read.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. On 31 Oct 2026 the author read rows 230 and 231 and left them as they are; no other row has been reported as read. Row 9 was reworded on 1 Nov 2026, when `/login` became a name entry (it read “Log in”, “लॉग इन”), and is not among the rows read. Once the whole sheet has been read, this line will say who read it and when. That will mean “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other seven languages have not been read by anyone.
 
 ## What is here
 
@@ -55,7 +55,7 @@ Around every page in every shot: the language, text-size and theme controls, the
 | 6 | common.darkMode | Dark mode | गहरा रंग | |
 | 7 | common.skipToMain | Skip to main content | मुख्य सामग्री पर जाएँ | |
 | 8 | common.dialect | Dialect | बोली | |
-| 9 | common.login | Log in | लॉग इन | |
+| 9 | common.login | Enter your name | अपना नाम लिखें | |
 | 10 | common.chooseLanguage | Choose your language | अपनी भाषा चुनें | |
 | 11 | nav.home | Home | होम | |
 | 12 | nav.profile | About you | आपके बारे में | |

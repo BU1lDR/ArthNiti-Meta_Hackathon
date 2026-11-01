@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 6bedb8a..8a73235 100644
+index 6bedb8a..9548f9d 100644
 --- a/README.md
 +++ b/README.md
 @@ -5 +5 @@ Hyper-local business advice and financial structuring for rural micro-entreprene
@@ -79,8 +79,10 @@ index 6bedb8a..8a73235 100644
 +**It has run.** It was written on a machine with no Linux and no Python 3.10, and its first three runs (27 and 28 October 2026) all passed. In the run of 28 October, Python 3.10.22 and 3.14 each ran the whole backend suite on Linux and passed, and the frontend job passed. The Actions tab has every run, and it, not this file, is the evidence for the latest commit. The browser gates in `tools/verify/` are not in it: they drive a local Edge at a hardcoded Windows path, so they only run on a Windows machine with Edge installed. There's still no Makefile and no Dockerfile.
 @@ -119 +154 @@ Two switches turn the demo into something a real person can use.
 -Landing, then an optional login, then four question pages, then four result pages, plus the privacy notice.
-+Landing, then an optional login, then four question pages, then four result pages, plus the privacy notice. With the helper switched on there is one more page, `/talk`, and the landing page leads with it: speaking is the first button and the form is the second.
-@@ -124,0 +160 @@ Landing, then an optional login, then four question pages, then four result page
++Landing, then an optional name page (`/login`), then four question pages, then four result pages, plus the privacy notice. With the helper switched on there is one more page, `/talk`, and the landing page leads with it: speaking is the first button and the form is the second.
+@@ -124 +159,2 @@ Landing, then an optional login, then four question pages, then four result page
+-| | `/login` | a name, nothing else. Not authentication — there's no password. It just carries the name into step 1 |
++| | `/login` | a name, nothing else. Titled "What is your name?" and linked as "Enter your name". Not authentication — there's no password. It just carries the name into step 1 |
 +| | `/talk` | only when the helper is on. Say or type the answers instead of filling in the form: one open question first, then the twelve form questions one at a time, each read aloud (by itself once the box is ticked if the device has a voice for the language, else when Listen is pressed). Nothing is sent to Meta until the box on the page is ticked. An answer lands in the ordinary form, marked as filled in by the helper, once the reader says it is right, and when no question is left the reader is taken to the first form page with something unanswered (the name and the business name are typed there) |
 @@ -128 +164 @@ Landing, then an optional login, then four question pages, then four result page
 -| 4 | `/finance` | capital in hand, household + business costs, the household's monthly loan repayments, optionally the household's monthly income, and an unticked box agreeing to the privacy notice. Submitting here fires the only API call in the app |
