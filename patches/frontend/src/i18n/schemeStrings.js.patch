@@ -1,7 +1,12 @@
 diff --git a/frontend/src/i18n/schemeStrings.js b/frontend/src/i18n/schemeStrings.js
-index e24e46f..66b989a 100644
+index e24e46f..a365dde 100644
 --- a/frontend/src/i18n/schemeStrings.js
 +++ b/frontend/src/i18n/schemeStrings.js
+@@ -10,2 +10,2 @@
+- * apply, and which papers to carry. Thirty schemes across seven layers of
+- * government is roughly a thousand lines on its own, and mixing it into
++ * apply, and which papers to carry. That prose, for every scheme across seven
++ * layers of government, is thousands of lines on its own, and mixing it into
 @@ -115,0 +116 @@ const en = {
 +  'elig.pmfme.upgrade': 'The food-processing Ministry describes this money for a single unit as being for units that want to upgrade. It does not say whether a new unit can get it, so ask your bank branch before you apply.',
 @@ -122,0 +124 @@ const en = {

@@ -1,7 +1,10 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..5ac9212 100644
+index 4ea17de..f14827a 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
+@@ -5 +5 @@ because schemes.json carries a translation code beside every sentence, and
+-hand-editing 30 schemes across four parallel code arrays is how the arrays fall
++hand-editing every scheme across four parallel code arrays is how the arrays fall
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
 -To change the dataset, edit SPEC (or LOCATION_TYPES) here and run the script;
 +To change the dataset, edit SPEC (or LOCATION_TYPES, CHECK_FIRST) here and run the script;

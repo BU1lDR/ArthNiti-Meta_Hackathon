@@ -1,7 +1,10 @@
 diff --git a/frontend/src/i18n/strings.js b/frontend/src/i18n/strings.js
-index 4915325..1282ad7 100644
+index 4915325..9e2dcbb 100644
 --- a/frontend/src/i18n/strings.js
 +++ b/frontend/src/i18n/strings.js
+@@ -8 +8 @@
+-//   schemeStrings.js  the prose typed into schemes.json — 30 schemes' own words
++//   schemeStrings.js  the prose typed into schemes.json — the schemes' own words
 @@ -263,0 +264 @@ const en = {
 +  'cat.poultry': 'Poultry / Eggs',
 @@ -526,0 +528 @@ const hi = {

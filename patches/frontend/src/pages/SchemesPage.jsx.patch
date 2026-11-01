@@ -1,7 +1,10 @@
 diff --git a/frontend/src/pages/SchemesPage.jsx b/frontend/src/pages/SchemesPage.jsx
-index da4db45..429476c 100644
+index da4db45..2fb7157 100644
 --- a/frontend/src/pages/SchemesPage.jsx
 +++ b/frontend/src/pages/SchemesPage.jsx
+@@ -75 +75 @@ export default function SchemesPage() {
+-                  sch.noneCovered lists every kind of work the thirty schemes in
++                  sch.noneCovered lists every kind of work the schemes in
 @@ -244,0 +245,11 @@ function SchemeCard({ scheme, index, t, bt }) {
 +      {/* The few eligibility lines that decide whether the scheme fits a person,
 +          kept out of the closed disclosure below so the reader sees them before
