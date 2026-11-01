@@ -3,7 +3,7 @@
 // Only a voice that runs on this device is used (`localService` is true). A voice the
 // browser reaches over the network, such as Edge's "Online (Natural)" voices, sends the
 // sentence to a server this app has not told the person or the deployer about: on the
-// owner's Windows machine both Hindi voices Edge lists are of that kind (1 Nov 2026).
+// owner's Windows machine the two Online (Natural) Hindi voices are of that kind (1 Nov 2026).
 // So where there is no local voice for the page language the button is not drawn, and
 // nothing is read. The line is drawn at the device, and this module opens no connection
 // of its own (tools/verify/speak-lib-test.mjs greps its source for the usual ways).
