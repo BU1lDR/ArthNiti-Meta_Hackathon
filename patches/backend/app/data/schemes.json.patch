@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..5b58d99 100644
+index a874e48..66a8c41 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..5b58d99 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,1991 @@
+@@ -1493,0 +1602,2519 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -2167,3 +2167,531 @@ index a874e48..5b58d99 100644
 +    ],
 +    "description_code": "sdata.uk_nulm.description",
 +    "support_type_code": "sdata.uk_nulm.support"
++  },
++  {
++    "id": "gj_tribal_int",
++    "name": "6% Interest Subsidy on Loans taken through Banks up to a Limit of Rs.5 Lakh for Self-Employment, Gujarat",
++    "description": "A scheme of the Tribal Development Department, Government of Gujarat, that promotes self-employment among Scheduled Tribe (ST) individuals by making business loans affordable. ST beneficiaries who take a bank loan for self-employment, up to a limit of Rs.5 lakh, are given an interest subsidy of 6%.",
++    "target_segment": "Scheduled Tribe residents of the tribal areas of Gujarat who have taken a bank loan for self-employment",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must belong to the Scheduled Tribe (ST) category.",
++      "The applicant must be a resident of the tribal areas of Gujarat.",
++      "The applicant must have taken a bank loan for self-employment.",
++      "Applications are made at the office of the Project Administrator of the Gujarat Tribal Development Corporation in Gandhinagar, or at a tribal district office."
++    ],
++    "support_type": "Interest subsidy of 6% on a bank loan of up to Rs.5 lakh",
++    "documents": [
++      "Aadhaar card",
++      "Bank-related documents",
++      "Caste certificate, where applicable",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.gjtribal.st",
++      "elig.gjtribal.area",
++      "elig.gjtribal.loan",
++      "elig.gjtribal.office"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.bank",
++      "doc.caste",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.gjtribal.st",
++      "elig.gjtribal.area",
++      "elig.gjtribal.loan"
++    ],
++    "description_code": "sdata.gj_tribal_int.description",
++    "support_type_code": "sdata.gj_tribal_int.support"
++  },
++  {
++    "id": "gj_jgvy",
++    "name": "Jyoti Gramodyog Vikas Yojana, Gujarat",
++    "description": "A scheme of the Commissioner of Cottage and Rural Industries, Industries and Mines Department, Government of Gujarat, that promotes rural entrepreneurship by giving a margin money subsidy for setting up new village industries. It is meant for individual artisans, entrepreneurs and Self-Help Groups. The subsidy is 25% of the first Rs.10 lakh of the project cost (30% for SC, ST, women and physically handicapped applicants) and 10% of the cost above that, up to Rs.25 lakh.",
++    "target_segment": "Rural artisans, entrepreneurs and self-help groups in Gujarat who want to set up a new village industry",
++    "business_categories": [
++      "manufacturing",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "rural"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be an individual artisan or entrepreneur, or part of an active Grade-II Self-Help Group engaged in small-scale production, and must not represent a partnership firm, private limited company, joint venture, HUF or similar commercial entity.",
++      "The applicant must be between 25 and 50 years of age.",
++      "The applicant must have passed at least Class 10 from a recognised educational board.",
++      "The applicant must have at least one year of experience in the proposed business activity, or relevant training from a recognised institution.",
++      "The project must be located in a rural area with a population of not more than 20,000 and with 24-hour three-phase electricity supply.",
++      "The unit must be new, not an existing or transferred unit.",
++      "The project cost must be from Rs.1 lakh to Rs.25 lakh, and can include machinery, raw materials and working capital (at most 10% of the total cost) but not land or buildings. The subsidy is paid after the unit has run successfully for 2 years."
++    ],
++    "support_type": "Subsidy of 25% of the first Rs.10 lakh of the project cost (30% for some groups)",
++    "documents": [
++      "Identity proof",
++      "Educational or training documents where applicable",
++      "Project report",
++      "Quotations for machinery, tools or equipment",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.gjjgvy.who",
++      "elig.gjjgvy.age",
++      "elig.gjjgvy.class10",
++      "elig.gjjgvy.experience",
++      "elig.gjjgvy.village",
++      "elig.common.newUnit",
++      "elig.gjjgvy.cost"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.education",
++      "doc.projectReport",
++      "doc.quotation",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.gjjgvy.age",
++      "elig.gjjgvy.class10",
++      "elig.gjjgvy.experience",
++      "elig.gjjgvy.village"
++    ],
++    "description_code": "sdata.gj_jgvy.description",
++    "support_type_code": "sdata.gj_jgvy.support"
++  },
++  {
++    "id": "gj_dtaiss",
++    "name": "Dattopant Thengadi Artisan Interest Subsidy Scheme, Gujarat",
++    "description": "A scheme of the Industries and Mines Department, Government of Gujarat, that gives artisans registered in the urban and rural areas of the state easy finance from banks for machinery or working capital, up to a credit limit of Rs.1 lakh, to buy raw materials, equipment or tools. The artisan gets a margin money subsidy and an interest subsidy of 7%, paid half-yearly for up to 3 years. The District Industries Centre is the nodal agency.",
++    "target_segment": "Registered handloom and handicraft artisans in Gujarat who need a bank loan for machinery, tools or raw materials",
++    "business_categories": [
++      "handicrafts",
++      "manufacturing"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be at least 18 years old.",
++      "The applicant must have skills in handloom or handicraft art.",
++      "The applicant must be registered as an artisan with the Indext-C of the Cottage and Rural Industries Department, and must hold an identity card issued by the Development Commissioner (Handloom or Handicraft) or Indext-C, or a provisional certificate from the General Manager of the District Industries Centre.",
++      "The margin money subsidy is 20% of the loan for general category male applicants, and 25% of the loan for Scheduled Caste, Scheduled Tribe and women applicants and for blind or handicapped applicants with a disability of 40% or more. It is paid once, after the loan is disbursed.",
++      "The loan must be repaid with interest in 12 to 36 monthly instalments, as fixed by the bank. The artisan must pay the instalments regularly, must not be a defaulter of the bank, and must use the loan only for the purpose for which it was sanctioned.",
++      "Final sanction rests with the financing bank."
++    ],
++    "support_type": "Loan of up to Rs.1 lakh with a margin money subsidy of 20% to 25%",
++    "documents": [
++      "Recent passport-size photograph",
++      "Identity proof",
++      "Aadhaar card",
++      "Quotations for machinery, tools or equipment",
++      "Ownership or rent agreement for the work premises",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.age18",
++      "elig.gjdtaiss.skill",
++      "elig.gjdtaiss.registered",
++      "elig.gjdtaiss.margin",
++      "elig.gjdtaiss.repay",
++      "elig.common.bankApproval"
++    ],
++    "document_codes": [
++      "doc.photo",
++      "doc.identity",
++      "doc.aadhaar",
++      "doc.quotation",
++      "doc.landOrRent",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.gjdtaiss.skill",
++      "elig.gjdtaiss.registered"
++    ],
++    "description_code": "sdata.gj_dtaiss.description",
++    "support_type_code": "sdata.gj_dtaiss.support"
++  },
++  {
++    "id": "gj_mahila",
++    "name": "Mahila Samruddhi Yojana (DAADC), Gujarat",
++    "description": "A scheme of the Dr. Ambedkar Antyodaya Development Corporation (DAADC) under the Social Justice and Empowerment Department, Government of Gujarat, that promotes self-employment and financial independence among women of the Antyodaya Samaj, especially Scheduled Castes. It gives a loan of Rs.50,000 at 6% interest a year to start a small business. The state contributes 95% of it (Rs.47,500) and the beneficiary 5% (Rs.2,500). The possible monthly instalment is about Rs.1,445, over 36 months.",
++    "target_segment": "Scheduled Caste women of Gujarat from Antyodaya or economically backward families who want to start a small business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Gujarat.",
++      "Only women applicants are eligible.",
++      "The applicant must belong to the Scheduled Caste (SC) category.",
++      "The applicant must belong to an Antyodaya Anna Yojana (AAY) family or to the economically backward class.",
++      "The annual family income must not be more than Rs.3 lakh.",
++      "The applicant must plan to start a self-employment venture or micro-enterprise.",
++      "Applications are made online on the website of the Dr. Ambedkar Antyodaya Development Corporation."
++    ],
++    "support_type": "Loan of Rs.50,000 at 6% interest, repaid over 36 months",
++    "documents": [
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Aadhaar card",
++      "Recent passport-size photograph",
++      "Bank-related documents",
++      "Address proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.gjmahila.permanent",
++      "elig.common.womenOnly",
++      "elig.gjdaadc.sc",
++      "elig.gjmahila.aay",
++      "elig.gjdaadc.income",
++      "elig.gjmahila.plan",
++      "elig.gjdaadc.online"
++    ],
++    "document_codes": [
++      "doc.caste",
++      "doc.income",
++      "doc.aadhaar",
++      "doc.photo",
++      "doc.bank",
++      "doc.address"
++    ],
++    "check_first_codes": [
++      "elig.gjdaadc.sc",
++      "elig.gjmahila.aay",
++      "elig.gjdaadc.income"
++    ],
++    "description_code": "sdata.gj_mahila.description",
++    "support_type_code": "sdata.gj_mahila.support"
++  },
++  {
++    "id": "gj_smallbiz",
++    "name": "Loan for Small Businesses (DAADC), Gujarat",
++    "description": "A scheme of the Dr. Ambedkar Antyodaya Development Corporation (DAADC) under the Social Justice and Empowerment Department, Government of Gujarat, that promotes self-employment among Scheduled Caste individuals from Antyodaya Anna Yojana (AAY) families. It gives a loan of up to Rs.1,25,000 at 4% interest a year for starting or expanding a small business, repaid over 60 months, with two guarantors. The state contributes the whole amount, so no share is needed from the beneficiary. The instalment is about Rs.2,302 a month at most.",
++    "target_segment": "Scheduled Caste residents of Gujarat from Antyodaya Anna Yojana families who want to start or expand a small business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must belong to the Scheduled Caste (SC) category.",
++      "The applicant must belong to an Antyodaya Anna Yojana (AAY) family.",
++      "The annual family income must not be more than Rs.3 lakh.",
++      "The applicant must intend to start or expand a small business or occupation.",
++      "The applicant must be able to provide two guarantors.",
++      "Applications are made online on the website of the Dr. Ambedkar Antyodaya Development Corporation."
++    ],
++    "support_type": "Loan up to Rs.1,25,000 at 4% interest, repaid over 60 months",
++    "documents": [
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Aadhaar card",
++      "Recent passport-size photograph",
++      "Bank-related documents",
++      "Address proof"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.gjdaadc.sc",
++      "elig.gjsmallbiz.aay",
++      "elig.gjdaadc.income",
++      "elig.gjsmallbiz.intent",
++      "elig.gjsmallbiz.guarantors",
++      "elig.gjdaadc.online"
++    ],
++    "document_codes": [
++      "doc.caste",
++      "doc.income",
++      "doc.aadhaar",
++      "doc.photo",
++      "doc.bank",
++      "doc.address"
++    ],
++    "check_first_codes": [
++      "elig.gjdaadc.sc",
++      "elig.gjsmallbiz.aay",
++      "elig.gjdaadc.income",
++      "elig.gjsmallbiz.guarantors"
++    ],
++    "description_code": "sdata.gj_smallbiz.description",
++    "support_type_code": "sdata.gj_smallbiz.support"
++  },
++  {
++    "id": "gj_selfemp",
++    "name": "Self Employment Scheme (Tribal Development Department), Gujarat",
++    "description": "A scheme of the Tribal Development Department, Government of Gujarat, that gives unemployed Scheduled Tribe individuals affordable loans for self-employment. Loans of Rs.50,000 to Rs.5 lakh, depending on the chosen business, are given at 4% interest a year to start any of 85 businesses identified by the department.",
++    "target_segment": "Unemployed Scheduled Tribe residents of Gujarat who want to start one of the businesses the department has named",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must belong to the Scheduled Tribe (ST) category.",
++      "The applicant must be unemployed at the time of applying.",
++      "The business must be one of the 85 businesses identified by the department, and the loan amount depends on the business.",
++      "Applications are made online on the website of the Gujarat Tribal Development Corporation."
++    ],
++    "support_type": "Loan of Rs.50,000 to Rs.5 lakh at 4% interest",
++    "documents": [
++      "Aadhaar card",
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Recent passport-size photograph",
++      "Bank-related documents",
++      "Quotations for machinery, tools or equipment",
++      "Land record extract",
++      "Ownership or rent agreement for the work premises"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.gjtribal.st",
++      "elig.gjselfemp.unemployed",
++      "elig.gjselfemp.list",
++      "elig.gjselfemp.online"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.caste",
++      "doc.income",
++      "doc.photo",
++      "doc.bank",
++      "doc.quotation",
++      "doc.landRecord",
++      "doc.landOrRent"
++    ],
++    "check_first_codes": [
++      "elig.gjtribal.st",
++      "elig.gjselfemp.unemployed",
++      "elig.gjselfemp.list"
++    ],
++    "description_code": "sdata.gj_selfemp.description",
++    "support_type_code": "sdata.gj_selfemp.support"
++  },
++  {
++    "id": "gj_fvp",
++    "name": "Fruit and Vegetable Preservation Training Program (Horticulture HRT 5), Gujarat",
++    "description": "A scheme of the Agriculture and Co-operation Department, Government of Gujarat, that gives hands-on training in value addition, preservation, canning and kitchen gardening of fruits and vegetables, to promote self-sustenance and nutrition. The training lasts 2 to 5 days. The government meets Rs.500 per trainee per day: Rs.250 is paid to the trainee as a stipend and Rs.250 goes on training material, expert honorarium and other resources.",
++    "target_segment": "Residents of Gujarat who want hands-on training in preserving and canning fruits and vegetables and kitchen gardening",
++    "business_categories": [
++      "food processing"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must be willing to take part in horticulture-related skill development training.",
++      "Applications are made online on the I-Khedut portal."
++    ],
++    "support_type": "Stipend of Rs.250 a day during a training of 2 to 5 days",
++    "documents": [
++      "Aadhaar card",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.gjfvp.willing",
++      "elig.gjfvp.online"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.gjfvp.willing"
++    ],
++    "description_code": "sdata.gj_fvp.description",
++    "support_type_code": "sdata.gj_fvp.support"
++  },
++  {
++    "id": "gj_micro",
++    "name": "Small Scale Lending Scheme (Microfinance), Gujarat",
++    "description": "A scheme of the Social Justice and Empowerment Department, Government of Gujarat, run by the Gujarat Gopalak Vikas Nigam, that gives microcredit to small entrepreneurs of the Rabari and Bharwad communities among the socially and educationally backward classes. Loans of up to Rs.1,25,000 are given at a subsidised interest rate of 5% a year, covering 95% of the project cost.",
++    "target_segment": "Small entrepreneurs of the Rabari and Bharwad communities in Gujarat who need a small business loan",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must belong to the Rabari or Bharwad community among the socially and educationally backward classes.",
++      "The applicant must be between 21 and 45 years of age.",
++      "The applicant's annual income must not be more than Rs.3 lakh.",
++      "The loan covers 95% of the project cost, and the applicant puts in the remaining 5%.",
++      "Applications are made online on the DAAD Online portal."
++    ],
++    "support_type": "Loan up to Rs.1,25,000 at 5% interest",
++    "documents": [
++      "Recent passport-size photograph",
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Identity proof",
++      "Address proof",
++      "Bank-related documents",
++      "Project report"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.gjmicro.caste",
++      "elig.gjmicro.age",
++      "elig.gjmicro.income",
++      "elig.gjmicro.share",
++      "elig.gjmicro.online"
++    ],
++    "document_codes": [
++      "doc.photo",
++      "doc.caste",
++      "doc.income",
++      "doc.identity",
++      "doc.address",
++      "doc.bank",
++      "doc.projectReport"
++    ],
++    "check_first_codes": [
++      "elig.gjmicro.caste",
++      "elig.gjmicro.age",
++      "elig.gjmicro.income"
++    ],
++    "description_code": "sdata.gj_micro.description",
++    "support_type_code": "sdata.gj_micro.support"
++  },
++  {
++    "id": "gj_vahan",
++    "name": "Vahan Loan Sahay Yojana (Self-Employment Scheme), Gujarat",
++    "description": "A component of the Self-Employment Scheme of the Social Justice and Empowerment Department, Government of Gujarat, run by the Gujarat Unreserved Education and Economical Development Corporation, that gives self-employed people a loan for the on-road cost of a vehicle such as a rickshaw, loading rickshaw, Maruti car or jeep taxi. The interest is 5% simple interest a year, and 4% for women.",
++    "target_segment": "Self-employed residents of Gujarat in the unreserved category who want to buy a rickshaw, loading rickshaw or taxi with a loan",
++    "business_categories": [
++      "services"
++    ],
++    "states": [
++      "Gujarat"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must belong to the unreserved category.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The applicant must hold a valid driving licence.",
++      "The annual family income must not be more than Rs.6 lakh.",
++      "The vehicle bought under the scheme must be hypothecated to the corporation, and the loan must be repaid in equal monthly instalments over 5 years.",
++      "Only one person from a family can get the benefit, and at most 5 beneficiaries are selected in a village."
++    ],
++    "support_type": "Loan for a vehicle's on-road cost, at 5% interest (4% for women)",
++    "documents": [
++      "Aadhaar card",
++      "Income certificate",
++      "Address proof",
++      "Bank-related documents",
++      "Educational or training documents where applicable",
++      "Project report"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.gjvahan.unreserved",
++      "elig.gjvahan.age",
++      "elig.gjvahan.licence",
++      "elig.gjvahan.income",
++      "elig.gjvahan.vehicle",
++      "elig.gjvahan.limits"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.income",
++      "doc.address",
++      "doc.bank",
++      "doc.education",
++      "doc.projectReport"
++    ],
++    "check_first_codes": [
++      "elig.gjvahan.unreserved",
++      "elig.gjvahan.age",
++      "elig.gjvahan.licence",
++      "elig.gjvahan.income"
++    ],
++    "description_code": "sdata.gj_vahan.description",
++    "support_type_code": "sdata.gj_vahan.support"

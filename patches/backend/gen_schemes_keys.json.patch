@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..9b03caa 100644
+index 220d74e..bbeead6 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..9b03caa 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,93 @@
+@@ -96 +99,132 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -102,8 +102,47 @@ index 220d74e..9b03caa 100644
 +  "elig.ukcfpc.fees": "A fee of Rs.15 is charged for each trainee, and a fee of Rs.15 for each kilogram processed, for which the applicant provides the raw material.",
 +  "elig.ukcfpc.visit": "Applicants visit the nearest Community Food Processing Centre, and places are given on a first-come, first-served basis.",
 +  "elig.ukhoh.member": "The applicant must be a member of a self-help group, community-based organisation, collective or cluster level federation formed under a scheme of a department of the Government of Uttarakhand, or a woman entrepreneur.",
-+  "elig.uknulm.income": "The annual income of the beneficiary's family must be less than Rs.3 lakh, as per the standards of the Government of India."
-@@ -151 +246,41 @@
++  "elig.uknulm.income": "The annual income of the beneficiary's family must be less than Rs.3 lakh, as per the standards of the Government of India.",
++  "elig.gjtribal.st": "The applicant must belong to the Scheduled Tribe (ST) category.",
++  "elig.gjtribal.area": "The applicant must be a resident of the tribal areas of Gujarat.",
++  "elig.gjtribal.loan": "The applicant must have taken a bank loan for self-employment.",
++  "elig.gjtribal.office": "Applications are made at the office of the Project Administrator of the Gujarat Tribal Development Corporation in Gandhinagar, or at a tribal district office.",
++  "elig.gjjgvy.who": "The applicant must be an individual artisan or entrepreneur, or part of an active Grade-II Self-Help Group engaged in small-scale production, and must not represent a partnership firm, private limited company, joint venture, HUF or similar commercial entity.",
++  "elig.gjjgvy.age": "The applicant must be between 25 and 50 years of age.",
++  "elig.gjjgvy.class10": "The applicant must have passed at least Class 10 from a recognised educational board.",
++  "elig.gjjgvy.experience": "The applicant must have at least one year of experience in the proposed business activity, or relevant training from a recognised institution.",
++  "elig.gjjgvy.village": "The project must be located in a rural area with a population of not more than 20,000 and with 24-hour three-phase electricity supply.",
++  "elig.gjjgvy.cost": "The project cost must be from Rs.1 lakh to Rs.25 lakh, and can include machinery, raw materials and working capital (at most 10% of the total cost) but not land or buildings. The subsidy is paid after the unit has run successfully for 2 years.",
++  "elig.gjdtaiss.skill": "The applicant must have skills in handloom or handicraft art.",
++  "elig.gjdtaiss.registered": "The applicant must be registered as an artisan with the Indext-C of the Cottage and Rural Industries Department, and must hold an identity card issued by the Development Commissioner (Handloom or Handicraft) or Indext-C, or a provisional certificate from the General Manager of the District Industries Centre.",
++  "elig.gjdtaiss.margin": "The margin money subsidy is 20% of the loan for general category male applicants, and 25% of the loan for Scheduled Caste, Scheduled Tribe and women applicants and for blind or handicapped applicants with a disability of 40% or more. It is paid once, after the loan is disbursed.",
++  "elig.gjdtaiss.repay": "The loan must be repaid with interest in 12 to 36 monthly instalments, as fixed by the bank. The artisan must pay the instalments regularly, must not be a defaulter of the bank, and must use the loan only for the purpose for which it was sanctioned.",
++  "elig.gjmahila.permanent": "The applicant must be a permanent resident of Gujarat.",
++  "elig.gjdaadc.sc": "The applicant must belong to the Scheduled Caste (SC) category.",
++  "elig.gjmahila.aay": "The applicant must belong to an Antyodaya Anna Yojana (AAY) family or to the economically backward class.",
++  "elig.gjdaadc.income": "The annual family income must not be more than Rs.3 lakh.",
++  "elig.gjmahila.plan": "The applicant must plan to start a self-employment venture or micro-enterprise.",
++  "elig.gjdaadc.online": "Applications are made online on the website of the Dr. Ambedkar Antyodaya Development Corporation.",
++  "elig.gjsmallbiz.aay": "The applicant must belong to an Antyodaya Anna Yojana (AAY) family.",
++  "elig.gjsmallbiz.intent": "The applicant must intend to start or expand a small business or occupation.",
++  "elig.gjsmallbiz.guarantors": "The applicant must be able to provide two guarantors.",
++  "elig.gjselfemp.unemployed": "The applicant must be unemployed at the time of applying.",
++  "elig.gjselfemp.list": "The business must be one of the 85 businesses identified by the department, and the loan amount depends on the business.",
++  "elig.gjselfemp.online": "Applications are made online on the website of the Gujarat Tribal Development Corporation.",
++  "elig.gjfvp.willing": "The applicant must be willing to take part in horticulture-related skill development training.",
++  "elig.gjfvp.online": "Applications are made online on the I-Khedut portal.",
++  "elig.gjmicro.caste": "The applicant must belong to the Rabari or Bharwad community among the socially and educationally backward classes.",
++  "elig.gjmicro.age": "The applicant must be between 21 and 45 years of age.",
++  "elig.gjmicro.income": "The applicant's annual income must not be more than Rs.3 lakh.",
++  "elig.gjmicro.share": "The loan covers 95% of the project cost, and the applicant puts in the remaining 5%.",
++  "elig.gjmicro.online": "Applications are made online on the DAAD Online portal.",
++  "elig.gjvahan.unreserved": "The applicant must belong to the unreserved category.",
++  "elig.gjvahan.age": "The applicant must be between 18 and 50 years of age.",
++  "elig.gjvahan.licence": "The applicant must hold a valid driving licence.",
++  "elig.gjvahan.income": "The annual family income must not be more than Rs.6 lakh.",
++  "elig.gjvahan.vehicle": "The vehicle bought under the scheme must be hypothecated to the corporation, and the loan must be repaid in equal monthly instalments over 5 years.",
++  "elig.gjvahan.limits": "Only one person from a family can get the benefit, and at most 5 beneficiaries are selected in a village."
+@@ -151 +285,50 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -145,4 +184,13 @@ index 220d74e..9b03caa 100644
 +  "uk_bee",
 +  "uk_cfpc",
 +  "uk_hoh",
-+  "uk_nulm"
++  "uk_nulm",
++  "gj_tribal_int",
++  "gj_jgvy",
++  "gj_dtaiss",
++  "gj_mahila",
++  "gj_smallbiz",
++  "gj_selfemp",
++  "gj_fvp",
++  "gj_micro",
++  "gj_vahan"

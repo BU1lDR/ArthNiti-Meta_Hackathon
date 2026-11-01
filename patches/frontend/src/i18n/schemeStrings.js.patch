@@ -1,5 +1,5 @@
 diff --git a/frontend/src/i18n/schemeStrings.js b/frontend/src/i18n/schemeStrings.js
-index e24e46f..2ef889b 100644
+index e24e46f..b8cb444 100644
 --- a/frontend/src/i18n/schemeStrings.js
 +++ b/frontend/src/i18n/schemeStrings.js
 @@ -115,0 +116 @@ const en = {
@@ -8,7 +8,7 @@ index e24e46f..2ef889b 100644
 +  'elig.pmegp.period': 'The 2022 PMEGP rules approve the scheme for the years 2021-22 to 2025-26. We have not confirmed that it continues after 31 March 2026, so ask your District Industries Centre before you apply.',
 @@ -142,0 +145 @@ const en = {
 +  'elig.standupindia.period': 'The Department of Financial Services says the scheme runs up to 31 March 2025. A new scheme was announced in the 2025-26 Budget. We have not confirmed that loans are being given now, so ask your bank branch.',
-@@ -277,0 +281,218 @@ const en = {
+@@ -277,0 +281,285 @@ const en = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'A guarantee that helps a member bank lend up to Rs.10 crore to a small business without taking collateral, or with collateral on only part of the loan. Farming and self-help groups are not covered.',
@@ -227,13 +227,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'Bank loans of up to Rs.2 lakh for people in towns and cities of Uttarakhand to start or grow a small business, with part of the interest paid by the central and state governments. You get the form from your municipal body, which checks it and sends it to the bank.',
 +  'sdata.uk_nulm.support': 'Bank loan up to Rs.2 lakh, with part of the interest paid',
 +  'elig.uknulm.income': 'Your family\'s income for the year must be less than Rs.3 lakh.',
-@@ -344,0 +566 @@ const hi = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'For Scheduled Tribe people in the tribal areas of Gujarat who take a bank loan to start work of their own. The government gives 6% interest help on a loan of up to Rs.5 lakh.',
++  'sdata.gj_tribal_int.support': '6% interest help on a bank loan of up to Rs.5 lakh',
++  'elig.gjtribal.st': 'You must be a Scheduled Tribe person.',
++  'elig.gjtribal.area': 'You must live in a tribal area of Gujarat.',
++  'elig.gjtribal.loan': 'You must have taken a bank loan to start work of your own.',
++  'elig.gjtribal.office': 'You apply at the office of the Project Administrator of the Gujarat Tribal Development Corporation in Gandhinagar, or at a tribal district office.',
++
++  'sdata.gj_jgvy.description': 'For artisans, small entrepreneurs and self-help groups who want to start a new village industry. The government pays 25% of the first Rs.10 lakh of the cost, or 30% for Scheduled Caste, Scheduled Tribe, women and people with a disability, and 10% of the cost above that, up to Rs.25 lakh.',
++  'sdata.gj_jgvy.support': 'Government pays 25% of the first Rs.10 lakh (30% for some groups)',
++  'elig.gjjgvy.who': 'You must be an individual artisan or entrepreneur, or a member of an active Grade-II self-help group that makes small-scale products. You must not be applying on behalf of a partnership firm, private company, joint venture, HUF or similar business.',
++  'elig.gjjgvy.age': 'You must be between 25 and 50 years old.',
++  'elig.gjjgvy.class10': 'You must have passed at least Class 10 at a recognised school board.',
++  'elig.gjjgvy.experience': 'You must have at least one year of experience in the work you plan to do, or training in it from a recognised institute.',
++  'elig.gjjgvy.village': 'Your project must be in a rural area where not more than 20,000 people live, with a 24-hour three-phase electricity supply.',
++  'elig.gjjgvy.cost': 'The cost of the project must be from Rs.1 lakh to Rs.25 lakh. It can include machinery, raw materials and money to run the business (up to 10% of the total), but not land or buildings. The government money comes only after your unit has run well for 2 years.',
++
++  'sdata.gj_dtaiss.description': 'For handloom and handicraft artisans registered in Gujarat. A bank loan of up to Rs.1 lakh for machinery, tools or raw materials. The government pays a share of the loan one time, and 7% interest help every six months for up to 3 years.',
++  'sdata.gj_dtaiss.support': 'Loan of up to Rs.1 lakh, and the government pays 20% to 25% of it',
++  'elig.gjdtaiss.skill': 'You must have skills in handloom or handicraft work.',
++  'elig.gjdtaiss.registered': 'You must be registered as an artisan with Indext-C of the Cottage and Rural Industries Department, and hold an identity card from the Development Commissioner (Handloom or Handicraft) or from Indext-C, or a temporary certificate from the General Manager of the District Industries Centre.',
++  'elig.gjdtaiss.margin': 'The government pays 20% of the loan if you are a man in the general category, and 25% if you are a Scheduled Caste, Scheduled Tribe or woman applicant, or are blind or have a disability of 40% or more. It is paid once, after the loan is given.',
++  'elig.gjdtaiss.repay': 'You repay the loan with interest in 12 to 36 monthly instalments, as the bank fixes. You must pay each instalment on time, must not have failed to repay a bank, and must use the loan only for the purpose it was given for.',
++
++  'sdata.gj_mahila.description': 'For Scheduled Caste women from low-income families in Gujarat who want to start a small business. A loan of Rs.50,000 at 6% interest a year. The state puts in 95% of it (Rs.47,500) and you put in 5% (Rs.2,500). The monthly instalment may be about Rs.1,445 for 36 months.',
++  'sdata.gj_mahila.support': 'Loan of Rs.50,000 at 6% interest, repaid over 36 months',
++  'elig.gjmahila.permanent': 'You must be a permanent resident of Gujarat.',
++  'elig.gjdaadc.sc': 'You must be a Scheduled Caste person.',
++  'elig.gjmahila.aay': 'You must be from an Antyodaya Anna Yojana (AAY) family, or from an economically backward class.',
++  'elig.gjdaadc.income': 'Your family\'s income for a year must not be more than Rs.3 lakh.',
++  'elig.gjmahila.plan': 'You must plan to start a small business or work of your own.',
++  'elig.gjdaadc.online': 'You apply online, on the website of the Dr. Ambedkar Antyodaya Development Corporation.',
++
++  'sdata.gj_smallbiz.description': 'For Scheduled Caste people from Antyodaya Anna Yojana families in Gujarat who want to start or grow a small business. A loan of up to Rs.1,25,000 at 4% interest a year, repaid over 60 months, with two guarantors. The state puts in the whole amount, so you put in no share. The monthly instalment is about Rs.2,302 at most.',
++  'sdata.gj_smallbiz.support': 'Loan up to Rs.1,25,000 at 4% interest, repaid over 60 months',
++  'elig.gjsmallbiz.aay': 'You must be from an Antyodaya Anna Yojana (AAY) family.',
++  'elig.gjsmallbiz.intent': 'You must plan to start or grow a small business or trade.',
++  'elig.gjsmallbiz.guarantors': 'You must have two guarantors, people who agree to stand behind your loan.',
++
++  'sdata.gj_selfemp.description': 'For unemployed Scheduled Tribe people in Gujarat. Loans of Rs.50,000 to Rs.5 lakh, depending on the business you choose, at 4% interest a year, to start any of 85 businesses the department has named.',
++  'sdata.gj_selfemp.support': 'Loan of Rs.50,000 to Rs.5 lakh at 4% interest',
++  'elig.gjselfemp.unemployed': 'You must have no job when you apply.',
++  'elig.gjselfemp.list': 'Your business must be one of the 85 businesses the department has named, and the loan amount depends on the business.',
++  'elig.gjselfemp.online': 'You apply online, on the website of the Gujarat Tribal Development Corporation.',
++
++  'sdata.gj_fvp.description': 'Hands-on training in preserving and canning fruits and vegetables, and in growing them in a kitchen garden. The training lasts 2 to 5 days. The government meets Rs.500 per person per day: Rs.250 is paid to you as a stipend and Rs.250 goes on training material, experts and other costs.',
++  'sdata.gj_fvp.support': 'Stipend of Rs.250 a day during a training of 2 to 5 days',
++  'elig.gjfvp.willing': 'You must be willing to take part in skills training on fruit and vegetable growing.',
++  'elig.gjfvp.online': 'You apply online, on the I-Khedut portal.',
++
++  'sdata.gj_micro.description': 'For small business owners of the Rabari and Bharwad communities in Gujarat. Loans of up to Rs.1,25,000 at 5% interest a year, covering 95% of the cost of the project.',
++  'sdata.gj_micro.support': 'Loan up to Rs.1,25,000 at 5% interest',
++  'elig.gjmicro.caste': 'You must be from the Rabari or Bharwad community, which is among the socially and educationally backward classes.',
++  'elig.gjmicro.age': 'You must be between 21 and 45 years old.',
++  'elig.gjmicro.income': 'Your income for a year must not be more than Rs.3 lakh.',
++  'elig.gjmicro.share': 'The loan covers 95% of the cost, and you put in the other 5%.',
++  'elig.gjmicro.online': 'You apply online, on the DAAD Online portal.',
++
++  'sdata.gj_vahan.description': 'For self-employed people in Gujarat in the unreserved category. A loan for the on-road cost of a vehicle such as a rickshaw, loading rickshaw, Maruti car or jeep taxi, at 5% simple interest a year, or 4% for women.',
++  'sdata.gj_vahan.support': 'Loan for a vehicle\'s on-road cost, at 5% interest (4% for women)',
++  'elig.gjvahan.unreserved': 'You must belong to the unreserved category, not a reserved one.',
++  'elig.gjvahan.age': 'You must be between 18 and 50 years old.',
++  'elig.gjvahan.licence': 'You must have a valid driving licence.',
++  'elig.gjvahan.income': 'Your family\'s income for a year must not be more than Rs.6 lakh.',
++  'elig.gjvahan.vehicle': 'The vehicle you buy must be pledged to the corporation as security for the loan, and you repay the loan in equal monthly instalments over 5 years.',
++  'elig.gjvahan.limits': 'Only one person from a family can get this, and at most 5 people are chosen in a village.',
+@@ -344,0 +633 @@ const hi = {
 +  'elig.pmfme.upgrade': 'खाद्य प्रसंस्करण उद्योग मंत्रालय की जानकारी में एक इकाई के लिए यह सरकारी पैसा उन इकाइयों के लिए बताया गया है जो अपनी इकाई को उन्नत करना चाहती हैं। नई इकाई को यह मिल सकता है या नहीं, यह उसमें नहीं लिखा है, इसलिए आवेदन से पहले अपनी बैंक शाखा से पूछें।',
-@@ -351,0 +574 @@ const hi = {
+@@ -351,0 +641 @@ const hi = {
 +  'elig.pmegp.period': '2022 के PMEGP नियमों में यह योजना 2021-22 से 2025-26 तक के सालों के लिए मंज़ूर की गई है। हम यह पक्का नहीं कर पाए हैं कि यह 31 मार्च 2026 के बाद भी चल रही है, इसलिए आवेदन से पहले अपने ज़िला उद्योग केंद्र से पूछें।',
-@@ -371,0 +595 @@ const hi = {
+@@ -371,0 +662 @@ const hi = {
 +  'elig.standupindia.period': 'वित्तीय सेवा विभाग के अनुसार यह योजना 31 मार्च 2025 तक चलती है। 2025-26 के बजट में एक नई योजना की घोषणा हुई थी। हम यह पक्का नहीं कर पाए हैं कि अभी कर्ज़ दिए जा रहे हैं, इसलिए अपनी बैंक शाखा से पूछें।',
-@@ -500,0 +725,218 @@ const hi = {
+@@ -500,0 +792,285 @@ const hi = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'एक गारंटी, जिसके सहारे सदस्य बैंक छोटे कारोबार को बिना गिरवी लिए, या कर्ज़ के सिर्फ़ एक हिस्से पर गिरवी लेकर, Rs.10 करोड़ तक कर्ज़ दे सकता है। खेती और स्वयं सहायता समूह इसमें शामिल नहीं हैं।',
@@ -452,13 +519,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'उत्तराखंड के कस्बों और शहरों के लोगों के लिए छोटा कारोबार शुरू करने या बढ़ाने के लिए Rs.2 लाख तक का बैंक कर्ज़, जिसके ब्याज़ का एक हिस्सा केंद्र और राज्य सरकारें भरती हैं। फ़ॉर्म आपको अपने नगर निकाय से मिलता है, जो उसे जाँचकर बैंक को भेजता है।',
 +  'sdata.uk_nulm.support': 'Rs.2 लाख तक का बैंक कर्ज़, ब्याज़ का एक हिस्सा सरकार भरती है',
 +  'elig.uknulm.income': 'आपके परिवार की साल भर की आमदनी Rs.3 लाख से कम होनी चाहिए।',
-@@ -567,0 +1010 @@ const ta = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'गुजरात के आदिवासी इलाकों में रहने वाले अनुसूचित जनजाति के लोगों के लिए, जो अपना काम शुरू करने के लिए बैंक से कर्ज़ लेते हैं। सरकार Rs.5 लाख तक के कर्ज़ पर 6% ब्याज़ में मदद देती है।',
++  'sdata.gj_tribal_int.support': 'Rs.5 लाख तक के बैंक कर्ज़ पर 6% ब्याज़ में मदद',
++  'elig.gjtribal.st': 'आप अनुसूचित जनजाति के व्यक्ति हों।',
++  'elig.gjtribal.area': 'आप गुजरात के किसी आदिवासी इलाके के निवासी हों।',
++  'elig.gjtribal.loan': 'आपने अपना काम शुरू करने के लिए बैंक से कर्ज़ लिया हो।',
++  'elig.gjtribal.office': 'आप गांधीनगर में गुजरात आदिवासी विकास निगम के परियोजना प्रशासक के दफ़्तर में, या आदिवासी ज़िले के किसी दफ़्तर में आवेदन करते हैं।',
++
++  'sdata.gj_jgvy.description': 'गाँव में नया उद्योग शुरू करना चाहने वाले कारीगरों, छोटे उद्यमियों और स्वयं सहायता समूहों के लिए। सरकार लागत के पहले Rs.10 लाख का 25% देती है, और अनुसूचित जाति, अनुसूचित जनजाति, महिलाओं और दिव्यांगों के लिए 30%; उसके ऊपर की लागत का 10%, Rs.25 लाख तक।',
++  'sdata.gj_jgvy.support': 'सरकार पहले Rs.10 लाख का 25% देती है (कुछ वर्गों के लिए 30%)',
++  'elig.gjjgvy.who': 'आप व्यक्तिगत रूप से कारीगर या उद्यमी हों, या छोटे पैमाने पर सामान बनाने वाले किसी सक्रिय Grade-II स्वयं सहायता समूह के सदस्य हों। आवेदन किसी साझेदारी फ़र्म, निजी कंपनी, संयुक्त उद्यम, HUF या ऐसे ही किसी कारोबार की ओर से नहीं होना चाहिए।',
++  'elig.gjjgvy.age': 'आपकी उम्र 25 से 50 साल के बीच होनी चाहिए।',
++  'elig.gjjgvy.class10': 'आपने किसी मान्य स्कूल बोर्ड से कम से कम कक्षा 10 पास की हो।',
++  'elig.gjjgvy.experience': 'आप जो काम करना चाहते हैं, उसमें कम से कम एक साल का तजुर्बा हो, या किसी मान्य संस्थान से उसकी ट्रेनिंग मिली हो।',
++  'elig.gjjgvy.village': 'आपकी परियोजना ऐसे ग्रामीण इलाके में होनी चाहिए जहाँ 20,000 से ज़्यादा लोग न रहते हों, और जहाँ 24 घंटे थ्री-फ़ेज़ बिजली मिलती हो।',
++  'elig.gjjgvy.cost': 'परियोजना की लागत Rs.1 लाख से Rs.25 लाख के बीच होनी चाहिए। इसमें मशीन, कच्चा माल और कारोबार चलाने के लिए पैसा (कुल का 10% तक) शामिल हो सकता है, लेकिन ज़मीन या इमारत नहीं। सरकारी पैसा तभी मिलता है जब आपकी इकाई 2 साल तक अच्छी तरह चल चुकी हो।',
++
++  'sdata.gj_dtaiss.description': 'गुजरात में पंजीकृत हथकरघा और हस्तशिल्प कारीगरों के लिए। मशीन, औज़ार या कच्चे माल के लिए Rs.1 लाख तक का बैंक कर्ज़। सरकार कर्ज़ का एक हिस्सा एक बार देती है, और 3 साल तक हर छह महीने में 7% ब्याज़ में मदद।',
++  'sdata.gj_dtaiss.support': 'Rs.1 लाख तक का कर्ज़, और सरकार उसका 20% से 25% देती है',
++  'elig.gjdtaiss.skill': 'आपके पास हथकरघा या हस्तशिल्प के काम का हुनर हो।',
++  'elig.gjdtaiss.registered': 'आप कुटीर और ग्रामोद्योग विभाग के Indext-C में कारीगर के रूप में पंजीकृत हों, और आपके पास विकास आयुक्त (हथकरघा या हस्तशिल्प) या Indext-C का पहचान पत्र हो, या ज़िला उद्योग केंद्र के महाप्रबंधक का अस्थायी प्रमाण पत्र हो।',
++  'elig.gjdtaiss.margin': 'सामान्य श्रेणी के पुरुष आवेदक के लिए सरकार कर्ज़ का 20% देती है, और अनुसूचित जाति, अनुसूचित जनजाति या महिला आवेदक के लिए, या नेत्रहीन या 40% या उससे ज़्यादा दिव्यांगता वाले के लिए 25%। यह एक ही बार दिया जाता है, कर्ज़ मिलने के बाद।',
++  'elig.gjdtaiss.repay': 'कर्ज़ ब्याज़ समेत 12 से 36 मासिक किस्तों में चुकाना होता है, जितनी किस्तें बैंक तय करे। हर किस्त समय पर देनी होगी, आपने किसी बैंक का कर्ज़ चुकाने में चूक न की हो, और कर्ज़ का इस्तेमाल सिर्फ़ उसी काम में करना होगा जिसके लिए वह दिया गया है।',
++
++  'sdata.gj_mahila.description': 'गुजरात के कम आय वाले परिवारों की अनुसूचित जाति की महिलाओं के लिए, जो छोटा कारोबार शुरू करना चाहती हैं। Rs.50,000 का कर्ज़, 6% सालाना ब्याज़ पर। इसमें 95% (Rs.47,500) राज्य का हिस्सा है और 5% (Rs.2,500) आपका हिस्सा। महीने की किस्त 36 महीने तक करीब Rs.1,445 हो सकती है।',
++  'sdata.gj_mahila.support': 'Rs.50,000 का कर्ज़ 6% ब्याज़ पर, 36 महीने में चुकाना',
++  'elig.gjmahila.permanent': 'आप गुजरात के स्थायी निवासी हों।',
++  'elig.gjdaadc.sc': 'आप अनुसूचित जाति के व्यक्ति हों।',
++  'elig.gjmahila.aay': 'आप अंत्योदय अन्न योजना (AAY) वाले परिवार से हों, या आर्थिक रूप से पिछड़े वर्ग से हों।',
++  'elig.gjdaadc.income': 'आपके परिवार की सालाना आय Rs.3 लाख से ज़्यादा न हो।',
++  'elig.gjmahila.plan': 'आपकी योजना छोटा कारोबार या अपना काम शुरू करने की हो।',
++  'elig.gjdaadc.online': 'आप आवेदन ऑनलाइन करते हैं, डॉ. आंबेडकर अंत्योदय विकास निगम की वेबसाइट पर।',
++
++  'sdata.gj_smallbiz.description': 'गुजरात के अंत्योदय अन्न योजना वाले परिवारों के अनुसूचित जाति के लोगों के लिए, जो छोटा कारोबार शुरू करना या बढ़ाना चाहते हैं। Rs.1,25,000 तक का कर्ज़, 4% सालाना ब्याज़ पर, 60 महीने में चुकाना होता है, और दो ज़मानतदार चाहिए। पूरी रकम राज्य का हिस्सा है, इसलिए आपको अपना हिस्सा नहीं देना पड़ता। महीने की किस्त ज़्यादा से ज़्यादा करीब Rs.2,302 है।',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 तक का कर्ज़ 4% ब्याज़ पर, 60 महीने में चुकाना',
++  'elig.gjsmallbiz.aay': 'आप अंत्योदय अन्न योजना (AAY) वाले परिवार से हों।',
++  'elig.gjsmallbiz.intent': 'आपकी योजना छोटा कारोबार या धंधा शुरू करने या बढ़ाने की हो।',
++  'elig.gjsmallbiz.guarantors': 'आपके पास दो ज़मानतदार हों, यानी ऐसे लोग जो आपके कर्ज़ की ज़िम्मेदारी लेने को राज़ी हों।',
++
++  'sdata.gj_selfemp.description': 'गुजरात के बेरोज़गार अनुसूचित जनजाति के लोगों के लिए। विभाग के बताए 85 कारोबारों में से कोई भी शुरू करने के लिए Rs.50,000 से Rs.5 लाख तक का कर्ज़, 4% सालाना ब्याज़ पर; रकम इस पर निर्भर है कि आप कौन-सा कारोबार चुनते हैं।',
++  'sdata.gj_selfemp.support': 'Rs.50,000 से Rs.5 लाख तक का कर्ज़ 4% ब्याज़ पर',
++  'elig.gjselfemp.unemployed': 'आवेदन करते समय आप बेरोज़गार हों।',
++  'elig.gjselfemp.list': 'आपका कारोबार विभाग के बताए 85 कारोबारों में से एक होना चाहिए, और कर्ज़ की रकम कारोबार पर निर्भर करती है।',
++  'elig.gjselfemp.online': 'आप आवेदन ऑनलाइन करते हैं, गुजरात आदिवासी विकास निगम की वेबसाइट पर।',
++
++  'sdata.gj_fvp.description': 'फल और सब्ज़ियों को सुरक्षित रखने, डिब्बाबंद करने और रसोई-बग़ीचे में उगाने की व्यावहारिक ट्रेनिंग। ट्रेनिंग 2 से 5 दिन की होती है। सरकार हर व्यक्ति के लिए हर दिन Rs.500 का खर्च उठाती है: Rs.250 आपको वज़ीफ़े के रूप में मिलता है और Rs.250 ट्रेनिंग की सामग्री, विशेषज्ञों और दूसरे खर्चों पर लगता है।',
++  'sdata.gj_fvp.support': '2 से 5 दिन की ट्रेनिंग के दौरान हर दिन Rs.250 वज़ीफ़ा',
++  'elig.gjfvp.willing': 'आप फल और सब्ज़ी उगाने के हुनर की ट्रेनिंग में हिस्सा लेने को तैयार हों।',
++  'elig.gjfvp.online': 'आप आवेदन ऑनलाइन करते हैं, I-Khedut पोर्टल पर।',
++
++  'sdata.gj_micro.description': 'गुजरात के रबारी और भरवाड समुदायों के छोटे कारोबारियों के लिए। 5% सालाना ब्याज़ पर Rs.1,25,000 तक का कर्ज़, जिससे परियोजना की लागत का 95% पूरा होता है।',
++  'sdata.gj_micro.support': 'Rs.1,25,000 तक का कर्ज़ 5% ब्याज़ पर',
++  'elig.gjmicro.caste': 'आप रबारी या भरवाड समुदाय से हों, जो सामाजिक और शैक्षिक रूप से पिछड़े वर्गों में आता है।',
++  'elig.gjmicro.age': 'आपकी उम्र 21 से 45 साल के बीच होनी चाहिए।',
++  'elig.gjmicro.income': 'आपकी सालाना आय Rs.3 लाख से ज़्यादा न हो।',
++  'elig.gjmicro.share': 'कर्ज़ लागत का 95% पूरा करता है, और बाकी 5% आप लगाते हैं।',
++  'elig.gjmicro.online': 'आप आवेदन ऑनलाइन करते हैं, DAAD Online पोर्टल पर।',
++
++  'sdata.gj_vahan.description': 'गुजरात के अनारक्षित वर्ग के अपना काम करने वालों के लिए। रिक्शा, लोडिंग रिक्शा, मारुति कार या जीप टैक्सी जैसी गाड़ी की ऑन-रोड कीमत के लिए कर्ज़, 5% सालाना साधारण ब्याज़ पर, और महिलाओं के लिए 4%।',
++  'sdata.gj_vahan.support': 'गाड़ी की ऑन-रोड कीमत के लिए कर्ज़, 5% ब्याज़ पर (महिलाओं के लिए 4%)',
++  'elig.gjvahan.unreserved': 'आप अनारक्षित वर्ग के हों, आरक्षित वर्ग के नहीं।',
++  'elig.gjvahan.age': 'आपकी उम्र 18 से 50 साल के बीच होनी चाहिए।',
++  'elig.gjvahan.licence': 'आपके पास मान्य ड्राइविंग लाइसेंस हो।',
++  'elig.gjvahan.income': 'आपके परिवार की सालाना आय Rs.6 लाख से ज़्यादा न हो।',
++  'elig.gjvahan.vehicle': 'आप जो गाड़ी खरीदें, उसे कर्ज़ की सुरक्षा के लिए निगम के पास गिरवी रखना होगा, और कर्ज़ 5 साल में बराबर मासिक किस्तों में चुकाना होगा।',
++  'elig.gjvahan.limits': 'एक परिवार से सिर्फ़ एक व्यक्ति को यह मिल सकता है, और एक गाँव में ज़्यादा से ज़्यादा 5 लोग चुने जाते हैं।',
+@@ -567,0 +1144 @@ const ta = {
 +  'elig.pmfme.upgrade': 'ஒரு நிறுவனத்தைப் பற்றி உணவுப் பதப்படுத்தும் தொழில்கள் அமைச்சகம் தந்த தகவலில், இந்த அரசுப் பணம் தங்கள் நிறுவனத்தை மேம்படுத்த விரும்பும் நிறுவனங்களுக்கானது என்று உள்ளது. புதிய நிறுவனம் இதைப் பெற முடியுமா என்பது அதில் இல்லை, எனவே விண்ணப்பிக்கும் முன் உங்கள் வங்கிக் கிளையில் கேளுங்கள்.',
-@@ -574,0 +1018 @@ const ta = {
+@@ -574,0 +1152 @@ const ta = {
 +  'elig.pmegp.period': '2022 PMEGP விதிகளில், இந்தத் திட்டம் 2021-22 முதல் 2025-26 வரையிலான ஆண்டுகளுக்கு ஒப்புதல் பெற்றுள்ளது. 31 மார்ச் 2026 முடிந்த பிறகும் இது தொடர்கிறதா என்பதை நாங்கள் உறுதி செய்யவில்லை, எனவே விண்ணப்பிக்கும் முன் உங்கள் மாவட்டத் தொழில் மையத்தில் கேளுங்கள்.',
-@@ -594,0 +1039 @@ const ta = {
+@@ -594,0 +1173 @@ const ta = {
 +  'elig.standupindia.period': 'நிதிச் சேவைகள் துறை, இந்தத் திட்டம் 31 மார்ச் 2025 வரை என்று கூறுகிறது. 2025-26 பட்ஜெட்டில் ஒரு புதிய திட்டம் அறிவிக்கப்பட்டது. இப்போது கடன்கள் வழங்கப்படுகின்றனவா என்பதை நாங்கள் உறுதி செய்யவில்லை, எனவே உங்கள் வங்கிக் கிளையில் கேளுங்கள்.',
-@@ -723,0 +1169,218 @@ const ta = {
+@@ -723,0 +1303,285 @@ const ta = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'உறுப்பினர் வங்கி ஒரு சிறு தொழிலுக்கு அடைமானம் கேட்காமல், அல்லது கடனின் ஒரு பகுதிக்கு மட்டும் அடைமானம் பெற்று, Rs.10 கோடி வரை கடன் தர உதவும் உத்தரவாதம். விவசாயமும் சுய உதவிக் குழுக்களும் இதில் சேராது.',
@@ -677,13 +811,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'உத்தரகண்ட்டின் நகரங்கள், பட்டணங்களில் உள்ளவர்கள் சிறு தொழிலைத் தொடங்க அல்லது வளர்க்க Rs.2 லட்சம் வரை வங்கிக் கடன்; அதன் வட்டியில் ஒரு பகுதியை மத்திய, மாநில அரசுகள் செலுத்தும். படிவத்தை உங்கள் நகராட்சி அமைப்பிடம் பெறுவீர்கள்; அது அதைச் சரிபார்த்து வங்கிக்கு அனுப்பும்.',
 +  'sdata.uk_nulm.support': 'Rs.2 லட்சம் வரை வங்கிக் கடன், வட்டியில் ஒரு பகுதி அரசு செலுத்தும்',
 +  'elig.uknulm.income': 'உங்கள் குடும்பத்தின் ஆண்டு வருமானம் Rs.3 லட்சத்துக்குக் குறைவாக இருக்க வேண்டும்.',
-@@ -790,0 +1454 @@ const te = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'சொந்தத் தொழில் தொடங்க வங்கிக் கடன் வாங்கும், குஜராத்தின் பழங்குடியினர் பகுதிகளில் வசிக்கும் பட்டியல் பழங்குடியினருக்கானது. Rs.5 லட்சம் வரையிலான கடனுக்கு அரசு 6% வட்டியில் உதவி வழங்குகிறது.',
++  'sdata.gj_tribal_int.support': 'Rs.5 லட்சம் வரையிலான வங்கிக் கடனுக்கு 6% வட்டியில் உதவி',
++  'elig.gjtribal.st': 'நீங்கள் பட்டியல் பழங்குடியினரைச் சேர்ந்தவராக இருக்க வேண்டும்.',
++  'elig.gjtribal.area': 'நீங்கள் குஜராத்தின் ஒரு பழங்குடியினர் பகுதியில் வசிக்க வேண்டும்.',
++  'elig.gjtribal.loan': 'சொந்தத் தொழில் தொடங்க நீங்கள் வங்கியில் கடன் வாங்கியிருக்க வேண்டும்.',
++  'elig.gjtribal.office': 'காந்திநகரில் உள்ள குஜராத் பழங்குடியினர் வளர்ச்சிக் கழகத்தின் திட்ட நிர்வாகி அலுவலகத்தில், அல்லது ஒரு பழங்குடியினர் மாவட்ட அலுவலகத்தில் விண்ணப்பிக்க வேண்டும்.',
++
++  'sdata.gj_jgvy.description': 'புதிய கிராமத் தொழிலைத் தொடங்க விரும்பும் கைவினைஞர்கள், சிறு தொழில்முனைவோர், சுய உதவிக் குழுக்களுக்கானது. செலவின் முதல் Rs.10 லட்சத்தில் 25% அரசு தருகிறது; பட்டியல் சாதி, பட்டியல் பழங்குடியினர், பெண்கள், மாற்றுத் திறனாளிகளுக்கு 30%. அதற்கு மேலுள்ள செலவில் 10% தருகிறது, Rs.25 லட்சம் வரை.',
++  'sdata.gj_jgvy.support': 'முதல் Rs.10 லட்சத்தில் 25% அரசு தரும் (சில பிரிவினருக்கு 30%)',
++  'elig.gjjgvy.who': 'நீங்கள் தனிப்பட்ட கைவினைஞராகவோ தொழில்முனைவோராகவோ இருக்க வேண்டும், அல்லது சிறிய அளவில் பொருட்களைத் தயாரிக்கும், செயல்பாட்டில் உள்ள Grade-II சுய உதவிக் குழுவின் உறுப்பினராக இருக்க வேண்டும். கூட்டாண்மை நிறுவனம், தனியார் கம்பெனி, கூட்டு முயற்சி, HUF அல்லது அதுபோன்ற வணிகத்தின் சார்பாக விண்ணப்பிக்கக் கூடாது.',
++  'elig.gjjgvy.age': 'உங்கள் வயது 25 முதல் 50 வரை இருக்க வேண்டும்.',
++  'elig.gjjgvy.class10': 'நீங்கள் அங்கீகரிக்கப்பட்ட பள்ளி வாரியத்தில் குறைந்தது வகுப்பு 10 தேர்ச்சி பெற்றிருக்க வேண்டும்.',
++  'elig.gjjgvy.experience': 'நீங்கள் செய்ய விரும்பும் வேலையில் குறைந்தது ஒரு வருட அனுபவம் இருக்க வேண்டும், அல்லது அங்கீகரிக்கப்பட்ட நிறுவனத்தில் அதற்கான பயிற்சி பெற்றிருக்க வேண்டும்.',
++  'elig.gjjgvy.village': 'உங்கள் திட்டம் 20,000-க்கு மேல் மக்கள் வசிக்காத கிராமப்புறப் பகுதியில், 24 மணி நேர மும்முனை மின்சார வசதியுடன் இருக்க வேண்டும்.',
++  'elig.gjjgvy.cost': 'திட்டச் செலவு Rs.1 லட்சம் முதல் Rs.25 லட்சம் வரை இருக்க வேண்டும். இதில் இயந்திரங்கள், மூலப்பொருட்கள், தொழிலை நடத்தப் பணம் (மொத்தத்தில் 10% வரை) சேர்க்கலாம்; நிலம் அல்லது கட்டடங்கள் சேராது. உங்கள் நிறுவனம் 2 ஆண்டுகள் நன்றாக இயங்கிய பிறகுதான் அரசுப் பணம் கிடைக்கும்.',
++
++  'sdata.gj_dtaiss.description': 'குஜராத்தில் பதிவு செய்துள்ள, கைத்தறி மற்றும் கைவினைத் தொழிலில் உள்ள கைவினைஞர்களுக்கானது. இயந்திரங்கள், கருவிகள் அல்லது மூலப்பொருட்களுக்கு Rs.1 லட்சம் வரை வங்கிக் கடன். கடனின் ஒரு பங்கை அரசு ஒரே முறை தருகிறது; மேலும் 3 ஆண்டுகள் வரை ஆறு மாதத்துக்கு ஒருமுறை 7% வட்டியில் உதவி.',
++  'sdata.gj_dtaiss.support': 'Rs.1 லட்சம் வரை கடன், அதில் 20% முதல் 25% வரை அரசு தரும்',
++  'elig.gjdtaiss.skill': 'உங்களுக்குக் கைத்தறி அல்லது கைவினை வேலையில் திறன் இருக்க வேண்டும்.',
++  'elig.gjdtaiss.registered': 'நீங்கள் குடிசை மற்றும் கிராமத் தொழில்கள் துறையின் Indext-C-இல் கைவினைஞராகப் பதிவு செய்திருக்க வேண்டும்; மேலும் மேம்பாட்டு ஆணையர் (கைத்தறி அல்லது கைவினை) அல்லது Indext-C வழங்கிய அடையாள அட்டை, அல்லது மாவட்டத் தொழில் மையத்தின் பொது மேலாளர் வழங்கிய தற்காலிகச் சான்றிதழ் இருக்க வேண்டும்.',
++  'elig.gjdtaiss.margin': 'பொதுப் பிரிவு ஆணாக இருந்தால் கடனில் 20% அரசு தரும்; பட்டியல் சாதி, பட்டியல் பழங்குடியினர் அல்லது பெண் விண்ணப்பதாரராக இருந்தால், அல்லது பார்வையற்றவராக அல்லது 40% அல்லது அதற்கு மேல் மாற்றுத் திறனாளியாக இருந்தால் 25% தரும். இது கடன் கொடுத்த பிறகு ஒரே முறை செலுத்தப்படும்.',
++  'elig.gjdtaiss.repay': 'கடனை வட்டியுடன் 12 முதல் 36 மாதாந்திரத் தவணைகளில் திருப்பிச் செலுத்த வேண்டும்; எத்தனை தவணை என்பதை வங்கி முடிவு செய்யும். ஒவ்வொரு தவணையையும் உரிய நேரத்தில் செலுத்த வேண்டும், எந்த வங்கிக்கும் திருப்பிச் செலுத்தத் தவறியிருக்கக் கூடாது, கடனை அது வழங்கப்பட்ட நோக்கத்துக்கு மட்டுமே பயன்படுத்த வேண்டும்.',
++
++  'sdata.gj_mahila.description': 'குஜராத்தில் குறைந்த வருமானக் குடும்பங்களைச் சேர்ந்த, சிறு தொழில் தொடங்க விரும்பும் பட்டியல் சாதிப் பெண்களுக்கானது. ஆண்டுக்கு 6% வட்டியில் Rs.50,000 கடன். இதில் 95% (Rs.47,500) மாநிலத்தின் பங்களிப்பு, 5% (Rs.2,500) உங்கள் பங்களிப்பு. மாதாந்திரத் தவணை 36 மாதங்களுக்கு சுமார் Rs.1,445 ஆக இருக்கலாம்.',
++  'sdata.gj_mahila.support': 'Rs.50,000 கடன் 6% வட்டியில், 36 மாதங்களில் திருப்பிச் செலுத்த வேண்டும்',
++  'elig.gjmahila.permanent': 'நீங்கள் குஜராத்தின் நிரந்தர வசிப்பாளராக இருக்க வேண்டும்.',
++  'elig.gjdaadc.sc': 'நீங்கள் பட்டியல் சாதியைச் சேர்ந்தவராக இருக்க வேண்டும்.',
++  'elig.gjmahila.aay': 'நீங்கள் அந்த்யோதயா அன்ன யோஜனா (AAY) குடும்பத்தைச் சேர்ந்தவராக, அல்லது பொருளாதாரத்தில் பிற்படுத்தப்பட்ட வகுப்பைச் சேர்ந்தவராக இருக்க வேண்டும்.',
++  'elig.gjdaadc.income': 'உங்கள் குடும்பத்தின் ஓராண்டு வருமானம் Rs.3 லட்சத்துக்கு மேல் இருக்கக் கூடாது.',
++  'elig.gjmahila.plan': 'சிறு தொழிலை அல்லது சொந்த வேலையைத் தொடங்கும் திட்டம் உங்களுக்கு இருக்க வேண்டும்.',
++  'elig.gjdaadc.online': 'டாக்டர் அம்பேத்கர் அந்த்யோதயா வளர்ச்சிக் கழகத்தின் இணையதளத்தில், இணையத்தில் விண்ணப்பிக்க வேண்டும்.',
++
++  'sdata.gj_smallbiz.description': 'குஜராத்தில் அந்த்யோதயா அன்ன யோஜனா குடும்பங்களைச் சேர்ந்த, சிறு தொழிலைத் தொடங்க அல்லது வளர்க்க விரும்பும் பட்டியல் சாதியினருக்கானது. ஆண்டுக்கு 4% வட்டியில் Rs.1,25,000 வரை கடன், 60 மாதங்களில் திருப்பிச் செலுத்த வேண்டும், இரண்டு பேர் உத்தரவாதம் அளிக்க வேண்டும். முழுத் தொகையும் மாநிலத்தின் பங்களிப்பு, எனவே உங்கள் பங்களிப்பு தேவையில்லை. மாதாந்திரத் தவணை அதிகபட்சம் சுமார் Rs.2,302.',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 வரை கடன் 4% வட்டியில், 60 மாதங்களில் திருப்பிச் செலுத்த வேண்டும்',
++  'elig.gjsmallbiz.aay': 'நீங்கள் அந்த்யோதயா அன்ன யோஜனா (AAY) குடும்பத்தைச் சேர்ந்தவராக இருக்க வேண்டும்.',
++  'elig.gjsmallbiz.intent': 'சிறு தொழில் அல்லது வணிகத்தைத் தொடங்கவோ பெருக்கவோ திட்டம் உங்களுக்கு இருக்க வேண்டும்.',
++  'elig.gjsmallbiz.guarantors': 'உங்கள் கடனுக்கு உத்தரவாதம் அளிக்கச் சம்மதிக்கும் இரண்டு பேர் இருக்க வேண்டும்.',
++
++  'sdata.gj_selfemp.description': 'குஜராத்தில் வேலையில்லாத பட்டியல் பழங்குடியினருக்கானது. துறை குறிப்பிட்டுள்ள 85 தொழில்களில் எதையாவது தொடங்க, நீங்கள் தேர்ந்தெடுக்கும் தொழிலைப் பொறுத்து Rs.50,000 முதல் Rs.5 லட்சம் வரை கடன், ஆண்டுக்கு 4% வட்டியில்.',
++  'sdata.gj_selfemp.support': 'Rs.50,000 முதல் Rs.5 லட்சம் வரை கடன் 4% வட்டியில்',
++  'elig.gjselfemp.unemployed': 'விண்ணப்பிக்கும்போது நீங்கள் வேலையில்லாமல் இருக்க வேண்டும்.',
++  'elig.gjselfemp.list': 'உங்கள் தொழில் துறை குறிப்பிட்டுள்ள 85 தொழில்களில் ஒன்றாக இருக்க வேண்டும்; கடன் தொகை தொழிலைப் பொறுத்தது.',
++  'elig.gjselfemp.online': 'குஜராத் பழங்குடியினர் வளர்ச்சிக் கழகத்தின் இணையதளத்தில் ஆன்லைனில் விண்ணப்பிக்க வேண்டும்.',
++
++  'sdata.gj_fvp.description': 'பழங்கள், காய்கறிகளைப் பதப்படுத்துதல், டப்பாவில் அடைத்தல், வீட்டுத் தோட்டத்தில் வளர்த்தல் ஆகியவற்றில் நேரடிப் பயிற்சி. பயிற்சி 2 முதல் 5 நாட்கள் நடக்கும். ஒருவருக்கு ஒரு நாளைக்கு Rs.500 செலவை அரசு ஏற்கிறது: Rs.250 உங்களுக்கு உதவித்தொகையாகக் கிடைக்கும், Rs.250 பயிற்சிப் பொருட்கள், நிபுணர்கள் மற்றும் பிற செலவுகளுக்குப் போகும்.',
++  'sdata.gj_fvp.support': '2 முதல் 5 நாள் பயிற்சியின்போது ஒரு நாளுக்கு Rs.250 உதவித்தொகை',
++  'elig.gjfvp.willing': 'பழம், காய்கறி வளர்ப்பு குறித்த திறன் பயிற்சியில் கலந்துகொள்ள நீங்கள் தயாராக இருக்க வேண்டும்.',
++  'elig.gjfvp.online': 'I-Khedut இணையதளத்தில் ஆன்லைனில் விண்ணப்பிக்க வேண்டும்.',
++
++  'sdata.gj_micro.description': 'குஜராத்தில் ரபாரி, பர்வாட் சமூகங்களைச் சேர்ந்த சிறு தொழில் உரிமையாளர்களுக்கானது. ஆண்டுக்கு 5% வட்டியில் Rs.1,25,000 வரை கடன்; திட்டச் செலவின் 95% தொகையை இது ஈடுசெய்கிறது.',
++  'sdata.gj_micro.support': 'Rs.1,25,000 வரை கடன் 5% வட்டியில்',
++  'elig.gjmicro.caste': 'நீங்கள் சமூக ரீதியாகவும் கல்வி ரீதியாகவும் பிற்படுத்தப்பட்ட வகுப்புகளில் உள்ள ரபாரி அல்லது பர்வாட் சமூகத்தைச் சேர்ந்தவராக இருக்க வேண்டும்.',
++  'elig.gjmicro.age': 'உங்கள் வயது 21 முதல் 45 வரை இருக்க வேண்டும்.',
++  'elig.gjmicro.income': 'உங்கள் ஓராண்டு வருமானம் Rs.3 லட்சத்துக்கு மேல் இருக்கக் கூடாது.',
++  'elig.gjmicro.share': 'கடன் செலவின் 95% தொகையை ஈடுசெய்யும்; மீதமுள்ள 5% நீங்கள் போட வேண்டும்.',
++  'elig.gjmicro.online': 'DAAD Online இணையதளத்தில் ஆன்லைனில் விண்ணப்பிக்க வேண்டும்.',
++
++  'sdata.gj_vahan.description': 'குஜராத்தில் இடஒதுக்கீடு இல்லாத பிரிவைச் சேர்ந்த, சொந்தத் தொழில் செய்பவர்களுக்கானது. ஆட்டோ ரிக்ஷா, சரக்கு ஆட்டோ, மாருதி கார் அல்லது ஜீப் டாக்சி போன்ற வாகனத்தின் சாலை விலைக்குக் கடன், ஆண்டுக்கு 5% எளிய வட்டியில்; பெண்களுக்கு 4%.',
++  'sdata.gj_vahan.support': 'வாகனத்தின் சாலை விலைக்குக் கடன், 5% வட்டியில் (பெண்களுக்கு 4%)',
++  'elig.gjvahan.unreserved': 'நீங்கள் இடஒதுக்கீடு இல்லாத பிரிவைச் சேர்ந்தவராக இருக்க வேண்டும், இடஒதுக்கீடு உள்ள பிரிவினராக அல்ல.',
++  'elig.gjvahan.age': 'உங்கள் வயது 18 முதல் 50 வரை இருக்க வேண்டும்.',
++  'elig.gjvahan.licence': 'உங்களிடம் செல்லுபடியாகும் ஓட்டுநர் உரிமம் இருக்க வேண்டும்.',
++  'elig.gjvahan.income': 'உங்கள் குடும்பத்தின் ஓராண்டு வருமானம் Rs.6 லட்சத்துக்கு மேல் இருக்கக் கூடாது.',
++  'elig.gjvahan.vehicle': 'நீங்கள் வாங்கும் வாகனம் கடனுக்கு உத்தரவாதமாகக் கழகத்திடம் அடைமானம் வைக்கப்பட வேண்டும்; கடனை 5 ஆண்டுகளில் சம மாதாந்திரத் தவணைகளில் திருப்பிச் செலுத்த வேண்டும்.',
++  'elig.gjvahan.limits': 'ஒரு குடும்பத்தில் ஒருவருக்கு மட்டுமே இது கிடைக்கும்; ஒரு கிராமத்தில் அதிகபட்சம் 5 பேர் தேர்ந்தெடுக்கப்படுவார்கள்.',
+@@ -790,0 +1655 @@ const te = {
 +  'elig.pmfme.upgrade': 'ఒక యూనిట్ గురించి ఆహార శుద్ధి పరిశ్రమల మంత్రిత్వ శాఖ ఇచ్చిన సమాచారంలో, ఈ ప్రభుత్వ డబ్బు మెరుగుపరచుకోవాలనుకునే యూనిట్ల కోసం అని ఉంది. కొత్త యూనిట్ దీన్ని పొందగలదా అనేది అందులో లేదు, అందుకే దరఖాస్తు చేసే ముందు మీ బ్యాంకు శాఖలో అడగండి.',
-@@ -797,0 +1462 @@ const te = {
+@@ -797,0 +1663 @@ const te = {
 +  'elig.pmegp.period': '2022 PMEGP నిబంధనల ప్రకారం ఈ పథకం 2021-22 నుంచి 2025-26 వరకు ఉన్న సంవత్సరాలకు ఆమోదం పొందింది. 31 మార్చి 2026 తర్వాత కూడా ఇది కొనసాగుతుందో లేదో మేము నిర్ధారించలేదు, అందుకే దరఖాస్తు చేసే ముందు మీ జిల్లా పరిశ్రమల కేంద్రంలో అడగండి.',
-@@ -817,0 +1483 @@ const te = {
+@@ -817,0 +1684 @@ const te = {
 +  'elig.standupindia.period': 'ఆర్థిక సేవల విభాగం ప్రకారం ఈ పథకం 31 మార్చి 2025 వరకు ఉంటుంది. 2025-26 బడ్జెట్ సందర్భంగా కొత్త పథకాన్ని ప్రకటించారు. ఇప్పుడు అప్పులు ఇస్తున్నారో లేదో మేము నిర్ధారించలేదు, అందుకే మీ బ్యాంకు శాఖలో అడగండి.',
-@@ -946,0 +1613,218 @@ const te = {
+@@ -946,0 +1814,285 @@ const te = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'సభ్య బ్యాంకు ఒక చిన్న వ్యాపారానికి తాకట్టు అడగకుండా, లేదా అప్పులో ఒక భాగానికి మాత్రమే తాకట్టు తీసుకుని, Rs.10 కోట్ల వరకు అప్పు ఇవ్వడానికి సహాయపడే హామీ. వ్యవసాయం, స్వయం సహాయక సంఘాలు దీని పరిధిలోకి రావు.',
@@ -902,13 +1103,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'ఉత్తరాఖండ్‌లోని పట్టణాలు, నగరాల్లో ఉండేవారు చిన్న వ్యాపారం మొదలుపెట్టడానికి లేదా పెంచుకోవడానికి Rs.2 లక్షల వరకు బ్యాంకు అప్పు, దాని వడ్డీలో కొంత భాగాన్ని కేంద్ర, రాష్ట్ర ప్రభుత్వాలు చెల్లిస్తాయి. ఫారం మీ పురపాలక సంస్థ నుంచి వస్తుంది, అది దాన్ని తనిఖీ చేసి బ్యాంకుకు పంపుతుంది.',
 +  'sdata.uk_nulm.support': 'Rs.2 లక్షల వరకు బ్యాంకు అప్పు, వడ్డీలో కొంత భాగం ప్రభుత్వం చెల్లిస్తుంది',
 +  'elig.uknulm.income': 'మీ కుటుంబ ఏడాది ఆదాయం Rs.3 లక్షల కంటే తక్కువ ఉండాలి.',
-@@ -1013,0 +1898 @@ const ml = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'సొంత పని మొదలుపెట్టడానికి బ్యాంకు అప్పు తీసుకునే, గుజరాత్‌లోని గిరిజన ప్రాంతాల షెడ్యూల్డ్ తెగల వారి కోసం. Rs.5 లక్షల వరకు అప్పుపై 6% వడ్డీలో ప్రభుత్వం సహాయం ఇస్తుంది.',
++  'sdata.gj_tribal_int.support': 'Rs.5 లక్షల వరకు బ్యాంకు అప్పుపై 6% వడ్డీలో సహాయం',
++  'elig.gjtribal.st': 'మీరు షెడ్యూల్డ్ తెగకు చెందినవారై ఉండాలి.',
++  'elig.gjtribal.area': 'మీరు గుజరాత్‌లోని ఒక గిరిజన ప్రాంతంలో నివసించాలి.',
++  'elig.gjtribal.loan': 'సొంత పని మొదలుపెట్టడానికి మీరు బ్యాంకు అప్పు తీసుకుని ఉండాలి.',
++  'elig.gjtribal.office': 'గాంధీనగర్‌లోని గుజరాత్ గిరిజన అభివృద్ధి కార్పొరేషన్ ప్రాజెక్ట్ అడ్మినిస్ట్రేటర్ కార్యాలయంలో, లేదా ఒక గిరిజన జిల్లా కార్యాలయంలో దరఖాస్తు చేయాలి.',
++
++  'sdata.gj_jgvy.description': 'కొత్త గ్రామీణ పరిశ్రమ మొదలుపెట్టాలనుకునే కళాకారులు, చిన్న పారిశ్రామికవేత్తలు, స్వయం సహాయక సంఘాల కోసం. ఖర్చులో మొదటి Rs.10 లక్షల్లో 25% ప్రభుత్వం ఇస్తుంది; షెడ్యూల్డ్ కులం, షెడ్యూల్డ్ తెగ, మహిళలు, దివ్యాంగులకు 30%. దానికి మించిన ఖర్చులో 10%, Rs.25 లక్షల వరకు.',
++  'sdata.gj_jgvy.support': 'మొదటి Rs.10 లక్షల్లో 25% ప్రభుత్వం ఇస్తుంది (కొన్ని వర్గాలకు 30%)',
++  'elig.gjjgvy.who': 'మీరు వ్యక్తిగతంగా కళాకారులు లేదా పారిశ్రామికవేత్తలు అయి ఉండాలి, లేదా చిన్న స్థాయిలో వస్తువులు తయారుచేసే, చురుగ్గా పనిచేస్తున్న Grade-II స్వయం సహాయక సంఘంలో సభ్యులు అయి ఉండాలి. భాగస్వామ్య సంస్థ, ప్రైవేట్ కంపెనీ, జాయింట్ వెంచర్, HUF లేదా అలాంటి వ్యాపారం తరపున దరఖాస్తు చేయకూడదు.',
++  'elig.gjjgvy.age': 'మీ వయసు 25 నుంచి 50 ఏళ్ల మధ్య ఉండాలి.',
++  'elig.gjjgvy.class10': 'మీరు గుర్తింపు పొందిన స్కూల్ బోర్డులో కనీసం తరగతి 10 పాస్ అయి ఉండాలి.',
++  'elig.gjjgvy.experience': 'మీరు చేయాలనుకుంటున్న పనిలో కనీసం ఒక సంవత్సరం అనుభవం ఉండాలి, లేదా గుర్తింపు పొందిన సంస్థలో దానిలో శిక్షణ పొంది ఉండాలి.',
++  'elig.gjjgvy.village': 'మీ ప్రాజెక్టు 20,000 కంటే ఎక్కువ మంది నివసించని గ్రామీణ ప్రాంతంలో, 24 గంటల త్రీ-ఫేజ్ విద్యుత్ సరఫరాతో ఉండాలి.',
++  'elig.gjjgvy.cost': 'ప్రాజెక్టు ఖర్చు Rs.1 లక్ష నుంచి Rs.25 లక్షల వరకు ఉండాలి. ఇందులో యంత్రాలు, ముడి సరుకు, వ్యాపారం నడపడానికి డబ్బు (మొత్తంలో 10% వరకు) చేర్చవచ్చు, కానీ భూమి లేదా భవనాలు కాదు. మీ యూనిట్ 2 ఏళ్లు బాగా నడిచిన తర్వాతే ప్రభుత్వ డబ్బు వస్తుంది.',
++
++  'sdata.gj_dtaiss.description': 'గుజరాత్‌లో నమోదైన చేనేత, హస్తకళా కళాకారుల కోసం. యంత్రాలు, పనిముట్లు లేదా ముడి సరుకు కోసం Rs.1 లక్ష వరకు బ్యాంకు అప్పు. ప్రభుత్వం అప్పులో ఒక వాటాను ఒక్కసారి ఇస్తుంది, 3 ఏళ్ల వరకు ప్రతి ఆరు నెలలకు 7% వడ్డీలో సహాయం కూడా ఇస్తుంది.',
++  'sdata.gj_dtaiss.support': 'Rs.1 లక్ష వరకు అప్పు, అందులో 20% నుంచి 25% ప్రభుత్వం ఇస్తుంది',
++  'elig.gjdtaiss.skill': 'మీకు చేనేత లేదా హస్తకళ పనిలో నైపుణ్యం ఉండాలి.',
++  'elig.gjdtaiss.registered': 'మీరు కుటీర మరియు గ్రామీణ పరిశ్రమల శాఖకు చెందిన Indext-C లో కళాకారులుగా నమోదై ఉండాలి; అలాగే అభివృద్ధి కమిషనర్ (చేనేత లేదా హస్తకళ) లేదా Indext-C ఇచ్చిన గుర్తింపు కార్డు, లేదా జిల్లా పరిశ్రమల కేంద్రం జనరల్ మేనేజర్ ఇచ్చిన తాత్కాలిక ధ్రువపత్రం ఉండాలి.',
++  'elig.gjdtaiss.margin': 'సాధారణ వర్గానికి చెందిన పురుషులైతే అప్పులో 20% ప్రభుత్వం ఇస్తుంది; షెడ్యూల్డ్ కులం, షెడ్యూల్డ్ తెగ లేదా మహిళా దరఖాస్తుదారులైతే, లేదా అంధులైతే లేదా 40% లేదా అంతకంటే ఎక్కువ దివ్యాంగులైతే 25% ఇస్తుంది. ఇది అప్పు ఇచ్చిన తర్వాత ఒక్కసారి మాత్రమే ఇస్తారు.',
++  'elig.gjdtaiss.repay': 'అప్పును వడ్డీతో సహా 12 నుంచి 36 నెలవారీ వాయిదాల్లో తిరిగి చెల్లించాలి; ఎన్ని వాయిదాలో బ్యాంకు నిర్ణయిస్తుంది. ప్రతి వాయిదాను సమయానికి చెల్లించాలి, ఏ బ్యాంకుకైనా చెల్లించడంలో విఫలమై ఉండకూడదు, అప్పును ఇచ్చిన ఉద్దేశానికి మాత్రమే వాడాలి.',
++
++  'sdata.gj_mahila.description': 'గుజరాత్‌లోని తక్కువ ఆదాయ కుటుంబాల షెడ్యూల్డ్ కులం మహిళల కోసం, చిన్న వ్యాపారం మొదలుపెట్టాలనుకునే వారికి. సంవత్సరానికి 6% వడ్డీతో Rs.50,000 అప్పు. ఇందులో 95% (Rs.47,500) రాష్ట్ర వాటా, 5% (Rs.2,500) మీ వాటా. నెలవారీ వాయిదా 36 నెలలకు సుమారు Rs.1,445 ఉండవచ్చు.',
++  'sdata.gj_mahila.support': 'Rs.50,000 అప్పు 6% వడ్డీతో, 36 నెలల్లో తిరిగి చెల్లించాలి',
++  'elig.gjmahila.permanent': 'మీరు గుజరాత్ శాశ్వత నివాసి అయి ఉండాలి.',
++  'elig.gjdaadc.sc': 'మీరు షెడ్యూల్డ్ కులానికి చెందినవారై ఉండాలి.',
++  'elig.gjmahila.aay': 'మీరు అంత్యోదయ అన్న యోజన (AAY) కుటుంబానికి చెందినవారై ఉండాలి, లేదా ఆర్థికంగా వెనుకబడిన వర్గానికి చెందినవారై ఉండాలి.',
++  'elig.gjdaadc.income': 'మీ కుటుంబ వార్షిక ఆదాయం Rs.3 లక్షల కంటే ఎక్కువ ఉండకూడదు.',
++  'elig.gjmahila.plan': 'మీరు చిన్న వ్యాపారం లేదా సొంత పని మొదలుపెట్టాలనే ఆలోచనతో ఉండాలి.',
++  'elig.gjdaadc.online': 'డాక్టర్ అంబేద్కర్ అంత్యోదయ అభివృద్ధి కార్పొరేషన్ వెబ్‌సైట్‌లో ఆన్‌లైన్‌లో దరఖాస్తు చేయాలి.',
++
++  'sdata.gj_smallbiz.description': 'గుజరాత్‌లోని అంత్యోదయ అన్న యోజన కుటుంబాలకు చెందిన షెడ్యూల్డ్ కులం వారి కోసం, చిన్న వ్యాపారం మొదలుపెట్టాలనుకునే లేదా పెంచుకోవాలనుకునే వారికి. సంవత్సరానికి 4% వడ్డీతో Rs.1,25,000 వరకు అప్పు, 60 నెలల్లో తిరిగి చెల్లించాలి, ఇద్దరు హామీదారులు కావాలి. అప్పు మొత్తమంతా రాష్ట్ర వాటానే, కాబట్టి మీరు మీ వాటా ఇవ్వాల్సిన అవసరం లేదు. నెలవారీ వాయిదా గరిష్ఠంగా సుమారు Rs.2,302.',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 వరకు అప్పు 4% వడ్డీతో, 60 నెలల్లో తిరిగి చెల్లించాలి',
++  'elig.gjsmallbiz.aay': 'మీరు అంత్యోదయ అన్న యోజన (AAY) కుటుంబానికి చెందినవారై ఉండాలి.',
++  'elig.gjsmallbiz.intent': 'చిన్న వ్యాపారం లేదా వృత్తిని మొదలుపెట్టాలని లేదా పెంచుకోవాలని మీకు ఆలోచన ఉండాలి.',
++  'elig.gjsmallbiz.guarantors': 'మీ అప్పుకు హామీగా ఉండటానికి అంగీకరించే ఇద్దరు హామీదారులు మీకు ఉండాలి.',
++
++  'sdata.gj_selfemp.description': 'గుజరాత్‌లోని నిరుద్యోగ షెడ్యూల్డ్ తెగల వారి కోసం. శాఖ పేర్కొన్న 85 వ్యాపారాల్లో ఏదైనా మొదలుపెట్టడానికి, మీరు ఎంచుకునే వ్యాపారాన్ని బట్టి Rs.50,000 నుంచి Rs.5 లక్షల వరకు అప్పు, సంవత్సరానికి 4% వడ్డీతో.',
++  'sdata.gj_selfemp.support': 'Rs.50,000 నుంచి Rs.5 లక్షల వరకు అప్పు 4% వడ్డీతో',
++  'elig.gjselfemp.unemployed': 'దరఖాస్తు చేసేటప్పుడు మీకు ఉద్యోగం ఉండకూడదు.',
++  'elig.gjselfemp.list': 'మీ వ్యాపారం శాఖ పేర్కొన్న 85 వ్యాపారాల్లో ఒకటి అయి ఉండాలి; అప్పు మొత్తం వ్యాపారాన్ని బట్టి ఉంటుంది.',
++  'elig.gjselfemp.online': 'గుజరాత్ గిరిజన అభివృద్ధి కార్పొరేషన్ వెబ్‌సైట్‌లో ఆన్‌లైన్‌లో దరఖాస్తు చేయాలి.',
++
++  'sdata.gj_fvp.description': 'పండ్లు, కూరగాయలను నిల్వ చేయడం, డబ్బాలో నిల్వ చేయడం, పెరటి తోటలో పెంచడంపై ప్రత్యక్ష శిక్షణ. శిక్షణ 2 నుంచి 5 రోజులు ఉంటుంది. ఒక్కొక్కరికి రోజుకు Rs.500 ఖర్చును ప్రభుత్వం భరిస్తుంది: Rs.250 మీకు స్టైపెండ్‌గా ఇస్తారు, Rs.250 శిక్షణ సామగ్రి, నిపుణులు, ఇతర ఖర్చులకు పోతుంది.',
++  'sdata.gj_fvp.support': '2 నుంచి 5 రోజుల శిక్షణ సమయంలో రోజుకు Rs.250 స్టైపెండ్',
++  'elig.gjfvp.willing': 'పండ్లు, కూరగాయల సాగుపై నైపుణ్య శిక్షణలో పాల్గొనడానికి మీరు సిద్ధంగా ఉండాలి.',
++  'elig.gjfvp.online': 'I-Khedut పోర్టల్‌లో ఆన్‌లైన్‌లో దరఖాస్తు చేయాలి.',
++
++  'sdata.gj_micro.description': 'గుజరాత్‌లోని రబారీ, భర్వాడ్ వర్గాల చిన్న వ్యాపార యజమానుల కోసం. సంవత్సరానికి 5% వడ్డీతో Rs.1,25,000 వరకు అప్పు; ఇది ప్రాజెక్టు ఖర్చులో 95% వరకు కవర్ చేస్తుంది.',
++  'sdata.gj_micro.support': 'Rs.1,25,000 వరకు అప్పు 5% వడ్డీతో',
++  'elig.gjmicro.caste': 'మీరు సామాజికంగా, విద్యాపరంగా వెనుకబడిన తరగతుల్లో ఉన్న రబారీ లేదా భర్వాడ్ వర్గానికి చెందినవారై ఉండాలి.',
++  'elig.gjmicro.age': 'మీ వయసు 21 నుంచి 45 ఏళ్ల మధ్య ఉండాలి.',
++  'elig.gjmicro.income': 'మీ వార్షిక ఆదాయం Rs.3 లక్షల కంటే ఎక్కువ ఉండకూడదు.',
++  'elig.gjmicro.share': 'అప్పు ఖర్చులో 95% కవర్ చేస్తుంది; మిగిలిన 5% మీరు పెట్టాలి.',
++  'elig.gjmicro.online': 'DAAD Online పోర్టల్‌లో ఆన్‌లైన్‌లో దరఖాస్తు చేయాలి.',
++
++  'sdata.gj_vahan.description': 'గుజరాత్‌లోని రిజర్వేషన్ లేని వర్గానికి చెందిన, సొంత పని చేసుకునే వారి కోసం. ఆటో రిక్షా, లోడింగ్ ఆటో, మారుతి కారు లేదా జీప్ టాక్సీ లాంటి వాహనం ఆన్-రోడ్ ధరకు అప్పు, సంవత్సరానికి 5% సాధారణ వడ్డీతో; మహిళలకు 4%.',
++  'sdata.gj_vahan.support': 'వాహనం ఆన్-రోడ్ ధరకు అప్పు, 5% వడ్డీతో (మహిళలకు 4%)',
++  'elig.gjvahan.unreserved': 'మీరు రిజర్వేషన్ లేని వర్గానికి చెందినవారై ఉండాలి, రిజర్వేషన్ ఉన్న వర్గానికి కాదు.',
++  'elig.gjvahan.age': 'మీ వయసు 18 నుంచి 50 ఏళ్ల మధ్య ఉండాలి.',
++  'elig.gjvahan.licence': 'మీ దగ్గర చెల్లుబాటు అయ్యే డ్రైవింగ్ లైసెన్స్ ఉండాలి.',
++  'elig.gjvahan.income': 'మీ కుటుంబ వార్షిక ఆదాయం Rs.6 లక్షల కంటే ఎక్కువ ఉండకూడదు.',
++  'elig.gjvahan.vehicle': 'మీరు కొనే వాహనాన్ని అప్పుకు భద్రతగా కార్పొరేషన్ వద్ద తాకట్టు పెట్టాలి; అప్పును 5 ఏళ్లలో సమాన నెలవారీ వాయిదాల్లో తిరిగి చెల్లించాలి.',
++  'elig.gjvahan.limits': 'ఒక కుటుంబం నుంచి ఒక్కరికి మాత్రమే ఇది లభిస్తుంది; ఒక గ్రామంలో గరిష్ఠంగా 5 మందిని ఎంపిక చేస్తారు.',
+@@ -1013,0 +2166 @@ const ml = {
 +  'elig.pmfme.upgrade': 'ഒരു യൂണിറ്റിനെക്കുറിച്ച് ഭക്ഷ്യ സംസ്കരണ വ്യവസായ മന്ത്രാലയം നൽകിയ വിവരങ്ങളിൽ, ഈ സർക്കാർ പണം സ്വന്തം യൂണിറ്റ് മെച്ചപ്പെടുത്താൻ ആഗ്രഹിക്കുന്ന യൂണിറ്റുകൾക്കാണെന്നാണ് പറയുന്നത്. പുതിയ യൂണിറ്റിന് ഇത് കിട്ടുമോ എന്ന് അതിൽ പറയുന്നില്ല, അതുകൊണ്ട് അപേക്ഷിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ ബാങ്ക് ശാഖയിൽ ചോദിക്കുക.',
-@@ -1020,0 +1906 @@ const ml = {
+@@ -1020,0 +2174 @@ const ml = {
 +  'elig.pmegp.period': '2022-ലെ PMEGP നിയമങ്ങളിൽ ഈ പദ്ധതി 2021-22 മുതൽ 2025-26 വരെയുള്ള വർഷങ്ങളിലേക്ക് അംഗീകരിച്ചിട്ടുണ്ട്. 31 മാർച്ച് 2026-ന് ശേഷവും ഇത് തുടരുന്നുണ്ടോ എന്ന് ഞങ്ങൾ ഉറപ്പാക്കിയിട്ടില്ല, അതുകൊണ്ട് അപേക്ഷിക്കുന്നതിന് മുമ്പ് നിങ്ങളുടെ ജില്ലാ വ്യവസായ കേന്ദ്രത്തിൽ ചോദിക്കുക.',
-@@ -1040,0 +1927 @@ const ml = {
+@@ -1040,0 +2195 @@ const ml = {
 +  'elig.standupindia.period': 'ധനകാര്യ സേവന വകുപ്പ് പറയുന്നത് ഈ പദ്ധതി 31 മാർച്ച് 2025 വരെയാണെന്നാണ്. 2025-26 ബജറ്റിൽ ഒരു പുതിയ പദ്ധതി പ്രഖ്യാപിച്ചു. ഇപ്പോൾ വായ്പകൾ നൽകുന്നുണ്ടോ എന്ന് ഞങ്ങൾ ഉറപ്പാക്കിയിട്ടില്ല, അതുകൊണ്ട് നിങ്ങളുടെ ബാങ്ക് ശാഖയിൽ ചോദിക്കുക.',
-@@ -1169,0 +2057,218 @@ const ml = {
+@@ -1169,0 +2325,285 @@ const ml = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'അംഗമായ ബാങ്കിന് ഒരു ചെറുകിട ബിസിനസിന് പണയം ആവശ്യപ്പെടാതെ, അല്ലെങ്കിൽ വായ്പയുടെ ഒരു ഭാഗത്തിന് മാത്രം പണയം വാങ്ങി, Rs.10 കോടി വരെ വായ്പ നൽകാൻ സഹായിക്കുന്ന ഗ്യാരന്റി. കൃഷിയും സ്വയം സഹായ സംഘങ്ങളും ഇതിൽ ഉൾപ്പെടില്ല.',
@@ -1127,13 +1395,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'ഉത്തരാഖണ്ഡിലെ പട്ടണങ്ങളിലും നഗരങ്ങളിലുമുള്ളവർക്ക് ചെറിയ ബിസിനസ് തുടങ്ങാനോ വളർത്താനോ Rs.2 ലക്ഷം വരെ ബാങ്ക് വായ്പ, അതിന്റെ പലിശയുടെ ഒരു ഭാഗം കേന്ദ്ര-സംസ്ഥാന സർക്കാരുകൾ അടയ്ക്കും. ഫോം നിങ്ങളുടെ നഗരസഭയിൽ നിന്ന് ലഭിക്കും, അവർ അത് പരിശോധിച്ച് ബാങ്കിലേക്ക് അയയ്ക്കും.',
 +  'sdata.uk_nulm.support': 'Rs.2 ലക്ഷം വരെ ബാങ്ക് വായ്പ, പലിശയുടെ ഒരു ഭാഗം സർക്കാർ അടയ്ക്കും',
 +  'elig.uknulm.income': 'നിങ്ങളുടെ കുടുംബത്തിന്റെ വാർഷിക വരുമാനം Rs.3 ലക്ഷത്തിൽ കുറവായിരിക്കണം.',
-@@ -1236,0 +2342 @@ const kn = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'സ്വന്തം ജോലി തുടങ്ങാൻ ബാങ്ക് വായ്പ എടുക്കുന്ന, ഗുജറാത്തിലെ ആദിവാസി മേഖലകളിലെ പട്ടികവർഗക്കാർക്കുള്ളതാണ്. Rs.5 ലക്ഷം വരെയുള്ള വായ്പയ്ക്ക് സർക്കാർ 6% പലിശയിൽ സഹായം നൽകുന്നു.',
++  'sdata.gj_tribal_int.support': 'Rs.5 ലക്ഷം വരെയുള്ള ബാങ്ക് വായ്പയ്ക്ക് 6% പലിശയിൽ സഹായം',
++  'elig.gjtribal.st': 'നിങ്ങൾ പട്ടികവർഗത്തിൽപ്പെട്ട ആളായിരിക്കണം.',
++  'elig.gjtribal.area': 'നിങ്ങൾ ഗുജറാത്തിലെ ഒരു ആദിവാസി മേഖലയിൽ താമസിക്കുന്നവരായിരിക്കണം.',
++  'elig.gjtribal.loan': 'സ്വന്തം ജോലി തുടങ്ങാൻ നിങ്ങൾ ബാങ്ക് വായ്പ എടുത്തിരിക്കണം.',
++  'elig.gjtribal.office': 'ഗാന്ധിനഗറിലെ ഗുജറാത്ത് ആദിവാസി വികസന കോർപ്പറേഷന്റെ പ്രോജക്ട് അഡ്മിനിസ്ട്രേറ്ററുടെ ഓഫീസിൽ, അല്ലെങ്കിൽ ഒരു ആദിവാസി ജില്ലാ ഓഫീസിൽ അപേക്ഷിക്കണം.',
++
++  'sdata.gj_jgvy.description': 'പുതിയ ഗ്രാമവ്യവസായം തുടങ്ങാൻ ആഗ്രഹിക്കുന്ന കരകൗശല തൊഴിലാളികൾ, ചെറുകിട സംരംഭകർ, സ്വയം സഹായ സംഘങ്ങൾ എന്നിവർക്കുള്ളത്. ചെലവിന്റെ ആദ്യ Rs.10 ലക്ഷത്തിന്റെ 25% സർക്കാർ നൽകുന്നു; പട്ടികജാതി, പട്ടികവർഗം, സ്ത്രീകൾ, ഭിന്നശേഷിക്കാർ എന്നിവർക്ക് 30%. അതിനു മുകളിലുള്ള ചെലവിന്റെ 10%, Rs.25 ലക്ഷം വരെ.',
++  'sdata.gj_jgvy.support': 'ആദ്യ Rs.10 ലക്ഷത്തിന്റെ 25% സർക്കാർ നൽകും (ചില വിഭാഗങ്ങൾക്ക് 30%)',
++  'elig.gjjgvy.who': 'നിങ്ങൾ വ്യക്തിഗതമായി ഒരു കരകൗശല തൊഴിലാളിയോ സംരംഭം നടത്തുന്ന ആളോ ആയിരിക്കണം, അല്ലെങ്കിൽ ചെറുകിട ഉൽപ്പന്നങ്ങൾ നിർമിക്കുന്ന, പ്രവർത്തിക്കുന്ന Grade-II സ്വയം സഹായ സംഘത്തിലെ അംഗമായിരിക്കണം. പങ്കാളിത്ത സ്ഥാപനം, പ്രൈവറ്റ് കമ്പനി, സംയുക്ത സംരംഭം, HUF അല്ലെങ്കിൽ സമാന ബിസിനസിന്റെ പേരിൽ അപേക്ഷിക്കരുത്.',
++  'elig.gjjgvy.age': 'നിങ്ങളുടെ പ്രായം 25 മുതൽ 50 വയസ്സിനിടയിൽ ആകണം.',
++  'elig.gjjgvy.class10': 'നിങ്ങൾ അംഗീകൃത സ്കൂൾ ബോർഡിൽ നിന്ന് കുറഞ്ഞത് ക്ലാസ് 10 പാസായിരിക്കണം.',
++  'elig.gjjgvy.experience': 'നിങ്ങൾ ചെയ്യാൻ ഉദ്ദേശിക്കുന്ന ജോലിയിൽ കുറഞ്ഞത് ഒരു വർഷത്തെ അനുഭവം വേണം, അല്ലെങ്കിൽ അംഗീകൃത സ്ഥാപനത്തിൽ നിന്ന് അതിൽ പരിശീലനം നേടിയിരിക്കണം.',
++  'elig.gjjgvy.village': 'നിങ്ങളുടെ പദ്ധതി 20,000-ൽ കൂടുതൽ ആളുകൾ താമസിക്കാത്ത ഗ്രാമീണ മേഖലയിൽ, 24 മണിക്കൂർ ത്രീ-ഫേസ് വൈദ്യുതി ലഭിക്കുന്ന സ്ഥലത്തായിരിക്കണം.',
++  'elig.gjjgvy.cost': 'പദ്ധതിച്ചെലവ് Rs.1 ലക്ഷം മുതൽ Rs.25 ലക്ഷം വരെ ആയിരിക്കണം. ഇതിൽ യന്ത്രങ്ങൾ, അസംസ്കൃത വസ്തുക്കൾ, ബിസിനസ് നടത്താനുള്ള പണം (ആകെയുടെ 10% വരെ) ഉൾപ്പെടുത്താം, എന്നാൽ ഭൂമിയോ കെട്ടിടങ്ങളോ പാടില്ല. നിങ്ങളുടെ യൂണിറ്റ് 2 വർഷം നന്നായി പ്രവർത്തിച്ച ശേഷം മാത്രമേ സർക്കാർ പണം ലഭിക്കൂ.',
++
++  'sdata.gj_dtaiss.description': 'ഗുജറാത്തിൽ രജിസ്റ്റർ ചെയ്ത കൈത്തറി, കരകൗശല തൊഴിലാളികൾക്കുള്ളത്. യന്ത്രങ്ങൾ, ഉപകരണങ്ങൾ, അസംസ്കൃത വസ്തുക്കൾ എന്നിവയ്ക്ക് Rs.1 ലക്ഷം വരെ ബാങ്ക് വായ്പ. വായ്പയുടെ ഒരു ഭാഗം സർക്കാർ ഒരിക്കൽ നൽകും, കൂടാതെ 3 വർഷം വരെ ആറു മാസത്തിലൊരിക്കൽ 7% പലിശയിൽ സഹായവും.',
++  'sdata.gj_dtaiss.support': 'Rs.1 ലക്ഷം വരെ വായ്പ, അതിന്റെ 20% മുതൽ 25% വരെ സർക്കാർ നൽകും',
++  'elig.gjdtaiss.skill': 'നിങ്ങൾക്ക് കൈത്തറി അല്ലെങ്കിൽ കരകൗശല ജോലിയിൽ നൈപുണ്യം വേണം.',
++  'elig.gjdtaiss.registered': 'നിങ്ങൾ കുടിൽ-ഗ്രാമവ്യവസായ വകുപ്പിന്റെ Indext-C-യിൽ കരകൗശല തൊഴിലാളിയായി രജിസ്റ്റർ ചെയ്തിരിക്കണം; കൂടാതെ ഡെവലപ്മെന്റ് കമ്മീഷണർ (കൈത്തറി അല്ലെങ്കിൽ കരകൗശല) അല്ലെങ്കിൽ Indext-C നൽകിയ തിരിച്ചറിയൽ കാർഡ്, അല്ലെങ്കിൽ ജില്ലാ വ്യവസായ കേന്ദ്രം ജനറൽ മാനേജർ നൽകിയ താൽക്കാലിക സർട്ടിഫിക്കറ്റ് വേണം.',
++  'elig.gjdtaiss.margin': 'പൊതു വിഭാഗത്തിലെ പുരുഷനാണെങ്കിൽ വായ്പയുടെ 20% സർക്കാർ നൽകും; പട്ടികജാതി, പട്ടികവർഗം അല്ലെങ്കിൽ സ്ത്രീ അപേക്ഷകരാണെങ്കിൽ, അല്ലെങ്കിൽ അന്ധരോ 40% അല്ലെങ്കിൽ അതിൽ കൂടുതൽ ഭിന്നശേഷിയുള്ളവരോ ആണെങ്കിൽ 25% നൽകും. ഇത് വായ്പ നൽകിയ ശേഷം ഒരിക്കൽ മാത്രം നൽകുന്നു.',
++  'elig.gjdtaiss.repay': 'വായ്പ പലിശയോടെ 12 മുതൽ 36 വരെ പ്രതിമാസ ഗഡുക്കളായി തിരിച്ചടയ്ക്കണം; എത്ര ഗഡു എന്ന് ബാങ്ക് തീരുമാനിക്കും. ഓരോ ഗഡുവും കൃത്യസമയത്ത് അടയ്ക്കണം, ഏതെങ്കിലും ബാങ്കിൽ തിരിച്ചടയ്ക്കുന്നതിൽ വീഴ്ച വരുത്തിയിട്ടുണ്ടാകരുത്, വായ്പ അനുവദിച്ച ആവശ്യത്തിന് മാത്രം ഉപയോഗിക്കണം.',
++
++  'sdata.gj_mahila.description': 'ഗുജറാത്തിലെ കുറഞ്ഞ വരുമാനമുള്ള കുടുംബങ്ങളിലെ പട്ടികജാതി സ്ത്രീകൾക്കുള്ളത്, ചെറിയ ബിസിനസ് തുടങ്ങാൻ ആഗ്രഹിക്കുന്നവർക്ക്. വർഷം 6% പലിശയിൽ Rs.50,000 വായ്പ. ഇതിൽ 95% (Rs.47,500) സംസ്ഥാനത്തിന്റെ വിഹിതവും 5% (Rs.2,500) നിങ്ങളുടെ വിഹിതവുമാണ്. പ്രതിമാസ ഗഡു 36 മാസത്തേക്ക് ഏകദേശം Rs.1,445 ആകാം.',
++  'sdata.gj_mahila.support': 'Rs.50,000 വായ്പ 6% പലിശയിൽ, 36 മാസം കൊണ്ട് തിരിച്ചടയ്ക്കണം',
++  'elig.gjmahila.permanent': 'നിങ്ങൾ ഗുജറാത്തിൽ സ്ഥിരമായി താമസിക്കുന്നവരായിരിക്കണം.',
++  'elig.gjdaadc.sc': 'നിങ്ങൾ പട്ടികജാതിയിൽപ്പെട്ട ആളായിരിക്കണം.',
++  'elig.gjmahila.aay': 'നിങ്ങൾ അന്ത്യോദയ അന്ന യോജന (AAY) കുടുംബത്തിൽ നിന്നുള്ളവരായിരിക്കണം, അല്ലെങ്കിൽ സാമ്പത്തികമായി പിന്നാക്കം നിൽക്കുന്ന വിഭാഗത്തിൽ നിന്നുള്ളവരായിരിക്കണം.',
++  'elig.gjdaadc.income': 'നിങ്ങളുടെ കുടുംബത്തിന്റെ വാർഷിക വരുമാനം Rs.3 ലക്ഷത്തിൽ കൂടരുത്.',
++  'elig.gjmahila.plan': 'ചെറിയ ബിസിനസോ സ്വന്തം ജോലിയോ തുടങ്ങാൻ നിങ്ങൾക്ക് പദ്ധതി ഉണ്ടായിരിക്കണം.',
++  'elig.gjdaadc.online': 'ഡോ. അംബേദ്കർ അന്ത്യോദയ വികസന കോർപ്പറേഷന്റെ വെബ്സൈറ്റിൽ ഓൺലൈനായി അപേക്ഷിക്കണം.',
++
++  'sdata.gj_smallbiz.description': 'ഗുജറാത്തിലെ അന്ത്യോദയ അന്ന യോജന കുടുംബങ്ങളിലെ പട്ടികജാതിക്കാർക്കുള്ളത്, ചെറിയ ബിസിനസ് തുടങ്ങാനോ വളർത്താനോ ആഗ്രഹിക്കുന്നവർക്ക്. വർഷം 4% പലിശയിൽ Rs.1,25,000 വരെ വായ്പ, 60 മാസം കൊണ്ട് തിരിച്ചടയ്ക്കണം, ജാമ്യം നിൽക്കുന്ന രണ്ടുപേർ വേണം. മുഴുവൻ തുകയും സംസ്ഥാനത്തിന്റെ വിഹിതമാണ്, അതിനാൽ നിങ്ങൾ സ്വന്തം വിഹിതം ഒന്നും നൽകേണ്ടതില്ല. പ്രതിമാസ ഗഡു പരമാവധി ഏകദേശം Rs.2,302.',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 വരെ വായ്പ 4% പലിശയിൽ, 60 മാസം കൊണ്ട് തിരിച്ചടയ്ക്കണം',
++  'elig.gjsmallbiz.aay': 'നിങ്ങൾ അന്ത്യോദയ അന്ന യോജന (AAY) കുടുംബത്തിൽ നിന്നുള്ളവരായിരിക്കണം.',
++  'elig.gjsmallbiz.intent': 'ചെറിയ ബിസിനസോ വ്യാപാരമോ തുടങ്ങാനോ വളർത്താനോ നിങ്ങൾക്ക് പദ്ധതി ഉണ്ടായിരിക്കണം.',
++  'elig.gjsmallbiz.guarantors': 'നിങ്ങളുടെ വായ്പയ്ക്ക് ജാമ്യം നിൽക്കാൻ തയ്യാറുള്ള രണ്ടുപേർ ഉണ്ടായിരിക്കണം.',
++
++  'sdata.gj_selfemp.description': 'ഗുജറാത്തിലെ തൊഴിലില്ലാത്ത പട്ടികവർഗക്കാർക്കുള്ളത്. വകുപ്പ് നിശ്ചയിച്ചിട്ടുള്ള 85 ബിസിനസുകളിൽ ഏതെങ്കിലും തുടങ്ങാൻ, നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന ബിസിനസിനെ ആശ്രയിച്ച് Rs.50,000 മുതൽ Rs.5 ലക്ഷം വരെ വായ്പ, വർഷം 4% പലിശയിൽ.',
++  'sdata.gj_selfemp.support': 'Rs.50,000 മുതൽ Rs.5 ലക്ഷം വരെ വായ്പ 4% പലിശയിൽ',
++  'elig.gjselfemp.unemployed': 'അപേക്ഷിക്കുന്ന സമയത്ത് നിങ്ങൾക്ക് ജോലി ഉണ്ടാകരുത്.',
++  'elig.gjselfemp.list': 'നിങ്ങളുടെ ബിസിനസ് വകുപ്പ് നിശ്ചയിച്ചിട്ടുള്ള 85 ബിസിനസുകളിൽ ഒന്നായിരിക്കണം; വായ്പയുടെ തുക ബിസിനസിനെ ആശ്രയിച്ചിരിക്കും.',
++  'elig.gjselfemp.online': 'ഗുജറാത്ത് ആദിവാസി വികസന കോർപ്പറേഷന്റെ വെബ്സൈറ്റിൽ ഓൺലൈനായി അപേക്ഷിക്കണം.',
++
++  'sdata.gj_fvp.description': 'പഴങ്ങളും പച്ചക്കറികളും സംരക്ഷിക്കൽ, ടിന്നിലടയ്ക്കൽ, അടുക്കളത്തോട്ടത്തിൽ വളർത്തൽ എന്നിവയിൽ നേരിട്ടുള്ള പരിശീലനം. പരിശീലനം 2 മുതൽ 5 ദിവസം വരെ നീളും. ഒരാൾക്ക് ഒരു ദിവസം Rs.500 ചെലവ് സർക്കാർ വഹിക്കുന്നു: Rs.250 നിങ്ങൾക്ക് സ്റ്റൈപ്പൻഡായി ലഭിക്കും, Rs.250 പരിശീലന സാമഗ്രികൾ, വിദഗ്ധർ, മറ്റു ചെലവുകൾ എന്നിവയ്ക്കായി ചെലവാകും.',
++  'sdata.gj_fvp.support': '2 മുതൽ 5 ദിവസത്തെ പരിശീലന സമയത്ത് ഒരു ദിവസം Rs.250 സ്റ്റൈപ്പൻഡ്',
++  'elig.gjfvp.willing': 'പഴങ്ങളും പച്ചക്കറികളും വളർത്തുന്നതിനെക്കുറിച്ചുള്ള നൈപുണ്യ പരിശീലനത്തിൽ പങ്കെടുക്കാൻ നിങ്ങൾ തയ്യാറായിരിക്കണം.',
++  'elig.gjfvp.online': 'I-Khedut പോർട്ടലിൽ ഓൺലൈനായി അപേക്ഷിക്കണം.',
++
++  'sdata.gj_micro.description': 'ഗുജറാത്തിലെ റബാരി, ഭർവാഡ് സമുദായങ്ങളിലെ ചെറുകിട ബിസിനസ് ഉടമകൾക്കുള്ളത്. വർഷം 5% പലിശയിൽ Rs.1,25,000 വരെ വായ്പ; ഇത് പദ്ധതിച്ചെലവിന്റെ 95% വരെ ഉൾക്കൊള്ളുന്നു.',
++  'sdata.gj_micro.support': 'Rs.1,25,000 വരെ വായ്പ 5% പലിശയിൽ',
++  'elig.gjmicro.caste': 'നിങ്ങൾ സാമൂഹികമായും വിദ്യാഭ്യാസപരമായും പിന്നാക്കം നിൽക്കുന്ന വിഭാഗങ്ങളിൽ ഉൾപ്പെടുന്ന റബാരി അല്ലെങ്കിൽ ഭർവാഡ് സമുദായത്തിൽ നിന്നുള്ളവരായിരിക്കണം.',
++  'elig.gjmicro.age': 'നിങ്ങളുടെ പ്രായം 21 മുതൽ 45 വയസ്സിനിടയിൽ ആകണം.',
++  'elig.gjmicro.income': 'നിങ്ങളുടെ വാർഷിക വരുമാനം Rs.3 ലക്ഷത്തിൽ കൂടരുത്.',
++  'elig.gjmicro.share': 'വായ്പ ചെലവിന്റെ 95% ഉൾക്കൊള്ളുന്നു; ബാക്കി 5% നിങ്ങൾ മുടക്കണം.',
++  'elig.gjmicro.online': 'DAAD Online പോർട്ടലിൽ ഓൺലൈനായി അപേക്ഷിക്കണം.',
++
++  'sdata.gj_vahan.description': 'ഗുജറാത്തിലെ സംവരണേതര വിഭാഗത്തിലെ സ്വയംതൊഴിലുകാർക്കുള്ളത്. ഓട്ടോറിക്ഷ, ലോഡിംഗ് ഓട്ടോ, മാരുതി കാർ, ജീപ്പ് ടാക്സി തുടങ്ങിയ വാഹനത്തിന്റെ ഓൺ-റോഡ് വിലയ്ക്ക് വായ്പ, വർഷം 5% ലളിത പലിശയിൽ; സ്ത്രീകൾക്ക് 4%.',
++  'sdata.gj_vahan.support': 'വാഹനത്തിന്റെ ഓൺ-റോഡ് വിലയ്ക്ക് വായ്പ, 5% പലിശയിൽ (സ്ത്രീകൾക്ക് 4%)',
++  'elig.gjvahan.unreserved': 'നിങ്ങൾ സംവരണേതര വിഭാഗത്തിൽപ്പെട്ടവരായിരിക്കണം, സംവരണ വിഭാഗത്തിൽപ്പെട്ടവരാകരുത്.',
++  'elig.gjvahan.age': 'നിങ്ങളുടെ പ്രായം 18 മുതൽ 50 വയസ്സിനിടയിൽ ആകണം.',
++  'elig.gjvahan.licence': 'നിങ്ങൾക്ക് സാധുവായ ഡ്രൈവിംഗ് ലൈസൻസ് വേണം.',
++  'elig.gjvahan.income': 'നിങ്ങളുടെ കുടുംബത്തിന്റെ വാർഷിക വരുമാനം Rs.6 ലക്ഷത്തിൽ കൂടരുത്.',
++  'elig.gjvahan.vehicle': 'നിങ്ങൾ വാങ്ങുന്ന വാഹനം വായ്പയ്ക്ക് ഈടായി കോർപ്പറേഷനിൽ പണയം വയ്ക്കണം; വായ്പ 5 വർഷം കൊണ്ട് തുല്യ പ്രതിമാസ ഗഡുക്കളായി തിരിച്ചടയ്ക്കണം.',
++  'elig.gjvahan.limits': 'ഒരു കുടുംബത്തിൽ നിന്ന് ഒരാൾക്ക് മാത്രമേ ഇത് ലഭിക്കൂ; ഒരു ഗ്രാമത്തിൽ പരമാവധി 5 പേരെ തിരഞ്ഞെടുക്കും.',
+@@ -1236,0 +2677 @@ const kn = {
 +  'elig.pmfme.upgrade': 'ಒಂದು ಘಟಕದ ಬಗ್ಗೆ ಆಹಾರ ಸಂಸ್ಕರಣಾ ಉದ್ಯಮಗಳ ಸಚಿವಾಲಯ ನೀಡಿರುವ ಮಾಹಿತಿಯಲ್ಲಿ, ಈ ಸರ್ಕಾರದ ಹಣ ತಮ್ಮ ಘಟಕವನ್ನು ಉತ್ತಮಪಡಿಸಲು ಬಯಸುವ ಘಟಕಗಳಿಗೆ ಎಂದು ಹೇಳಲಾಗಿದೆ. ಹೊಸ ಘಟಕಕ್ಕೆ ಇದು ಸಿಗುತ್ತದೆಯೇ ಎಂದು ಅದರಲ್ಲಿ ಹೇಳಿಲ್ಲ, ಆದ್ದರಿಂದ ಅರ್ಜಿ ಹಾಕುವ ಮೊದಲು ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಶಾಖೆಯಲ್ಲಿ ಕೇಳಿ.',
-@@ -1243,0 +2350 @@ const kn = {
+@@ -1243,0 +2685 @@ const kn = {
 +  'elig.pmegp.period': '2022 ರಲ್ಲಿ ಬಂದ PMEGP ನಿಯಮಗಳಲ್ಲಿ ಈ ಯೋಜನೆಗೆ 2021-22 ರಿಂದ 2025-26 ರವರೆಗಿನ ವರ್ಷಗಳಿಗೆ ಅನುಮೋದನೆ ಇದೆ. 31 ಮಾರ್ಚ್ 2026 ಕಳೆದ ನಂತರವೂ ಇದು ಮುಂದುವರಿಯುತ್ತದೆಯೇ ಎಂದು ನಾವು ಖಚಿತಪಡಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ಅರ್ಜಿ ಹಾಕುವ ಮೊದಲು ನಿಮ್ಮ ಜಿಲ್ಲಾ ಕೈಗಾರಿಕೆ ಕೇಂದ್ರದಲ್ಲಿ ಕೇಳಿ.',
-@@ -1263,0 +2371 @@ const kn = {
+@@ -1263,0 +2706 @@ const kn = {
 +  'elig.standupindia.period': 'ಹಣಕಾಸು ಸೇವೆಗಳ ಇಲಾಖೆಯ ಪ್ರಕಾರ ಈ ಯೋಜನೆ 31 ಮಾರ್ಚ್ 2025 ರವರೆಗೆ ಇದೆ. 2025-26 ಬಜೆಟ್ ಸಂದರ್ಭದಲ್ಲಿ ಹೊಸ ಯೋಜನೆಯನ್ನು ಘೋಷಿಸಲಾಯಿತು. ಈಗ ಸಾಲ ಕೊಡುತ್ತಿದ್ದಾರೆಯೇ ಎಂದು ನಾವು ಖಚಿತಪಡಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಶಾಖೆಯಲ್ಲಿ ಕೇಳಿ.',
-@@ -1392,0 +2501,218 @@ const kn = {
+@@ -1392,0 +2836,285 @@ const kn = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'ಸದಸ್ಯ ಬ್ಯಾಂಕ್ ಒಂದು ಸಣ್ಣ ವ್ಯಾಪಾರಕ್ಕೆ ಅಡಮಾನ ಕೇಳದೆ, ಅಥವಾ ಸಾಲದ ಒಂದು ಭಾಗಕ್ಕೆ ಮಾತ್ರ ಅಡಮಾನ ತೆಗೆದುಕೊಂಡು, Rs.10 ಕೋಟಿವರೆಗೆ ಸಾಲ ಕೊಡಲು ಸಹಾಯ ಮಾಡುವ ಖಾತರಿ. ಕೃಷಿ ಮತ್ತು ಸ್ವಸಹಾಯ ಸಂಘಗಳು ಇದರಲ್ಲಿ ಸೇರುವುದಿಲ್ಲ.',
@@ -1352,13 +1687,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'ಉತ್ತರಾಖಂಡದ ಪಟ್ಟಣ ಮತ್ತು ನಗರಗಳಲ್ಲಿರುವವರು ಸಣ್ಣ ವ್ಯಾಪಾರ ಆರಂಭಿಸಲು ಅಥವಾ ಬೆಳೆಸಲು Rs.2 ಲಕ್ಷದವರೆಗೆ ಬ್ಯಾಂಕ್ ಸಾಲ, ಅದರ ಬಡ್ಡಿಯ ಒಂದು ಭಾಗವನ್ನು ಕೇಂದ್ರ ಮತ್ತು ರಾಜ್ಯ ಸರ್ಕಾರಗಳು ಪಾವತಿಸುತ್ತವೆ. ಅರ್ಜಿ ನಮೂನೆ ನಿಮ್ಮ ನಗರ ಸ್ಥಳೀಯ ಸಂಸ್ಥೆಯಿಂದ ಸಿಗುತ್ತದೆ, ಅದು ಪರಿಶೀಲಿಸಿ ಬ್ಯಾಂಕ್‌ಗೆ ಕಳುಹಿಸುತ್ತದೆ.',
 +  'sdata.uk_nulm.support': 'Rs.2 ಲಕ್ಷದವರೆಗೆ ಬ್ಯಾಂಕ್ ಸಾಲ, ಬಡ್ಡಿಯ ಒಂದು ಭಾಗವನ್ನು ಸರ್ಕಾರ ಪಾವತಿಸುತ್ತದೆ',
 +  'elig.uknulm.income': 'ನಿಮ್ಮ ಕುಟುಂಬದ ವಾರ್ಷಿಕ ಆದಾಯ Rs.3 ಲಕ್ಷಕ್ಕಿಂತ ಕಡಿಮೆ ಇರಬೇಕು.',
-@@ -1459,0 +2786 @@ const mr = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'ಸ್ವಂತ ಕೆಲಸ ಆರಂಭಿಸಲು ಬ್ಯಾಂಕ್ ಸಾಲ ಪಡೆಯುವ, ಗುಜರಾತ್‌ನ ಬುಡಕಟ್ಟು ಪ್ರದೇಶಗಳ ಪರಿಶಿಷ್ಟ ಪಂಗಡದವರಿಗೆ. Rs.5 ಲಕ್ಷದವರೆಗಿನ ಸಾಲಕ್ಕೆ ಸರ್ಕಾರ 6% ಬಡ್ಡಿಯಲ್ಲಿ ಸಹಾಯ ನೀಡುತ್ತದೆ.',
++  'sdata.gj_tribal_int.support': 'Rs.5 ಲಕ್ಷದವರೆಗಿನ ಬ್ಯಾಂಕ್ ಸಾಲಕ್ಕೆ 6% ಬಡ್ಡಿಯಲ್ಲಿ ಸಹಾಯ',
++  'elig.gjtribal.st': 'ನೀವು ಪರಿಶಿಷ್ಟ ಪಂಗಡಕ್ಕೆ ಸೇರಿದವರಾಗಿರಬೇಕು.',
++  'elig.gjtribal.area': 'ನೀವು ಗುಜರಾತ್‌ನ ಒಂದು ಬುಡಕಟ್ಟು ಪ್ರದೇಶದಲ್ಲಿ ವಾಸಿಸುತ್ತಿರಬೇಕು.',
++  'elig.gjtribal.loan': 'ಸ್ವಂತ ಕೆಲಸ ಆರಂಭಿಸಲು ನೀವು ಬ್ಯಾಂಕ್ ಸಾಲ ಪಡೆದಿರಬೇಕು.',
++  'elig.gjtribal.office': 'ಗಾಂಧಿನಗರದಲ್ಲಿರುವ ಗುಜರಾತ್ ಬುಡಕಟ್ಟು ಅಭಿವೃದ್ಧಿ ನಿಗಮದ ಯೋಜನಾ ಆಡಳಿತಾಧಿಕಾರಿಯ ಕಚೇರಿಯಲ್ಲಿ, ಅಥವಾ ಒಂದು ಬುಡಕಟ್ಟು ಜಿಲ್ಲಾ ಕಚೇರಿಯಲ್ಲಿ ಅರ್ಜಿ ಹಾಕಬೇಕು.',
++
++  'sdata.gj_jgvy.description': 'ಹೊಸ ಗ್ರಾಮೋದ್ಯೋಗ ಆರಂಭಿಸಲು ಬಯಸುವ ಕುಶಲಕರ್ಮಿಗಳು, ಸಣ್ಣ ಉದ್ಯಮಿಗಳು ಮತ್ತು ಸ್ವಸಹಾಯ ಸಂಘಗಳಿಗೆ. ವೆಚ್ಚದ ಮೊದಲ Rs.10 ಲಕ್ಷದ 25% ಸರ್ಕಾರ ನೀಡುತ್ತದೆ; ಪರಿಶಿಷ್ಟ ಜಾತಿ, ಪರಿಶಿಷ್ಟ ಪಂಗಡ, ಮಹಿಳೆಯರು ಮತ್ತು ವಿಕಲಚೇತನರಿಗೆ 30%. ಅದಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ವೆಚ್ಚದ 10%, Rs.25 ಲಕ್ಷದವರೆಗೆ.',
++  'sdata.gj_jgvy.support': 'ಮೊದಲ Rs.10 ಲಕ್ಷದ 25% ಸರ್ಕಾರ ನೀಡುತ್ತದೆ (ಕೆಲವು ವರ್ಗಗಳಿಗೆ 30%)',
++  'elig.gjjgvy.who': 'ನೀವು ವೈಯಕ್ತಿಕವಾಗಿ ಕುಶಲಕರ್ಮಿ ಅಥವಾ ಉದ್ಯಮಿಯಾಗಿರಬೇಕು, ಅಥವಾ ಸಣ್ಣ ಪ್ರಮಾಣದಲ್ಲಿ ಉತ್ಪನ್ನಗಳನ್ನು ತಯಾರಿಸುವ ಕಾರ್ಯನಿರತ Grade-II ಸ್ವಸಹಾಯ ಸಂಘದ ಸದಸ್ಯರಾಗಿರಬೇಕು. ಪಾಲುದಾರಿಕೆ ಸಂಸ್ಥೆ, ಖಾಸಗಿ ಕಂಪನಿ, ಜಂಟಿ ಉದ್ಯಮ, HUF ಅಥವಾ ಅಂತಹುದೇ ವ್ಯಾಪಾರದ ಪರವಾಗಿ ಅರ್ಜಿ ಹಾಕಬಾರದು.',
++  'elig.gjjgvy.age': 'ನಿಮ್ಮ ವಯಸ್ಸು 25 ರಿಂದ 50 ವರ್ಷದ ನಡುವೆ ಇರಬೇಕು.',
++  'elig.gjjgvy.class10': 'ನೀವು ಮಾನ್ಯತೆ ಪಡೆದ ಶಾಲಾ ಮಂಡಳಿಯಿಂದ ಕನಿಷ್ಠ ತರಗತಿ 10 ಪಾಸಾಗಿರಬೇಕು.',
++  'elig.gjjgvy.experience': 'ನೀವು ಮಾಡಲು ಬಯಸುವ ಕೆಲಸದಲ್ಲಿ ಕನಿಷ್ಠ ಒಂದು ವರ್ಷದ ಅನುಭವ ಇರಬೇಕು, ಅಥವಾ ಮಾನ್ಯತೆ ಪಡೆದ ಸಂಸ್ಥೆಯಲ್ಲಿ ಅದರ ತರಬೇತಿ ಪಡೆದಿರಬೇಕು.',
++  'elig.gjjgvy.village': 'ನಿಮ್ಮ ಯೋಜನೆ 20,000 ಕ್ಕಿಂತ ಹೆಚ್ಚು ಜನ ವಾಸಿಸದ ಗ್ರಾಮೀಣ ಪ್ರದೇಶದಲ್ಲಿ, 24 ಗಂಟೆ ತ್ರೀ-ಫೇಸ್ ವಿದ್ಯುತ್ ಪೂರೈಕೆಯೊಂದಿಗೆ ಇರಬೇಕು.',
++  'elig.gjjgvy.cost': 'ಯೋಜನೆಯ ವೆಚ್ಚ Rs.1 ಲಕ್ಷದಿಂದ Rs.25 ಲಕ್ಷದವರೆಗೆ ಇರಬೇಕು. ಇದರಲ್ಲಿ ಯಂತ್ರ, ಕಚ್ಚಾ ವಸ್ತು ಮತ್ತು ವ್ಯಾಪಾರ ನಡೆಸಲು ಹಣ (ಒಟ್ಟಿನ 10% ವರೆಗೆ) ಸೇರಿಸಬಹುದು, ಆದರೆ ಜಮೀನು ಅಥವಾ ಕಟ್ಟಡ ಅಲ್ಲ. ನಿಮ್ಮ ಘಟಕ 2 ವರ್ಷ ಚೆನ್ನಾಗಿ ನಡೆದ ನಂತರವೇ ಸರ್ಕಾರದ ಹಣ ಸಿಗುತ್ತದೆ.',
++
++  'sdata.gj_dtaiss.description': 'ಗುಜರಾತ್‌ನಲ್ಲಿ ನೋಂದಾಯಿತರಾದ ಕೈಮಗ್ಗ ಮತ್ತು ಕರಕುಶಲ ಕುಶಲಕರ್ಮಿಗಳಿಗೆ. ಯಂತ್ರ, ಉಪಕರಣ ಅಥವಾ ಕಚ್ಚಾ ವಸ್ತುಗಳಿಗೆ Rs.1 ಲಕ್ಷದವರೆಗೆ ಬ್ಯಾಂಕ್ ಸಾಲ. ಸರ್ಕಾರ ಸಾಲದ ಒಂದು ಭಾಗವನ್ನು ಒಂದು ಬಾರಿ ನೀಡುತ್ತದೆ, ಜೊತೆಗೆ 3 ವರ್ಷಗಳವರೆಗೆ ಆರು ತಿಂಗಳಿಗೊಮ್ಮೆ 7% ಬಡ್ಡಿಯಲ್ಲಿ ಸಹಾಯ ನೀಡುತ್ತದೆ.',
++  'sdata.gj_dtaiss.support': 'Rs.1 ಲಕ್ಷದವರೆಗೆ ಸಾಲ, ಅದರ 20% ರಿಂದ 25% ಸರ್ಕಾರ ನೀಡುತ್ತದೆ',
++  'elig.gjdtaiss.skill': 'ನಿಮಗೆ ಕೈಮಗ್ಗ ಅಥವಾ ಕರಕುಶಲ ಕೆಲಸದಲ್ಲಿ ಕೌಶಲ ಇರಬೇಕು.',
++  'elig.gjdtaiss.registered': 'ನೀವು ಕುಟೀರ ಮತ್ತು ಗ್ರಾಮೋದ್ಯೋಗ ಇಲಾಖೆಯ Indext-C ನಲ್ಲಿ ಕುಶಲಕರ್ಮಿಯಾಗಿ ನೋಂದಾಯಿತರಾಗಿರಬೇಕು; ಜೊತೆಗೆ ಅಭಿವೃದ್ಧಿ ಆಯುಕ್ತರು (ಕೈಮಗ್ಗ ಅಥವಾ ಕರಕುಶಲ) ಅಥವಾ Indext-C ನೀಡಿದ ಗುರುತಿನ ಚೀಟಿ, ಅಥವಾ ಜಿಲ್ಲಾ ಕೈಗಾರಿಕೆ ಕೇಂದ್ರದ ಜನರಲ್ ಮ್ಯಾನೇಜರ್ ನೀಡಿದ ತಾತ್ಕಾಲಿಕ ಪ್ರಮಾಣಪತ್ರ ಇರಬೇಕು.',
++  'elig.gjdtaiss.margin': 'ಸಾಮಾನ್ಯ ವರ್ಗದ ಪುರುಷರಾದರೆ ಸಾಲದ 20% ಸರ್ಕಾರ ನೀಡುತ್ತದೆ; ಪರಿಶಿಷ್ಟ ಜಾತಿ, ಪರಿಶಿಷ್ಟ ಪಂಗಡ ಅಥವಾ ಮಹಿಳಾ ಅರ್ಜಿದಾರರಾದರೆ, ಅಥವಾ ಅಂಧರಾಗಿದ್ದರೆ ಅಥವಾ 40% ಅಥವಾ ಹೆಚ್ಚು ವಿಕಲಚೇತನರಾಗಿದ್ದರೆ 25% ನೀಡುತ್ತದೆ. ಇದನ್ನು ಸಾಲ ನೀಡಿದ ನಂತರ ಒಂದು ಬಾರಿ ಮಾತ್ರ ಕೊಡಲಾಗುತ್ತದೆ.',
++  'elig.gjdtaiss.repay': 'ಸಾಲವನ್ನು ಬಡ್ಡಿಯೊಂದಿಗೆ 12 ರಿಂದ 36 ಮಾಸಿಕ ಕಂತುಗಳಲ್ಲಿ ಮರುಪಾವತಿಸಬೇಕು; ಎಷ್ಟು ಕಂತು ಎಂಬುದನ್ನು ಬ್ಯಾಂಕ್ ನಿರ್ಧರಿಸುತ್ತದೆ. ಪ್ರತಿ ಕಂತನ್ನು ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಕಟ್ಟಬೇಕು, ಯಾವುದೇ ಬ್ಯಾಂಕ್‌ಗೆ ಮರುಪಾವತಿಸುವಲ್ಲಿ ವಿಫಲವಾಗಿರಬಾರದು, ಸಾಲವನ್ನು ನೀಡಿದ ಉದ್ದೇಶಕ್ಕೆ ಮಾತ್ರ ಬಳಸಬೇಕು.',
++
++  'sdata.gj_mahila.description': 'ಗುಜರಾತ್‌ನ ಕಡಿಮೆ ಆದಾಯದ ಕುಟುಂಬಗಳ ಪರಿಶಿಷ್ಟ ಜಾತಿಯ ಮಹಿಳೆಯರಿಗೆ, ಸಣ್ಣ ವ್ಯಾಪಾರ ಆರಂಭಿಸಲು ಬಯಸುವವರಿಗೆ. ವರ್ಷಕ್ಕೆ 6% ಬಡ್ಡಿಯಲ್ಲಿ Rs.50,000 ಸಾಲ. ಇದರಲ್ಲಿ 95% (Rs.47,500) ರಾಜ್ಯದ ಪಾಲು ಮತ್ತು 5% (Rs.2,500) ನಿಮ್ಮ ಪಾಲು. ಮಾಸಿಕ ಕಂತು 36 ತಿಂಗಳಿಗೆ ಸುಮಾರು Rs.1,445 ಆಗಿರಬಹುದು.',
++  'sdata.gj_mahila.support': 'Rs.50,000 ಸಾಲ 6% ಬಡ್ಡಿಯಲ್ಲಿ, 36 ತಿಂಗಳಲ್ಲಿ ಮರುಪಾವತಿಸಬೇಕು',
++  'elig.gjmahila.permanent': 'ನೀವು ಗುಜರಾತ್‌ನ ಶಾಶ್ವತ ನಿವಾಸಿಯಾಗಿರಬೇಕು.',
++  'elig.gjdaadc.sc': 'ನೀವು ಪರಿಶಿಷ್ಟ ಜಾತಿಗೆ ಸೇರಿದವರಾಗಿರಬೇಕು.',
++  'elig.gjmahila.aay': 'ನೀವು ಅಂತ್ಯೋದಯ ಅನ್ನ ಯೋಜನೆ (AAY) ಕುಟುಂಬದವರಾಗಿರಬೇಕು, ಅಥವಾ ಆರ್ಥಿಕವಾಗಿ ಹಿಂದುಳಿದ ವರ್ಗಕ್ಕೆ ಸೇರಿದವರಾಗಿರಬೇಕು.',
++  'elig.gjdaadc.income': 'ನಿಮ್ಮ ಕುಟುಂಬದ ವಾರ್ಷಿಕ ಆದಾಯ Rs.3 ಲಕ್ಷಕ್ಕಿಂತ ಹೆಚ್ಚಿರಬಾರದು.',
++  'elig.gjmahila.plan': 'ಸಣ್ಣ ವ್ಯಾಪಾರ ಅಥವಾ ಸ್ವಂತ ಕೆಲಸ ಆರಂಭಿಸುವ ಯೋಜನೆ ನಿಮಗೆ ಇರಬೇಕು.',
++  'elig.gjdaadc.online': 'ಡಾ. ಅಂಬೇಡ್ಕರ್ ಅಂತ್ಯೋದಯ ಅಭಿವೃದ್ಧಿ ನಿಗಮದ ಜಾಲತಾಣದಲ್ಲಿ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಹಾಕಬೇಕು.',
++
++  'sdata.gj_smallbiz.description': 'ಗುಜರಾತ್‌ನ ಅಂತ್ಯೋದಯ ಅನ್ನ ಯೋಜನೆ ಕುಟುಂಬಗಳ ಪರಿಶಿಷ್ಟ ಜಾತಿಯವರಿಗೆ, ಸಣ್ಣ ವ್ಯಾಪಾರ ಆರಂಭಿಸಲು ಅಥವಾ ಬೆಳೆಸಲು ಬಯಸುವವರಿಗೆ. ವರ್ಷಕ್ಕೆ 4% ಬಡ್ಡಿಯಲ್ಲಿ Rs.1,25,000 ವರೆಗೆ ಸಾಲ, 60 ತಿಂಗಳಲ್ಲಿ ಮರುಪಾವತಿಸಬೇಕು, ಇಬ್ಬರು ಖಾತರಿದಾರರು ಬೇಕು. ಪೂರ್ತಿ ಮೊತ್ತ ರಾಜ್ಯದ ಪಾಲು, ಆದ್ದರಿಂದ ನೀವು ನಿಮ್ಮ ಪಾಲು ಏನನ್ನೂ ಕೊಡಬೇಕಿಲ್ಲ. ಮಾಸಿಕ ಕಂತು ಗರಿಷ್ಠ ಸುಮಾರು Rs.2,302.',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 ವರೆಗೆ ಸಾಲ 4% ಬಡ್ಡಿಯಲ್ಲಿ, 60 ತಿಂಗಳಲ್ಲಿ ಮರುಪಾವತಿಸಬೇಕು',
++  'elig.gjsmallbiz.aay': 'ನೀವು ಅಂತ್ಯೋದಯ ಅನ್ನ ಯೋಜನೆ (AAY) ಕುಟುಂಬದವರಾಗಿರಬೇಕು.',
++  'elig.gjsmallbiz.intent': 'ಸಣ್ಣ ವ್ಯಾಪಾರ ಅಥವಾ ವೃತ್ತಿಯನ್ನು ಆರಂಭಿಸುವ ಅಥವಾ ಬೆಳೆಸುವ ಯೋಜನೆ ನಿಮಗೆ ಇರಬೇಕು.',
++  'elig.gjsmallbiz.guarantors': 'ನಿಮ್ಮ ಸಾಲಕ್ಕೆ ಖಾತರಿ ನೀಡಲು ಒಪ್ಪುವ ಇಬ್ಬರು ಖಾತರಿದಾರರು ನಿಮಗೆ ಇರಬೇಕು.',
++
++  'sdata.gj_selfemp.description': 'ಗುಜರಾತ್‌ನ ನಿರುದ್ಯೋಗಿ ಪರಿಶಿಷ್ಟ ಪಂಗಡದವರಿಗೆ. ಇಲಾಖೆ ಹೆಸರಿಸಿರುವ 85 ವ್ಯಾಪಾರಗಳಲ್ಲಿ ಯಾವುದನ್ನಾದರೂ ಆರಂಭಿಸಲು, ನೀವು ಆರಿಸುವ ವ್ಯಾಪಾರವನ್ನು ಅವಲಂಬಿಸಿ Rs.50,000 ರಿಂದ Rs.5 ಲಕ್ಷದವರೆಗೆ ಸಾಲ, ವರ್ಷಕ್ಕೆ 4% ಬಡ್ಡಿಯಲ್ಲಿ.',
++  'sdata.gj_selfemp.support': 'Rs.50,000 ರಿಂದ Rs.5 ಲಕ್ಷದವರೆಗೆ ಸಾಲ 4% ಬಡ್ಡಿಯಲ್ಲಿ',
++  'elig.gjselfemp.unemployed': 'ಅರ್ಜಿ ಹಾಕುವಾಗ ನಿಮಗೆ ಕೆಲಸ ಇರಬಾರದು.',
++  'elig.gjselfemp.list': 'ನಿಮ್ಮ ವ್ಯಾಪಾರ ಇಲಾಖೆ ಹೆಸರಿಸಿರುವ 85 ವ್ಯಾಪಾರಗಳಲ್ಲಿ ಒಂದಾಗಿರಬೇಕು; ಸಾಲದ ಮೊತ್ತ ವ್ಯಾಪಾರವನ್ನು ಅವಲಂಬಿಸಿರುತ್ತದೆ.',
++  'elig.gjselfemp.online': 'ಗುಜರಾತ್ ಬುಡಕಟ್ಟು ಅಭಿವೃದ್ಧಿ ನಿಗಮದ ಜಾಲತಾಣದಲ್ಲಿ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಹಾಕಬೇಕು.',
++
++  'sdata.gj_fvp.description': 'ಹಣ್ಣು ಮತ್ತು ತರಕಾರಿಗಳ ಸಂರಕ್ಷಣೆ, ಡಬ್ಬಿಯಲ್ಲಿ ತುಂಬುವುದು ಮತ್ತು ಕೈತೋಟದಲ್ಲಿ ಬೆಳೆಸುವುದರ ಪ್ರಾಯೋಗಿಕ ತರಬೇತಿ. ತರಬೇತಿ 2 ರಿಂದ 5 ದಿನ ನಡೆಯುತ್ತದೆ. ಒಬ್ಬರಿಗೆ ದಿನಕ್ಕೆ Rs.500 ವೆಚ್ಚವನ್ನು ಸರ್ಕಾರ ಭರಿಸುತ್ತದೆ: Rs.250 ನಿಮಗೆ ಶಿಷ್ಯವೇತನವಾಗಿ ಸಿಗುತ್ತದೆ, Rs.250 ತರಬೇತಿ ಸಾಮಗ್ರಿ, ತಜ್ಞರು ಮತ್ತು ಇತರ ವೆಚ್ಚಗಳಿಗೆ ಹೋಗುತ್ತದೆ.',
++  'sdata.gj_fvp.support': '2 ರಿಂದ 5 ದಿನಗಳ ತರಬೇತಿ ಸಮಯದಲ್ಲಿ ದಿನಕ್ಕೆ Rs.250 ಶಿಷ್ಯವೇತನ',
++  'elig.gjfvp.willing': 'ಹಣ್ಣು ಮತ್ತು ತರಕಾರಿ ಬೆಳೆಸುವ ಕೌಶಲ ತರಬೇತಿಯಲ್ಲಿ ಭಾಗವಹಿಸಲು ನೀವು ಸಿದ್ಧರಿರಬೇಕು.',
++  'elig.gjfvp.online': 'I-Khedut ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಹಾಕಬೇಕು.',
++
++  'sdata.gj_micro.description': 'ಗುಜರಾತ್‌ನ ರಬಾರಿ ಮತ್ತು ಭರವಾಡ ಸಮುದಾಯಗಳ ಸಣ್ಣ ವ್ಯಾಪಾರ ಮಾಲೀಕರಿಗೆ. ವರ್ಷಕ್ಕೆ 5% ಬಡ್ಡಿಯಲ್ಲಿ Rs.1,25,000 ವರೆಗೆ ಸಾಲ; ಇದು ಯೋಜನೆ ವೆಚ್ಚದ 95% ವರೆಗೆ ಒಳಗೊಳ್ಳುತ್ತದೆ.',
++  'sdata.gj_micro.support': 'Rs.1,25,000 ವರೆಗೆ ಸಾಲ 5% ಬಡ್ಡಿಯಲ್ಲಿ',
++  'elig.gjmicro.caste': 'ನೀವು ಸಾಮಾಜಿಕವಾಗಿ ಮತ್ತು ಶೈಕ್ಷಣಿಕವಾಗಿ ಹಿಂದುಳಿದ ವರ್ಗಗಳಲ್ಲಿ ಬರುವ ರಬಾರಿ ಅಥವಾ ಭರವಾಡ ಸಮುದಾಯಕ್ಕೆ ಸೇರಿದವರಾಗಿರಬೇಕು.',
++  'elig.gjmicro.age': 'ನಿಮ್ಮ ವಯಸ್ಸು 21 ರಿಂದ 45 ವರ್ಷದ ನಡುವೆ ಇರಬೇಕು.',
++  'elig.gjmicro.income': 'ನಿಮ್ಮ ವಾರ್ಷಿಕ ಆದಾಯ Rs.3 ಲಕ್ಷಕ್ಕಿಂತ ಹೆಚ್ಚಿರಬಾರದು.',
++  'elig.gjmicro.share': 'ಸಾಲ ವೆಚ್ಚದ 95% ಅನ್ನು ಒಳಗೊಳ್ಳುತ್ತದೆ; ಉಳಿದ 5% ನೀವು ಹಾಕಬೇಕು.',
++  'elig.gjmicro.online': 'DAAD Online ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಹಾಕಬೇಕು.',
++
++  'sdata.gj_vahan.description': 'ಗುಜರಾತ್‌ನ ಮೀಸಲಾತಿ ಇಲ್ಲದ ವರ್ಗದ, ಸ್ವಂತ ಕೆಲಸ ಮಾಡುವವರಿಗೆ. ಆಟೋ ರಿಕ್ಷಾ, ಲೋಡಿಂಗ್ ಆಟೋ, ಮಾರುತಿ ಕಾರು ಅಥವಾ ಜೀಪ್ ಟ್ಯಾಕ್ಸಿಯಂತಹ ವಾಹನದ ಆನ್-ರೋಡ್ ಬೆಲೆಗೆ ಸಾಲ, ವರ್ಷಕ್ಕೆ 5% ಸರಳ ಬಡ್ಡಿಯಲ್ಲಿ; ಮಹಿಳೆಯರಿಗೆ 4%.',
++  'sdata.gj_vahan.support': 'ವಾಹನದ ಆನ್-ರೋಡ್ ಬೆಲೆಗೆ ಸಾಲ, 5% ಬಡ್ಡಿಯಲ್ಲಿ (ಮಹಿಳೆಯರಿಗೆ 4%)',
++  'elig.gjvahan.unreserved': 'ನೀವು ಮೀಸಲಾತಿ ಇಲ್ಲದ ವರ್ಗಕ್ಕೆ ಸೇರಿದವರಾಗಿರಬೇಕು, ಮೀಸಲಾತಿ ಇರುವ ವರ್ಗಕ್ಕೆ ಅಲ್ಲ.',
++  'elig.gjvahan.age': 'ನಿಮ್ಮ ವಯಸ್ಸು 18 ರಿಂದ 50 ವರ್ಷದ ನಡುವೆ ಇರಬೇಕು.',
++  'elig.gjvahan.licence': 'ನಿಮ್ಮ ಬಳಿ ಮಾನ್ಯವಾದ ಚಾಲನಾ ಪರವಾನಗಿ ಇರಬೇಕು.',
++  'elig.gjvahan.income': 'ನಿಮ್ಮ ಕುಟುಂಬದ ವಾರ್ಷಿಕ ಆದಾಯ Rs.6 ಲಕ್ಷಕ್ಕಿಂತ ಹೆಚ್ಚಿರಬಾರದು.',
++  'elig.gjvahan.vehicle': 'ನೀವು ಖರೀದಿಸುವ ವಾಹನವನ್ನು ಸಾಲಕ್ಕೆ ಭದ್ರತೆಯಾಗಿ ನಿಗಮದ ಬಳಿ ಅಡಮಾನ ಇಡಬೇಕು; ಸಾಲವನ್ನು 5 ವರ್ಷಗಳಲ್ಲಿ ಸಮಾನ ಮಾಸಿಕ ಕಂತುಗಳಲ್ಲಿ ಮರುಪಾವತಿಸಬೇಕು.',
++  'elig.gjvahan.limits': 'ಒಂದು ಕುಟುಂಬದಿಂದ ಒಬ್ಬರಿಗೆ ಮಾತ್ರ ಇದು ಸಿಗುತ್ತದೆ; ಒಂದು ಹಳ್ಳಿಯಲ್ಲಿ ಗರಿಷ್ಠ 5 ಜನರನ್ನು ಆಯ್ಕೆ ಮಾಡಲಾಗುತ್ತದೆ.',
+@@ -1459,0 +3188 @@ const mr = {
 +  'elig.pmfme.upgrade': 'एका घटकाबद्दल अन्न प्रक्रिया उद्योग मंत्रालयाने दिलेल्या माहितीत हे सरकारी पैसे आपला घटक सुधारू इच्छिणाऱ्या घटकांसाठी असल्याचे सांगितले आहे। नवीन घटकाला ते मिळू शकतात की नाही, हे त्यात सांगितलेले नाही, म्हणून अर्ज करण्यापूर्वी तुमच्या बँक शाखेत विचारा।',
-@@ -1466,0 +2794 @@ const mr = {
+@@ -1466,0 +3196 @@ const mr = {
 +  'elig.pmegp.period': '2022 च्या PMEGP नियमांनुसार ही योजना 2021-22 ते 2025-26 या वर्षांसाठी मंजूर आहे। 31 मार्च 2026 नंतरही ती सुरू आहे की नाही, याची आम्ही खात्री केलेली नाही, म्हणून अर्ज करण्यापूर्वी तुमच्या जिल्हा उद्योग केंद्रात विचारा।',
-@@ -1486,0 +2815 @@ const mr = {
+@@ -1486,0 +3217 @@ const mr = {
 +  'elig.standupindia.period': 'वित्तीय सेवा विभागाच्या म्हणण्यानुसार ही योजना 31 मार्च 2025 पर्यंत आहे। 2025-26 च्या अर्थसंकल्पात नवी योजना जाहीर झाली होती। सध्या कर्ज दिले जात आहे की नाही, याची आम्ही खात्री केलेली नाही, म्हणून तुमच्या बँक शाखेत विचारा।',
-@@ -1615,0 +2945,218 @@ const mr = {
+@@ -1615,0 +3347,285 @@ const mr = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'एक हमी, जिच्या आधारावर सदस्य बँक छोट्या व्यवसायाला तारण न घेता, किंवा कर्जाच्या फक्त एका भागावर तारण घेऊन, Rs.10 कोटींपर्यंत कर्ज देऊ शकते। शेती आणि बचत गट यात येत नाहीत।',
@@ -1577,13 +1979,80 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'उत्तराखंडमधील शहरांतील आणि नगरांतील लोकांना लहान व्यवसाय सुरू करण्यासाठी किंवा वाढवण्यासाठी Rs.2 लाखांपर्यंत बँक कर्ज, ज्याच्या व्याजाचा काही भाग केंद्र आणि राज्य सरकारे भरतात। फॉर्म तुम्हाला तुमच्या नगरपालिकेकडून मिळतो, जी तो तपासून बँकेकडे पाठवते।',
 +  'sdata.uk_nulm.support': 'Rs.2 लाखांपर्यंत बँक कर्ज, व्याजाचा काही भाग सरकार भरते',
 +  'elig.uknulm.income': 'तुमच्या कुटुंबाचे वर्षाचे उत्पन्न Rs.3 लाखांपेक्षा कमी असले पाहिजे।',
-@@ -1682,0 +3230 @@ const bn = {
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'स्वतःचे काम सुरू करण्यासाठी बँकेतून कर्ज घेणाऱ्या, गुजरातच्या आदिवासी भागांतील अनुसूचित जमातीच्या लोकांसाठी. Rs.5 लाखांपर्यंतच्या कर्जावर सरकार 6% व्याजात मदत देते।',
++  'sdata.gj_tribal_int.support': 'Rs.5 लाखांपर्यंतच्या बँक कर्जावर 6% व्याजात मदत',
++  'elig.gjtribal.st': 'तुम्ही अनुसूचित जमातीतील असावे।',
++  'elig.gjtribal.area': 'तुम्ही गुजरातच्या एखाद्या आदिवासी भागातील रहिवासी असावे।',
++  'elig.gjtribal.loan': 'स्वतःचे काम सुरू करण्यासाठी तुम्ही बँकेतून कर्ज घेतलेले असावे।',
++  'elig.gjtribal.office': 'तुम्ही गांधीनगर येथील गुजरात आदिवासी विकास महामंडळाच्या प्रकल्प प्रशासकाच्या कार्यालयात, किंवा आदिवासी जिल्हा कार्यालयात अर्ज करता।',
++
++  'sdata.gj_jgvy.description': 'गावात नवा उद्योग सुरू करू इच्छिणाऱ्या कारागीर, लहान उद्योजक आणि बचत गटांसाठी. सरकार खर्चाच्या पहिल्या Rs.10 लाखांच्या 25% देते; अनुसूचित जाती, अनुसूचित जमाती, महिला आणि दिव्यांग यांना 30%. त्यापुढच्या खर्चाच्या 10%, Rs.25 लाखांपर्यंत।',
++  'sdata.gj_jgvy.support': 'पहिल्या Rs.10 लाखांच्या 25% सरकार देते (काही गटांसाठी 30%)',
++  'elig.gjjgvy.who': 'तुम्ही वैयक्तिक कारागीर किंवा उद्योजक असावे, किंवा लहान प्रमाणात वस्तू बनवणाऱ्या कार्यरत Grade-II बचत गटाचे सदस्य असावे। भागीदारी फर्म, खासगी कंपनी, संयुक्त उपक्रम, HUF किंवा तशाच व्यवसायाच्या वतीने अर्ज करू नये।',
++  'elig.gjjgvy.age': 'तुमचे वय 25 ते 50 वर्षांच्या दरम्यान असावे।',
++  'elig.gjjgvy.class10': 'तुम्ही मान्यताप्राप्त शालेय मंडळातून किमान इयत्ता 10 उत्तीर्ण असावे।',
++  'elig.gjjgvy.experience': 'तुम्हाला जे काम करायचे आहे त्यात किमान एक वर्षाचा अनुभव असावा, किंवा मान्यताप्राप्त संस्थेतून त्याचे प्रशिक्षण घेतलेले असावे।',
++  'elig.gjjgvy.village': 'तुमचा प्रकल्प 20,000 पेक्षा जास्त लोक राहत नसलेल्या ग्रामीण भागात, 24 तास थ्री-फेज वीजपुरवठ्यासह असावा।',
++  'elig.gjjgvy.cost': 'प्रकल्पाचा खर्च Rs.1 लाख ते Rs.25 लाखांपर्यंत असावा। यात यंत्रे, कच्चा माल आणि व्यवसाय चालवण्यासाठी पैसे (एकूणच्या 10% पर्यंत) धरता येतात, पण जमीन किंवा इमारत नाही। तुमचा घटक 2 वर्षे चांगला चालल्यानंतरच सरकारी पैसे मिळतात।',
++
++  'sdata.gj_dtaiss.description': 'गुजरातमध्ये नोंदणी केलेल्या हातमाग आणि हस्तकला कारागिरांसाठी. यंत्रे, अवजारे किंवा कच्च्या मालासाठी Rs.1 लाखापर्यंत बँक कर्ज. सरकार कर्जाचा एक हिस्सा एकदाच देते, आणि 3 वर्षांपर्यंत दर सहा महिन्यांनी 7% व्याजात मदत।',
++  'sdata.gj_dtaiss.support': 'Rs.1 लाखापर्यंत कर्ज, आणि त्याच्या 20% ते 25% सरकार देते',
++  'elig.gjdtaiss.skill': 'तुमच्याकडे हातमाग किंवा हस्तकलेच्या कामाचे कौशल्य असावे।',
++  'elig.gjdtaiss.registered': 'तुम्ही कुटीर व ग्रामोद्योग विभागाच्या Indext-C मध्ये कारागीर म्हणून नोंदणीकृत असावे; तसेच विकास आयुक्त (हातमाग किंवा हस्तकला) किंवा Indext-C चे ओळखपत्र, किंवा जिल्हा उद्योग केंद्राच्या महाव्यवस्थापकांचे तात्पुरते प्रमाणपत्र असावे।',
++  'elig.gjdtaiss.margin': 'सामान्य वर्गातील पुरुष असाल तर कर्जाच्या 20% सरकार देते; अनुसूचित जाती, अनुसूचित जमाती किंवा महिला अर्जदार असाल, किंवा अंध असाल किंवा 40% वा त्याहून जास्त दिव्यांगत्व असेल तर 25% देते। हे कर्ज दिल्यानंतर एकदाच दिले जाते।',
++  'elig.gjdtaiss.repay': 'कर्ज व्याजासह 12 ते 36 मासिक हप्त्यांत परत करायचे असते; किती हप्ते ते बँक ठरवते। प्रत्येक हप्ता वेळेवर भरावा लागतो, कोणत्याही बँकेचे कर्ज बुडवलेले नसावे, आणि कर्ज ज्या कामासाठी दिले त्यासाठीच वापरावे लागते।',
++
++  'sdata.gj_mahila.description': 'गुजरातमधील कमी उत्पन्नाच्या कुटुंबांतील अनुसूचित जातीच्या महिलांसाठी, ज्यांना छोटा व्यवसाय सुरू करायचा आहे। वर्षाला 6% व्याजाने Rs.50,000 कर्ज। यातील 95% (Rs.47,500) राज्याचा वाटा आणि 5% (Rs.2,500) तुमचा वाटा। मासिक हप्ता 36 महिन्यांसाठी सुमारे Rs.1,445 असू शकतो।',
++  'sdata.gj_mahila.support': 'Rs.50,000 कर्ज 6% व्याजाने, 36 महिन्यांत परत करायचे',
++  'elig.gjmahila.permanent': 'तुम्ही गुजरातचे कायमचे रहिवासी असावे।',
++  'elig.gjdaadc.sc': 'तुम्ही अनुसूचित जातीतील असावे।',
++  'elig.gjmahila.aay': 'तुम्ही अंत्योदय अन्न योजनेच्या (AAY) कुटुंबातील असावे, किंवा आर्थिकदृष्ट्या मागास वर्गातील असावे।',
++  'elig.gjdaadc.income': 'तुमच्या कुटुंबाचे वार्षिक उत्पन्न Rs.3 लाखांपेक्षा जास्त नसावे।',
++  'elig.gjmahila.plan': 'छोटा व्यवसाय किंवा स्वतःचे काम सुरू करण्याची तुमची योजना असावी।',
++  'elig.gjdaadc.online': 'तुम्ही डॉ. आंबेडकर अंत्योदय विकास महामंडळाच्या संकेतस्थळावर ऑनलाइन अर्ज करता।',
++
++  'sdata.gj_smallbiz.description': 'गुजरातमधील अंत्योदय अन्न योजनेच्या कुटुंबांतील अनुसूचित जातीच्या लोकांसाठी, ज्यांना छोटा व्यवसाय सुरू किंवा वाढवायचा आहे। वर्षाला 4% व्याजाने Rs.1,25,000 पर्यंत कर्ज, 60 महिन्यांत परत करायचे, आणि दोन जामीनदार लागतात। संपूर्ण रक्कम राज्याचा वाटा आहे, म्हणून तुम्हाला स्वतःचा वाटा द्यावा लागत नाही। मासिक हप्ता जास्तीत जास्त सुमारे Rs.2,302।',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 पर्यंत कर्ज 4% व्याजाने, 60 महिन्यांत परत करायचे',
++  'elig.gjsmallbiz.aay': 'तुम्ही अंत्योदय अन्न योजनेच्या (AAY) कुटुंबातील असावे।',
++  'elig.gjsmallbiz.intent': 'छोटा व्यवसाय किंवा धंदा सुरू करण्याची किंवा वाढवण्याची तुमची योजना असावी।',
++  'elig.gjsmallbiz.guarantors': 'तुमच्या कर्जाला हमी देण्यास तयार असलेले दोन जामीनदार तुमच्याकडे असावेत।',
++
++  'sdata.gj_selfemp.description': 'गुजरातमधील बेरोजगार अनुसूचित जमातीच्या लोकांसाठी. विभागाने नमूद केलेल्या 85 व्यवसायांपैकी कोणताही सुरू करण्यासाठी, तुम्ही निवडलेल्या व्यवसायानुसार Rs.50,000 ते Rs.5 लाखांपर्यंत कर्ज, वर्षाला 4% व्याजाने।',
++  'sdata.gj_selfemp.support': 'Rs.50,000 ते Rs.5 लाखांपर्यंत कर्ज 4% व्याजाने',
++  'elig.gjselfemp.unemployed': 'अर्ज करताना तुम्ही बेरोजगार असावे।',
++  'elig.gjselfemp.list': 'तुमचा व्यवसाय विभागाने नमूद केलेल्या 85 व्यवसायांपैकी एक असावा, आणि कर्जाची रक्कम व्यवसायानुसार ठरते।',
++  'elig.gjselfemp.online': 'तुम्ही गुजरात आदिवासी विकास महामंडळाच्या संकेतस्थळावर ऑनलाइन अर्ज करता।',
++
++  'sdata.gj_fvp.description': 'फळे आणि भाज्या टिकवणे, डबाबंद करणे आणि परसबागेत वाढवणे यांचे प्रत्यक्ष प्रशिक्षण. प्रशिक्षण 2 ते 5 दिवस चालते. सरकार प्रत्येक व्यक्तीमागे दररोज Rs.500 खर्च उचलते: Rs.250 तुम्हाला विद्यावेतन म्हणून मिळतात आणि Rs.250 प्रशिक्षण साहित्य, तज्ज्ञ आणि इतर खर्चांवर जातात।',
++  'sdata.gj_fvp.support': '2 ते 5 दिवसांच्या प्रशिक्षणादरम्यान दररोज Rs.250 विद्यावेतन',
++  'elig.gjfvp.willing': 'फळे आणि भाज्या वाढवण्याच्या कौशल्य प्रशिक्षणात भाग घेण्यास तुम्ही तयार असावे।',
++  'elig.gjfvp.online': 'तुम्ही I-Khedut पोर्टलवर ऑनलाइन अर्ज करता।',
++
++  'sdata.gj_micro.description': 'गुजरातमधील रबारी आणि भरवाड समाजांतील लहान व्यावसायिकांसाठी. वर्षाला 5% व्याजाने Rs.1,25,000 पर्यंत कर्ज, जे प्रकल्पाच्या खर्चाच्या 95% पर्यंत असते।',
++  'sdata.gj_micro.support': 'Rs.1,25,000 पर्यंत कर्ज 5% व्याजाने',
++  'elig.gjmicro.caste': 'तुम्ही रबारी किंवा भरवाड समाजातील असावे, जो सामाजिक आणि शैक्षणिकदृष्ट्या मागास वर्गांत येतो।',
++  'elig.gjmicro.age': 'तुमचे वय 21 ते 45 वर्षांच्या दरम्यान असावे।',
++  'elig.gjmicro.income': 'तुमचे वार्षिक उत्पन्न Rs.3 लाखांपेक्षा जास्त नसावे।',
++  'elig.gjmicro.share': 'कर्ज खर्चाच्या 95% भागवते, आणि उरलेले 5% तुम्ही घालता।',
++  'elig.gjmicro.online': 'तुम्ही DAAD Online पोर्टलवर ऑनलाइन अर्ज करता।',
++
++  'sdata.gj_vahan.description': 'गुजरातमधील अनारक्षित प्रवर्गातील स्वतःचे काम करणाऱ्यांसाठी. रिक्षा, लोडिंग रिक्षा, मारुती कार किंवा जीप टॅक्सी यांसारख्या वाहनाच्या ऑन-रोड किंमतीसाठी कर्ज, वर्षाला 5% साधे व्याज, आणि महिलांसाठी 4%।',
++  'sdata.gj_vahan.support': 'वाहनाच्या ऑन-रोड किंमतीसाठी कर्ज, 5% व्याजाने (महिलांसाठी 4%)',
++  'elig.gjvahan.unreserved': 'तुम्ही अनारक्षित प्रवर्गातील असावे, आरक्षित प्रवर्गातील नसावे।',
++  'elig.gjvahan.age': 'तुमचे वय 18 ते 50 वर्षांच्या दरम्यान असावे।',
++  'elig.gjvahan.licence': 'तुमच्याकडे वैध वाहन चालक परवाना असावा।',
++  'elig.gjvahan.income': 'तुमच्या कुटुंबाचे वार्षिक उत्पन्न Rs.6 लाखांपेक्षा जास्त नसावे।',
++  'elig.gjvahan.vehicle': 'तुम्ही खरेदी केलेले वाहन कर्जासाठी तारण म्हणून महामंडळाकडे ठेवावे लागते, आणि कर्ज 5 वर्षांत समान मासिक हप्त्यांत परत करावे लागते।',
++  'elig.gjvahan.limits': 'एका कुटुंबातील फक्त एका व्यक्तीला हे मिळू शकते, आणि एका गावात जास्तीत जास्त 5 लोक निवडले जातात।',
+@@ -1682,0 +3699 @@ const bn = {
 +  'elig.pmfme.upgrade': 'একটি ইউনিট সম্পর্কে খাদ্য প্রক্রিয়াকরণ শিল্প মন্ত্রকের দেওয়া তথ্যে এই সরকারি টাকা সেই ইউনিটগুলোর জন্য বলা হয়েছে যারা নিজেদের ইউনিট আরও ভালো করতে চায়। নতুন ইউনিট এটা পেতে পারে কি না, তা সেখানে বলা নেই, তাই আবেদনের আগে আপনার ব্যাঙ্ক শাখায় জিজ্ঞেস করুন।',
-@@ -1689,0 +3238 @@ const bn = {
+@@ -1689,0 +3707 @@ const bn = {
 +  'elig.pmegp.period': '2022 সালের PMEGP নিয়মে এই প্রকল্প 2021-22 থেকে 2025-26 পর্যন্ত বছরগুলোর জন্য মঞ্জুর করা হয়েছে। 31 মার্চ 2026-এর পরেও এটা চলছে কি না, তা আমরা নিশ্চিত করিনি, তাই আবেদনের আগে আপনার জেলা শিল্প কেন্দ্রে জিজ্ঞেস করুন।',
-@@ -1709,0 +3259 @@ const bn = {
+@@ -1709,0 +3728 @@ const bn = {
 +  'elig.standupindia.period': 'আর্থিক পরিষেবা বিভাগ বলছে এই প্রকল্প 31 মার্চ 2025 পর্যন্ত। 2025-26 সালের বাজেটে একটি নতুন প্রকল্প ঘোষণা করা হয়েছিল। এখন ঋণ দেওয়া হচ্ছে কি না, তা আমরা নিশ্চিত করিনি, তাই আপনার ব্যাঙ্ক শাখায় জিজ্ঞেস করুন।',
-@@ -1838,0 +3389,218 @@ const bn = {
+@@ -1838,0 +3858,285 @@ const bn = {
 +
 +  // --- added 31 Oct 2026, central finance and credit ---
 +  'sdata.cgtmse.description': 'একটি গ্যারান্টি, যার ভরসায় সদস্য ব্যাঙ্ক ছোট ব্যবসাকে বন্ধক না নিয়ে, বা ঋণের শুধু একটি অংশের জন্য বন্ধক নিয়ে, Rs.10 কোটি পর্যন্ত ঋণ দিতে পারে। চাষবাস এবং স্বনির্ভর দল এর মধ্যে পড়ে না।',
@@ -1802,3 +2271,70 @@ index e24e46f..2ef889b 100644
 +  'sdata.uk_nulm.description': 'উত্তরাখণ্ডের শহর ও নগরের মানুষের জন্য ছোট ব্যবসা শুরু বা বাড়াতে Rs.2 লাখ পর্যন্ত ব্যাঙ্ক ঋণ, যার সুদের একটি অংশ কেন্দ্র ও রাজ্য সরকার দেয়। ফর্ম আপনি আপনার পুরসভার কাছ থেকে পান, তারা তা যাচাই করে ব্যাঙ্কে পাঠায়।',
 +  'sdata.uk_nulm.support': 'Rs.2 লাখ পর্যন্ত ব্যাঙ্ক ঋণ, সুদের একটি অংশ সরকার দেয়',
 +  'elig.uknulm.income': 'আপনার পরিবারের বছরের আয় Rs.3 লাখের কম হতে হবে।',
++
++  // --- added 31 Oct 2026, Gujarat state schemes ---
++  'sdata.gj_tribal_int.description': 'নিজের কাজ শুরু করতে ব্যাঙ্ক থেকে ঋণ নেওয়া, গুজরাটের আদিবাসী এলাকার তফসিলি উপজাতির মানুষের জন্য। Rs.5 লাখ পর্যন্ত ঋণে সরকার 6% সুদে সাহায্য দেয়।',
++  'sdata.gj_tribal_int.support': 'Rs.5 লাখ পর্যন্ত ব্যাঙ্ক ঋণে 6% সুদে সাহায্য',
++  'elig.gjtribal.st': 'আপনাকে তফসিলি উপজাতির মানুষ হতে হবে।',
++  'elig.gjtribal.area': 'আপনাকে গুজরাটের কোনো আদিবাসী এলাকায় থাকতে হবে।',
++  'elig.gjtribal.loan': 'নিজের কাজ শুরু করার জন্য আপনাকে ব্যাঙ্ক থেকে ঋণ নিয়ে থাকতে হবে।',
++  'elig.gjtribal.office': 'আপনি গান্ধীনগরে গুজরাট আদিবাসী উন্নয়ন নিগমের প্রকল্প প্রশাসকের অফিসে, অথবা কোনো আদিবাসী জেলা অফিসে আবেদন করেন।',
++
++  'sdata.gj_jgvy.description': 'গ্রামে নতুন শিল্প শুরু করতে চান এমন কারিগর, ছোট উদ্যোক্তা ও স্বনির্ভর দলের জন্য। সরকার খরচের প্রথম Rs.10 লাখের 25% দেয়; তফসিলি জাতি, তফসিলি উপজাতি, মহিলা ও প্রতিবন্ধীদের জন্য 30%। তার ওপরের খরচের 10%, Rs.25 লাখ পর্যন্ত।',
++  'sdata.gj_jgvy.support': 'প্রথম Rs.10 লাখের 25% সরকার দেয় (কিছু শ্রেণির জন্য 30%)',
++  'elig.gjjgvy.who': 'আপনাকে ব্যক্তিগতভাবে কারিগর বা উদ্যোক্তা হতে হবে, অথবা ছোট পরিসরে পণ্য তৈরি করে এমন সক্রিয় Grade-II স্বনির্ভর দলের সদস্য হতে হবে। অংশীদারি সংস্থা, বেসরকারি কোম্পানি, যৌথ উদ্যোগ, HUF বা একই ধরনের ব্যবসার হয়ে আবেদন করা যাবে না।',
++  'elig.gjjgvy.age': 'আপনার বয়স 25 থেকে 50 বছরের মধ্যে হতে হবে।',
++  'elig.gjjgvy.class10': 'আপনাকে স্বীকৃত স্কুল বোর্ড থেকে অন্তত শ্রেণি 10 পাস হতে হবে।',
++  'elig.gjjgvy.experience': 'আপনি যে কাজ করতে চান তাতে অন্তত এক বছরের অভিজ্ঞতা থাকতে হবে, অথবা কোনো স্বীকৃত প্রতিষ্ঠান থেকে তার প্রশিক্ষণ নেওয়া থাকতে হবে।',
++  'elig.gjjgvy.village': 'আপনার প্রকল্প এমন গ্রামীণ এলাকায় হতে হবে যেখানে 20,000-এর বেশি মানুষ থাকেন না, এবং যেখানে 24 ঘণ্টা থ্রি-ফেজ বিদ্যুৎ সরবরাহ আছে।',
++  'elig.gjjgvy.cost': 'প্রকল্পের খরচ Rs.1 লাখ থেকে Rs.25 লাখ পর্যন্ত হতে হবে। এতে যন্ত্র, কাঁচামাল ও ব্যবসা চালানোর টাকা (মোটের 10% পর্যন্ত) ধরা যায়, কিন্তু জমি বা দালান নয়। আপনার ইউনিট 2 বছর ভালোভাবে চলার পরেই সরকারি টাকা পাওয়া যায়।',
++
++  'sdata.gj_dtaiss.description': 'গুজরাটে নিবন্ধিত তাঁত ও হস্তশিল্পের কারিগরদের জন্য। যন্ত্র, সরঞ্জাম বা কাঁচামালের জন্য Rs.1 লাখ পর্যন্ত ব্যাঙ্ক ঋণ। সরকার ঋণের একটি অংশ একবার দেয়, আর 3 বছর পর্যন্ত প্রতি ছয় মাসে 7% সুদে সাহায্য দেয়।',
++  'sdata.gj_dtaiss.support': 'Rs.1 লাখ পর্যন্ত ঋণ, আর তার 20% থেকে 25% সরকার দেয়',
++  'elig.gjdtaiss.skill': 'আপনার তাঁত বা হস্তশিল্পের কাজে দক্ষতা থাকতে হবে।',
++  'elig.gjdtaiss.registered': 'আপনাকে কুটির ও গ্রামশিল্প বিভাগের Indext-C-তে কারিগর হিসেবে নিবন্ধিত হতে হবে; এবং উন্নয়ন কমিশনার (তাঁত বা হস্তশিল্প) বা Indext-C-র দেওয়া পরিচয়পত্র, অথবা জেলা শিল্প কেন্দ্রের জেনারেল ম্যানেজারের দেওয়া অস্থায়ী শংসাপত্র থাকতে হবে।',
++  'elig.gjdtaiss.margin': 'সাধারণ শ্রেণির পুরুষ হলে ঋণের 20% সরকার দেয়; তফসিলি জাতি, তফসিলি উপজাতি বা মহিলা আবেদনকারী হলে, অথবা দৃষ্টিহীন হলে বা 40% বা তার বেশি প্রতিবন্ধকতা থাকলে 25% দেয়। এটি ঋণ দেওয়ার পরে একবারই দেওয়া হয়।',
++  'elig.gjdtaiss.repay': 'ঋণ সুদসহ 12 থেকে 36টি মাসিক কিস্তিতে শোধ করতে হয়; কতগুলো কিস্তি, তা ব্যাঙ্ক ঠিক করে। প্রতিটি কিস্তি সময়মতো দিতে হবে, আগে কোনো ব্যাঙ্কের ঋণ শোধ করতে ব্যর্থ হয়ে থাকলে চলবে না, আর ঋণ যে কাজের জন্য দেওয়া হয়েছে শুধু সেই কাজেই ব্যবহার করতে হবে।',
++
++  'sdata.gj_mahila.description': 'গুজরাটের কম আয়ের পরিবারের তফসিলি জাতির মহিলাদের জন্য, যাঁরা ছোট ব্যবসা শুরু করতে চান। বছরে 6% সুদে Rs.50,000 ঋণ। এর মধ্যে 95% (Rs.47,500) রাজ্যের অংশ আর 5% (Rs.2,500) আপনার অংশ। মাসিক কিস্তি 36 মাসের জন্য প্রায় Rs.1,445 হতে পারে।',
++  'sdata.gj_mahila.support': 'Rs.50,000 ঋণ 6% সুদে, 36 মাসে শোধ করতে হবে',
++  'elig.gjmahila.permanent': 'আপনাকে গুজরাটের স্থায়ী বাসিন্দা হতে হবে।',
++  'elig.gjdaadc.sc': 'আপনাকে তফসিলি জাতির মানুষ হতে হবে।',
++  'elig.gjmahila.aay': 'আপনাকে অন্ত্যোদয় অন্ন যোজনা (AAY) পরিবারের হতে হবে, অথবা অর্থনৈতিকভাবে পিছিয়ে পড়া শ্রেণির হতে হবে।',
++  'elig.gjdaadc.income': 'আপনার পরিবারের বছরের আয় Rs.3 লাখের বেশি হওয়া চলবে না।',
++  'elig.gjmahila.plan': 'ছোট ব্যবসা বা নিজের কাজ শুরু করার পরিকল্পনা আপনার থাকতে হবে।',
++  'elig.gjdaadc.online': 'ডঃ আম্বেদকর অন্ত্যোদয় উন্নয়ন নিগমের ওয়েবসাইটে অনলাইনে আবেদন করতে হয়।',
++
++  'sdata.gj_smallbiz.description': 'গুজরাটের অন্ত্যোদয় অন্ন যোজনা পরিবারের তফসিলি জাতির মানুষের জন্য, যাঁরা ছোট ব্যবসা শুরু বা বাড়াতে চান। বছরে 4% সুদে Rs.1,25,000 পর্যন্ত ঋণ, 60 মাসে শোধ করতে হবে, আর দুজন জামিনদার লাগবে। পুরো টাকাটাই রাজ্যের অংশ, তাই আপনাকে নিজের অংশ কিছু দিতে হয় না। মাসিক কিস্তি সর্বোচ্চ প্রায় Rs.2,302।',
++  'sdata.gj_smallbiz.support': 'Rs.1,25,000 পর্যন্ত ঋণ 4% সুদে, 60 মাসে শোধ করতে হবে',
++  'elig.gjsmallbiz.aay': 'আপনাকে অন্ত্যোদয় অন্ন যোজনা (AAY) পরিবারের হতে হবে।',
++  'elig.gjsmallbiz.intent': 'ছোট ব্যবসা বা পেশা শুরু বা বাড়ানোর পরিকল্পনা আপনার থাকতে হবে।',
++  'elig.gjsmallbiz.guarantors': 'আপনার ঋণের দায় নিতে রাজি এমন দুজন জামিনদার থাকতে হবে।',
++
++  'sdata.gj_selfemp.description': 'গুজরাটের বেকার তফসিলি উপজাতির মানুষের জন্য। বিভাগ যে 85টি ব্যবসার নাম দিয়েছে, তার যেকোনোটি শুরু করতে, আপনি যে ব্যবসা বেছে নেবেন তার ওপর নির্ভর করে Rs.50,000 থেকে Rs.5 লাখ পর্যন্ত ঋণ, বছরে 4% সুদে।',
++  'sdata.gj_selfemp.support': 'Rs.50,000 থেকে Rs.5 লাখ পর্যন্ত ঋণ 4% সুদে',
++  'elig.gjselfemp.unemployed': 'আবেদনের সময় আপনাকে বেকার হতে হবে।',
++  'elig.gjselfemp.list': 'আপনার ব্যবসা বিভাগের নাম দেওয়া 85টি ব্যবসার একটি হতে হবে, আর ঋণের পরিমাণ ব্যবসার ওপর নির্ভর করে।',
++  'elig.gjselfemp.online': 'গুজরাট আদিবাসী উন্নয়ন নিগমের ওয়েবসাইটে অনলাইনে আবেদন করতে হয়।',
++
++  'sdata.gj_fvp.description': 'ফল ও সবজি সংরক্ষণ, টিনজাত করা এবং বাড়ির বাগানে ফলানোর হাতেকলমে প্রশিক্ষণ। প্রশিক্ষণ 2 থেকে 5 দিন চলে। সরকার প্রত্যেক জনের জন্য প্রতিদিন Rs.500 খরচ বহন করে: Rs.250 আপনি ভাতা হিসেবে পান আর Rs.250 প্রশিক্ষণের সামগ্রী, বিশেষজ্ঞ ও অন্যান্য খরচে যায়।',
++  'sdata.gj_fvp.support': '2 থেকে 5 দিনের প্রশিক্ষণের সময় প্রতিদিন Rs.250 ভাতা',
++  'elig.gjfvp.willing': 'ফল ও সবজি ফলানোর দক্ষতা প্রশিক্ষণে অংশ নিতে আপনাকে রাজি থাকতে হবে।',
++  'elig.gjfvp.online': 'I-Khedut পোর্টালে অনলাইনে আবেদন করতে হয়।',
++
++  'sdata.gj_micro.description': 'গুজরাটের রাবারি ও ভারওয়াদ সম্প্রদায়ের ছোট ব্যবসায়ীদের জন্য। বছরে 5% সুদে Rs.1,25,000 পর্যন্ত ঋণ, যা প্রকল্পের খরচের 95% পর্যন্ত মেটায়।',
++  'sdata.gj_micro.support': 'Rs.1,25,000 পর্যন্ত ঋণ 5% সুদে',
++  'elig.gjmicro.caste': 'আপনাকে রাবারি বা ভারওয়াদ সম্প্রদায়ের হতে হবে, যা সামাজিক ও শিক্ষাগতভাবে পিছিয়ে পড়া শ্রেণির মধ্যে পড়ে।',
++  'elig.gjmicro.age': 'আপনার বয়স 21 থেকে 45 বছরের মধ্যে হতে হবে।',
++  'elig.gjmicro.income': 'আপনার বছরের আয় Rs.3 লাখের বেশি হওয়া চলবে না।',
++  'elig.gjmicro.share': 'ঋণ খরচের 95% মেটায়, আর বাকি 5% আপনি দেন।',
++  'elig.gjmicro.online': 'DAAD Online পোর্টালে অনলাইনে আবেদন করতে হয়।',
++
++  'sdata.gj_vahan.description': 'গুজরাটের অসংরক্ষিত শ্রেণির নিজের কাজ করা মানুষের জন্য। রিকশা, মালবাহী রিকশা, মারুতি গাড়ি বা জিপ ট্যাক্সির মতো গাড়ির অন-রোড দামের জন্য ঋণ, বছরে 5% সরল সুদে, আর মহিলাদের জন্য 4%।',
++  'sdata.gj_vahan.support': 'গাড়ির অন-রোড দামের জন্য ঋণ, 5% সুদে (মহিলাদের জন্য 4%)',
++  'elig.gjvahan.unreserved': 'আপনাকে অসংরক্ষিত শ্রেণির হতে হবে, সংরক্ষিত শ্রেণির নয়।',
++  'elig.gjvahan.age': 'আপনার বয়স 18 থেকে 50 বছরের মধ্যে হতে হবে।',
++  'elig.gjvahan.licence': 'আপনার একটি বৈধ ড্রাইভিং লাইসেন্স থাকতে হবে।',
++  'elig.gjvahan.income': 'আপনার পরিবারের বছরের আয় Rs.6 লাখের বেশি হওয়া চলবে না।',
++  'elig.gjvahan.vehicle': 'আপনি যে গাড়ি কিনবেন তা ঋণের জামানত হিসেবে নিগমের কাছে বন্ধক রাখতে হবে, আর ঋণ 5 বছরে সমান মাসিক কিস্তিতে শোধ করতে হবে।',
++  'elig.gjvahan.limits': 'একটি পরিবার থেকে শুধু একজনই এটি পেতে পারেন, আর একটি গ্রামে সর্বোচ্চ 5 জন বাছাই করা হয়।',

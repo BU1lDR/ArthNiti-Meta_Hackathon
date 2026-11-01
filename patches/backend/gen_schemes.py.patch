@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..cd0e49b 100644
+index 4ea17de..793cc94 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..cd0e49b 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,715 @@ SPEC = [
+@@ -615,3 +624,905 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -740,6 +740,196 @@ index 4ea17de..cd0e49b 100644
 +        ["doc.aadhaar", "doc.income", "doc.projectReport", "doc.photo", "doc.address", "doc.bank"],
 +        "https://www.myscheme.gov.in/schemes/daynulsepuk",
 +    ),
++    # ---- Gujarat state schemes ----
++    (
++        "gj_tribal_int",
++        "6% Interest Subsidy on Loans taken through Banks up to a Limit of Rs.5 Lakh for Self-Employment, Gujarat",
++        # The page says '6% interest subsidy' and does not say how it is worked out, so the card repeats the
++        # words and does not turn them into a sum. The loan approval letter it asks for has no document code.
++        "state", ["Gujarat"], GENERAL,
++        "Scheduled Tribe residents of the tribal areas of Gujarat who have taken a bank loan for self-employment",
++        "A scheme of the Tribal Development Department, Government of Gujarat, that promotes self-employment among Scheduled Tribe (ST) individuals by making business loans affordable. ST beneficiaries who take a bank loan for self-employment, up to a limit of Rs.5 lakh, are given an interest subsidy of 6%.",
++        "Interest subsidy of 6% on a bank loan of up to Rs.5 lakh",
++        [
++            ("elig.gjtribal.st", "The applicant must belong to the Scheduled Tribe (ST) category."),
++            ("elig.gjtribal.area", "The applicant must be a resident of the tribal areas of Gujarat."),
++            ("elig.gjtribal.loan", "The applicant must have taken a bank loan for self-employment."),
++            ("elig.gjtribal.office", "Applications are made at the office of the Project Administrator of the Gujarat Tribal Development Corporation in Gandhinagar, or at a tribal district office."),
++        ],
++        ["doc.aadhaar", "doc.bank", "doc.caste", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/6islbse",
++    ),
++    (
++        "gj_jgvy",
++        "Jyoti Gramodyog Vikas Yojana, Gujarat",
++        # The page writes the supply as '24x3-phase electricity'; it is read as 24-hour three-phase supply, the
++        # supply the scheme's name points to. Margin money is kept in the formal text and called government money
++        # in the plain text. The training certificates and employment records it asks for are covered by
++        # doc.education. SC, ST, women and physically handicapped applicants get 30% instead of 25%.
++        "state", ["Gujarat"], [MFG, FP, HC, TLR],
++        "Rural artisans, entrepreneurs and self-help groups in Gujarat who want to set up a new village industry",
++        "A scheme of the Commissioner of Cottage and Rural Industries, Industries and Mines Department, Government of Gujarat, that promotes rural entrepreneurship by giving a margin money subsidy for setting up new village industries. It is meant for individual artisans, entrepreneurs and Self-Help Groups. The subsidy is 25% of the first Rs.10 lakh of the project cost (30% for SC, ST, women and physically handicapped applicants) and 10% of the cost above that, up to Rs.25 lakh.",
++        "Subsidy of 25% of the first Rs.10 lakh of the project cost (30% for some groups)",
++        [
++            ("elig.gjjgvy.who", "The applicant must be an individual artisan or entrepreneur, or part of an active Grade-II Self-Help Group engaged in small-scale production, and must not represent a partnership firm, private limited company, joint venture, HUF or similar commercial entity."),
++            ("elig.gjjgvy.age", "The applicant must be between 25 and 50 years of age."),
++            ("elig.gjjgvy.class10", "The applicant must have passed at least Class 10 from a recognised educational board."),
++            ("elig.gjjgvy.experience", "The applicant must have at least one year of experience in the proposed business activity, or relevant training from a recognised institution."),
++            ("elig.gjjgvy.village", "The project must be located in a rural area with a population of not more than 20,000 and with 24-hour three-phase electricity supply."),
++            "elig.common.newUnit",
++            ("elig.gjjgvy.cost", "The project cost must be from Rs.1 lakh to Rs.25 lakh, and can include machinery, raw materials and working capital (at most 10% of the total cost) but not land or buildings. The subsidy is paid after the unit has run successfully for 2 years."),
++        ],
++        ["doc.identity", "doc.education", "doc.projectReport", "doc.quotation", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/jgvy",
++    ),
++    (
++        "gj_dtaiss",
++        "Dattopant Thengadi Artisan Interest Subsidy Scheme, Gujarat",
++        # The page says the applicant must be 'more than 18' years of age; the shared at-least-18 line is used.
++        # The artisan identity card, birth or school leaving certificate, electricity letter and ration card it
++        # asks for have no document code. The 7% interest subsidy is repeated as the page words it.
++        "state", ["Gujarat"], [HC, MFG],
++        "Registered handloom and handicraft artisans in Gujarat who need a bank loan for machinery, tools or raw materials",
++        "A scheme of the Industries and Mines Department, Government of Gujarat, that gives artisans registered in the urban and rural areas of the state easy finance from banks for machinery or working capital, up to a credit limit of Rs.1 lakh, to buy raw materials, equipment or tools. The artisan gets a margin money subsidy and an interest subsidy of 7%, paid half-yearly for up to 3 years. The District Industries Centre is the nodal agency.",
++        "Loan of up to Rs.1 lakh with a margin money subsidy of 20% to 25%",
++        [
++            "elig.common.age18",
++            ("elig.gjdtaiss.skill", "The applicant must have skills in handloom or handicraft art."),
++            ("elig.gjdtaiss.registered", "The applicant must be registered as an artisan with the Indext-C of the Cottage and Rural Industries Department, and must hold an identity card issued by the Development Commissioner (Handloom or Handicraft) or Indext-C, or a provisional certificate from the General Manager of the District Industries Centre."),
++            ("elig.gjdtaiss.margin", "The margin money subsidy is 20% of the loan for general category male applicants, and 25% of the loan for Scheduled Caste, Scheduled Tribe and women applicants and for blind or handicapped applicants with a disability of 40% or more. It is paid once, after the loan is disbursed."),
++            ("elig.gjdtaiss.repay", "The loan must be repaid with interest in 12 to 36 monthly instalments, as fixed by the bank. The artisan must pay the instalments regularly, must not be a defaulter of the bank, and must use the loan only for the purpose for which it was sanctioned."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.photo", "doc.identity", "doc.aadhaar", "doc.quotation", "doc.landOrRent", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/dtaiss",
++    ),
++    (
++        "gj_mahila",
++        "Mahila Samruddhi Yojana (DAADC), Gujarat",
++        # The page calls 95% of the loan, Rs.47,500, the state's contribution. The monthly instalment it gives
++        # (Rs.1,445 over 36 months at 6%) is what Rs.47,500 comes to, so the card words it as the state putting in
++        # 95% and the beneficiary 5%, and never as the government paying it. The documents are the step 6 upload
++        # list; the ration card, widow certificate, age proof, birth and school leaving certificates and the
++        # electricity bill on the other list have no document code.
++        "state", ["Gujarat"], GENERAL,
++        "Scheduled Caste women of Gujarat from Antyodaya or economically backward families who want to start a small business",
++        "A scheme of the Dr. Ambedkar Antyodaya Development Corporation (DAADC) under the Social Justice and Empowerment Department, Government of Gujarat, that promotes self-employment and financial independence among women of the Antyodaya Samaj, especially Scheduled Castes. It gives a loan of Rs.50,000 at 6% interest a year to start a small business. The state contributes 95% of it (Rs.47,500) and the beneficiary 5% (Rs.2,500). The possible monthly instalment is about Rs.1,445, over 36 months.",
++        "Loan of Rs.50,000 at 6% interest, repaid over 36 months",
++        [
++            ("elig.gjmahila.permanent", "The applicant must be a permanent resident of Gujarat."),
++            "elig.common.womenOnly",
++            ("elig.gjdaadc.sc", "The applicant must belong to the Scheduled Caste (SC) category."),
++            ("elig.gjmahila.aay", "The applicant must belong to an Antyodaya Anna Yojana (AAY) family or to the economically backward class."),
++            ("elig.gjdaadc.income", "The annual family income must not be more than Rs.3 lakh."),
++            ("elig.gjmahila.plan", "The applicant must plan to start a self-employment venture or micro-enterprise."),
++            ("elig.gjdaadc.online", "Applications are made online on the website of the Dr. Ambedkar Antyodaya Development Corporation."),
++        ],
++        ["doc.caste", "doc.income", "doc.aadhaar", "doc.photo", "doc.bank", "doc.address"],
++        "https://www.myscheme.gov.in/schemes/msydaadc",
++    ),
++    (
++        "gj_smallbiz",
++        "Loan for Small Businesses (DAADC), Gujarat",
++        # The page gives the state's contribution as '100% (no beneficiary share required)'; the figure is
++        # worded as 'the whole amount' because a card must not print 100%. The documents are the step 6 upload
++        # list; the school leaving certificate, electricity bill, age proof, ration card and election card on
++        # the other list have no document code or are covered by it.
++        "state", ["Gujarat"], GENERAL,
++        "Scheduled Caste residents of Gujarat from Antyodaya Anna Yojana families who want to start or expand a small business",
++        "A scheme of the Dr. Ambedkar Antyodaya Development Corporation (DAADC) under the Social Justice and Empowerment Department, Government of Gujarat, that promotes self-employment among Scheduled Caste individuals from Antyodaya Anna Yojana (AAY) families. It gives a loan of up to Rs.1,25,000 at 4% interest a year for starting or expanding a small business, repaid over 60 months, with two guarantors. The state contributes the whole amount, so no share is needed from the beneficiary. The instalment is about Rs.2,302 a month at most.",
++        "Loan up to Rs.1,25,000 at 4% interest, repaid over 60 months",
++        [
++            "elig.common.residentState",
++            ("elig.gjdaadc.sc", "The applicant must belong to the Scheduled Caste (SC) category."),
++            ("elig.gjsmallbiz.aay", "The applicant must belong to an Antyodaya Anna Yojana (AAY) family."),
++            ("elig.gjdaadc.income", "The annual family income must not be more than Rs.3 lakh."),
++            ("elig.gjsmallbiz.intent", "The applicant must intend to start or expand a small business or occupation."),
++            ("elig.gjsmallbiz.guarantors", "The applicant must be able to provide two guarantors."),
++            ("elig.gjdaadc.online", "Applications are made online on the website of the Dr. Ambedkar Antyodaya Development Corporation."),
++        ],
++        ["doc.caste", "doc.income", "doc.aadhaar", "doc.photo", "doc.bank", "doc.address"],
++        "https://www.myscheme.gov.in/schemes/sbsdaadc",
++    ),
++    (
++        "gj_selfemp",
++        "Self Employment Scheme (Tribal Development Department), Gujarat",
++        # The page's steps name another scheme ('Foreign Study') in one line, which looks like a leftover from a
++        # template, so the steps are not used; the benefit, interest rate and eligibility lines are consistent.
++        # The 7/12 certificate is read as a land record and the business address proof as the premises proof.
++        # The affidavit, artisan identity card, ration card and age proof have no document code.
++        "state", ["Gujarat"], GENERAL,
++        "Unemployed Scheduled Tribe residents of Gujarat who want to start one of the businesses the department has named",
++        "A scheme of the Tribal Development Department, Government of Gujarat, that gives unemployed Scheduled Tribe individuals affordable loans for self-employment. Loans of Rs.50,000 to Rs.5 lakh, depending on the chosen business, are given at 4% interest a year to start any of 85 businesses identified by the department.",
++        "Loan of Rs.50,000 to Rs.5 lakh at 4% interest",
++        [
++            "elig.common.residentState",
++            ("elig.gjtribal.st", "The applicant must belong to the Scheduled Tribe (ST) category."),
++            ("elig.gjselfemp.unemployed", "The applicant must be unemployed at the time of applying."),
++            ("elig.gjselfemp.list", "The business must be one of the 85 businesses identified by the department, and the loan amount depends on the business."),
++            ("elig.gjselfemp.online", "Applications are made online on the website of the Gujarat Tribal Development Corporation."),
++        ],
++        ["doc.aadhaar", "doc.caste", "doc.income", "doc.photo", "doc.bank", "doc.quotation", "doc.landRecord", "doc.landOrRent"],
++        "https://www.myscheme.gov.in/schemes/sesg",
++    ),
++    (
++        "gj_fvp",
++        "Fruit and Vegetable Preservation Training Program (Horticulture HRT 5), Gujarat",
++        # The page says the aim is to empower women and urban citizens; it names no eligibility line for either,
++        # so the card does not restrict by sex or place. The ration card it asks for has no document code.
++        "state", ["Gujarat"], [FP],
++        "Residents of Gujarat who want hands-on training in preserving and canning fruits and vegetables and kitchen gardening",
++        "A scheme of the Agriculture and Co-operation Department, Government of Gujarat, that gives hands-on training in value addition, preservation, canning and kitchen gardening of fruits and vegetables, to promote self-sustenance and nutrition. The training lasts 2 to 5 days. The government meets Rs.500 per trainee per day: Rs.250 is paid to the trainee as a stipend and Rs.250 goes on training material, expert honorarium and other resources.",
++        "Stipend of Rs.250 a day during a training of 2 to 5 days",
++        [
++            "elig.common.residentState",
++            ("elig.gjfvp.willing", "The applicant must be willing to take part in horticulture-related skill development training."),
++            ("elig.gjfvp.online", "Applications are made online on the I-Khedut portal."),
++        ],
++        ["doc.aadhaar", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/sfvptphdf",
++    ),
++    (
++        "gj_micro",
++        "Small Scale Lending Scheme (Microfinance), Gujarat",
++        # The page expands DAAD as a Department of Agriculture and Animal Husbandry, which does not fit a social
++        # justice scheme, so the portal is named as 'DAAD Online' and not expanded. It states no residency line.
++        # The age proof it asks for has no document code.
++        "state", ["Gujarat"], GENERAL,
++        "Small entrepreneurs of the Rabari and Bharwad communities in Gujarat who need a small business loan",
++        "A scheme of the Social Justice and Empowerment Department, Government of Gujarat, run by the Gujarat Gopalak Vikas Nigam, that gives microcredit to small entrepreneurs of the Rabari and Bharwad communities among the socially and educationally backward classes. Loans of up to Rs.1,25,000 are given at a subsidised interest rate of 5% a year, covering 95% of the project cost.",
++        "Loan up to Rs.1,25,000 at 5% interest",
++        [
++            ("elig.gjmicro.caste", "The applicant must belong to the Rabari or Bharwad community among the socially and educationally backward classes."),
++            ("elig.gjmicro.age", "The applicant must be between 21 and 45 years of age."),
++            ("elig.gjmicro.income", "The applicant's annual income must not be more than Rs.3 lakh."),
++            ("elig.gjmicro.share", "The loan covers 95% of the project cost, and the applicant puts in the remaining 5%."),
++            ("elig.gjmicro.online", "Applications are made online on the DAAD Online portal."),
++        ],
++        ["doc.photo", "doc.caste", "doc.income", "doc.identity", "doc.address", "doc.bank", "doc.projectReport"],
++        "https://www.myscheme.gov.in/schemes/ssls-m",
++    ),
++    (
++        "gj_vahan",
++        "Vahan Loan Sahay Yojana (Self-Employment Scheme), Gujarat",
++        # Vehicles are a service business, so the scheme is listed under services. The non-deposit certificate
++        # and the leaving certificate it asks for have no document code; the business proposal is read as a
++        # project report. The loan amount is not stated on the page: it is the on-road cost of the vehicle.
++        "state", ["Gujarat"], [SVC],
++        "Self-employed residents of Gujarat in the unreserved category who want to buy a rickshaw, loading rickshaw or taxi with a loan",
++        "A component of the Self-Employment Scheme of the Social Justice and Empowerment Department, Government of Gujarat, run by the Gujarat Unreserved Education and Economical Development Corporation, that gives self-employed people a loan for the on-road cost of a vehicle such as a rickshaw, loading rickshaw, Maruti car or jeep taxi. The interest is 5% simple interest a year, and 4% for women.",
++        "Loan for a vehicle's on-road cost, at 5% interest (4% for women)",
++        [
++            "elig.common.residentState",
++            ("elig.gjvahan.unreserved", "The applicant must belong to the unreserved category."),
++            ("elig.gjvahan.age", "The applicant must be between 18 and 50 years of age."),
++            ("elig.gjvahan.licence", "The applicant must hold a valid driving licence."),
++            ("elig.gjvahan.income", "The annual family income must not be more than Rs.6 lakh."),
++            ("elig.gjvahan.vehicle", "The vehicle bought under the scheme must be hypothecated to the corporation, and the loan must be repaid in equal monthly instalments over 5 years."),
++            ("elig.gjvahan.limits", "Only one person from a family can get the benefit, and at most 5 beneficiaries are selected in a village."),
++        ],
++        ["doc.aadhaar", "doc.income", "doc.address", "doc.bank", "doc.education", "doc.projectReport"],
++        "https://www.myscheme.gov.in/schemes/vlsy",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -749,13 +939,14 @@ index 4ea17de..cd0e49b 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +1340 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +1530 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +1353,3 @@ LOCATION_TYPES = {
+@@ -630,0 +1543,4 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
 +    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
 +    "uk_nulm": ["semi-urban", "urban"],  # elig.common.urbanArea: the page makes a person eligible under the municipal body area
-@@ -634,0 +1360,78 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
++    "gj_jgvy": ["rural"],  # elig.gjjgvy.village: the page requires the project to be in a rural area with a population of not more than 20,000
+@@ -634,0 +1551,87 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -832,20 +1023,29 @@ index 4ea17de..cd0e49b 100644
 +    "uk_bee": ["elig.ukbee.farmer"],
 +    "uk_hoh": ["elig.ukhoh.member"],
 +    "uk_nulm": ["elig.uknulm.income"],
++    "gj_tribal_int": ["elig.gjtribal.st", "elig.gjtribal.area", "elig.gjtribal.loan"],
++    "gj_jgvy": ["elig.gjjgvy.age", "elig.gjjgvy.class10", "elig.gjjgvy.experience", "elig.gjjgvy.village"],
++    "gj_dtaiss": ["elig.gjdtaiss.skill", "elig.gjdtaiss.registered"],
++    "gj_mahila": ["elig.gjdaadc.sc", "elig.gjmahila.aay", "elig.gjdaadc.income"],
++    "gj_smallbiz": ["elig.gjdaadc.sc", "elig.gjsmallbiz.aay", "elig.gjdaadc.income", "elig.gjsmallbiz.guarantors"],
++    "gj_selfemp": ["elig.gjtribal.st", "elig.gjselfemp.unemployed", "elig.gjselfemp.list"],
++    "gj_fvp": ["elig.gjfvp.willing"],
++    "gj_micro": ["elig.gjmicro.caste", "elig.gjmicro.age", "elig.gjmicro.income"],
++    "gj_vahan": ["elig.gjvahan.unreserved", "elig.gjvahan.age", "elig.gjvahan.licence", "elig.gjvahan.income"],
 +}
 +
-@@ -652,0 +1456,4 @@ def build():
+@@ -652,0 +1656,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +1471,4 @@ def build():
+@@ -663,0 +1671,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1499 @@ def build():
+@@ -688 +1699 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1502 @@ def build():
+@@ -690,0 +1702 @@ def build():
 +                "check_first_codes": check_first,

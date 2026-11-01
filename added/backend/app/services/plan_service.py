@@ -190,6 +190,15 @@ HELP_BY_SCHEME = {
     "uk_cfpc": ("training", "tools"),
     "uk_hoh": ("market",),
     "uk_nulm": ("loan", "subsidy"),
+    "gj_tribal_int": ("subsidy",),
+    "gj_jgvy": ("subsidy",),
+    "gj_dtaiss": ("loan", "subsidy"),
+    "gj_mahila": ("loan",),
+    "gj_smallbiz": ("loan",),
+    "gj_selfemp": ("loan",),
+    "gj_fvp": ("training",),
+    "gj_micro": ("loan",),
+    "gj_vahan": ("loan",),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is
