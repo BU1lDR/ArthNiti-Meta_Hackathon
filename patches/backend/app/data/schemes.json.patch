@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..c794e58 100644
+index a874e48..608a1d1 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..c794e58 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,2938 @@
+@@ -1493,0 +1602,3369 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -3114,3 +3114,434 @@ index a874e48..c794e58 100644
 +    ],
 +    "description_code": "sdata.mp_aitrain.description",
 +    "support_type_code": "sdata.mp_aitrain.support"
++  },
++  {
++    "id": "br_startup",
++    "name": "Bihar Startup Policy",
++    "description": "A policy of the Government of Bihar to boost entrepreneurship and the growth of micro, small and medium enterprises in the state. Young entrepreneurs in Bihar can get seed money as a loan of Rs.10 lakh without interest for 10 years, and a grant of Rs.3 lakh for businesses that take part in training on product improvement and finance. Shared office space and other help are also available.",
++    "target_segment": "Young entrepreneurs in Bihar whose new business is registered in the state as a private limited company, partnership firm or LLP",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The business must be a private limited company, a registered partnership firm or a limited liability partnership, and no more than 10 years may have passed since it was incorporated or registered.",
++      "The turnover of the business must not have been more than Rs.100 crore in any financial year since it was incorporated or registered.",
++      "The business must be working on new or better products, processes or services, or have a business model that can grow and create many jobs or much wealth.",
++      "A business formed by splitting up or rebuilding an existing business is not counted as a start-up.",
++      "The business must be incorporated or registered in Bihar, have an office in Bihar and pay the taxes on its operations in Bihar."
++    ],
++    "support_type": "Interest-free seed loan of Rs.10 lakh for 10 years, plus a Rs.3 lakh grant",
++    "documents": [
++      "Aadhaar card",
++      "Working mobile number linked to Aadhaar",
++      "Recent passport-size photograph",
++      "Educational or training documents where applicable",
++      "Business/project details"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brstartup.entity",
++      "elig.brstartup.turnover",
++      "elig.brstartup.innovation",
++      "elig.brstartup.newbiz",
++      "elig.brstartup.bihar"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.mobile",
++      "doc.photo",
++      "doc.education",
++      "doc.businessDetails"
++    ],
++    "check_first_codes": [
++      "elig.brstartup.entity",
++      "elig.brstartup.innovation",
++      "elig.brstartup.bihar"
++    ],
++    "description_code": "sdata.br_startup.description",
++    "support_type_code": "sdata.br_startup.support"
++  },
++  {
++    "id": "br_chai",
++    "name": "Chai Vikas Yojana (Tea Development Scheme), Bihar",
++    "description": "A scheme of the Department of Agriculture, Government of Bihar, to grow the tea industry by spreading tea plantations in the districts of Kishanganj, Araria, Supaul, Purnia and Katihar. Farmers buy the planting material themselves and get a subsidy on it, paid in two parts: 75% in the first year and 25% in the second year if ninety per cent of the plants survive. A subsidy of 50% of the cost, up to a limit, is also given on tea machines and equipment.",
++    "target_segment": "Farmers in Kishanganj, Araria, Supaul, Purnia and Katihar districts of Bihar who grow or plan to grow tea",
++    "business_categories": [
++      "agriculture"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must belong to one of these districts of Bihar: Kishanganj, Araria, Supaul, Purnia or Katihar.",
++      "The applicant must be a farmer.",
++      "The applicant must have at least 2 acres of land, and more for some machines: 10 acres for a leaf carriage vehicle and 5 acres for a leaf collection shed.",
++      "The applicant must be registered as a farmer on the DBT portal with an Aadhaar number, and can apply online 48 hours after registering.",
++      "The subsidy is 50% of the cost of the machine, up to Rs.60,000 for a pruning machine, Rs.50,000 for a mechanical harvester, Rs.1,100 for plucking shears (at most 20), Rs.7,50,000 for a leaf carriage vehicle and Rs.37,500 for a leaf collection shed.",
++      "A person who gets the subsidy for new tea area under this scheme cannot also get the subsidy on machines.",
++      "Applicants are chosen in the order they apply, and 30% of the places are kept for women."
++    ],
++    "support_type": "Subsidy on tea plants (75%, then 25%) and 50% on tea machines",
++    "documents": [
++      "Aadhaar card",
++      "Recent passport-size photograph",
++      "Land record extract",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brchai.district",
++      "elig.brchai.farmer",
++      "elig.brchai.land",
++      "elig.brchai.dbt",
++      "elig.brchai.machines",
++      "elig.brchai.exclusion",
++      "elig.brchai.select"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.photo",
++      "doc.landRecord",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.brchai.district",
++      "elig.brchai.farmer",
++      "elig.brchai.land",
++      "elig.brchai.dbt"
++    ],
++    "description_code": "sdata.br_chai.description",
++    "support_type_code": "sdata.br_chai.support"
++  },
++  {
++    "id": "br_mmuy_scst",
++    "name": "Mukhyamantri Anusuchit Jati / Anusuchit Janjati Udyami Yojana, Bihar",
++    "description": "A component of the Mukhyamantri Udyami Yojana of the Department of Industries, Government of Bihar, that promotes entrepreneurship and self-employment. It gives people of the Scheduled Castes and Scheduled Tribes financial help of up to Rs.10 lakh to set up and run a business. Half of the help (up to Rs.5 lakh) is a grant that is not repaid, and the other half (up to Rs.5 lakh) is an interest-free loan, with a nominal 1% interest under some sub-schemes. Training is compulsory.",
++    "target_segment": "Scheduled Caste and Scheduled Tribe people of Bihar who want to set up a business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Bihar.",
++      "The applicant must belong to the Scheduled Caste or Scheduled Tribe category.",
++      "The applicant must have passed at least 10+2, Intermediate, ITI, a polytechnic diploma or an equivalent examination.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The business must be a proprietorship or a partnership firm.",
++      "Training forms part of the scheme.",
++      "Applications are made online: register on the scheme's website with an Aadhaar number and a password, then fill in the form and upload the documents."
++    ],
++    "support_type": "Up to Rs.10 lakh, half as a grant and half as an interest-free loan",
++    "documents": [
++      "Educational or training documents where applicable",
++      "Caste certificate, where applicable",
++      "Domicile or residence certificate for the state",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.scst",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm",
++      "elig.common.trainingIncluded",
++      "elig.brmmuy.online"
++    ],
++    "document_codes": [
++      "doc.education",
++      "doc.caste",
++      "doc.domicile",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.scst",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm"
++    ],
++    "description_code": "sdata.br_mmuy_scst.description",
++    "support_type_code": "sdata.br_mmuy_scst.support"
++  },
++  {
++    "id": "br_mmuy_ebc",
++    "name": "Mukhyamantri Ati Pichhada Varg Udyami Yojana, Bihar",
++    "description": "A component of the Mukhyamantri Udyami Yojana of the Department of Industries, Government of Bihar, that promotes entrepreneurship and self-employment. It gives people of the Extremely Backward Classes financial help of up to Rs.10 lakh to set up and run a business. Half of the help (up to Rs.5 lakh) is a grant that is not repaid, and the other half (up to Rs.5 lakh) is an interest-free loan, with a nominal 1% interest under some sub-schemes. Training is compulsory.",
++    "target_segment": "People of the Extremely Backward Classes in Bihar who want to set up a business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Bihar.",
++      "The applicant must belong to the Extremely Backward Classes.",
++      "The applicant must have passed at least 10+2, Intermediate, ITI, a polytechnic diploma or an equivalent examination.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The business must be a proprietorship or a partnership firm.",
++      "Training forms part of the scheme.",
++      "Applications are made online: register on the scheme's website with an Aadhaar number and a password, then fill in the form and upload the documents."
++    ],
++    "support_type": "Up to Rs.10 lakh, half as a grant and half as an interest-free loan",
++    "documents": [
++      "Educational or training documents where applicable",
++      "Caste certificate, where applicable",
++      "Domicile or residence certificate for the state",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.ebc",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm",
++      "elig.common.trainingIncluded",
++      "elig.brmmuy.online"
++    ],
++    "document_codes": [
++      "doc.education",
++      "doc.caste",
++      "doc.domicile",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.ebc",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm"
++    ],
++    "description_code": "sdata.br_mmuy_ebc.description",
++    "support_type_code": "sdata.br_mmuy_ebc.support"
++  },
++  {
++    "id": "br_mmuy_minority",
++    "name": "Mukhyamantri Alpasankhyak Udyami Yojana, Bihar",
++    "description": "A component of the Mukhyamantri Udyami Yojana of the Department of Industries, Government of Bihar, that promotes entrepreneurship and self-employment. It gives people of the minority communities financial help of up to Rs.10 lakh to set up and run a business. Half of the help (up to Rs.5 lakh) is a grant that is not repaid, and the other half (up to Rs.5 lakh) is an interest-free loan, with a nominal 1% interest under some sub-schemes. Training is compulsory.",
++    "target_segment": "People of minority communities in Bihar who want to set up a business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Bihar.",
++      "The applicant must belong to a minority community.",
++      "The applicant must have passed at least 10+2, Intermediate, ITI, a polytechnic diploma or an equivalent examination.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The business must be a proprietorship or a partnership firm.",
++      "Training forms part of the scheme.",
++      "Applications are made online: register on the scheme's website with an Aadhaar number and a password, then fill in the form and upload the documents."
++    ],
++    "support_type": "Up to Rs.10 lakh, half as a grant and half as an interest-free loan",
++    "documents": [
++      "Educational or training documents where applicable",
++      "Caste certificate, where applicable",
++      "Domicile or residence certificate for the state",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.minority",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm",
++      "elig.common.trainingIncluded",
++      "elig.brmmuy.online"
++    ],
++    "document_codes": [
++      "doc.education",
++      "doc.caste",
++      "doc.domicile",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.minority",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm"
++    ],
++    "description_code": "sdata.br_mmuy_minority.description",
++    "support_type_code": "sdata.br_mmuy_minority.support"
++  },
++  {
++    "id": "br_mmuy_yuva",
++    "name": "Mukhyamantri Yuva Udyami Yojana, Bihar",
++    "description": "A component of the Mukhyamantri Udyami Yojana of the Department of Industries, Government of Bihar, that promotes entrepreneurship and self-employment. It gives men of the general category and the backward classes financial help of up to Rs.10 lakh to set up and run a business. Half of the help (up to Rs.5 lakh) is a grant that is not repaid, and the other half (up to Rs.5 lakh) is an interest-free loan, with a nominal 1% interest under some sub-schemes. Training is compulsory.",
++    "target_segment": "Men of the general category and the backward classes in Bihar who want to set up a business",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Bihar.",
++      "Only male applicants from the general category and the backward classes are eligible.",
++      "The applicant must have passed at least 10+2, Intermediate, ITI, a polytechnic diploma or an equivalent examination.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The business must be a proprietorship or a partnership firm.",
++      "Training forms part of the scheme.",
++      "Applications are made online: register on the scheme's website with an Aadhaar number and a password, then fill in the form and upload the documents."
++    ],
++    "support_type": "Up to Rs.10 lakh, half as a grant and half as an interest-free loan",
++    "documents": [
++      "Educational or training documents where applicable",
++      "Caste certificate, where applicable",
++      "Domicile or residence certificate for the state",
++      "Recent passport-size photograph"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.men",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm",
++      "elig.common.trainingIncluded",
++      "elig.brmmuy.online"
++    ],
++    "document_codes": [
++      "doc.education",
++      "doc.caste",
++      "doc.domicile",
++      "doc.photo"
++    ],
++    "check_first_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brmmuy.men",
++      "elig.brmmuy.education",
++      "elig.brmmuy.age",
++      "elig.brmmuy.firm"
++    ],
++    "description_code": "sdata.br_mmuy_yuva.description",
++    "support_type_code": "sdata.br_mmuy_yuva.support"
++  },
++  {
++    "id": "br_minority_loan",
++    "name": "Mukhyamantri Alpsankhyak Rozgar Rinn Yojana, Bihar",
++    "description": "A scheme of the Minority Welfare Department, Government of Bihar, run by the Bihar State Minorities Financial Corporation, that gives loans of up to Rs.5 lakh at a simple interest of 5% a year to young people of the minority communities (Muslim, Sikh, Christian, Buddhist, Jain and Parsi) for work that creates employment. The loan is repaid in 20 quarterly instalments over 5 years, and a processing fee of 0.5% of the sanctioned amount is deducted before payment.",
++    "target_segment": "Young people of the minority communities in Bihar who want a loan to start work that earns an income",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Bihar"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Bihar.",
++      "The applicant must belong to a minority community: Muslim, Sikh, Christian, Buddhist, Jain or Parsi.",
++      "The applicant must be between 18 and 50 years of age.",
++      "The applicant must not be a government or semi-government employee.",
++      "The annual income of the applicant's family must be less than Rs.4,00,000.",
++      "Up to Rs.1,00,000 the applicant can give their own guarantee. For more, a guarantor of a kind the scheme lists is needed, such as a government, semi-government or bank employee with at least 5 years of service left.",
++      "The loan must be used only for work that gives employment or an income.",
++      "Applications are made offline at the District Minority Welfare Office, after the Bihar State Minorities Financial Corporation advertises for applications in daily newspapers. Applicants should ask the office whether the form goes to the district of permanent residence or to the district where the business will start."
++    ],
++    "support_type": "Loan of up to Rs.5 lakh at 5% simple interest a year, repaid over 5 years",
++    "documents": [
++      "Aadhaar card",
++      "Recent passport-size photograph",
++      "Educational or training documents where applicable",
++      "Bank-related documents",
++      "Caste certificate, where applicable",
++      "Income certificate",
++      "Domicile or residence certificate for the state"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.brmmuy.permanent",
++      "elig.brminloan.community",
++      "elig.brmmuy.age",
++      "elig.brminloan.govjob",
++      "elig.brminloan.income",
++      "elig.brminloan.guarantor",
++      "elig.brminloan.use",
++      "elig.brminloan.apply"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.photo",
++      "doc.education",
++      "doc.bank",
++      "doc.caste",
++      "doc.income",
++      "doc.domicile"
++    ],
++    "check_first_codes": [
++      "elig.brminloan.community",
++      "elig.brmmuy.age",
++      "elig.brminloan.govjob",
++      "elig.brminloan.income"
++    ],
++    "description_code": "sdata.br_minority_loan.description",
++    "support_type_code": "sdata.br_minority_loan.support"

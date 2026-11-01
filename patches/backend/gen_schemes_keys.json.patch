@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..71832a0 100644
+index 220d74e..9db74fb 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..71832a0 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,162 @@
+@@ -96 +99,189 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -171,8 +171,35 @@ index 220d74e..71832a0 100644
 +  "elig.mpdairy.apply": "Applications are made at the nearest veterinary office in the district, and are approved in turn by the Gram Sabha, the Janpad Panchayat and the District Panchayat Agricultural Standing Committee.",
 +  "elig.mpai.unemployed": "The applicant must be an unemployed youth.",
 +  "elig.mpai.interest": "The applicant should have a keen interest in dairy farming and artificial insemination.",
-+  "elig.mpai.select": "One applicant from each Gram Panchayat is chosen for the first training, with the approval of the Janpad Panchayat."
-@@ -151 +315,57 @@
++  "elig.mpai.select": "One applicant from each Gram Panchayat is chosen for the first training, with the approval of the Janpad Panchayat.",
++  "elig.brstartup.entity": "The business must be a private limited company, a registered partnership firm or a limited liability partnership, and no more than 10 years may have passed since it was incorporated or registered.",
++  "elig.brstartup.turnover": "The turnover of the business must not have been more than Rs.100 crore in any financial year since it was incorporated or registered.",
++  "elig.brstartup.innovation": "The business must be working on new or better products, processes or services, or have a business model that can grow and create many jobs or much wealth.",
++  "elig.brstartup.newbiz": "A business formed by splitting up or rebuilding an existing business is not counted as a start-up.",
++  "elig.brstartup.bihar": "The business must be incorporated or registered in Bihar, have an office in Bihar and pay the taxes on its operations in Bihar.",
++  "elig.brchai.district": "The applicant must belong to one of these districts of Bihar: Kishanganj, Araria, Supaul, Purnia or Katihar.",
++  "elig.brchai.farmer": "The applicant must be a farmer.",
++  "elig.brchai.land": "The applicant must have at least 2 acres of land, and more for some machines: 10 acres for a leaf carriage vehicle and 5 acres for a leaf collection shed.",
++  "elig.brchai.dbt": "The applicant must be registered as a farmer on the DBT portal with an Aadhaar number, and can apply online 48 hours after registering.",
++  "elig.brchai.machines": "The subsidy is 50% of the cost of the machine, up to Rs.60,000 for a pruning machine, Rs.50,000 for a mechanical harvester, Rs.1,100 for plucking shears (at most 20), Rs.7,50,000 for a leaf carriage vehicle and Rs.37,500 for a leaf collection shed.",
++  "elig.brchai.exclusion": "A person who gets the subsidy for new tea area under this scheme cannot also get the subsidy on machines.",
++  "elig.brchai.select": "Applicants are chosen in the order they apply, and 30% of the places are kept for women.",
++  "elig.brmmuy.permanent": "The applicant must be a permanent resident of Bihar.",
++  "elig.brmmuy.scst": "The applicant must belong to the Scheduled Caste or Scheduled Tribe category.",
++  "elig.brmmuy.education": "The applicant must have passed at least 10+2, Intermediate, ITI, a polytechnic diploma or an equivalent examination.",
++  "elig.brmmuy.age": "The applicant must be between 18 and 50 years of age.",
++  "elig.brmmuy.firm": "The business must be a proprietorship or a partnership firm.",
++  "elig.brmmuy.online": "Applications are made online: register on the scheme's website with an Aadhaar number and a password, then fill in the form and upload the documents.",
++  "elig.brmmuy.ebc": "The applicant must belong to the Extremely Backward Classes.",
++  "elig.brmmuy.minority": "The applicant must belong to a minority community.",
++  "elig.brmmuy.men": "Only male applicants from the general category and the backward classes are eligible.",
++  "elig.brminloan.community": "The applicant must belong to a minority community: Muslim, Sikh, Christian, Buddhist, Jain or Parsi.",
++  "elig.brminloan.govjob": "The applicant must not be a government or semi-government employee.",
++  "elig.brminloan.income": "The annual income of the applicant's family must be less than Rs.4,00,000.",
++  "elig.brminloan.guarantor": "Up to Rs.1,00,000 the applicant can give their own guarantee. For more, a guarantor of a kind the scheme lists is needed, such as a government, semi-government or bank employee with at least 5 years of service left.",
++  "elig.brminloan.use": "The loan must be used only for work that gives employment or an income.",
++  "elig.brminloan.apply": "Applications are made offline at the District Minority Welfare Office, after the Bihar State Minorities Financial Corporation advertises for applications in daily newspapers. Applicants should ask the office whether the form goes to the district of permanent residence or to the district where the business will start."
+@@ -151 +342,64 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -230,4 +257,11 @@ index 220d74e..71832a0 100644
 +  "mp_pathvendor",
 +  "mp_goat",
 +  "mp_dairyplus",
-+  "mp_aitrain"
++  "mp_aitrain",
++  "br_startup",
++  "br_chai",
++  "br_mmuy_scst",
++  "br_mmuy_ebc",
++  "br_mmuy_minority",
++  "br_mmuy_yuva",
++  "br_minority_loan"

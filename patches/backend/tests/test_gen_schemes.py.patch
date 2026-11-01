@@ -1,19 +1,19 @@
 diff --git a/backend/tests/test_gen_schemes.py b/backend/tests/test_gen_schemes.py
-index e953df8..9d26792 100644
+index e953df8..d27c941 100644
 --- a/backend/tests/test_gen_schemes.py
 +++ b/backend/tests/test_gen_schemes.py
 @@ -158 +158 @@ def test_no_generated_scheme_carries_an_official_url():
 -    assert len(gen_schemes.SPEC) == 30
-+    assert len(gen_schemes.SPEC) == 86
++    assert len(gen_schemes.SPEC) == 93
 @@ -173,2 +173,3 @@ def test_only_schemes_whose_own_rules_name_a_kind_of_place_are_restricted():
 -    # Pins the per-id table against the measured split in schemes.json: 25 open
 -    # everywhere, four rural-only, and PM SVANidhi for towns and cities.
-+    # Pins the per-id table against the measured split in schemes.json: 76 open
++    # Pins the per-id table against the measured split in schemes.json: 83 open
 +    # everywhere, eight rural-only, and PM SVANidhi and Uttarakhand's DAY-NULM
 +    # scheme for towns and cities.
 @@ -178 +179 @@ def test_only_schemes_whose_own_rules_name_a_kind_of_place_are_restricted():
 -    assert sum(1 for places in by_id.values() if places == ["ALL"]) == 25
-+    assert sum(1 for places in by_id.values() if places == ["ALL"]) == 76
++    assert sum(1 for places in by_id.values() if places == ["ALL"]) == 83
 @@ -183,0 +185,4 @@ def test_only_schemes_whose_own_rules_name_a_kind_of_place_are_restricted():
 +        "day_nrlm",
 +        "rkvy_vlstl",
