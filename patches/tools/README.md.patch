@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..2d98c75 100644
+index b8e7eb3..bc4a9c9 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -122,7 +122,20 @@ index b8e7eb3..2d98c75 100644
 +node --test tools/verify/amount-lib-test.mjs   # the amount printed beside a piece of advice (adviceAmount.js): 17 tests, no network
 +node --test tools/verify/offer-lib-test.mjs    # the yearly cost of a loan offer (loanOffer.js): 58 tests, no network
 +node --test tools/verify/offer-lines-test.mjs  # the words of the loan-offer card (offerLines.js) and the banned-word list: 48 tests, no network
-@@ -411,0 +447,7 @@ record a new version, so it has to be caught in review.
+@@ -392,3 +427,2 @@ themselves are sound, the failure message prints the hash to record.
+-Measured on 25 Sept 2026 (`node tools/parity4.mjs`), after the notice, consent
+-and privacy keys were added and the `/login` contact keys removed, over **732
+-keys, 5,856 strings** (222 + 263 + 59 + 188 keys in `strings`, `resultStrings`,
++Measured on 1 Nov 2026 (`node tools/parity4.mjs`), over **1,226 keys, 9,808
++strings** (223 + 479 + 60 + 464 keys in `strings`, `resultStrings`,
+@@ -399,3 +433,3 @@ keys, 5,856 strings** (222 + 263 + 59 + 188 keys in `strings`, `resultStrings`,
+-| 6. figures vs English | 5,124 translated values | 0 | 4: `elig.common.class8` in hi, ml, mr, bn |
+-| 7. Latin digits only | 5,856 values | 0 | none |
+-| 8. figures vs schemes.json | 312 sentences across 30 schemes | 0 | 1: `sdata.pmvishwakarma.description` |
++| 6. figures vs English | 8,582 translated values | 0 | 5: `offer.errWhole` in hi, `elig.common.class8` in hi, ml, mr, bn |
++| 7. Latin digits only | 9,808 values | 0 | none |
++| 8. figures vs schemes.json | 883 sentences across 86 schemes | 0 | 1: `sdata.pmvishwakarma.description` |
+@@ -411,0 +446,7 @@ record a new version, so it has to be caught in review.
 +Measured again on 1 Nov 2026, after the scheme batches, over **1,302 keys,
 +10,416 strings** (223 + 479 + 60 + 540 keys in the same four files): check 6
 +compares 9,114 translated values (5 allowlisted: `offer.errWhole` in hi and
@@ -130,20 +143,20 @@ index b8e7eb3..2d98c75 100644
 +compares 1,057 sentences across 99 schemes (the same 1 allowlisted), and check 9
 +is unchanged. The table above stays as the 25 Sept record.
 +
-@@ -421 +463 @@ Nothing is normalised. A deliberate difference goes in `DIGIT_ALLOW` or
+@@ -421 +462 @@ Nothing is normalised. A deliberate difference goes in `DIGIT_ALLOW` or
 -one-line reason. There is one entry in each. `elig.common.class8` is allowed
 +one-line reason. `DIGIT_ALLOW` has two entries and `SOURCE_ALLOW` one. `elig.common.class8` is allowed
-@@ -422,0 +465,2 @@ because four languages write "Class 8" as an ordinal word with no digit.
+@@ -422,0 +464,2 @@ because four languages write "Class 8" as an ordinal word with no digit.
 +`offer.errWhole` is allowed in Hindi because that line names the digits the box
 +takes, "0-9", which the English line leaves out.
-@@ -446,3 +490,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
+@@ -446,3 +489,3 @@ push and pull request. The backend job runs `pytest` on Python 3.10 and 3.14. Th
 -frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`
 -and `market-lib-test`, then `glyph-audit`, which exits 0 whenever it ran and is there to be
 -read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
 +frontend job runs `npm ci`, `npm run lint`, `npm run build`, `parity4`, `keycheck`,
 +`market-lib-test`, `necc-lib-test`, `talk-lib-test`, `app-state-test`, `speak-lib-test`, `amount-lib-test`, `offer-lib-test` and `offer-lines-test`, then `glyph-audit`,
 +which exits 0 whenever it ran and is there to be read. The build step sets `VITE_API_BASE_URL=https://api.example.invalid`:
-@@ -453,3 +497,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
+@@ -453,3 +496,4 @@ this build is never deployed, so it gets a placeholder that cannot resolve
 -text. **None of the browser scripts is in CI.** **CI has never run, on GitHub or
 -on Linux**, because the branch has not been pushed. Two scripts were changed for
 -Linux, by reading the code, not by running it there. `keycheck` turns every `\`
@@ -151,21 +164,21 @@ index b8e7eb3..2d98c75 100644
 +machine with no Linux and no Python 3.10, and has run on Linux since 27 Oct 2026
 +(the Actions tab has every run). Two scripts were changed for Linux by reading
 +the code, and both have since run there in CI. `keycheck` turns every `\`
-@@ -466,2 +511,2 @@ Need the **Vite dev server** on 5173:
+@@ -466,2 +510,2 @@ Need the **Vite dev server** on 5173:
 -node tools/verify/drive.mjs          # hydrate check + 8 passes, 41 page loads + scheme cards — the main gate; exits 1 on a finding
 -node tools/verify/mobile-audit.mjs   # 360/390/412 px, 48 page loads
 +node tools/verify/drive.mjs          # hydrate check + 13 passes, 59 page loads + scheme cards + 13 Simple/Detailed looks + 3 amount-line looks — the main gate; exits 1 on a finding
 +node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
-@@ -479,0 +525,2 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
+@@ -479,0 +524,2 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
 +node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 101 page loads, 756 checks; Vite only
 +node tools/verify/offer-ui.mjs       # the loan-offer card on /advisory: 12 scenarios, 74 page loads, 13,400 checks; Vite only, needs 4 case_*.json
-@@ -533 +580 @@ until the 422 check was added.
+@@ -533 +579 @@ until the 422 check was added.
 -`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
 +`drive`'s ninth pass, `cleared`, loads the four result pages in Hindi with the
-@@ -550 +597 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+@@ -550 +596 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 59 loads, in every pass that loads
-@@ -569,0 +617,226 @@ exited 0 with `neutralised` naming both.
+@@ -569,0 +616,226 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -392,7 +405,7 @@ index b8e7eb3..2d98c75 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +854,6 @@ correct app.
+@@ -581,2 +853,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -401,17 +414,17 @@ index b8e7eb3..2d98c75 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -594 +871,2 @@ is `FinancePage` local state, never stored.
+@@ -594 +870,2 @@ is `FinancePage` local state, never stored.
 -- Each of those nine declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
 +- `read-aloud` and `offer-ui` seed 6, the current shape: a result and nothing else.
 +- Each of those eleven declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
-@@ -597 +875 @@ is `FinancePage` local state, never stored.
+@@ -597 +874 @@ is `FinancePage` local state, never stored.
 -- The seven that seed a result read the stored state back on each result route
 +- The nine that seed a result read the stored state back on each result route
-@@ -735 +1013 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -735 +1012 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +1024,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +1023,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -425,7 +438,7 @@ index b8e7eb3..2d98c75 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1108,612 @@ is still slow or unbounded" above).
+@@ -817 +1107,612 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -1039,11 +1052,11 @@ index b8e7eb3..2d98c75 100644
 +fresh clone can re-run. The ten arms can be re-run with `--broken` (one arm, or all ten).
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1726 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1725 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1729 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1728 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1759,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1758,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -1053,7 +1066,7 @@ index b8e7eb3..2d98c75 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1773,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1772,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -1071,26 +1084,26 @@ index b8e7eb3..2d98c75 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1790,2 @@ a script to run.
+@@ -866,2 +1789,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +**Run `refresh-cases.mjs` after any backend change.** Ten scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1822,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1821,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui`, `read-aloud` and `offer-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1838 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1837 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381, `offer-ui` 9383 — plus `assetgen` 9377
-@@ -933 +1857 @@ working one.
+@@ -933 +1856 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
 +Eight scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1865 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1864 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1869,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
+@@ -944,0 +1868,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
 +node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 101 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
@@ -1106,7 +1119,7 @@ index b8e7eb3..2d98c75 100644
 +node tools/verify/offer-ui.mjs     --broken=live     # the sentences carried by a copy of the result area: 188 findings (LIVE-REGION 177, CAPTION 11)
 +node tools/verify/offer-ui.mjs     --broken=leak     # "{total}" left on the first line: 264 findings (WRONG-FIGURE 132, LEAK 132)
 +node tools/verify/offer-ui.mjs     --broken          # all ten: 900 findings in 17 kinds; exit 2 names an arm whose own kind did not appear
-@@ -948 +1887,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1886,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s and
