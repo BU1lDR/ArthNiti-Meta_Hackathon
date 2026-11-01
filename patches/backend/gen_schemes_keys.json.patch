@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..cfeeda0 100644
+index 220d74e..9b03caa 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..cfeeda0 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,72 @@
+@@ -96 +99,93 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -81,8 +81,29 @@ index 220d74e..cfeeda0 100644
 +  "elig.rjmarket.select": "The Department of Industries and Commerce selects the units according to their product profile and the theme of the fair, and gives preference to units that have not used the scheme before.",
 +  "elig.rjmarket.repeat": "A unit that has used the scheme for one kind of event (a fair in Rajasthan, elsewhere in India or abroad) cannot use it again for that kind of event for the next 2 financial years. The application must be made within 6 months of the fair or exhibition.",
 +  "elig.rjbee.farmer": "The applicant must be a farmer. Preference is given to small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and trained bee-keepers.",
-+  "elig.rjbee.apply": "Applications are made online at the nearest e-Mitra centre, or through the applicant's own e-Mitra account, and applying is free."
-@@ -151 +225,33 @@
++  "elig.rjbee.apply": "Applications are made online at the nearest e-Mitra centre, or through the applicant's own e-Mitra account, and applying is free.",
++  "elig.uk.nativeResident": "The applicant must be a native or permanent resident of Uttarakhand.",
++  "elig.uk.noEducation": "No educational qualification is required.",
++  "elig.uk.bankDefault": "The applicant must hold an account with the financing bank in the concerned area, and the applicant or entity must not be a defaulter of any bank, financial institution or cooperative bank.",
++  "elig.uknano.subsidy": "The subsidy is 35% (up to Rs.17,500) for the general category and 40% (up to Rs.20,000) for the special category in Category A districts, 30% (up to Rs.15,000) and 35% (up to Rs.17,500) in Category B and B+ districts, and 25% (up to Rs.12,500) and 30% (up to Rs.15,000) in Category C and D districts.",
++  "elig.uknano.release": "The subsidy is released only after the enterprise has run successfully for one continuous year.",
++  "elig.ukmsy.sectors": "Financing is available for industrial, service and business projects, and also for projects in apple cultivation, orchids, animal husbandry and agriculture.",
++  "elig.ukmsy.release": "The subsidy is released only after the enterprise has run successfully for two continuous years.",
++  "elig.uktour.unemployed": "The applicant must be unemployed, which means not engaged in any business, enterprise or profession at present.",
++  "elig.uktour.margin": "To get the grant, the applicant must contribute 12.5% of the total project cost as margin money.",
++  "elig.uktour.land": "If land is needed, the applicant must own it or, if it is in the name of a close relative, the mortgage of the land is accepted as priority security. Leased land is also allowed if the lease period is longer than the loan repayment period and the applicant is not a defaulter of any bank or financial institution.",
++  "elig.ukminority.community": "The applicant must be a permanent resident of Uttarakhand and belong to a minority community: Muslim, Sikh, Christian, Parsi, Buddhist or Jain.",
++  "elig.ukminority.age": "The applicant's age must be between 18 and 55 years.",
++  "elig.ukminority.income": "The annual family income from all sources must not be more than Rs.2,50,000, or the applicant must belong to a BPL family.",
++  "elig.ukminority.share": "The grant is given only with a loan of Rs.1 lakh to Rs.10 lakh, and the applicant contributes 15% of the project cost.",
++  "elig.ukminority.select": "The department advertises for beneficiaries. Applications are made at the office of the District Minority Welfare Officer or the District Social Welfare Officer, and a selection committee interviews the applicants.",
++  "elig.ukbee.farmer": "The applicant must be a farmer interested in bee-keeping.",
++  "elig.ukbee.apply": "Applications are made at the nearest Horticulture Mobile Team Centre, and beneficiaries are chosen on a first-come, first-served basis, depending on the budget available.",
++  "elig.ukcfpc.fees": "A fee of Rs.15 is charged for each trainee, and a fee of Rs.15 for each kilogram processed, for which the applicant provides the raw material.",
++  "elig.ukcfpc.visit": "Applicants visit the nearest Community Food Processing Centre, and places are given on a first-come, first-served basis.",
++  "elig.ukhoh.member": "The applicant must be a member of a self-help group, community-based organisation, collective or cluster level federation formed under a scheme of a department of the Government of Uttarakhand, or a woman entrepreneur.",
++  "elig.uknulm.income": "The annual income of the beneficiary's family must be less than Rs.3 lakh, as per the standards of the Government of India."
+@@ -151 +246,41 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -116,4 +137,12 @@ index 220d74e..cfeeda0 100644
 +  "rj_imsupy",
 +  "rj_mlupy",
 +  "rj_market",
-+  "rj_beekeeping"
++  "rj_beekeeping",
++  "uk_nano",
++  "uk_msy",
++  "uk_tourism",
++  "uk_minority",
++  "uk_bee",
++  "uk_cfpc",
++  "uk_hoh",
++  "uk_nulm"

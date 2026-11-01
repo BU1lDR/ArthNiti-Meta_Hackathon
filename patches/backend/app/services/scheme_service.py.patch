@@ -1,8 +1,12 @@
 diff --git a/backend/app/services/scheme_service.py b/backend/app/services/scheme_service.py
-index 80205b3..ea0686a 100644
+index 80205b3..501d182 100644
 --- a/backend/app/services/scheme_service.py
 +++ b/backend/app/services/scheme_service.py
-@@ -356,0 +357,14 @@ def _scheme_index():
+@@ -134 +134,2 @@ def serves_location(scheme, location_type):
+-    nobody supplied would hide five schemes from every consumer of that route.
++    nobody supplied would hide the schemes that name a kind of place from every
++    consumer of that route.
+@@ -356,0 +358,14 @@ def _scheme_index():
 +def _check_first(scheme):
 +    """
 +    The sentences and the codes of the eligibility lines a reader should check
@@ -17,9 +21,9 @@ index 80205b3..ea0686a 100644
 +    return [scheme["eligibility_rules"][codes.index(code)] for code in wanted], wanted
 +
 +
-@@ -397,0 +412 @@ def match_schemes(
+@@ -397,0 +413 @@ def match_schemes(
 +            check_first, check_first_codes = _check_first(scheme)
-@@ -441,0 +457,4 @@ def match_schemes(
+@@ -441,0 +458,4 @@ def match_schemes(
 +                    # The few eligibility lines a reader should check first, as
 +                    # the same sentence and code pairs as above (new lists).
 +                    "check_first": check_first,

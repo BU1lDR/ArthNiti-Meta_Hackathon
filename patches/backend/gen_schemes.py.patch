@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..2faa865 100644
+index 4ea17de..cd0e49b 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..2faa865 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,544 @@ SPEC = [
+@@ -615,3 +624,715 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -569,6 +569,177 @@ index 4ea17de..2faa865 100644
 +        ["doc.aadhaar", "doc.address", "doc.landRecord", "doc.bank"],
 +        "https://www.myscheme.gov.in/schemes/beeraj",
 +    ),
++    # ---- Uttarakhand state schemes ----
++    (
++        "uk_nano",
++        "Mukhyamantri Swarozgar Yojana Ati Sukshm (Nano) Udhyam, Uttarakhand",
++        # The page does not say which category of district each district is (Annexure 2 of the guidelines),
++        # nor what the special category is, and the card says so by naming the categories only. The affidavit,
++        # the disability certificate and the ration card it asks for have no document code. The page lists an
++        # education certificate among the documents although it says no qualification is required, so the card
++        # carries both lines.
++        "state", ["Uttarakhand"], GENERAL,
++        "Residents of Uttarakhand who want to start or expand a very small (nano) business with a small bank loan",
++        "A scheme of the Micro, Small and Medium Enterprises Department under the Department of Industries, Government of Uttarakhand, that promotes self-employment by providing finance of up to Rs.50,000 through banks to set up a new nano enterprise or expand an existing business. A subsidy is paid on top, between 25% and 40% depending on the category of the district and of the applicant, and at most Rs.20,000.",
++        "Bank finance of up to Rs.50,000, with a subsidy of 25% to 40%",
++        [
++            ("elig.uk.nativeResident", "The applicant must be a native or permanent resident of Uttarakhand."),
++            "elig.common.age18",
++            ("elig.uk.noEducation", "No educational qualification is required."),
++            ("elig.uk.bankDefault", "The applicant must hold an account with the financing bank in the concerned area, and the applicant or entity must not be a defaulter of any bank, financial institution or cooperative bank."),
++            ("elig.uknano.subsidy", "The subsidy is 35% (up to Rs.17,500) for the general category and 40% (up to Rs.20,000) for the special category in Category A districts, 30% (up to Rs.15,000) and 35% (up to Rs.17,500) in Category B and B+ districts, and 25% (up to Rs.12,500) and 30% (up to Rs.15,000) in Category C and D districts."),
++            ("elig.uknano.release", "The subsidy is released only after the enterprise has run successfully for one continuous year."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.photo", "doc.aadhaar", "doc.domicile", "doc.caste", "doc.projectReport", "doc.education", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/mmsyasnu",
++    ),
++    (
++        "uk_msy",
++        "Mukhyamantri Swarozgar Yojana (MSY), Uttarakhand",
++        # The page gives the subsidy as a percentage and a maximum for manufacturing and for service in each
++        # category of district; every maximum is the percentage of the project cost limit, and the card states
++        # the range and the highest maximum only. The disability certificate and the ration card it asks for
++        # have no document code. Animal husbandry is read as dairy and poultry among the categories.
++        "state", ["Uttarakhand"], GENERAL + [AGR, DRY, PLT],
++        "Residents of Uttarakhand who want to start or upgrade a manufacturing, service or business enterprise, or an apple, orchid, animal or farming project, with a bank loan",
++        "A scheme of the Uttarakhand Khadi and Village Industries Board under the Department of Industries, Government of Uttarakhand, that promotes self-employment by financing new enterprises, or the upgrading of existing small units, through banks, with a subsidy. The project cost can be up to Rs.25 lakh for manufacturing enterprises and up to Rs.10 lakh for service and business enterprises. The subsidy is 15% to 25% depending on the category of the district, and at most Rs.6.25 lakh.",
++        "Bank-financed project with a subsidy of 15% to 25%",
++        [
++            ("elig.uk.nativeResident", "The applicant must be a native or permanent resident of Uttarakhand."),
++            "elig.common.age18",
++            ("elig.uk.noEducation", "No educational qualification is required."),
++            ("elig.ukmsy.sectors", "Financing is available for industrial, service and business projects, and also for projects in apple cultivation, orchids, animal husbandry and agriculture."),
++            ("elig.uk.bankDefault", "The applicant must hold an account with the financing bank in the concerned area, and the applicant or entity must not be a defaulter of any bank, financial institution or cooperative bank."),
++            ("elig.ukmsy.release", "The subsidy is released only after the enterprise has run successfully for two continuous years."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.photo", "doc.aadhaar", "doc.domicile", "doc.caste", "doc.projectReport"],
++        "https://www.myscheme.gov.in/schemes/mmsy-uk",
++    ),
++    (
++        "uk_tourism",
++        "Veer Chandra Singh Garhwali Paryatan Swarojgar Yojana, Uttarakhand",
++        # The page also gives a grant of 50% of the project cost, at most Rs.20 lakh, for certain buses and
++        # electric buses, 50 a financial year; the card leaves it out. The identity proof, the affidavit, the
++        # proof of the proposed investment, the disability certificate, the ration card, the driving licence
++        # and the training papers it asks for have no document code or were left out to keep to seven documents.
++        # The page's list of vehicles reads 'ordinary bus, taxi, max, electric bus'; the card says bus, taxi
++        # or electric bus.
++        "state", ["Uttarakhand"], [SVC, TRD, FP],
++        "Unemployed residents of Uttarakhand who want to start a tourism business or buy a bus or taxi with a bank loan",
++        "A scheme of the Department of Tourism, Government of Uttarakhand, that promotes tourism-based self-employment among unemployed residents of Uttarakhand through bank loans with a grant. It covers vehicles (bus, taxi or electric bus) and non-vehicle projects such as a hotel or paying guest scheme, a motor garage or workshop, a fast food centre, a yoga and meditation centre, adventure activities, a bakery, a laundry and a sales centre for local handicrafts, and an applicant can also propose an innovative project based on the attractions of the area. For non-vehicle projects the grant is up to 33% of the project cost, at most Rs.33 lakh, in hilly areas, and up to 25%, at most Rs.25 lakh, in plain areas. For vehicles it is up to 25%, at most Rs.10 lakh.",
++        "Grant of up to 33% of the project cost, at most Rs.33 lakh in hilly areas",
++        [
++            ("elig.uk.nativeResident", "The applicant must be a native or permanent resident of Uttarakhand."),
++            ("elig.uktour.unemployed", "The applicant must be unemployed, which means not engaged in any business, enterprise or profession at present."),
++            ("elig.uktour.margin", "To get the grant, the applicant must contribute 12.5% of the total project cost as margin money."),
++            ("elig.uktour.land", "If land is needed, the applicant must own it or, if it is in the name of a close relative, the mortgage of the land is accepted as priority security. Leased land is also allowed if the lease period is longer than the loan repayment period and the applicant is not a defaulter of any bank or financial institution."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.mobile", "doc.domicile", "doc.photo", "doc.projectReport", "doc.education", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/vcsgpsyuk",
++    ),
++    (
++        "uk_minority",
++        "Self-Employment Scheme for Unemployed Minority Communities, Uttarakhand",
++        # The page says the grant is 25% of the loan, and also that the project cost is met 60% by the loan,
++        # 25% by the department's grant and 15% by the applicant. The two do not agree (25% of the project
++        # cost is more than 25% of a loan that is 60% of it). The card gives the first, which is the page's
++        # headline, and the applicant's 15% share, which the page states twice, and leaves the 60/25/15 split out.
++        # The income certificate or BPL certificate is shown as the income document, and the caste certificate
++        # as the page lists it, without 'if it applies', which the shared document text adds.
++        "state", ["Uttarakhand"], GENERAL,
++        "Unemployed people of minority communities in Uttarakhand who want to start their own work with a bank loan",
++        "A scheme of the Minority Welfare Department, Government of Uttarakhand, that gives a grant of 25% of the loan amount to people of minority communities who are permanent residents of Uttarakhand, when they take a loan of Rs.1 lakh to Rs.10 lakh to start self-employment. The grant is at least Rs.25,000 and at most Rs.2,50,000, and the bank charges interest at its current rates.",
++        "Grant of 25% of the loan, from Rs.25,000 to Rs.2,50,000",
++        [
++            ("elig.ukminority.community", "The applicant must be a permanent resident of Uttarakhand and belong to a minority community: Muslim, Sikh, Christian, Parsi, Buddhist or Jain."),
++            ("elig.ukminority.age", "The applicant's age must be between 18 and 55 years."),
++            ("elig.ukminority.income", "The annual family income from all sources must not be more than Rs.2,50,000, or the applicant must belong to a BPL family."),
++            ("elig.ukminority.share", "The grant is given only with a loan of Rs.1 lakh to Rs.10 lakh, and the applicant contributes 15% of the project cost."),
++            ("elig.ukminority.select", "The department advertises for beneficiaries. Applications are made at the office of the District Minority Welfare Officer or the District Social Welfare Officer, and a selection committee interviews the applicants."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.income", "doc.caste", "doc.domicile", "doc.aadhaar", "doc.bank", "doc.projectReport"],
++        "https://www.myscheme.gov.in/schemes/msesu",
++    ),
++    (
++        "uk_bee",
++        "Bee Keeping Scheme (Department of Horticulture), Uttarakhand",
++        # The page asks for a mobile number, but the document code says the number is linked to Aadhaar,
++        # which the page does not, so none is shown. Its worked example (a box costing Rs.200, the farmer
++        # paying Rs.120) is left out, and so is the Rs.700 and Rs.350 split of the training payment.
++        "state", ["Uttarakhand"], [BEE, AGR],
++        "Farmers in Uttarakhand who want to take up bee-keeping",
++        "A scheme of the Department of Horticulture, Government of Uttarakhand, that promotes bee-keeping as a livelihood for farmers by giving bee boxes and bee colonies at a 40% subsidy, with a maximum cost of Rs.2,000 each. A farmer can get 50 boxes in plain areas and 25 in hilly areas, and Rs.350 for each colony kept in the farmer's own orchard. The department also runs free bee-keeping training for seven days and pays each trainee Rs.1,050 in all.",
++        "Subsidy of 40% on bee boxes and bee colonies, and free training",
++        [
++            "elig.common.residentState",
++            ("elig.ukbee.farmer", "The applicant must be a farmer interested in bee-keeping."),
++            ("elig.ukbee.apply", "Applications are made at the nearest Horticulture Mobile Team Centre, and beneficiaries are chosen on a first-come, first-served basis, depending on the budget available."),
++        ],
++        ["doc.aadhaar", "doc.address", "doc.domicile", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/bk",
++    ),
++    (
++        "uk_cfpc",
++        "Community Food Processing Centre (Department of Horticulture), Uttarakhand",
++        # The page lists no documents (they are required in accordance with the centre's guidelines), so the
++        # card shows an identity proof as the one document, as for the other schemes whose pages list none.
++        "state", ["Uttarakhand"], [FP],
++        "Individuals and farmers in Uttarakhand who want to learn fruit and vegetable processing or have their produce processed at a community centre",
++        "A facility of the Department of Horticulture, Government of Uttarakhand, that helps individuals and farmers process fruits and vegetables, add value to their produce and earn more, through community-based centres. It gives training in fruit and vegetable processing for 10 days in urban areas and 15 days in rural areas, and food can be processed at the centre.",
++        "Training and community food processing for a small fee",
++        [
++            "elig.common.residentState",
++            ("elig.ukcfpc.fees", "A fee of Rs.15 is charged for each trainee, and a fee of Rs.15 for each kilogram processed, for which the applicant provides the raw material."),
++            ("elig.ukcfpc.visit", "Applicants visit the nearest Community Food Processing Centre, and places are given on a first-come, first-served basis."),
++        ],
++        ["doc.identity"],
++        "https://www.myscheme.gov.in/schemes/cfpc",
++    ),
++    (
++        "uk_hoh",
++        "House of Himalayas (Department of Rural Development), Uttarakhand",
++        # The page names no list of products, gives no amount and lists no documents (they are required in
++        # accordance with the department's guidelines), so the card says what the page says the scheme works
++        # on and shows an identity proof as the one document. The producing categories stand for 'local
++        # products'. The page calls the collectives both 'Livelihood Collectives' and 'Local Collective'; the
++        # card says collectives.
++        "state", ["Uttarakhand"], [MFG, FP, HC, TLR],
++        "Self-help groups, women entrepreneurs and community groups in Uttarakhand whose local products need branding, packaging and a bigger market",
++        "A scheme of the Department of Rural Development, Government of Uttarakhand, that gives the local Himalayan products of Uttarakhand a new identity by improving their branding, marketing, quality and packaging, and helps them reach national and international markets. Products made by members of self-help groups, community-based organisations, women entrepreneurs, collectives and cluster level federations formed under schemes of the state government departments are included under the House of Himalayas name.",
++        "Help with branding, packaging and selling local products",
++        [
++            "elig.common.residentState",
++            ("elig.ukhoh.member", "The applicant must be a member of a self-help group, community-based organisation, collective or cluster level federation formed under a scheme of a department of the Government of Uttarakhand, or a woman entrepreneur."),
++        ],
++        ["doc.identity"],
++        "https://www.myscheme.gov.in/schemes/hohuk",
++    ),
++    (
++        "uk_nulm",
++        "DAY-NULM Self-Employment Programme, Uttarakhand",
++        # The page says the beneficiary bears '7% of the interest' and the Government of India and the State
++        # Government share the rest. That is ambiguous (the programme's own rule is a loan at 7% a year), so the
++        # card says only that part of the interest is paid and gives no percentage. The page names the Nagar
++        # Nigam Dehradun as the implementing body but speaks of 'the municipal body' for eligibility and for
++        # applying, so the card names no city. The income certificate or the Rs.10 affidavit is shown as the
++        # income document.
++        "state", ["Uttarakhand"], GENERAL,
++        "Low-income families in the towns and cities of Uttarakhand who want to start or grow a small business with a bank loan",
++        "The Self-Employment Programme under the Deen Dayal Antyodaya Yojana - National Urban Livelihoods Mission (DAY-NULM), run under the Department of Urban Development, Government of Uttarakhand, to help the urban poor set up or expand self-employment ventures. A beneficiary can get a bank loan of up to Rs.2 lakh, with part of the interest paid by the Government of India and the State Government. The application form is obtained from the municipal body, which checks it before sending it to the bank.",
++        "Bank loan of up to Rs.2 lakh, with part of the interest paid by government",
++        [
++            "elig.common.residentState",
++            "elig.common.urbanArea",
++            ("elig.uknulm.income", "The annual income of the beneficiary's family must be less than Rs.3 lakh, as per the standards of the Government of India."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.income", "doc.projectReport", "doc.photo", "doc.address", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/daynulsepuk",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -578,12 +749,13 @@ index 4ea17de..2faa865 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +1169 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +1340 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +1182,2 @@ LOCATION_TYPES = {
+@@ -630,0 +1353,3 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
 +    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
-@@ -634,0 +1188,71 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
++    "uk_nulm": ["semi-urban", "urban"],  # elig.common.urbanArea: the page makes a person eligible under the municipal body area
+@@ -634,0 +1360,78 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -594,7 +766,7 @@ index 4ea17de..2faa865 100644
 +# when the matcher already cut the list by it (the states list, LOCATION_TYPES) or
 +# when it only says what the scheme pays, charges or asks you to bring. Codes, never
 +# positions, so an inserted line cannot move a note onto the wrong sentence. Shown
-+# in the order given. The five schemes that name nobody in particular have no entry.
++# in the order given. The six schemes that name nobody in particular have no entry.
 +CHECK_FIRST = {
 +    "pmfme": ["elig.pmfme.upgrade"],
 +    "pmegp": ["elig.pmegp.period"],
@@ -653,20 +825,27 @@ index 4ea17de..2faa865 100644
 +    "rj_mlupy": ["elig.rjmlupy.activities"],
 +    "rj_market": ["elig.common.udyamNeeded", "elig.rjmarket.fair"],
 +    "rj_beekeeping": ["elig.rjbee.farmer"],
++    "uk_nano": ["elig.uk.nativeResident", "elig.uk.bankDefault"],
++    "uk_msy": ["elig.uk.nativeResident", "elig.uk.bankDefault"],
++    "uk_tourism": ["elig.uktour.unemployed", "elig.uktour.land"],
++    "uk_minority": ["elig.ukminority.community", "elig.ukminority.age", "elig.ukminority.income"],
++    "uk_bee": ["elig.ukbee.farmer"],
++    "uk_hoh": ["elig.ukhoh.member"],
++    "uk_nulm": ["elig.uknulm.income"],
 +}
 +
-@@ -652,0 +1277,4 @@ def build():
+@@ -652,0 +1456,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +1292,4 @@ def build():
+@@ -663,0 +1471,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1320 @@ def build():
+@@ -688 +1499 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1323 @@ def build():
+@@ -690,0 +1502 @@ def build():
 +                "check_first_codes": check_first,

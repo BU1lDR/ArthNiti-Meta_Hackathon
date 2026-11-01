@@ -182,6 +182,14 @@ HELP_BY_SCHEME = {
     "rj_mlupy": ("loan", "subsidy"),
     "rj_market": ("market", "subsidy"),
     "rj_beekeeping": ("subsidy",),
+    "uk_nano": ("loan", "subsidy"),
+    "uk_msy": ("loan", "subsidy"),
+    "uk_tourism": ("loan", "subsidy"),
+    "uk_minority": ("loan", "subsidy"),
+    "uk_bee": ("subsidy", "training"),
+    "uk_cfpc": ("training", "tools"),
+    "uk_hoh": ("market",),
+    "uk_nulm": ("loan", "subsidy"),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

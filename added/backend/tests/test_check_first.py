@@ -29,16 +29,17 @@ from app.services.scheme_service import load_schemes, match_schemes  # noqa: E40
 # one would ask them to confirm something the list was already cut by.
 DECIDED_BY_A_GATE = {"elig.unnati.where", "elig.common.ruralArea", "elig.common.urbanArea"}
 
-NO_NOTE = {"pmmy", "dic", "tehsil_certificates", "blbc", "gp_licence"}
+NO_NOTE = {"pmmy", "dic", "tehsil_certificates", "blbc", "gp_licence", "uk_cfpc"}
 
 
 def _by_id():
     return {scheme["id"]: scheme for scheme in load_schemes()}
 
 
-def test_every_scheme_carries_the_list_and_only_five_leave_it_empty():
-    # Five schemes name nobody in particular: the Mudra bands are priced by the
-    # loan size, and the four offices take anyone who walks in. Pinned so that
+def test_every_scheme_carries_the_list_and_only_six_leave_it_empty():
+    # Six schemes name nobody in particular: the Mudra bands are priced by the
+    # loan size, and the four offices and Uttarakhand's food processing centre
+    # (a fee and first come, first served) take anyone who walks in. Pinned so that
     # adding or removing a note is a decision, not an accident of the table.
     empty = {sid for sid, scheme in _by_id().items() if scheme["check_first_codes"] == []}
 
