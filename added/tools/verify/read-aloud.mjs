@@ -34,7 +34,8 @@
 //                         cancelled line a moment after the cancel, and the fake does the
 //                         same (500 ms in that scenario).
 //   NO-BUTTON             a voice on the device for the page language, and no button; also
-//                         after the voices arrive late (`voiceschanged`).
+//                         after the voices arrive late (`voiceschanged`), and when the
+//                         browser announced the list before the page was listening.
 //   LABEL                 the button or the note is not the dictionary's wording for that
 //                         language, or the button does not read Stop while speaking and
 //                         Listen after.
@@ -54,7 +55,8 @@
 // drawn without a local voice; R3 a press speaks the right lines in the local voice
 // (every language; the three lights in English and Hindi); R5 a second press stops, and a
 // stale cancel event is ignored; R6 the speech runs to its end and can be started again;
-// R7 voices that arrive late; R7b a voice taken away mid-speech; R8 a language switch;
+// R7 voices that arrive late, and a list announced before the page was listening; R7b a voice
+// taken away mid-speech; R8 a language switch;
 // R9 leaving the page; R10 a line with a digit is on the page and not spoken; R11 nothing
 // leaves the machine; R12 print; R13 layout at 320 px with the largest text in the dark
 // (all 8 languages), at 390 px and on a desktop; R14 both Simple and Detailed.
@@ -80,7 +82,8 @@
 //
 // Defects planted in the app itself, one at a time (a script outside the repo edited the
 // source, ran this gate, put the file back and checked its sha256), and what the gate
-// reported (29-30 Oct 2026: all 20 exit 1, the unplanted baseline exit 0). A "+" marks
+// reported (all 21 exit 1, the unplanted baseline exit 0; the first twenty on 29 and 30 Oct
+// 2026, before R7 had the early announcement, the last on 1 Nov 2026). A "+" marks
 // findings that came from the same fault in other scenarios; tools/README.md has the rest:
 //   speak.js     no localService test in localVoiceFor   REMOTE-VOICE-USED, BUTTON-WITHOUT-VOICE
 //                                                        + WRONG-VOICE, NOT-STOPPED, WRONG-LINES
@@ -108,6 +111,8 @@
 //   ReadAloud    a full-size element laid over the       COVERED + SILENT, WRONG-LINES, LABEL,
 //                button (the press never lands)          ENDED-EARLY, NOT-STOPPED, FOCUS-LOST,
 //                                                        STALE-EVENT
+//   ReadAloud    no second read of the list once the     NO-BUTTON
+//                listener is in place
 import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -277,7 +282,14 @@ function installFake(cfg, seed, version) {
     Object.defineProperty(voice, 'isLocal', { value: !!v.local })
     return voice
   }
-  let voices = cfg.late ? [] : cfg.voices.map(make)
+  // `early`: the list is ready the moment the page first asks, and the engine announces it
+  // before the page's effects have run, when nobody is listening yet (a browser that kept
+  // the list from an earlier page answers at once). The first getVoices() still returns [].
+  // `announcedTo` is how many listeners heard the announcement; the gate needs 0, or the
+  // case measures nothing.
+  let voices = cfg.late || cfg.early ? [] : cfg.voices.map(make)
+  let asked = false
+  let announcedTo = null
 
   class Utterance {
     constructor(line) {
@@ -296,7 +308,13 @@ function installFake(cfg, seed, version) {
     paused: false,
     get speaking() { return queue.length > 0 },
     get pending() { return queue.length > 1 },
-    getVoices: () => voices,
+    getVoices: () => {
+      if (cfg.early && !asked) {
+        asked = true
+        queueMicrotask(() => { voices = cfg.voices.map(make); announcedTo = listeners.size; announce() })
+      }
+      return voices
+    },
     speak(u) {
       queue.push(u)
       spoken.push({ text: u.text, lang: u.lang, voice: u.voice ? u.voice.name : null, trueLocal: u.voice ? u.voice.isLocal : null })
@@ -315,7 +333,7 @@ function installFake(cfg, seed, version) {
 
   window.__ra = {
     synth,
-    state: () => ({ spoken: spoken.slice(), cancels, queued: queue.length, listeners: listeners.size }),
+    state: () => ({ spoken: spoken.slice(), cancels, queued: queue.length, listeners: listeners.size, announcedTo }),
     // The head line ends, as an engine reports it.
     advance() {
       const u = queue.shift()
@@ -535,7 +553,7 @@ function scenario(id) {
   }
 }
 
-const BASE = { voices: [], late: false, cancelInert: false, allLocal: false, appendDigit: false, staleDelay: 0, noSynth: false, noUtterance: false }
+const BASE = { voices: [], late: false, early: false, cancelInert: false, allLocal: false, appendDigit: false, staleDelay: 0, noSynth: false, noUtterance: false }
 const FLAWS = { cancelInert: BROKEN.has('cancel'), allLocal: BROKEN.has('local'), appendDigit: BROKEN.has('digits') }
 
 let scriptId = null
@@ -752,6 +770,22 @@ async function r7Voices(cdp) {
     await cdp.evaluate('window.__ra.release()')
     s.ok(await until(cdp, inPage(hasBlock), 1500), 'NO-BUTTON', `${tag}: no button after the voices arrived (voiceschanged)`)
     s.ok((await raState(cdp)).spoken.length === 0, 'AUTO-SPEECH', `${tag}: the voices arriving started a speech`)
+    errors(cdp, s, tag)
+  }
+  // The list is ready the moment the page first asks and is announced before the page has
+  // started to listen, so the page has to read it again once it is listening and not wait
+  // for an event that has gone by. Found on the owner's Edge on 1 Nov 2026 (326 voices,
+  // no speaker button on /talk, whose hook subscribes the same way).
+  for (const route of PAGES) {
+    const tag = `list announced before the page listened, en ${route}`
+    if (!(await load(cdp, s, { route, lang: 'en', cfg: { voices: voicesFor('en'), early: true } }))) continue
+    const heard = (await raState(cdp)).announcedTo
+    if (heard !== 0) {
+      s.fault(`${tag}: the fake announced the list to ${heard} listener(s), not 0, so this measures nothing`)
+      continue
+    }
+    s.ok(await until(cdp, inPage(hasBlock), 1500), 'NO-BUTTON', `${tag}: no button, though the browser had a voice on the device before the page listened`)
+    s.ok((await raState(cdp)).spoken.length === 0, 'AUTO-SPEECH', `${tag}: the list arriving started a speech`)
     errors(cdp, s, tag)
   }
   const tag = 'voice taken away, en /analysis'

@@ -14,12 +14,14 @@ import { localVoiceFor, speakLines } from '../audio/speak'
 // The light's word and its note are read together, as ResultBand prints them together,
 // so a page cannot have the word read without the note that says what it is not.
 //
-// Some browsers list their voices late, so the list is read once and again on
-// `voiceschanged`. Pressing the button again, switching language and leaving the page
-// each stop the speech. What is remembered is the voice that is speaking and not a flag,
-// so a new language (a new voice) reads as "not speaking" without a second state to keep
-// in step, and the stop function sits in a ref because nothing is drawn from it. The
-// speech is started from a press and from nowhere else.
+// Some browsers list their voices late, so the list is read once, again on
+// `voiceschanged` and once more as soon as the listener is in place (a browser can
+// announce the list before that: Edge does, on a reload). Pressing the button again,
+// switching language and leaving the page each stop the speech. What is remembered is
+// the voice that is speaking and not a flag, so a new language (a new voice) reads as
+// "not speaking" without a second state to keep in step, and the stop function sits in
+// a ref because nothing is drawn from it. The speech is started from a press and from
+// nowhere else.
 // Whole keys, as ResultBand has them, so keycheck can see each one.
 const BAND_KEY = { green: 'band.green', yellow: 'band.yellow', red: 'band.red' }
 
@@ -31,8 +33,9 @@ function ReadAloud({ band, lines }) {
 
   useEffect(() => {
     const synth = window.speechSynthesis
-    const refresh = () => setVoices(synth.getVoices())
+    const refresh = () => setVoices(synth?.getVoices?.() ?? [])
     synth?.addEventListener?.('voiceschanged', refresh)
+    refresh()
     return () => synth?.removeEventListener?.('voiceschanged', refresh)
   }, [])
 

@@ -3,14 +3,15 @@
 // Only a voice that runs on this device is used (`localService` is true). A voice the
 // browser reaches over the network, such as Edge's "Online (Natural)" voices, sends the
 // sentence to a server this app has not told the person or the deployer about: on the
-// owner's Windows machine all 321 voices Edge listed were of that kind (29 Oct 2026).
+// owner's Windows machine both Hindi voices Edge lists are of that kind (1 Nov 2026).
 // So where there is no local voice for the page language the button is not drawn, and
 // nothing is read. The line is drawn at the device, and this module opens no connection
 // of its own (tools/verify/speak-lib-test.mjs greps its source for the usual ways).
 //
 // The one exception is the question /talk asks aloud (promptVoiceFor, below): that line is
 // the page's own fixed wording and carries nothing the person said, so it may use a voice
-// over the network. No sentence from a result, and nothing the person said, takes that road.
+// over the network, when the person presses Listen (useQuestionVoice.js). No sentence from
+// a result, and nothing the person said, takes that road.
 //
 // What is spoken is only text the page already shows, each line as its own utterance
 // (some engines have been reported to stop a long one part-way). No figure is read: a
@@ -56,8 +57,9 @@ export const localVoiceFor = (voices, code) => pick(voices, code, (voice) => voi
 // (the dictionary's question strings) and carry nothing the person said, so a voice the
 // browser reaches over the network may read them where the device has none of the
 // language: Edge lists no other kind for most of the eight. A voice on the device still
-// comes first. What the person says never goes to a speech engine, and the result
-// sentences keep to localVoiceFor; this must not be used for either.
+// comes first, and is the only kind that starts by itself; a voice over the network reads
+// when Listen is pressed. What the person says never goes to a speech engine, and the
+// result sentences keep to localVoiceFor; this must not be used for either.
 export const promptVoiceFor = (voices, code) => localVoiceFor(voices, code) ?? pick(voices, code, () => true)
 
 // Speaks the lines one after another and returns a function that stops them, or null

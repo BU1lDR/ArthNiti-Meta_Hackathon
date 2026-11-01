@@ -55,7 +55,8 @@
 //        questions, the end of the questions
 //   S24  the question read aloud (a fake speech engine): nothing before consent, one line at a
 //        time, the speaker button, Skip / Find / Record change or stop it, the voice chosen (a
-//        local one first), no button when the browser has no voice for the language
+//        local one first), no button when the browser has no voice for the language, a list of
+//        voices that comes late, and one the browser announced before the page was listening
 //   S25  360 px phone: the open question, a question under review, no answer found, the end
 //        of the questions
 //
@@ -128,9 +129,10 @@
 // S15 also waits 1.2 s before pressing Stop: a recording stopped at once is sometimes
 // reported as unusable (3 of 40 runs without the wait, 0 of 40 with it, too few to
 // call significant), and that report is correct but is not what part 1 is testing.
-// S23-S25, run on 30 Oct 2026: 35 changes, made one at a time, each file put back byte for
-// byte after its run. TalkPage.jsx unless another file is named; in brackets, how many
-// checks failed. All 35 fail the gate with exit 1. S23, the questions one at a time:
+// S23-S25, run on 30 Oct 2026 (the S24 rows again on 1 Nov 2026): 39 changes, made one at a
+// time, each file put back byte for byte after its run. TalkPage.jsx unless another file is
+// named; in brackets, how many checks failed. All 39 fail the gate with exit 1. S23, the
+// questions one at a time:
 //   TalkPage.jsx  lookFor() no longer sends `asking`                                  -> S23  [6]
 //   TalkPage.jsx  `asking` also sent in the open turn (`?? 'state'`)                  -> S3   [1]
 //   TalkPage.jsx  apply() marks the question asked as answered, landed or not         -> S23  [1]
@@ -153,17 +155,27 @@
 //   TalkPage.jsx  "Yes, that is right" not disabled while a request is out            -> S23  [1]
 //   TalkPage.jsx  "No, I will say it again" not disabled while a request is out       -> S23  [1]
 //   TalkPage.jsx  no navigation after the last answer                                 -> S23  [1]
-// S24, the question read aloud:
-//   TalkPage.jsx  the voice starts without the consent tick                           -> S24  [3]
-//   TalkPage.jsx  the question is always read in English                              -> S24  [2]
+// S24, the question read aloud (run again on 1 Nov 2026, after a voice over the network was
+// made to wait for a press of Listen; the row for the second read of the list was added the
+// same day, after the real Edge showed the announcement arriving before the listener):
+//   TalkPage.jsx  the voice starts without the consent tick                           -> S24  [1]
+//   TalkPage.jsx  the question is always read in English                              -> S24  [3]
 //   TalkPage.jsx  agreed() (Find, Record) no longer stops the voice                   -> S24  [1]
 //   TalkPage.jsx  the spoken line includes the typed words                            -> S24  [1]
-//   useQuestionVoice.js  the line before is not stopped when the line changes         -> S24  [4]
+//   useQuestionVoice.js  the effect returns no cleanup (new line, untick, leaving)    -> S24  [2]
 //   useQuestionVoice.js  the speaker button is offered with no voice                  -> S24  [2]
 //   useQuestionVoice.js  no listener for `voiceschanged`                              -> S24  [1]
-//   useQuestionVoice.js  leaving the page does not cut the line off                   -> S24  [1]
+//   useQuestionVoice.js  no second read of the list once the listener is in place     -> S24  [3]
+//   useQuestionVoice.js  a voice over the network also starts by itself               -> S24  [2]
+//   useQuestionVoice.js  no voice starts by itself                                    -> S24  [1]
+//   useQuestionVoice.js  the speaker button only for a voice on the device            -> S24  [3]
 //   speak.js      delete the `if (!live) return` in finish()                          -> S24  [2]
 //   speak.js      a local voice is no longer preferred to a network voice             -> S24  [1]
+//   speak.js      a voice over the network is never used for the questions            -> S24  [3]
+// Not a row: deleting `stopRef.current?.()` at the top of start() in useQuestionVoice.js
+// exits 0 (60 checks). Nothing can reach it: the effect returns `stop` in every case and
+// toggle() calls start() only when nothing plays. A probe that throws there ran S23-S25
+// (229 checks) with no failure and no page error. The line stays as a guard.
 // S25, 360 px:
 //   TalkPage.jsx  the question heading gets a min-width of 420 px                     -> S25  [7]
 //   TalkPage.jsx  the "Question n of 12" line at 10 px                                -> S25  [4]
@@ -581,6 +593,11 @@ function pageLibrary() {
 //   setVoices(list)   the browser lists its voices late: voiceschanged
 // `delay` is how long after a cancel the cancelled line reports its error, as a real
 // engine does a moment late; the page must not take it for the new line failing.
+// `listed: "early"` is an engine whose list is ready the moment the page first asks and
+// which announces it in the same breath, before the page has started to listen: the first
+// getVoices() returns an empty list, then the list and the voiceschanged event follow in
+// the next microtask, ahead of the page's effects. state().announcedTo is how many
+// listeners heard it (none, by design: that is the gap).
 function speechFake() {
   let config = null
   try { config = JSON.parse(sessionStorage.getItem('talk-ui-speech') || 'null') } catch { config = null }
@@ -590,7 +607,11 @@ function speechFake() {
     return
   }
   const make = (v) => ({ name: v.name, lang: v.lang, localService: v.local === true, default: false, voiceURI: v.name })
-  let voices = config.voices.map(make)
+  const listed = config.voices.map(make)
+  const early = config.listed === 'early'
+  let voices = early ? [] : listed
+  let asked = false
+  let announcedTo = null
   const said = []
   const queue = []
   const listeners = new Set()
@@ -601,7 +622,17 @@ function speechFake() {
   const synth = {
     get speaking() { return queue.length > 0 },
     get pending() { return queue.length > 1 },
-    getVoices: () => voices,
+    getVoices: () => {
+      if (early && !asked) {
+        asked = true
+        queueMicrotask(() => {
+          voices = listed
+          announcedTo = listeners.size
+          listeners.forEach((fn) => fn(new Event('voiceschanged')))
+        })
+      }
+      return voices
+    },
     speak(u) { said.push({ text: u.text, lang: u.lang, voice: u.voice ? u.voice.name : null }); queue.push(u) },
     cancel() {
       cancels += 1
@@ -612,7 +643,7 @@ function speechFake() {
     removeEventListener(type, fn) { listeners.delete(fn) },
   }
   window.__speech = {
-    state: () => ({ said: said.map((x) => ({ ...x })), cancels, speaking: queue.length > 0, voices: voices.map((v) => v.name) }),
+    state: () => ({ said: said.map((x) => ({ ...x })), cancels, speaking: queue.length > 0, voices: voices.map((v) => v.name), announcedTo }),
     finish() {
       const u = queue.shift()
       if (u && u.onend) u.onend({})
@@ -1215,9 +1246,11 @@ const chooseLanguage = (code) => choose('select:has(option[value="ml"])', code)
 // and the "Question n of N" line over it.
 const ask = (i) => norm(en(QUESTIONS[i][1]))
 const progressOf = (n) => norm(en('talk.progress', { n, total: QUESTIONS.length }))
-// The one voice S24 and S25 give the page: an online Hindi one, which the question may
-// use (it is the page's own wording) although a result's read-aloud may not.
+// The voices S24 and S25 give the page. An online Hindi one: the question may use it (it
+// is the page's own wording, although a result's read-aloud may not) but only when the
+// reader presses Listen. A Hindi one on the device may also start by itself.
 const NET_HINDI = { voices: [{ name: 'Net Hindi', lang: 'hi-IN', local: false }], delay: 400 }
+const DEVICE_HINDI = { voices: [{ name: 'Device Hindi', lang: 'hi-IN', local: true }], delay: 400 }
 // The landing page's buttons in the order they stand: where each leads, and whether it
 // has the filled (main) look. Run in the page, so it must stand alone.
 const heroButtons = () => [...document.querySelectorAll('.ui-hero a')].map((a) => ({
@@ -2215,16 +2248,50 @@ async function s24() {
   const hi = (key) => norm(T('hi', key))
   const lineHi = (i) => hi(QUESTIONS[i][1])
 
-  // An online Hindi voice only, which is what many Windows browsers have.
+  // An online Hindi voice only, which is what many Windows browsers have. Reading a line in
+  // it sends the line to the browser maker's speech service, and the box the reader ticks
+  // names Meta, so the line is read when Listen is pressed and not before.
   await open(ON, '/talk', { lang: 'hi', speech: NET_HINDI })
   let s = await snap()
   expect('the question has a speaker button, reading Listen in Hindi', Boolean(buttonOf(s, T('hi', 'ra.listen'))), s.buttons)
   expect('nothing is read before the box is ticked', s.speech.said.length === 0, s.speech)
 
   await tick('#talk-consent')
+  await sleep(700)
+  s = await snap()
+  expect('ticking the box does not read the question in an online voice', s.speech.said.length === 0 && s.speech.speaking === false && Boolean(buttonOf(s, T('hi', 'ra.listen'))), { speech: s.speech, buttons: s.buttons })
+  await pressOwed(T('hi', 'ra.listen'))
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('Listen reads the open question, in Hindi', norm(s.speech.said[0].text) === hi('talk.askOpen'), s.speech.said)
+  expect('in the browser\'s online Hindi voice', s.speech.said[0].voice === 'Net Hindi' && s.speech.said[0].lang === 'hi-IN', s.speech.said)
+  expect('while it is read the button says Stop', Boolean(buttonOf(s, T('hi', 'ra.stop'))) && s.speech.speaking === true, { buttons: s.buttons, speech: s.speech })
+
+  // Skip cuts the line off, and the next question waits for a press as well.
+  await pressOwed(T('hi', 'talk.skip'))
+  await reach('the first question', 3000, (x) => x.question?.heading === lineHi(0))
+  await sleep(700)
+  s = await snap()
+  expect('Skip cuts the line off and the next question is not read in an online voice', s.speech.said.length === 1 && s.speech.speaking === false && Boolean(buttonOf(s, T('hi', 'ra.listen'))), { speech: s.speech, buttons: s.buttons })
+  await pressOwed(T('hi', 'ra.listen'))
+  s = await reach('the first question to be read', 3000, (x) => x.speech.said.length === 2)
+  expect('Listen reads the question that is on the screen', norm(s.speech.said[1].text) === lineHi(0), s.speech.said)
+
+  // Taking the tick away cuts a line the reader started.
+  const pressed = s.speech.cancels
+  await tick('#talk-consent', false)
+  s = await reach('the voice to stop when the box is unticked', 3000, (x) => x.speech.speaking === false)
+  expect('unticking the consent box cuts a line started with Listen off', s.speech.cancels > pressed, s.speech)
+
+  // A voice on the device is the one that may start by itself; the rest of this scenario has one.
+  await open(ON, '/talk', { lang: 'hi', speech: DEVICE_HINDI })
+  s = await snap()
+  expect('the question has a speaker button, reading Listen in Hindi', Boolean(buttonOf(s, T('hi', 'ra.listen'))), s.buttons)
+  expect('nothing is read before the box is ticked', s.speech.said.length === 0, s.speech)
+
+  await tick('#talk-consent')
   s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
   expect('ticking the box reads the open question, in Hindi', norm(s.speech.said[0].text) === hi('talk.askOpen'), s.speech.said)
-  expect('in the browser\'s online Hindi voice', s.speech.said[0].voice === 'Net Hindi' && s.speech.said[0].lang === 'hi-IN', s.speech.said)
+  expect('in the Hindi voice on the device', s.speech.said[0].voice === 'Device Hindi' && s.speech.said[0].lang === 'hi-IN', s.speech.said)
   expect('while it is read the button says Stop', Boolean(buttonOf(s, T('hi', 'ra.stop'))) && s.speech.speaking === true, { buttons: s.buttons, speech: s.speech })
 
   // The speaker button: stop, then read it again.
@@ -2308,6 +2375,30 @@ async function s24() {
   await inPage(() => window.__speech.setVoices([{ name: 'Late Voice', lang: 'en-IN', local: true }]))
   s = await reach('the waiting question to be read', 3000, (x) => x.speech.said.length === 1)
   expect('once the voices arrive the waiting question is read, with its button', s.speech.said[0].voice === 'Late Voice' && norm(s.speech.said[0].text) === norm(en('talk.askOpen')) && Boolean(buttonOf(s, en('ra.stop'))), { speech: s.speech, buttons: s.buttons })
+
+  // The browser had the list ready the moment the page first asked and announced it before
+  // the page had started to listen (a list it kept from an earlier page comes back at once).
+  // The page has to read the list again once it is listening, and not wait for an event that
+  // has gone by. Found on the owner's Edge on 1 Nov 2026: 326 voices listed, no speaker button.
+  // The owner's Hindi page first (their only Hindi voices are online ones): the button has to
+  // be there, and the box alone reads nothing. It has no reach(), so the English walk below,
+  // which halts when the page never reads, cannot hide it.
+  await open(ON, '/talk', { lang: 'hi', speech: { ...NET_HINDI, listed: 'early' } })
+  s = await snap()
+  expect('(sanity) the engine listed its voices, and told nobody: the page was not yet listening', s.speech.voices.length === 1 && s.speech.announcedTo === 0, s.speech)
+  expect('an online Hindi voice announced early still gives the Hindi page its Listen button', Boolean(buttonOf(s, T('hi', 'ra.listen'))), s.buttons)
+  await tick('#talk-consent')
+  await sleep(700)
+  s = await snap()
+  expect('and ticking the box reads nothing in an online voice', s.speech.said.length === 0 && s.speech.speaking === false, s.speech)
+
+  await open(ON, '/talk', { speech: { voices: [{ name: 'Early Voice', lang: 'en-IN', local: true }], delay: 0, listed: 'early' } })
+  s = await snap()
+  expect('(sanity) the same, with a voice on the device', s.speech.voices.length === 1 && s.speech.announcedTo === 0, s.speech)
+  expect('a list announced before the page was listening still gives the speaker button', Boolean(buttonOf(s, en('ra.listen'))), s.buttons)
+  await tick('#talk-consent')
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('and ticking the box reads the open question in that voice on the device', s.speech.said[0].voice === 'Early Voice' && norm(s.speech.said[0].text) === norm(en('talk.askOpen')), s.speech.said)
 }
 
 async function s25() {

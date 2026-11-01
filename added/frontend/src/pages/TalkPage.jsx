@@ -91,7 +91,8 @@ function TalkPage() {
   const question = open ? null : (pending[0] ?? null)
   const finished = !open && question === null
   const lineKey = open ? 'talk.askOpen' : question ? question.key : 'talk.allDone'
-  // The question is read aloud from the moment the reader has agreed to what is sent.
+  // A voice on the device reads the question from the moment the reader has agreed to what
+  // is sent; a voice over the network reads it when the reader presses Listen.
   const voice = useQuestionVoice(language, t(lineKey), consent)
   // Where "use the form instead" goes: the first step with something missing.
   const formStep = firstUnansweredStep(applicationData) ?? '/finance'
