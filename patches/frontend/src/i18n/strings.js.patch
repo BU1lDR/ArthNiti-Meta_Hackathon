@@ -1,23 +1,48 @@
 diff --git a/frontend/src/i18n/strings.js b/frontend/src/i18n/strings.js
-index 4915325..9e2dcbb 100644
+index 4915325..f9b582d 100644
 --- a/frontend/src/i18n/strings.js
 +++ b/frontend/src/i18n/strings.js
 @@ -8 +8 @@
 -//   schemeStrings.js  the prose typed into schemes.json — 30 schemes' own words
 +//   schemeStrings.js  the prose typed into schemes.json — the schemes' own words
-@@ -263,0 +264 @@ const en = {
+@@ -83 +83,2 @@ const en = {
+-  'common.login': 'Log in',
++  // The masthead link and the breadcrumb of /login, which is a name entry and not a login.
++  'common.login': 'Enter your name',
+@@ -263,0 +265 @@ const en = {
 +  'cat.poultry': 'Poultry / Eggs',
-@@ -526,0 +528 @@ const hi = {
+@@ -365 +367 @@ const hi = {
+-  'common.login': 'लॉग इन',
++  'common.login': 'अपना नाम लिखें',
+@@ -526,0 +529 @@ const hi = {
 +  'cat.poultry': 'मुर्गी पालन / अंडे',
-@@ -769,0 +772 @@ const ta = {
+@@ -605 +608 @@ const ta = {
+-  'common.login': 'உள்நுழை',
++  'common.login': 'உங்கள் பெயரை எழுதுங்கள்',
+@@ -769,0 +773 @@ const ta = {
 +  'cat.poultry': 'கோழி வளர்ப்பு / முட்டை',
-@@ -1009,0 +1013 @@ const te = {
+@@ -848 +852 @@ const te = {
+-  'common.login': 'లాగిన్',
++  'common.login': 'మీ పేరు రాయండి',
+@@ -1009,0 +1014 @@ const te = {
 +  'cat.poultry': 'కోళ్ల పెంపకం / గుడ్లు',
-@@ -1249,0 +1254 @@ const ml = {
+@@ -1088 +1093 @@ const ml = {
+-  'common.login': 'ലോഗിൻ',
++  'common.login': 'നിങ്ങളുടെ പേര് എഴുതുക',
+@@ -1249,0 +1255 @@ const ml = {
 +  'cat.poultry': 'കോഴി വളർത്തൽ / മുട്ട',
-@@ -1489,0 +1495 @@ const kn = {
+@@ -1328 +1334 @@ const kn = {
+-  'common.login': 'ಲಾಗಿನ್',
++  'common.login': 'ನಿಮ್ಮ ಹೆಸರು ಬರೆಯಿರಿ',
+@@ -1489,0 +1496 @@ const kn = {
 +  'cat.poultry': 'ಕೋಳಿ ಸಾಕಣೆ / ಮೊಟ್ಟೆ',
-@@ -1729,0 +1736 @@ const mr = {
+@@ -1568 +1575 @@ const mr = {
+-  'common.login': 'लॉग इन',
++  'common.login': 'तुमचे नाव लिहा',
+@@ -1729,0 +1737 @@ const mr = {
 +  'cat.poultry': 'कोंबडी पालन / अंडी',
-@@ -1969,0 +1977 @@ const bn = {
+@@ -1808 +1816 @@ const bn = {
+-  'common.login': 'লগ ইন',
++  'common.login': 'আপনার নাম লিখুন',
+@@ -1969,0 +1978 @@ const bn = {
 +  'cat.poultry': 'মুরগি পালন / ডিম',

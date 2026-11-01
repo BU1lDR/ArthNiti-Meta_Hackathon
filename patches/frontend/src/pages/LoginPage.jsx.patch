@@ -1,0 +1,21 @@
+diff --git a/frontend/src/pages/LoginPage.jsx b/frontend/src/pages/LoginPage.jsx
+index 3e2d0eb..b70151a 100644
+--- a/frontend/src/pages/LoginPage.jsx
++++ b/frontend/src/pages/LoginPage.jsx
+@@ -7 +6,0 @@ import ShortNotice from '../components/ShortNotice'
+-import { APP_NAME } from '../i18n/brand'
+@@ -40,6 +39,3 @@ function LoginPage() {
+-        {/* The brand goes in as a placeholder rather than being written into each
+-            translation, so the eight versions of this sentence can be translated
+-            without eight spellings of the product name. Languages that need a
+-            case ending attach it to the placeholder with a hyphen, which is the
+-            normal convention for a foreign-script word in Tamil or Telugu. */}
+-        <h1 className="ui-page-title mt-4">{t('login.title', { app: APP_NAME })}</h1>
++        {/* A name entry, not a login: nothing here is checked. The heading is the
++            question step 1 asks, so those words are translated once. */}
++        <h1 className="ui-page-title mt-4">{t('profile.name')}</h1>
+@@ -63 +59 @@ function LoginPage() {
+-            {t('login.submit')} <span aria-hidden="true">→</span>
++            {t('common.continue')} <span aria-hidden="true">→</span>
+@@ -65 +60,0 @@ function LoginPage() {
+-          <p className="mt-3 text-sm text-[var(--color-text-muted)]">{t('login.noPassword')}</p>

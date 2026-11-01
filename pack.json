@@ -135,6 +135,7 @@
     "frontend/src/data/reviewDates.js",
     "frontend/src/i18n/backendStrings.js",
     "frontend/src/i18n/backendText.js",
+    "frontend/src/i18n/brand.js",
     "frontend/src/i18n/resultStrings.js",
     "frontend/src/i18n/schemeStrings.js",
     "frontend/src/i18n/strings.js",
@@ -144,6 +145,7 @@
     "frontend/src/pages/BusinessPage.jsx",
     "frontend/src/pages/FinancePage.jsx",
     "frontend/src/pages/LocationPage.jsx",
+    "frontend/src/pages/LoginPage.jsx",
     "frontend/src/pages/ProfilePage.jsx",
     "frontend/src/pages/ReportPage.jsx",
     "frontend/src/pages/SchemesPage.jsx",
@@ -172,7 +174,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "74bed9bf64b8ab34acb43c57a988da7f91de8898",
-    "tree": "d15f06bc6de618425f92fe05e14a1a2453551ac5"
+    "devCommit": "9c9e4535dafc6bd4a76a83aed54d925e7d6984b6",
+    "tree": "972fecf1db3858e757bbaa3c0bc412353fb16fb0"
   }
 }

@@ -1,0 +1,9 @@
+diff --git a/frontend/src/i18n/brand.js b/frontend/src/i18n/brand.js
+index 0697547..8ef3f73 100644
+--- a/frontend/src/i18n/brand.js
++++ b/frontend/src/i18n/brand.js
+@@ -16,2 +16,2 @@
+-// The only string that still names the product is `login.title`, which carries
+-// it as an {app} placeholder so the sentence around it can still be translated.
++// A string that names the product carries it as an {app} placeholder (`mk.notEndorsed`,
++// `privacy.whoText`, `privacy.whoDemo`) so the sentence around it can still be translated.
