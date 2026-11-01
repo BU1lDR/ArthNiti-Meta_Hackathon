@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..efd7578 100644
+index b8e7eb3..2d98c75 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -157,7 +157,7 @@ index b8e7eb3..efd7578 100644
 +node tools/verify/drive.mjs          # hydrate check + 13 passes, 59 page loads + scheme cards + 13 Simple/Detailed looks + 3 amount-line looks — the main gate; exits 1 on a finding
 +node tools/verify/mobile-audit.mjs   # 360/390/412 px, a 360 px stress case, and 320 px (Malayalam, largest text) on /advisory and /report: 50 page loads
 @@ -479,0 +525,2 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
-+node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 99 page loads, 750 checks; Vite only
++node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 101 page loads, 756 checks; Vite only
 +node tools/verify/offer-ui.mjs       # the loan-offer card on /advisory: 12 scenarios, 74 page loads, 13,400 checks; Vite only, needs 4 case_*.json
 @@ -533 +580 @@ until the 422 check was added.
 -`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
@@ -425,7 +425,7 @@ index b8e7eb3..efd7578 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1108,548 @@ is still slow or unbounded" above).
+@@ -817 +1108,612 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -433,7 +433,7 @@ index b8e7eb3..efd7578 100644
 +```bash
 +node --test tools/verify/talk-lib-test.mjs    # wav.js and talkAnswers.js: 71 tests, no server
 +node --test tools/verify/app-state-test.mjs   # AppContext's applyEdit, applyHelperFill, applyResult, applyPlan and storage: 41 tests, no server
-+node tools/verify/talk-ui.mjs                 # the page in a real Edge: 27 scenarios, 688 checks, about 60 s (--only=S3,S5 runs some)
++node tools/verify/talk-ui.mjs                 # the page in a real Edge: 27 scenarios, 711 checks, about 60 s (--only=S3,S5 runs some)
 +```
 +
 +- `talk-lib-test` also hands a real encoded recording to the backend's own
@@ -463,9 +463,10 @@ index b8e7eb3..efd7578 100644
 +
 +`talk-ui` has no `--broken` flag. Its refuters were run by hand: change one line, run
 +with `--only=`, restore it, compare the bytes. The thirteen for `/talk` (27 Oct 2026)
-+are in the table below; the twenty for the plan card (28 Oct 2026) and the thirty-nine
-+for the questions one at a time and the landing page's buttons (30 Oct 2026) come
-+further down. All are listed in the script's header. Each made the scenario fail:
++are in the table below; the twenty for the plan card (28 Oct 2026) and the forty-three
++for the questions one at a time and the landing page's buttons (30 Oct 2026, the S24
++rows again on 1 Nov 2026, and one more that day) come further down. All are listed in the script's header. Each
++made the scenario fail:
 +
 +| Change | Scenario | Checks that failed |
 +|---|---|---|
@@ -535,12 +536,15 @@ index b8e7eb3..efd7578 100644
 +refuter for the Cancel button, which is only on screen while the request is out; and
 +after a failed request the consent tick stays ticked (observed, not pinned).
 +
-+The thirty-five for the questions one at a time (S23 to S25) and four for the landing
++The thirty-eight for the questions one at a time (S23 to S25) and four for the landing
 +page's buttons (S0, S1) were run the same way on 30 Oct 2026, with a small runner kept
 +outside the repo: it backs the files up byte for byte, makes one change, runs
-+`talk-ui.mjs --only=...`, puts the file back and compares the bytes at the end. All 39
-+exit 1 and none survives. `TalkPage.jsx` unless a file is named; the header of
-+`talk-ui.mjs` has the same list:
++`talk-ui.mjs --only=...`, puts the file back and compares the bytes at the end. The S24
++rows were run again on 1 Nov 2026, after S24 was rewritten (a voice over the network no
++longer starts by itself) and three rows were added; a fourth row followed the same day
++(the voice list announced before the page was listening, below). All 43 exit 1; one more
++change (below the table) exits 0 and cannot be reached. `TalkPage.jsx` unless a file is named;
++the header of `talk-ui.mjs` has the same list:
 +
 +| Change | Scenario | Checks that failed |
 +|---|---|---|
@@ -566,16 +570,20 @@ index b8e7eb3..efd7578 100644
 +| "Yes, that is right" is not disabled while a request is out | S23 | 1 |
 +| "No, I will say it again" is not disabled while a request is out | S23 | 1 |
 +| no navigation after the last answer | S23 | 1 |
-+| the voice starts without the consent tick | S24 | 3 |
-+| the question is always read in English | S24 | 2 |
++| the voice starts without the consent tick | S24 | 1 |
++| the question is always read in English | S24 | 3 |
 +| `agreed()` (Find, Record) no longer stops the voice | S24 | 1 |
 +| the spoken line includes the typed words | S24 | 1 |
-+| `useQuestionVoice.js`: the line before is not stopped when the line changes | S24 | 4 |
++| `useQuestionVoice.js`: the effect returns no cleanup (a new line, an untick and leaving the page no longer stop the voice) | S24 | 2 |
 +| `useQuestionVoice.js`: the speaker button is offered with no voice | S24 | 2 |
 +| `useQuestionVoice.js`: no listener for `voiceschanged` | S24 | 1 |
-+| `useQuestionVoice.js`: leaving the page does not cut the line off | S24 | 1 |
++| `useQuestionVoice.js`: no second read of the list once the listener is in place (the line is `refresh()` right after `addEventListener`) | S24 | 3 |
++| `useQuestionVoice.js`: a voice over the network also starts by itself | S24 | 2 |
++| `useQuestionVoice.js`: no voice starts by itself | S24 | 1 |
++| `useQuestionVoice.js`: the speaker button is offered for a voice on the device only | S24 | 3 |
 +| `speak.js`: delete the `if (!live) return` in `finish()` | S24 | 2 |
 +| `speak.js`: a local voice is no longer preferred to a network voice | S24 | 1 |
++| `speak.js`: a voice over the network is never used for the questions | S24 | 3 |
 +| the question heading gets a `min-width` of 420 px | S25 | 7 |
 +| the "Question n of 12" line at 10 px | S25 | 4 |
 +| the language box 20 px high | S25 | 6 |
@@ -598,9 +606,36 @@ index b8e7eb3..efd7578 100644
 +not for the new address: the path changes a moment before the page is unmounted and the
 +voice stopped.
 +
-+Not covered: S24 uses a fake speech engine, so no voice has been heard, and nothing here
-+asks the real model with `asking` set. Both wait for the owner's rehearsal with a key
-+(`docs/HACKATHON.md` §10.1).
++The run of the S24 changes on 1 Nov 2026 was not clean on the first try either. Three of
++the fourteen were reported as "anchor found 0 times" and ran nothing: the files on disk
++end their lines with CRLF and an anchor over two lines had been written with LF (the
++runner now writes an anchor in the file's own line ends). Run again, two exit 1 (the
++effect without a cleanup, 2 checks; the `if (!live) return`, 2 checks) and one exits 0
++with 60 checks and no failure: deleting `stopRef.current?.()` at the top of `start()` in
++`useQuestionVoice.js`. That is no hole in the gate. The effect returns `stop` in every
++case (since `eec8d21`, 30 Oct 2026) and `toggle` calls `start()` only when nothing is
++playing, so `start()` is never reached with a line playing; a probe that makes that
++line throw when it is reached ran S23 to S25 (229 checks) with no failure and no page
++error. The line stays as a guard and the change is not in the table. The cleanup row in
++the table replaces two older ones (4 and 1 checks); the lines they planted were not kept.
++
++The row for the list announced before the page was listening was written the same day,
++after the Listen button was missing on the owner's Edge. S24's fake engine got a mode that
++returns `[]` from the first `getVoices()` and announces the list in the next microtask,
++before the hook's effect has subscribed, and the gate checks first that no one heard it
++(`announcedTo` is 0), or the case measures nothing. The unchanged hook failed 3 checks
++(the Hindi page's Listen button, the English page's speaker button, and the open question
++never read) with both sanity checks passing; with `refresh()` after `addEventListener`
++S24 has 67 checks and none fails. This row was run once, on the file as it stood before
++the fix (sha256 `f81d0d91…`), not by the byte-compared runner above. The same fault in
++`ReadAloud.jsx` is R7's (below).
++
++Not covered: S24 uses a fake speech engine, so what it proves is the hook's logic. A
++one-off probe of a real Edge (1 Nov 2026, not kept in the repo; `docs/ENGINEERING_HISTORY.md`)
++saw the real engine take the same utterances and report `start` and `end`, which the fake
++cannot show, but nobody has judged how any of it sounds. Nothing here asks the real model with
++`asking` set either; that waits for the owner's rehearsal with a key (`docs/HACKATHON.md`
++§10.1).
 +
 +**The Listen button.** `/analysis` and `/advisory` draw a `ReadAloud` block
 +(`components/ReadAloud.jsx`, `audio/speak.js`): a button that reads out the light's word, its
@@ -609,12 +644,16 @@ index b8e7eb3..efd7578 100644
 +digit in it. It has one Node test file and one browser gate.
 +
 +`speak-lib-test` (31 tests, `node --test`, no browser, no network) holds the pure part. A
-+voice counts only when `localService` is `true` (all 321 of Edge's own voices were network
-+voices on the owner's machine, 29 Oct 2026). The language is compared whole and not by its
++voice counts only when `localService` is `true` (on the owner's machine 5 of Edge's 326
++voices run on the device, all English, on 1 Nov 2026; a reading of 321 voices with none on
++the device on 29 Oct matches the first of the two lists Edge announces at launch). The
++language is compared whole and not by its
 +first letters, and the Indian voice of a language is preferred. `promptVoiceFor`, the voice
 +for the questions `/talk` asks aloud (fixed wording that carries nothing the person said),
 +takes a voice on the device first and a voice over the network only when the device has none
-+of the language, and never a voice of another language. `speakLines` trims, drops
++of the language, and never a voice of another language (`useQuestionVoice` lets only a
++voice on the device start by itself; a voice over the network speaks on a press of the
++question's Listen button). `speakLines` trims, drops
 +blank lines and any line with a digit in any script, speaks each line as its own utterance,
 +cancels only what is already playing, reports its end once after the last line, and lets a
 +cancelled line's late event neither end nor flip the speech that replaced it. The last test
@@ -631,24 +670,28 @@ index b8e7eb3..efd7578 100644
 +cancelled line 500 ms late, as real engines do. What a press speaks is compared with what
 +the page prints (the light's word, its note and the two sentences, a line with a digit left
 +out), not with the app's own variables, so a sentence that is spoken and not shown fails as
-+well as one that is shown and not spoken. 99 page loads and 750 checks in 13 scenarios
++well as one that is shown and not spoken. 101 page loads and 756 checks in 13 scenarios
 +(named R1 to R14; there is no R4): the button appears with the dictionary's words for a
 +local voice in each of the 8 languages on both pages, and nothing is spoken before a press
 +(R1); no button without a local voice (R2); a press speaks the right lines in the local
 +voice, in every language and for the three lights (R3); a second press stops, and a stale
 +cancel is ignored (R5); the speech runs to its end and can start again (R6); voices that
-+arrive late, and one taken away mid-speech (R7); a language switch (R8); leaving the page
++arrive late, a list the browser announced before the page was listening, and a voice taken
++away mid-speech (R7); a language switch (R8); leaving the page
 +(R9); a line with a digit is shown and not spoken (R10); nothing leaves the machine (R11);
 +print (R12); layout at 320 px with the largest text in the dark, in all 8 languages, and at
 +390 px and on a desktop (R13); Simple and Detailed (R14). The script's header lists its 20
 +finding kinds. Port 9381, profile `screenshots/verify/edge-profile-readaloud`, output
 +`screenshots/verify/read-aloud` (`read-aloud-broken` with `--broken`).
 +
-+Twenty defects were planted in the app's own source, one at a time, on 29 and 30 Oct 2026
-+(`frontend/src/audio/speak.js` and `components/ReadAloud.jsx`; a script kept outside the
-+repo made the edit, ran the gate, put the file back and compared its sha256, and the
-+originals were compared with `cmp` at the end). Every one exits 1 and reports the kind it
-+was planted for; the unplanted tree exits 0 with 99 loads and no finding:
++Twenty-one defects were planted in the app's own source, one at a time, the first twenty on
++29 and 30 Oct 2026 and the last on 1 Nov 2026 (`frontend/src/audio/speak.js` and
++`components/ReadAloud.jsx`; a script kept outside the repo made the edit, ran the gate, put
++the file back and compared its sha256, and the originals were compared with `cmp` at the
++end). Every one exits 1 and reports the kind it was planted for; the unplanted tree exits 0
++with 101 loads and no finding. The first twenty were run against the 99-load gate and the
++last against the 101-load gate (the two loads added to R7 for the early announcement); the
++twenty were not run again, so their counts are the old gate's:
 +
 +| Change | Scenarios | Findings |
 +|---|---|---|
@@ -672,29 +715,50 @@ index b8e7eb3..efd7578 100644
 +| `ReadAloud`: a second press restarts and does not stop | R5 | 6: NOT-STOPPED 2, SILENT 3, STALE-EVENT 1 |
 +| `ReadAloud`: the voice is always looked up for English | R2, R3, R8 | 25: WRONG-VOICE 18, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 2, LABEL 1, WRONG-LINES 1 |
 +| `ReadAloud`: a full-size element laid over the button | R3, R5 to R10 | 211: COVERED 70, WRONG-LINES 57, SILENT 27, LABEL 24, ENDED-EARLY 24, NOT-STOPPED 6, FOCUS-LOST 2, STALE-EVENT 1 |
++| `ReadAloud`: no second read of the list once the listener is in place (the line is `refresh()` right after `addEventListener`) | R7 | NO-BUTTON 2 |
 +
 +The kinds beyond the one planted are the same fault seen in other scenarios, not noise: a
 +build with no `localService` test also speaks in the network voice in R3, and an overlay
-+the click never gets through leaves every later step with nothing spoken. The last row was
-+added after the first nineteen, because `COVERED` was the one finding kind no plant reached
-+and so had never been seen to fire; with the overlay in place it fired 70 times.
++the click never gets through leaves every later step with nothing spoken. The twentieth
++row was added after the first nineteen, because `COVERED` was the one finding kind no plant
++reached and so had never been seen to fire; with the overlay in place it fired 70 times.
++The last row was added on 1 Nov 2026, after the real Edge showed that on a reload it
++announces its voice list (`voiceschanged`) about 15 ms after the page's first `getVoices()`
++and that the page's listener went in about 0.4 ms after the announcement: the old gate
++announced late, never early, so a build that missed the announcement passed it. Without
++that line the new R7 loads fail on both pages (the button never comes) and the unplanted
++tree passes them.
 +
 +The fake engine can be made to misbehave too: `--broken=cancel` (`cancel()` does nothing),
 +`--broken=local` (every voice reports itself as on the device) and `--broken=digits` (a digit
 +is added to every spoken line). A bare `--broken` applies all three. It exits 1 when each
 +arm's findings appear and 2 when one is missing (`unrefuted` in `report.json`). Measured on
-+30 Oct 2026 on the finished tree, 99 loads each: `cancel` 6 findings (NOT-STOPPED 6), `local`
-+53 (the same set as the first plant above), `digits` 89 (WRONG-LINES 57, DIGIT-SPOKEN 32),
-+all three 146; every arm exit 1, none unrefuted.
++30 Oct 2026 on the finished tree, 99 loads each, and again on 1 Nov 2026 with 101 loads:
++`cancel` 6 findings (NOT-STOPPED 6), `local` 53 (the same set as the first plant above),
++`digits` 89 (WRONG-LINES 57, DIGIT-SPOKEN 32), all three 146 (some findings are shared, so
++the three do not add up); every arm exit 1, none unrefuted, on both days.
 +
-+The fake is not the real engine. No real `speechSynthesis` has been driven: on the owner's
-+Windows Edge the button does not appear at all, because none of its 321 voices is a local
-+one. How a real local voice sounds, and the order of a real engine's events beyond the late
-+cancel the fake models, are unobserved. `speechSynthesis.getVoices().filter(v => v.localService).map(v => v.lang)`
-+in the page's console says whether a machine has one (`docs/HACKATHON.md` §10.1). The `ra.*`
-+wording is machine-written and unreviewed in the 7 non-English languages: the gate checks
-+that the page shows the dictionary's words, not that the words are right. `read-aloud` is
-+not in CI (it needs Edge); `speak-lib-test` is, as a step that has not run on Linux yet.
++The fake is not the real engine, and the gate does not drive one. A one-off probe outside
++the repo drove the owner's Edge (156.0.4314.50, a throwaway profile, real mouse clicks) on
++1 Nov 2026. Edge lists 326 voices there, 5 on the device and all English (David, Mark, Zira,
++Ravi, Heera); Hindi comes only through two voices over the network. On a reload Edge
++announces the list about 15 ms after the page's first `getVoices()`, and the page's
++listener went in about 0.4 ms after that, so the announcement was missed: with the line
++that reads the list again removed, no button on 30 of 30 reloads of `/talk` in Hindi and on
++20 of 20 of `/analysis` in English; with it, a button on all of them (and on 10 of 10 with
++the processor slowed twentyfold). A cold launch announces the list in two batches and
++heard the second (0 of 3 missed), which is why it showed only sometimes. On the real engine
++the question on `/talk` in English was read once in Ravi after the consent tick, `start`
++then `end` with no error; in Hindi the tick started nothing and a press read it in the
++network voice;
++`/analysis` and `/advisory` read their four lines in Ravi, line by line, and drew no button
++in Hindi. What is unobserved: how any voice sounds, a phone, and any browser or machine but
++that one. `speechSynthesis.getVoices().filter(v => v.localService).map(v => v.lang)` in the
++page's console says whether a machine has a device voice (`docs/HACKATHON.md` §10.1). The
++`ra.*` wording is machine-written and unreviewed in the 7 non-English languages: the gate
++checks that the page shows the dictionary's words, not that the words are right.
++`read-aloud` is not in CI (it needs Edge); `speak-lib-test` is, as a step that has not run
++on Linux yet.
 +
 +**The loan-offer card.** `/advisory` draws an `OfferCheck` card (`components/OfferCheck.jsx`;
 +the sums are in `data/loanOffer.js` and the sentences in `i18n/offerLines.js`): the reader says
@@ -975,11 +1039,11 @@ index b8e7eb3..efd7578 100644
 +fresh clone can re-run. The ten arms can be re-run with `--broken` (one arm, or all ten).
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1662 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1726 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1665 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1729 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1695,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1759,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -989,7 +1053,7 @@ index b8e7eb3..efd7578 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1709,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1773,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -1007,27 +1071,27 @@ index b8e7eb3..efd7578 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1726,2 @@ a script to run.
+@@ -866,2 +1790,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +**Run `refresh-cases.mjs` after any backend change.** Ten scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1758,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1822,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui`, `read-aloud` and `offer-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1774 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1838 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381, `offer-ui` 9383 — plus `assetgen` 9377
-@@ -933 +1793 @@ working one.
+@@ -933 +1857 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
 +Eight scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1801 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1865 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1805,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
-+node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 99 loads
+@@ -944,0 +1869,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
++node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 101 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
 +node tools/verify/read-aloud.mjs   --broken        # all three: 146 findings; exit 2 names an arm whose findings did not appear
@@ -1042,7 +1106,7 @@ index b8e7eb3..efd7578 100644
 +node tools/verify/offer-ui.mjs     --broken=live     # the sentences carried by a copy of the result area: 188 findings (LIVE-REGION 177, CAPTION 11)
 +node tools/verify/offer-ui.mjs     --broken=leak     # "{total}" left on the first line: 264 findings (WRONG-FIGURE 132, LEAK 132)
 +node tools/verify/offer-ui.mjs     --broken          # all ten: 900 findings in 17 kinds; exit 2 names an arm whose own kind did not appear
-@@ -948 +1823,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1887,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s and
