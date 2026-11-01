@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..2221fe4 100644
+index 4ea17de..2faa865 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..2221fe4 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,441 @@ SPEC = [
+@@ -615,3 +624,544 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -466,6 +466,109 @@ index 4ea17de..2221fe4 100644
 +        ["doc.identity", "doc.bank"],
 +        "https://agrimachinery.nic.in/Files/Guidelines/SMAM_2026.pdf",
 +    ),
++    # ---- Rajasthan state schemes ----
++    (
++        "rj_digital",
++        "Assistance for Digitization of Business Processes and Adoption of eCommerce, Rajasthan",
++        # The page also asks for invoices with payment proofs, proof of registration on the platform,
++        # a CA certificate and an undertaking, which have no document code. The PAN card it asks for
++        # is shown as identity proof, and the incorporation papers and proof of regular production as
++        # business details.
++        "state", ["Rajasthan"], [MFG, SVC, FP, HC, TLR],
++        "Micro, small and medium units in production in Rajasthan that want to digitize their work or sell online",
++        "A benefit under the Rajasthan MSME Policy 2024, run through the District Industries and Commerce Centres by the Department of Industries and Commerce. A micro, small or medium enterprise in production in Rajasthan can be reimbursed 75% of the cost of software or equipment that digitizes its business processes, such as POS systems, barcode scanners and inventory software, once, up to Rs.50,000, and 75% of the fee charged by one eCommerce platform, not counting shipping fees, up to Rs.50,000.",
++        "75% of digitization and eCommerce platform costs reimbursed, up to Rs.50,000 each",
++        [
++            "elig.common.udyamNeeded",
++            ("elig.rjdigital.unit", "The applicant must be a micro, small or medium enterprise in production, located in Rajasthan."),
++            ("elig.rjdigital.after", "The software or equipment must have been bought, and the eCommerce platform joined, after the Rajasthan MSME Policy 2024 was notified."),
++            ("elig.rjdigital.once", "Each part can be claimed only once, and only one eCommerce platform is covered for each enterprise."),
++        ],
++        ["doc.udyam", "doc.businessDetails", "doc.bank", "doc.identity"],
++        "https://www.myscheme.gov.in/schemes/adbpae",
++    ),
++    (
++        "rj_imsupy",
++        "Indira Mahila Shakti Udyam Protsahan Yojana (IMSUPY), Rajasthan",
++        # The page repeats Scheduled Castes in its margin money line; it is read as Scheduled Castes
++        # and Scheduled Tribes. Its vehicle line is garbled and is read as an on-road price above
++        # Rs.10 lakh, as on the MLUPY page. It also asks for a mobile number, but the document code
++        # says the number is linked to Aadhaar, which the page does not, so none is shown.
++        # The own contribution of 5% or 10% and the credit guarantee fee are left out of the card.
++        "state", ["Rajasthan"], GENERAL,
++        "Women in Rajasthan, on their own or in self-help groups, who want to start or grow a business",
++        "A scheme of the Government of Rajasthan to help women start and grow their own businesses and become financially independent. An individual woman can get a loan of up to Rs.50 lakh and a self-help group of women up to Rs.1 crore, with margin money of 25% of the sanctioned loan. No collateral security is required for loans up to Rs.10 lakh.",
++        "Loan of up to Rs.50 lakh for an individual woman, with margin money of 25%",
++        [
++            "elig.common.womenOnly",
++            "elig.common.age18",
++            ("elig.rjimsupy.resident", "The applicant must be a permanent resident of Rajasthan."),
++            ("elig.rjimsupy.group", "A women's self-help group, or a cluster or federation of such groups, must be registered with a department of the state government, and a cluster or federation must also be registered under the Cooperative Act."),
++            ("elig.rjimsupy.family", "No family member (husband, wife or minor children) should have benefited from another central or state employment-oriented or grant scheme in the last 5 years, and no family member should be a defaulter of any bank or financial institution."),
++            ("elig.rjimsupy.margin", "Margin money is 25% of the sanctioned loan, or 30% for women from the Scheduled Castes and Scheduled Tribes, widows, abandoned women, victims of violence and women with a disability, and it can be at most Rs.15 lakh."),
++            ("elig.rjimsupy.limits", "Land value is not counted in the project cost. A loan for building a workshop or other building can be at most 20% of the sanctioned project amount, and a loan for trading, which means buying and selling goods at wholesale or retail, can be at most Rs.10 lakh."),
++            ("elig.rjimsupy.activities", "The scheme does not cover making or selling products made from meat, liquor or intoxicants, explosives, transport vehicles with an on-road price above Rs.10 lakh, non-recyclable polythene and harmful plastic products, or anything banned by the Government of India or the State Government."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.address", "doc.bank", "doc.photo"],
++        "https://www.myscheme.gov.in/schemes/imspesy",
++    ),
++    (
++        "rj_mlupy",
++        "Mukhya Mantri Laghu Udyog Protsahan Yojana (MLUPY), Rajasthan",
++        # The page says the Weaver and Artisan Card holders get full interest reimbursement; the card
++        # says all of the interest. It also states the rates without saying per year, and so does the card.
++        # Aadhaar, the photograph and the project report are the three documents the page marks mandatory.
++        "state", ["Rajasthan"], GENERAL,
++        "Individuals and groups in Rajasthan setting up or expanding a manufacturing, service or trading business with a loan",
++        "A scheme of the Commissioner, Industries, Commerce and CSR Department, Government of Rajasthan, that gives interest subsidy on loans to individuals and institutions setting up or expanding manufacturing, service or trade-based enterprises. Loans of up to Rs.10 crore are covered, and up to Rs.1 crore for trade-based enterprises. The interest subsidy is paid for up to 5 years and is 8% on a loan up to Rs.25 lakh, 6% on a loan above Rs.25 lakh and up to Rs.5 crore, and 5% on a loan above Rs.5 crore and up to Rs.10 crore.",
++        "Interest subsidy of 5% to 8% for up to 5 years",
++        [
++            ("elig.rjmlupy.who", "Individuals can apply, and so can institutions such as self-help groups, societies, partnership firms, LLP firms and companies. The enterprise must be set up in Rajasthan, and an individual applicant must be at least 18 years old."),
++            ("elig.rjmlupy.cards", "Weaver Card holders can get all of the interest reimbursed on loans up to Rs.1 lakh, and Handicraft or Artisan Card holders on loans up to Rs.3 lakh."),
++            ("elig.rjmlupy.activities", "The scheme does not cover making or selling meat, liquor or intoxicating products, explosives, transport vehicles with an on-road value above Rs.10 lakh, non-recyclable polythene and harmful plastic products, anything banned by the Government of India or the State Government, agriculture and allied activities (including animal husbandry, poultry farming and fisheries), mining, real estate, educational institutions and coaching, and the activities of non-profit bodies such as NGOs and trusts."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.photo", "doc.education", "doc.caste", "doc.projectReport"],
++        "https://www.myscheme.gov.in/schemes/mmlupy",
++    ),
++    (
++        "rj_market",
++        "Scheme for Assistance to MSMEs for Market Development, Rajasthan",
++        # The page lists the actual travel fare of two persons beside each amount without saying whether
++        # it comes on top of the amount, so the card leaves it out. The brochure, invoices, photographs
++        # of the stall, a CA certificate and an undertaking have no document code; the PAN card the page
++        # asks for is shown as identity proof.
++        "state", ["Rajasthan"], GENERAL,
++        "Micro, small and medium units in Rajasthan that want to show their products at fairs and exhibitions",
++        "A benefit under the Rajasthan MSME Policy 2024, run through the District Industries and Commerce Centres, that helps micro, small and medium enterprises take part in fairs and exhibitions. For each event the assistance is the smaller of 75% of the stall rent and a fixed amount: Rs.37,500 at a fair in Rajasthan (up to 3 events in a financial year), Rs.1,12,500 at a fair elsewhere in India (up to 2 events), and Rs.1,50,000 at a fair abroad (1 event).",
++        "Up to 75% of the stall rent at fairs and exhibitions",
++        [
++            "elig.common.udyamNeeded",
++            ("elig.rjmarket.fair", "The fair or exhibition must be sponsored or approved by the government or a government agency, or approved by an Export Promotion Council."),
++            ("elig.rjmarket.select", "The Department of Industries and Commerce selects the units according to their product profile and the theme of the fair, and gives preference to units that have not used the scheme before."),
++            ("elig.rjmarket.repeat", "A unit that has used the scheme for one kind of event (a fair in Rajasthan, elsewhere in India or abroad) cannot use it again for that kind of event for the next 2 financial years. The application must be made within 6 months of the fair or exhibition."),
++        ],
++        ["doc.udyam", "doc.bank", "doc.identity"],
++        "https://www.myscheme.gov.in/schemes/samsmemd",
++    ),
++    (
++        "rj_beekeeping",
++        "Bee-Keeping Scheme (Horticulture Department), Rajasthan",
++        # The page gives the Centre and State funding split and a reference cost for a colony or box;
++        # the card leaves both out. The Jamabandi is shown as the land record extract, and the Jan
++        # Aadhaar or Bhamashah card the page also asks for has no document code.
++        "state", ["Rajasthan"], [BEE, AGR],
++        "Farmers and bee-keepers in Rajasthan who want to buy bee colonies or bee-keeping boxes",
++        "A scheme of the Horticulture Department, Government of Rajasthan, that promotes bee-keeping among farmers and bee-keepers through a subsidy on buying bee colonies and bee-keeping boxes. The subsidy is 40% of the cost or Rs.800 for each colony or box, whichever is lower, for up to 50 bee colonies and 50 bee-keeping boxes for each beneficiary, and it is released through direct benefit transfer after verification.",
++        "Subsidy of 40% of the cost, up to Rs.800 for each bee colony or box",
++        [
++            ("elig.rjbee.farmer", "The applicant must be a farmer. Preference is given to small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and trained bee-keepers."),
++            ("elig.rjbee.apply", "Applications are made online at the nearest e-Mitra centre, or through the applicant's own e-Mitra account, and applying is free."),
++        ],
++        ["doc.aadhaar", "doc.address", "doc.landRecord", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/beeraj",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -475,12 +578,12 @@ index 4ea17de..2221fe4 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +1066 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +1169 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +1079,2 @@ LOCATION_TYPES = {
+@@ -630,0 +1182,2 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
 +    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
-@@ -634,0 +1085,66 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
+@@ -634,0 +1188,71 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -545,20 +648,25 @@ index 4ea17de..2221fe4 100644
 +    "mszcs": ["elig.common.udyamNeeded"],
 +    "rkvy_vlstl": ["elig.rkvyvlstl.age"],
 +    "smam": ["elig.smam.plan"],
++    "rj_digital": ["elig.common.udyamNeeded", "elig.rjdigital.unit", "elig.rjdigital.after"],
++    "rj_imsupy": ["elig.rjimsupy.resident", "elig.rjimsupy.family", "elig.rjimsupy.activities"],
++    "rj_mlupy": ["elig.rjmlupy.activities"],
++    "rj_market": ["elig.common.udyamNeeded", "elig.rjmarket.fair"],
++    "rj_beekeeping": ["elig.rjbee.farmer"],
 +}
 +
-@@ -652,0 +1169,4 @@ def build():
+@@ -652,0 +1277,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +1184,4 @@ def build():
+@@ -663,0 +1292,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1212 @@ def build():
+@@ -688 +1320 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1215 @@ def build():
+@@ -690,0 +1323 @@ def build():
 +                "check_first_codes": check_first,

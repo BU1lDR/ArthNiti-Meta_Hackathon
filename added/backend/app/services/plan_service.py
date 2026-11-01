@@ -177,6 +177,11 @@ HELP_BY_SCHEME = {
     "mszcs": ("subsidy",),
     "rkvy_vlstl": ("subsidy",),
     "smam": ("subsidy",),
+    "rj_digital": ("subsidy",),
+    "rj_imsupy": ("loan",),
+    "rj_mlupy": ("loan", "subsidy"),
+    "rj_market": ("market", "subsidy"),
+    "rj_beekeeping": ("subsidy",),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

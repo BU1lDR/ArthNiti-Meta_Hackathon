@@ -1,7 +1,7 @@
 diff --git a/backend/tests/test_scheme.py b/backend/tests/test_scheme.py
-index 7442baa..4244f55 100644
+index 7442baa..7da439f 100644
 --- a/backend/tests/test_scheme.py
 +++ b/backend/tests/test_scheme.py
 @@ -28 +28 @@ def test_load_schemes():
 -    assert len(schemes) == 30
-+    assert len(schemes) == 57
++    assert len(schemes) == 62

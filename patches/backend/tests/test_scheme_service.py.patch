@@ -1,5 +1,5 @@
 diff --git a/backend/tests/test_scheme_service.py b/backend/tests/test_scheme_service.py
-index 0cc0a40..cfaef6c 100644
+index 0cc0a40..c0a748b 100644
 --- a/backend/tests/test_scheme_service.py
 +++ b/backend/tests/test_scheme_service.py
 @@ -12 +12 @@ from app.services.scheme_service import (
@@ -7,7 +7,25 @@ index 0cc0a40..cfaef6c 100644
 +# The exact strings the ten buttons on /business send, minus "other" (which
 @@ -21,0 +22 @@ BUTTON_CATEGORIES = [
 +    "poultry",
-@@ -549 +550,8 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
+@@ -468,0 +470,5 @@ def test_every_scheme_in_the_file_is_reachable_from_a_category_button():
++    # The states come from the file itself, so a new state's schemes need no edit here.
++    states = sorted(
++        {"Uttar Pradesh"}
++        | {state for scheme in load_schemes() for state in scheme["states"] if state != "ALL"}
++    )
+@@ -473,10 +479 @@ def test_every_scheme_in_the_file_is_reachable_from_a_category_button():
+-            for state in [
+-                "Uttar Pradesh",
+-                "Assam",
+-                "Kerala",
+-                "Maharashtra",
+-                "Tamil Nadu",
+-                "Karnataka",
+-                "West Bengal",
+-                "Sikkim",
+-            ]:
++            for state in states:
+@@ -549 +546,8 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
 -    LIST_FIELDS = ("eligibility_rules", "documents", "eligibility_codes", "document_codes")
 +    LIST_FIELDS = (
 +        "eligibility_rules",
@@ -17,11 +35,11 @@ index 0cc0a40..cfaef6c 100644
 +        "check_first",
 +        "check_first_codes",
 +    )
-@@ -569,0 +578 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
+@@ -569,0 +574 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
 +    # (check_first is built per response; the file holds only its codes.)
-@@ -573,0 +583 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
+@@ -573,0 +579 @@ def test_a_response_cannot_poison_the_cached_scheme_dataset():
 +        if field in scheme
-@@ -711,0 +722,40 @@ def test_a_multi_state_scheme_is_region_for_every_state_it_names():
+@@ -711,0 +718,40 @@ def test_a_multi_state_scheme_is_region_for_every_state_it_names():
 +
 +
 +# --- the allied work the published guidelines name -------------------------

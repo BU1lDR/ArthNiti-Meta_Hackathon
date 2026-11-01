@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..733ac8b 100644
+index 220d74e..cfeeda0 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..733ac8b 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,55 @@
+@@ -96 +99,72 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -64,8 +64,25 @@ index 220d74e..733ac8b 100644
 +  "elig.rkvyvlstl.premises": "The applicant or group must have its own premises or a rented building with a lease agreement for at least four years.",
 +  "elig.smam.farmers": "The assistance is 50% of the cost of the machine for small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and farmers of the North Eastern and Himalayan States, and 40% for all other farmers, up to a limit set for each machine.",
 +  "elig.smam.chc": "A rural entrepreneur, self-help group, farmer producer organisation, panchayat or farmers' co-operative society can set up a custom hiring centre, with assistance of 40% of the project cost for projects costing up to Rs.250 lakh.",
-+  "elig.smam.plan": "Each State decides, through its own Annual Action Plan, which machines are supported and how many farmers are helped, and when applications exceed the target they are approved by an online lottery."
-@@ -151 +208,28 @@
++  "elig.smam.plan": "Each State decides, through its own Annual Action Plan, which machines are supported and how many farmers are helped, and when applications exceed the target they are approved by an online lottery.",
++  "elig.rjdigital.unit": "The applicant must be a micro, small or medium enterprise in production, located in Rajasthan.",
++  "elig.rjdigital.after": "The software or equipment must have been bought, and the eCommerce platform joined, after the Rajasthan MSME Policy 2024 was notified.",
++  "elig.rjdigital.once": "Each part can be claimed only once, and only one eCommerce platform is covered for each enterprise.",
++  "elig.rjimsupy.resident": "The applicant must be a permanent resident of Rajasthan.",
++  "elig.rjimsupy.group": "A women's self-help group, or a cluster or federation of such groups, must be registered with a department of the state government, and a cluster or federation must also be registered under the Cooperative Act.",
++  "elig.rjimsupy.family": "No family member (husband, wife or minor children) should have benefited from another central or state employment-oriented or grant scheme in the last 5 years, and no family member should be a defaulter of any bank or financial institution.",
++  "elig.rjimsupy.margin": "Margin money is 25% of the sanctioned loan, or 30% for women from the Scheduled Castes and Scheduled Tribes, widows, abandoned women, victims of violence and women with a disability, and it can be at most Rs.15 lakh.",
++  "elig.rjimsupy.limits": "Land value is not counted in the project cost. A loan for building a workshop or other building can be at most 20% of the sanctioned project amount, and a loan for trading, which means buying and selling goods at wholesale or retail, can be at most Rs.10 lakh.",
++  "elig.rjimsupy.activities": "The scheme does not cover making or selling products made from meat, liquor or intoxicants, explosives, transport vehicles with an on-road price above Rs.10 lakh, non-recyclable polythene and harmful plastic products, or anything banned by the Government of India or the State Government.",
++  "elig.rjmlupy.who": "Individuals can apply, and so can institutions such as self-help groups, societies, partnership firms, LLP firms and companies. The enterprise must be set up in Rajasthan, and an individual applicant must be at least 18 years old.",
++  "elig.rjmlupy.cards": "Weaver Card holders can get all of the interest reimbursed on loans up to Rs.1 lakh, and Handicraft or Artisan Card holders on loans up to Rs.3 lakh.",
++  "elig.rjmlupy.activities": "The scheme does not cover making or selling meat, liquor or intoxicating products, explosives, transport vehicles with an on-road value above Rs.10 lakh, non-recyclable polythene and harmful plastic products, anything banned by the Government of India or the State Government, agriculture and allied activities (including animal husbandry, poultry farming and fisheries), mining, real estate, educational institutions and coaching, and the activities of non-profit bodies such as NGOs and trusts.",
++  "elig.rjmarket.fair": "The fair or exhibition must be sponsored or approved by the government or a government agency, or approved by an Export Promotion Council.",
++  "elig.rjmarket.select": "The Department of Industries and Commerce selects the units according to their product profile and the theme of the fair, and gives preference to units that have not used the scheme before.",
++  "elig.rjmarket.repeat": "A unit that has used the scheme for one kind of event (a fair in Rajasthan, elsewhere in India or abroad) cannot use it again for that kind of event for the next 2 financial years. The application must be made within 6 months of the fair or exhibition.",
++  "elig.rjbee.farmer": "The applicant must be a farmer. Preference is given to small and marginal farmers, Scheduled Caste and Scheduled Tribe farmers, women farmers and trained bee-keepers.",
++  "elig.rjbee.apply": "Applications are made online at the nearest e-Mitra centre, or through the applicant's own e-Mitra account, and applying is free."
+@@ -151 +225,33 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -94,4 +111,9 @@ index 220d74e..733ac8b 100644
 +  "acandabc",
 +  "mszcs",
 +  "rkvy_vlstl",
-+  "smam"
++  "smam",
++  "rj_digital",
++  "rj_imsupy",
++  "rj_mlupy",
++  "rj_market",
++  "rj_beekeeping"
