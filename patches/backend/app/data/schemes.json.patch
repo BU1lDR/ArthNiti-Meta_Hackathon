@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..66a8c41 100644
+index a874e48..c794e58 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..66a8c41 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,2519 @@
+@@ -1493,0 +1602,2938 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -2695,3 +2695,422 @@ index a874e48..66a8c41 100644
 +    ],
 +    "description_code": "sdata.gj_vahan.description",
 +    "support_type_code": "sdata.gj_vahan.support"
++  },
++  {
++    "id": "mp_msy",
++    "name": "Mukhya Mantri Swarojgar Yojana, Madhya Pradesh",
++    "description": "A scheme of the Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh, for citizens of the state who want to start self-employment with a bank loan of Rs.50,000 to Rs.10 lakh. It gives margin money assistance of 15% of the project cost, up to Rs.1 lakh (30%, up to Rs.2 lakh, for some groups of applicants), an interest subsidy of 5% a year of the project cost (6% for women), up to Rs.25,000 a year, for up to 7 years, and support with the credit guarantee fee.",
++    "target_segment": "Citizens of Madhya Pradesh who want to start self-employment with a bank loan",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Madhya Pradesh.",
++      "The applicant must generally be between 18 and 45 years of age.",
++      "The applicant must have passed at least class 5.",
++      "The applicant's family must not be an income taxpayer.",
++      "The applicant must not be a defaulter of any bank.",
++      "The applicant must not be getting help under any other self-employment scheme.",
++      "The benefit of this scheme can be taken only once.",
++      "The higher margin money rate of 30%, up to Rs.2 lakh, is for Below Poverty Line, Scheduled Caste, Scheduled Tribe, Other Backward Class (other than the creamy layer), women, minority and disabled applicants.",
++      "Training forms part of the scheme.",
++      "Final sanction rests with the financing bank."
++    ],
++    "support_type": "Margin money of 15% to 30% of the project cost and an interest subsidy of 5% a year",
++    "documents": [
++      "Aadhaar card",
++      "Income certificate",
++      "Address proof",
++      "Recent passport-size photograph",
++      "Educational or training documents where applicable"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.mpmsy.permanent",
++      "elig.common.age18to45",
++      "elig.mpmsy.class5",
++      "elig.mpmsy.taxpayer",
++      "elig.mpmsy.defaulter",
++      "elig.mpmsy.noOther",
++      "elig.mpmsy.once",
++      "elig.mpmsy.margin",
++      "elig.common.trainingIncluded",
++      "elig.common.bankApproval"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.income",
++      "doc.address",
++      "doc.photo",
++      "doc.education"
++    ],
++    "check_first_codes": [
++      "elig.common.age18to45",
++      "elig.mpmsy.class5",
++      "elig.mpmsy.taxpayer",
++      "elig.mpmsy.defaulter",
++      "elig.mpmsy.noOther"
++    ],
++    "description_code": "sdata.mp_msy.description",
++    "support_type_code": "sdata.mp_msy.support"
++  },
++  {
++    "id": "mp_myuy",
++    "name": "Mukhya Mantri Yuva Udyami Yojana, Madhya Pradesh",
++    "description": "A scheme of the Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh, for citizens of the state who want to set up their own industries with a bank loan of Rs.10 lakh to Rs.2 crore. It gives margin money assistance of 15% of the capital cost of the project, up to Rs.12 lakh (20%, up to Rs.18 lakh, for Below Poverty Line applicants), an interest subsidy of 5% a year of the capital cost (6% for women) for up to 7 years, and support with the credit guarantee fee.",
++    "target_segment": "Citizens of Madhya Pradesh who want to set up their own industry with a larger bank loan",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Madhya Pradesh.",
++      "The applicant must be between 18 and 40 years of age.",
++      "The applicant must have passed at least class 10.",
++      "The applicant's family must not be an income taxpayer.",
++      "The applicant must not be a defaulter of any bank.",
++      "The applicant must not be getting help under any other self-employment scheme.",
++      "The benefit of this scheme can be taken only once.",
++      "Final sanction rests with the financing bank."
++    ],
++    "support_type": "Margin money of 15% to 20% of the capital cost and an interest subsidy of 5% a year",
++    "documents": [
++      "Project report",
++      "Domicile or residence certificate for the state",
++      "Educational or training documents where applicable",
++      "Ownership or rent agreement for the work premises",
++      "Quotations for machinery, tools or equipment"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.mpmsy.permanent",
++      "elig.mpmyuy.age",
++      "elig.mpmyuy.class10",
++      "elig.mpmsy.taxpayer",
++      "elig.mpmsy.defaulter",
++      "elig.mpmsy.noOther",
++      "elig.mpmsy.once",
++      "elig.common.bankApproval"
++    ],
++    "document_codes": [
++      "doc.projectReport",
++      "doc.domicile",
++      "doc.education",
++      "doc.landOrRent",
++      "doc.quotation"
++    ],
++    "check_first_codes": [
++      "elig.mpmyuy.age",
++      "elig.mpmyuy.class10",
++      "elig.mpmsy.taxpayer",
++      "elig.mpmsy.defaulter",
++      "elig.mpmsy.noOther"
++    ],
++    "description_code": "sdata.mp_myuy.description",
++    "support_type_code": "sdata.mp_myuy.support"
++  },
++  {
++    "id": "mp_drivers",
++    "name": "Motor Vehicle Driver-Conductor Welfare Scheme (Self-Employment for Drivers and Conductors), Madhya Pradesh",
++    "description": "A scheme of the Transport Department, Government of Madhya Pradesh, that helps registered drivers and conductors of transport vehicles become self-employed by buying their own vehicle with a bank loan, for a project costing Rs.20,000 to Rs.10 lakh. It gives margin money assistance of 15% of the project cost, up to Rs.1 lakh (30%, up to Rs.2 lakh, for some groups of applicants), an interest subsidy of 5% a year, up to Rs.25,000 a year, for up to 7 years, and support with the credit guarantee fee.",
++    "target_segment": "Registered drivers and conductors of transport vehicles in Madhya Pradesh who want to buy their own vehicle with a bank loan",
++    "business_categories": [
++      "services"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Madhya Pradesh.",
++      "The applicant must be a registered transport vehicle driver or conductor.",
++      "The applicant must hold a valid commercial driving or conductor licence issued in Madhya Pradesh.",
++      "The applicant must be registered on the Samagra Portal.",
++      "The applicant must generally be between 18 and 45 years of age.",
++      "The applicant must have passed at least class 5.",
++      "The applicant must not be a defaulter of any nationalised bank, cooperative bank or financial institution.",
++      "The benefit of this scheme can be taken only once.",
++      "The higher margin money rate of 30%, up to Rs.2 lakh, is for Below Poverty Line, women, minority and disabled applicants.",
++      "No collateral has to be pledged.",
++      "Applications are made at the District or Regional Transport Office."
++    ],
++    "support_type": "Margin money of 15% to 30% of the project cost and an interest subsidy of 5% a year",
++    "documents": [
++      "Recent passport-size photograph",
++      "Address proof",
++      "Educational or training documents where applicable",
++      "Caste certificate, where applicable",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.mpmsy.permanent",
++      "elig.mpdrivers.registered",
++      "elig.mpdrivers.licence",
++      "elig.mpdrivers.samagra",
++      "elig.common.age18to45",
++      "elig.mpmsy.class5",
++      "elig.mpdrivers.defaulter",
++      "elig.mpmsy.once",
++      "elig.mpdrivers.margin",
++      "elig.common.noCollateral",
++      "elig.mpdrivers.office"
++    ],
++    "document_codes": [
++      "doc.photo",
++      "doc.address",
++      "doc.education",
++      "doc.caste",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.mpdrivers.registered",
++      "elig.mpdrivers.licence",
++      "elig.mpdrivers.samagra",
++      "elig.mpmsy.class5",
++      "elig.mpdrivers.defaulter"
++    ],
++    "description_code": "sdata.mp_drivers.description",
++    "support_type_code": "sdata.mp_drivers.support"
++  },
++  {
++    "id": "mp_pathvendor",
++    "name": "Chief Minister Rural Path Vendor Loan Scheme, Madhya Pradesh",
++    "description": "A scheme of the Panchayat and Rural Development Department, Government of Madhya Pradesh, that helps poor small traders and street vendors of rural areas (such as those who sell from a cart or a cycle, or offer services like barbering and tool repair) with low-cost equipment or working capital of up to Rs.10,000, as a loan through banks. People starting a new business first take Entrepreneurship Development training at a Rural Self Employment Training Institute (RSETI), and after the training the loan is interest-free.",
++    "target_segment": "Small traders and street vendors from poor families in villages of Madhya Pradesh who need working capital",
++    "business_categories": [
++      "trading",
++      "food processing",
++      "services",
++      "street vending"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "rural"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must be a resident of a rural area.",
++      "The applicant must be a small trader or street vendor from the rural poor class.",
++      "The applicant must not have defaulted on any earlier government loan.",
++      "A person starting a new business must first take Entrepreneurship Development training at a Rural Self Employment Training Institute (RSETI).",
++      "Applications are made online on the Street Vendor Portal.",
++      "Final sanction rests with the financing bank."
++    ],
++    "support_type": "Working capital loan of up to Rs.10,000, interest-free after training",
++    "documents": [
++      "Aadhaar card",
++      "Working mobile number linked to Aadhaar",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.mppath.rural",
++      "elig.mppath.trader",
++      "elig.mppath.nodefault",
++      "elig.mppath.training",
++      "elig.mppath.online",
++      "elig.common.bankApproval"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.mobile",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.mppath.trader",
++      "elig.mppath.nodefault"
++    ],
++    "description_code": "sdata.mp_pathvendor.description",
++    "support_type_code": "sdata.mp_pathvendor.support"
++  },
++  {
++    "id": "mp_goat",
++    "name": "Goat Unit Scheme on Grants and Bank Loans, Madhya Pradesh",
++    "description": "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that improves the economic condition of people by supporting goat rearing. People with goat farming experience can apply for a grant and a bank loan to buy a (10+1) goat unit for milk and meat production. The grant is 40% of the unit cost for general category applicants and 60% for Scheduled Caste and Scheduled Tribe applicants, on a total unit cost of Rs.77,456.",
++    "target_segment": "Landless labourers, marginal farmers and small farmers of Madhya Pradesh with experience in goat farming",
++    "business_categories": [
++      "agriculture",
++      "dairy"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must be a landless labourer, a marginal farmer or a small farmer.",
++      "The applicant must have earlier experience in goat farming.",
++      "Applications are made at the nearest veterinary institution of the Animal Husbandry Department, and the grant is paid to the bank after the bank approves the loan."
++    ],
++    "support_type": "Grant of 40% (60% for SC and ST) of a goat unit costing Rs.77,456",
++    "documents": [
++      "Identity proof",
++      "Address proof",
++      "Caste certificate, where applicable",
++      "Land record extract",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.mpgoat.who",
++      "elig.mpgoat.experience",
++      "elig.mpgoat.apply"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.address",
++      "doc.caste",
++      "doc.landRecord",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.mpgoat.who",
++      "elig.mpgoat.experience"
++    ],
++    "description_code": "sdata.mp_goat.description",
++    "support_type_code": "sdata.mp_goat.support"
++  },
++  {
++    "id": "mp_dairyplus",
++    "name": "Mukhyamantri Dairy Plus Programme (Two Murrah Buffaloes on Subsidy), Madhya Pradesh",
++    "description": "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that raises milk production and supports small and marginal livestock farmers by giving them two pregnant Murrah buffaloes of good breed, each giving about 8 to 10 litres of milk a day, on subsidy. The subsidy is 50% of the cost for general category applicants and 75% for Scheduled Caste and Scheduled Tribe applicants, and the applicant pays the rest. At present it is run only in Sehore, Vidisha and Raisen districts.",
++    "target_segment": "Livestock farmers of Sehore, Vidisha and Raisen districts of Madhya Pradesh who want two Murrah buffaloes on subsidy",
++    "business_categories": [
++      "dairy",
++      "agriculture"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must be a resident of Sehore, Vidisha or Raisen district, where the scheme is currently run.",
++      "The applicant must be a livestock farmer.",
++      "The applicant must have a shed and water for keeping two dairy animals.",
++      "Applications are made at the nearest veterinary office in the district, and are approved in turn by the Gram Sabha, the Janpad Panchayat and the District Panchayat Agricultural Standing Committee."
++    ],
++    "support_type": "Subsidy of 50% (75% for SC and ST) on two Murrah buffaloes",
++    "documents": [
++      "Identity proof",
++      "Address proof",
++      "Caste certificate, where applicable",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.mpdairy.district",
++      "elig.mpdairy.farmer",
++      "elig.mpdairy.shed",
++      "elig.mpdairy.apply"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.address",
++      "doc.caste",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.mpdairy.district",
++      "elig.mpdairy.farmer",
++      "elig.mpdairy.shed"
++    ],
++    "description_code": "sdata.mp_dairyplus.description",
++    "support_type_code": "sdata.mp_dairyplus.support"
++  },
++  {
++    "id": "mp_aitrain",
++    "name": "Training on Artificial Insemination for Self-Employment, Madhya Pradesh",
++    "description": "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that raises milk production through self-employment and better breeds. It gives 3 months of free training in artificial insemination, 1 month of theory and 2 months of practical work, at government-recognised institutes. A trained Gausevak receives an honorarium of Rs.4,000 and equipment worth Rs.18,000. It is meant for unemployed youth, and for Gausevaks already chosen.",
++    "target_segment": "Unemployed young people in Madhya Pradesh who want to work as artificial insemination helpers (Gausevaks) in the dairy sector",
++    "business_categories": [
++      "dairy",
++      "agriculture"
++    ],
++    "states": [
++      "Madhya Pradesh"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be an unemployed youth.",
++      "The applicant must be at least 18 years old.",
++      "The applicant must have passed at least class 10.",
++      "The applicant should have a keen interest in dairy farming and artificial insemination.",
++      "One applicant from each Gram Panchayat is chosen for the first training, with the approval of the Janpad Panchayat.",
++      "No fee is charged for this assistance."
++    ],
++    "support_type": "Free 3-month training, an honorarium of Rs.4,000 and equipment worth Rs.18,000",
++    "documents": [
++      "Recent passport-size photograph",
++      "Aadhaar card",
++      "Domicile or residence certificate for the state",
++      "Caste certificate, where applicable",
++      "Educational or training documents where applicable",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.mpai.unemployed",
++      "elig.common.age18",
++      "elig.mpmyuy.class10",
++      "elig.mpai.interest",
++      "elig.mpai.select",
++      "elig.common.freeOfCost"
++    ],
++    "document_codes": [
++      "doc.photo",
++      "doc.aadhaar",
++      "doc.domicile",
++      "doc.caste",
++      "doc.education",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.mpai.unemployed",
++      "elig.mpmyuy.class10",
++      "elig.mpai.select"
++    ],
++    "description_code": "sdata.mp_aitrain.description",
++    "support_type_code": "sdata.mp_aitrain.support"

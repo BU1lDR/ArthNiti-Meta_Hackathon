@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..793cc94 100644
+index 4ea17de..292f818 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..793cc94 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,905 @@ SPEC = [
+@@ -615,3 +624,1072 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -930,6 +930,173 @@ index 4ea17de..793cc94 100644
 +        ["doc.aadhaar", "doc.income", "doc.address", "doc.bank", "doc.education", "doc.projectReport"],
 +        "https://www.myscheme.gov.in/schemes/vlsy",
 +    ),
++    # ---- Madhya Pradesh state schemes ----
++    (
++        "mp_msy",
++        "Mukhya Mantri Swarojgar Yojana, Madhya Pradesh",
++        # Left out: the extra margin money for liberated nomadic and semi-nomadic tribes (its ceiling is printed as
++        # 'Rs.3,00,000 lakh', which cannot be right), the extra 20% for Bhopal gas victim families, and the repayment
++        # period of 6 months to 7 years. 'Passed in the 5th class' is read as at least class 5. The PAN card and the
++        # plain mobile number it asks for have no document code; the 5th class mark sheet is covered by doc.education.
++        "state", ["Madhya Pradesh"], GENERAL,
++        "Citizens of Madhya Pradesh who want to start self-employment with a bank loan",
++        "A scheme of the Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh, for citizens of the state who want to start self-employment with a bank loan of Rs.50,000 to Rs.10 lakh. It gives margin money assistance of 15% of the project cost, up to Rs.1 lakh (30%, up to Rs.2 lakh, for some groups of applicants), an interest subsidy of 5% a year of the project cost (6% for women), up to Rs.25,000 a year, for up to 7 years, and support with the credit guarantee fee.",
++        "Margin money of 15% to 30% of the project cost and an interest subsidy of 5% a year",
++        [
++            ("elig.mpmsy.permanent", "The applicant must be a permanent resident of Madhya Pradesh."),
++            "elig.common.age18to45",
++            ("elig.mpmsy.class5", "The applicant must have passed at least class 5."),
++            ("elig.mpmsy.taxpayer", "The applicant's family must not be an income taxpayer."),
++            ("elig.mpmsy.defaulter", "The applicant must not be a defaulter of any bank."),
++            ("elig.mpmsy.noOther", "The applicant must not be getting help under any other self-employment scheme."),
++            ("elig.mpmsy.once", "The benefit of this scheme can be taken only once."),
++            ("elig.mpmsy.margin", "The higher margin money rate of 30%, up to Rs.2 lakh, is for Below Poverty Line, Scheduled Caste, Scheduled Tribe, Other Backward Class (other than the creamy layer), women, minority and disabled applicants."),
++            "elig.common.trainingIncluded",
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.income", "doc.address", "doc.photo", "doc.education"],
++        "https://www.myscheme.gov.in/schemes/msy",
++    ),
++    (
++        "mp_myuy",
++        "Mukhya Mantri Yuva Udyami Yojana, Madhya Pradesh",
++        # The page prints the interest help ceiling as 'Maximum Rs 5,00,000 lakh per year', which cannot be right,
++        # so the card gives no ceiling. The page lists no sector, so it is listed under the general categories.
++        # The Madhya Pradesh native certificate is read as the domicile certificate. The date of birth certificate
++        # has no document code; the rent agreement is covered by doc.landOrRent.
++        "state", ["Madhya Pradesh"], GENERAL,
++        "Citizens of Madhya Pradesh who want to set up their own industry with a larger bank loan",
++        "A scheme of the Department of Micro, Small and Medium Enterprises, Government of Madhya Pradesh, for citizens of the state who want to set up their own industries with a bank loan of Rs.10 lakh to Rs.2 crore. It gives margin money assistance of 15% of the capital cost of the project, up to Rs.12 lakh (20%, up to Rs.18 lakh, for Below Poverty Line applicants), an interest subsidy of 5% a year of the capital cost (6% for women) for up to 7 years, and support with the credit guarantee fee.",
++        "Margin money of 15% to 20% of the capital cost and an interest subsidy of 5% a year",
++        [
++            ("elig.mpmsy.permanent", "The applicant must be a permanent resident of Madhya Pradesh."),
++            ("elig.mpmyuy.age", "The applicant must be between 18 and 40 years of age."),
++            ("elig.mpmyuy.class10", "The applicant must have passed at least class 10."),
++            ("elig.mpmsy.taxpayer", "The applicant's family must not be an income taxpayer."),
++            ("elig.mpmsy.defaulter", "The applicant must not be a defaulter of any bank."),
++            ("elig.mpmsy.noOther", "The applicant must not be getting help under any other self-employment scheme."),
++            ("elig.mpmsy.once", "The benefit of this scheme can be taken only once."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.projectReport", "doc.domicile", "doc.education", "doc.landOrRent", "doc.quotation"],
++        "https://www.myscheme.gov.in/schemes/myuy",
++    ),
++    (
++        "mp_drivers",
++        "Motor Vehicle Driver-Conductor Welfare Scheme (Self-Employment for Drivers and Conductors), Madhya Pradesh",
++        # Vehicles are a service business, so the scheme is listed under services. The page's General Category line
++        # has an unclosed bracket that names SC, ST and OBC (excluding the creamy layer), while its 30% line names
++        # only BPL, women, minority and disabled people; the sister scheme msy gives SC, ST and OBC the 30% rate,
++        # but this page does not say so, so the card names only the groups on the 30% line. The page's priority for
++        # permits under the Rural Transport Scheme and its 30 and 15 day processing times are left out (the times
++        # would read as a promise). The Samagra ID, the licence, the age proof and the BPL and disability
++        # certificates it asks for have no document code; the Samagra registration steps are not on the card.
++        "state", ["Madhya Pradesh"], [SVC],
++        "Registered drivers and conductors of transport vehicles in Madhya Pradesh who want to buy their own vehicle with a bank loan",
++        "A scheme of the Transport Department, Government of Madhya Pradesh, that helps registered drivers and conductors of transport vehicles become self-employed by buying their own vehicle with a bank loan, for a project costing Rs.20,000 to Rs.10 lakh. It gives margin money assistance of 15% of the project cost, up to Rs.1 lakh (30%, up to Rs.2 lakh, for some groups of applicants), an interest subsidy of 5% a year, up to Rs.25,000 a year, for up to 7 years, and support with the credit guarantee fee.",
++        "Margin money of 15% to 30% of the project cost and an interest subsidy of 5% a year",
++        [
++            ("elig.mpmsy.permanent", "The applicant must be a permanent resident of Madhya Pradesh."),
++            ("elig.mpdrivers.registered", "The applicant must be a registered transport vehicle driver or conductor."),
++            ("elig.mpdrivers.licence", "The applicant must hold a valid commercial driving or conductor licence issued in Madhya Pradesh."),
++            ("elig.mpdrivers.samagra", "The applicant must be registered on the Samagra Portal."),
++            "elig.common.age18to45",
++            ("elig.mpmsy.class5", "The applicant must have passed at least class 5."),
++            ("elig.mpdrivers.defaulter", "The applicant must not be a defaulter of any nationalised bank, cooperative bank or financial institution."),
++            ("elig.mpmsy.once", "The benefit of this scheme can be taken only once."),
++            ("elig.mpdrivers.margin", "The higher margin money rate of 30%, up to Rs.2 lakh, is for Below Poverty Line, women, minority and disabled applicants."),
++            "elig.common.noCollateral",
++            ("elig.mpdrivers.office", "Applications are made at the District or Regional Transport Office."),
++        ],
++        ["doc.photo", "doc.address", "doc.education", "doc.caste", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/mvdcws-cmsesdc",
++    ),
++    (
++        "mp_pathvendor",
++        "Chief Minister Rural Path Vendor Loan Scheme, Madhya Pradesh",
++        # The same department's Mukhyamantri Gramin Street Vendor Rin Yojana page (mgsvry) repeats this scheme's
++        # text (same portal, same RSETI training), so it is not entered twice; its age limit of 18 to 55 is on that
++        # page only and is not used here. 'Rural poor class' is read as a poor family in the plain text, never as
++        # BPL. The Samagra ID it asks for has no document code.
++        "state", ["Madhya Pradesh"], [TRD, FP, SVC, SV],
++        "Small traders and street vendors from poor families in villages of Madhya Pradesh who need working capital",
++        "A scheme of the Panchayat and Rural Development Department, Government of Madhya Pradesh, that helps poor small traders and street vendors of rural areas (such as those who sell from a cart or a cycle, or offer services like barbering and tool repair) with low-cost equipment or working capital of up to Rs.10,000, as a loan through banks. People starting a new business first take Entrepreneurship Development training at a Rural Self Employment Training Institute (RSETI), and after the training the loan is interest-free.",
++        "Working capital loan of up to Rs.10,000, interest-free after training",
++        [
++            "elig.common.residentState",
++            ("elig.mppath.rural", "The applicant must be a resident of a rural area."),
++            ("elig.mppath.trader", "The applicant must be a small trader or street vendor from the rural poor class."),
++            ("elig.mppath.nodefault", "The applicant must not have defaulted on any earlier government loan."),
++            ("elig.mppath.training", "A person starting a new business must first take Entrepreneurship Development training at a Rural Self Employment Training Institute (RSETI)."),
++            ("elig.mppath.online", "Applications are made online on the Street Vendor Portal."),
++            "elig.common.bankApproval",
++        ],
++        ["doc.aadhaar", "doc.mobile", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/cmrpvls",
++    ),
++    (
++        "mp_goat",
++        "Goat Unit Scheme on Grants and Bank Loans, Madhya Pradesh",
++        # (10+1) is repeated as the page writes it and is not expanded. 'Grant' and 'subsidy' are the page's own two
++        # words for the same 40% and 60%. The experience certificate it asks for has no document code. The goat
++        # unit is listed under agriculture and dairy (milk and meat), never under livestock.
++        "state", ["Madhya Pradesh"], [AGR, DRY],
++        "Landless labourers, marginal farmers and small farmers of Madhya Pradesh with experience in goat farming",
++        "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that improves the economic condition of people by supporting goat rearing. People with goat farming experience can apply for a grant and a bank loan to buy a (10+1) goat unit for milk and meat production. The grant is 40% of the unit cost for general category applicants and 60% for Scheduled Caste and Scheduled Tribe applicants, on a total unit cost of Rs.77,456.",
++        "Grant of 40% (60% for SC and ST) of a goat unit costing Rs.77,456",
++        [
++            "elig.common.residentState",
++            ("elig.mpgoat.who", "The applicant must be a landless labourer, a marginal farmer or a small farmer."),
++            ("elig.mpgoat.experience", "The applicant must have earlier experience in goat farming."),
++            ("elig.mpgoat.apply", "Applications are made at the nearest veterinary institution of the Animal Husbandry Department, and the grant is paid to the bank after the bank approves the loan."),
++        ],
++        ["doc.identity", "doc.address", "doc.caste", "doc.landRecord", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/gusgbl",
++    ),
++    (
++        "mp_dairyplus",
++        "Mukhyamantri Dairy Plus Programme (Two Murrah Buffaloes on Subsidy), Madhya Pradesh",
++        # Only three districts are served. The matcher gates on state and kind of place, never on district, so the
++        # district is an eligibility line and the first check-first line, and the description names the districts.
++        # The page lists General, SC and ST as the categories; that is read as the two rate groups, not as a bar on
++        # OBC applicants, so no category line is entered. The land or livestock ownership proof it asks for has no
++        # document code. The 5 months of pregnancy is left out.
++        "state", ["Madhya Pradesh"], [DRY, AGR],
++        "Livestock farmers of Sehore, Vidisha and Raisen districts of Madhya Pradesh who want two Murrah buffaloes on subsidy",
++        "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that raises milk production and supports small and marginal livestock farmers by giving them two pregnant Murrah buffaloes of good breed, each giving about 8 to 10 litres of milk a day, on subsidy. The subsidy is 50% of the cost for general category applicants and 75% for Scheduled Caste and Scheduled Tribe applicants, and the applicant pays the rest. At present it is run only in Sehore, Vidisha and Raisen districts.",
++        "Subsidy of 50% (75% for SC and ST) on two Murrah buffaloes",
++        [
++            "elig.common.residentState",
++            ("elig.mpdairy.district", "The applicant must be a resident of Sehore, Vidisha or Raisen district, where the scheme is currently run."),
++            ("elig.mpdairy.farmer", "The applicant must be a livestock farmer."),
++            ("elig.mpdairy.shed", "The applicant must have a shed and water for keeping two dairy animals."),
++            ("elig.mpdairy.apply", "Applications are made at the nearest veterinary office in the district, and are approved in turn by the Gram Sabha, the Janpad Panchayat and the District Panchayat Agricultural Standing Committee."),
++        ],
++        ["doc.identity", "doc.address", "doc.caste", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/mmdpp",
++    ),
++    (
++        "mp_aitrain",
++        "Training on Artificial Insemination for Self-Employment, Madhya Pradesh",
++        # Gausevak is kept as the page writes it. The pre-selected Gausevaks the page also names are mentioned in the
++        # description only; its eligibility list is for unemployed youth. The previous-class marksheet is covered by
++        # doc.education. The Samagra ID it asks for has no document code. The page does not say who runs the
++        # training institutes, so none is named.
++        "state", ["Madhya Pradesh"], [DRY, AGR],
++        "Unemployed young people in Madhya Pradesh who want to work as artificial insemination helpers (Gausevaks) in the dairy sector",
++        "A scheme of the Animal Husbandry Department, Government of Madhya Pradesh, that raises milk production through self-employment and better breeds. It gives 3 months of free training in artificial insemination, 1 month of theory and 2 months of practical work, at government-recognised institutes. A trained Gausevak receives an honorarium of Rs.4,000 and equipment worth Rs.18,000. It is meant for unemployed youth, and for Gausevaks already chosen.",
++        "Free 3-month training, an honorarium of Rs.4,000 and equipment worth Rs.18,000",
++        [
++            ("elig.mpai.unemployed", "The applicant must be an unemployed youth."),
++            "elig.common.age18",
++            ("elig.mpmyuy.class10", "The applicant must have passed at least class 10."),
++            ("elig.mpai.interest", "The applicant should have a keen interest in dairy farming and artificial insemination."),
++            ("elig.mpai.select", "One applicant from each Gram Panchayat is chosen for the first training, with the approval of the Janpad Panchayat."),
++            "elig.common.freeOfCost",
++        ],
++        ["doc.photo", "doc.aadhaar", "doc.domicile", "doc.caste", "doc.education", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/toaifse",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -939,14 +1106,15 @@ index 4ea17de..793cc94 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +1530 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +1697 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +1543,4 @@ LOCATION_TYPES = {
+@@ -630,0 +1710,5 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
 +    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
 +    "uk_nulm": ["semi-urban", "urban"],  # elig.common.urbanArea: the page makes a person eligible under the municipal body area
 +    "gj_jgvy": ["rural"],  # elig.gjjgvy.village: the page requires the project to be in a rural area with a population of not more than 20,000
-@@ -634,0 +1551,87 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
++    "mp_pathvendor": ["rural"],  # elig.mppath.rural: the page requires the applicant to be a resident of a rural area
+@@ -634,0 +1719,94 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -1032,20 +1200,27 @@ index 4ea17de..793cc94 100644
 +    "gj_fvp": ["elig.gjfvp.willing"],
 +    "gj_micro": ["elig.gjmicro.caste", "elig.gjmicro.age", "elig.gjmicro.income"],
 +    "gj_vahan": ["elig.gjvahan.unreserved", "elig.gjvahan.age", "elig.gjvahan.licence", "elig.gjvahan.income"],
++    "mp_msy": ["elig.common.age18to45", "elig.mpmsy.class5", "elig.mpmsy.taxpayer", "elig.mpmsy.defaulter", "elig.mpmsy.noOther"],
++    "mp_myuy": ["elig.mpmyuy.age", "elig.mpmyuy.class10", "elig.mpmsy.taxpayer", "elig.mpmsy.defaulter", "elig.mpmsy.noOther"],
++    "mp_drivers": ["elig.mpdrivers.registered", "elig.mpdrivers.licence", "elig.mpdrivers.samagra", "elig.mpmsy.class5", "elig.mpdrivers.defaulter"],
++    "mp_pathvendor": ["elig.mppath.trader", "elig.mppath.nodefault"],
++    "mp_goat": ["elig.mpgoat.who", "elig.mpgoat.experience"],
++    "mp_dairyplus": ["elig.mpdairy.district", "elig.mpdairy.farmer", "elig.mpdairy.shed"],
++    "mp_aitrain": ["elig.mpai.unemployed", "elig.mpmyuy.class10", "elig.mpai.select"],
 +}
 +
-@@ -652,0 +1656,4 @@ def build():
+@@ -652,0 +1831,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +1671,4 @@ def build():
+@@ -663,0 +1846,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +1699 @@ def build():
+@@ -688 +1874 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +1702 @@ def build():
+@@ -690,0 +1877 @@ def build():
 +                "check_first_codes": check_first,
