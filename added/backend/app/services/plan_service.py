@@ -213,6 +213,12 @@ HELP_BY_SCHEME = {
     "br_mmuy_minority": ("subsidy", "loan", "training"),
     "br_mmuy_yuva": ("subsidy", "loan", "training"),
     "br_minority_loan": ("loan",),
+    "hr_green": ("loan", "subsidy"),
+    "hr_laghu": ("loan", "subsidy"),
+    "hr_mahila_kisan": ("loan", "subsidy"),
+    "hr_poultry": ("tools",),
+    "hr_dairy": ("subsidy", "loan", "training"),
+    "hr_trade": ("loan", "subsidy"),
 }
 
 # What each placeholder stands for, as the model is told it. A placeholder is

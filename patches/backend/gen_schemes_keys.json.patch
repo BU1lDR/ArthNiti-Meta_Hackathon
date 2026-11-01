@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes_keys.json b/backend/gen_schemes_keys.json
-index 220d74e..9db74fb 100644
+index 220d74e..c60eb2e 100644
 --- a/backend/gen_schemes_keys.json
 +++ b/backend/gen_schemes_keys.json
 @@ -5,0 +6 @@
@@ -8,7 +8,7 @@ index 220d74e..9db74fb 100644
 +  "elig.pmegp.period": "The 2022 guidelines approve the scheme for the five years 2021-22 to 2025-26. This app has not confirmed that it continues after 31 March 2026.",
 @@ -23,0 +26 @@
 +  "elig.standupindia.period": "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now.",
-@@ -96 +99,189 @@
+@@ -96 +99,212 @@
 -  "elig.common.noCollateral": "No collateral has to be pledged."
 +  "elig.common.noCollateral": "No collateral has to be pledged.",
 +  "elig.cgtmse.scope": "The borrower must be a new or existing micro or small enterprise in manufacturing, services or trade; agriculture and self-help groups are not covered.",
@@ -198,8 +198,31 @@ index 220d74e..9db74fb 100644
 +  "elig.brminloan.income": "The annual income of the applicant's family must be less than Rs.4,00,000.",
 +  "elig.brminloan.guarantor": "Up to Rs.1,00,000 the applicant can give their own guarantee. For more, a guarantor of a kind the scheme lists is needed, such as a government, semi-government or bank employee with at least 5 years of service left.",
 +  "elig.brminloan.use": "The loan must be used only for work that gives employment or an income.",
-+  "elig.brminloan.apply": "Applications are made offline at the District Minority Welfare Office, after the Bihar State Minorities Financial Corporation advertises for applications in daily newspapers. Applicants should ask the office whether the form goes to the district of permanent residence or to the district where the business will start."
-@@ -151 +342,64 @@
++  "elig.brminloan.apply": "Applications are made offline at the District Minority Welfare Office, after the Bihar State Minorities Financial Corporation advertises for applications in daily newspapers. Applicants should ask the office whether the form goes to the district of permanent residence or to the district where the business will start.",
++  "elig.hrsc.permanent": "The applicant must be a permanent resident of Haryana.",
++  "elig.hrsc.age": "The applicant must be between 18 and 45 years of age.",
++  "elig.hrsc.sc": "The applicant must belong to the Scheduled Caste category.",
++  "elig.hrsc.income": "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000.",
++  "elig.hrgreen.activities": "The activity must help reduce the greenhouse effect, such as an e-rickshaw, a compressed air vehicle, solar energy gadgets or a polyhouse.",
++  "elig.hrsaral.online": "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number.",
++  "elig.hrsaral.csc": "The online application can also be made through a Common Service Centre.",
++  "elig.hrsc.bpl": "The applicant's family must be below the poverty line (BPL), with an annual family income not above the BPL limit.",
++  "elig.hrsc.bplList": "The applicant's name must be on the BPL survey list.",
++  "elig.hrlivestock.ageState": "The applicant must be between 18 and 55 years of age and a resident of Haryana.",
++  "elig.hrlivestock.noQual": "No educational qualification or training is required.",
++  "elig.hrlivestock.noEarlier": "An applicant who has earlier received benefits under any scheme of the Department of Animal Husbandry and Dairying for setting up a livestock unit cannot receive them under this scheme.",
++  "elig.hrlivestock.individual": "Groups, firms and organisations cannot apply, as the scheme is for individual beneficiaries.",
++  "elig.hrpoultry.unemployed": "The application steps say that an unemployed person who wants to set up backyard poultry under the scheme can apply online.",
++  "elig.hrlivestock.ppp": "The online application asks for the applicant's Parivar Pehchan Patra (family ID) number, and a one-time password is sent to the family member chosen as the applicant.",
++  "elig.hrdairy.unemployed": "The applicant must be unemployed (even a job in the private sector rules the applicant out) and must give a self-declaration of being unemployed and of following the scheme's other conditions.",
++  "elig.hrdairy.shed": "The applicant must have space or a shed for keeping the animals.",
++  "elig.hrdairy.fodder": "For a unit of 20 animals the applicant must have 2 acres of agricultural land for growing green fodder, and for a unit of 50 animals 5 acres, owned or on a long lease.",
++  "elig.hrdairy.earlier": "An applicant who earlier received benefits under a Departmental scheme for a dairy unit of fewer than 20 animals can still apply for a unit of 20 or 50 animals.",
++  "elig.hrdairy.breeds": "The animals must be buffaloes, crossbred cows, or indigenous cows of the Hariana, Sahiwal, Belahi, Red Sindhi, Tharparkar or Gir breeds only.",
++  "elig.hrdairy.limit": "Interest help applies to a bank loan of up to Rs.15 lakh for a unit of 20 animals and up to Rs.37.50 lakh for a unit of 50 animals, or to the loan the bank gives, whichever is lower.",
++  "elig.hrtrade.income": "The annual family income of the applicant must not be more than Rs.1,80,000, in both rural and urban areas.",
++  "elig.hrtrade.apply": "Applications are made online on the website of the Haryana Scheduled Castes Finance and Development Corporation, under the Bank Tie-up Scheme section: register (the mobile number is verified by a one-time password), fill in the form, give surety (guarantor) details and upload the documents. Field staff check eligibility before the case goes to the bank."
+@@ -151 +365,70 @@
 -  "svanidhi"
 +  "svanidhi",
 +  "cgtmse",
@@ -264,4 +287,10 @@ index 220d74e..9db74fb 100644
 +  "br_mmuy_ebc",
 +  "br_mmuy_minority",
 +  "br_mmuy_yuva",
-+  "br_minority_loan"
++  "br_minority_loan",
++  "hr_green",
++  "hr_laghu",
++  "hr_mahila_kisan",
++  "hr_poultry",
++  "hr_dairy",
++  "hr_trade"

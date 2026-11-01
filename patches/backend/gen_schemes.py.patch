@@ -1,5 +1,5 @@
 diff --git a/backend/gen_schemes.py b/backend/gen_schemes.py
-index 4ea17de..f8c4165 100644
+index 4ea17de..5ac9212 100644
 --- a/backend/gen_schemes.py
 +++ b/backend/gen_schemes.py
 @@ -10 +10 @@ structurally true rather than something a test has to catch.
@@ -30,7 +30,7 @@ index 4ea17de..f8c4165 100644
 +        "central", ["ALL"], [MFG, SVC, TRD, DRY, PLT, FP],
 @@ -200,0 +209 @@ SPEC = [
 +            ("elig.standupindia.period", "The Department of Financial Services gives the scheme period as up to 31 March 2025. A new scheme was announced in the Union Budget 2025-26. This app has not confirmed that loans are being given now."),
-@@ -615,3 +624,1229 @@ SPEC = [
+@@ -615,3 +624,1375 @@ SPEC = [
 -# The three original schemes keep their own verification date. Everything added
 -# on 7 Sept 2026 carries that date, and the UI prints it on every card.
 -EXISTING_VERIFIED = {"pmfme": "2026-09-01", "pmegp": "2026-09-01", "pmmy": "2026-09-01"}
@@ -1254,6 +1254,152 @@ index 4ea17de..f8c4165 100644
 +        ["doc.aadhaar", "doc.photo", "doc.education", "doc.bank", "doc.caste", "doc.income", "doc.domicile"],
 +        "https://www.myscheme.gov.in/schemes/marry",
 +    ),
++    # ---- Haryana state schemes ----
++    (
++        "hr_green",
++        "Green Business Scheme, Haryana",
++        # The page gives the loan limit twice: loans of up to Rs.2.00 lakh in the introduction and a unit cost of up to
++        # Rs.2,00,000 under Benefits; the card says a project of up to Rs.2 lakh. The income note (half of the people
++        # helped up to Rs.1,50,000, the rest up to Rs.3,00,000) is the shared income line. The Parivar Pehchaan Patra is
++        # read as identity proof and the ration card as address proof (the page calls it resident proof).
++        "state", ["Haryana"], GENERAL + [AGR],
++        "Scheduled Caste residents of Haryana, aged 18 to 45, who want to start an income-generating activity that helps reduce the greenhouse effect",
++        "A scheme of the Haryana Scheduled Castes Finance and Development Corporation (HSCFDC), run with the National Safai Karamcharis Finance and Development Corporation (NSFDC). It gives loans of up to Rs.2 lakh to Scheduled Caste residents of Haryana for income-generating activities such as e-rickshaws, compressed air vehicles, solar energy gadgets and polyhouses; activities that help reduce the greenhouse effect qualify. The Corporation provides margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++        "Loan for a project of up to Rs.2 lakh, plus a subsidy of 50% (max Rs.10,000)",
++        [
++            ("elig.hrsc.permanent", "The applicant must be a permanent resident of Haryana."),
++            ("elig.hrsc.age", "The applicant must be between 18 and 45 years of age."),
++            ("elig.hrsc.sc", "The applicant must belong to the Scheduled Caste category."),
++            ("elig.hrsc.income", "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000."),
++            ("elig.hrgreen.activities", "The activity must help reduce the greenhouse effect, such as an e-rickshaw, a compressed air vehicle, solar energy gadgets or a polyhouse."),
++            ("elig.hrsaral.online", "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."),
++            ("elig.hrsaral.csc", "The online application can also be made through a Common Service Centre."),
++        ],
++        ["doc.aadhaar", "doc.identity", "doc.address", "doc.caste"],
++        "https://www.myscheme.gov.in/schemes/gbshr",
++    ),
++    (
++        "hr_laghu",
++        "Laghu Vyavassay Scheme, Haryana",
++        # Same benefits as the Green Business Scheme (unit cost up to Rs.2 lakh, margin money 10%, subsidy 50% up to
++        # Rs.10,000). The page names no Common Service Centre route, so that line is not entered. The ration card is read
++        # as address proof. The password rules, tracking steps and helpline on the page are left out.
++        "state", ["Haryana"], GENERAL,
++        "Scheduled Caste residents of Haryana, aged 18 to 45, who want to start self-employment or an income-generating activity",
++        "An economic empowerment scheme of the Haryana Scheduled Castes Finance and Development Corporation, Government of Haryana. It gives loans to individuals from Scheduled Castes, aged 18 to 45 and permanent residents of Haryana, to improve their economic status through self-employment and income-generating activities. The loan is for projects with a unit cost of up to Rs.2 lakh, with margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++        "Loan for a project of up to Rs.2 lakh, plus a subsidy of 50% (max Rs.10,000)",
++        [
++            ("elig.hrsc.permanent", "The applicant must be a permanent resident of Haryana."),
++            ("elig.hrsc.sc", "The applicant must belong to the Scheduled Caste category."),
++            ("elig.hrsc.age", "The applicant must be between 18 and 45 years of age."),
++            ("elig.hrsc.income", "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000."),
++            ("elig.hrsaral.online", "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."),
++        ],
++        ["doc.aadhaar", "doc.address", "doc.caste"],
++        "https://www.myscheme.gov.in/schemes/lvsh",
++    ),
++    (
++        "hr_mahila_kisan",
++        "Mahila Kisan Yojana, Haryana",
++        # The page says self-employment in the 'Agriculture and Allied Sector' and does not say which allied work, so only
++        # agriculture is claimed as a category. The poverty-line lines come from the eligibility list (family income not
++        # above the BPL limit, name on the BPL survey list); the page also repeats the shared income-ceiling note.
++        # Margin money is not described beyond '10% of the project cost'.
++        "state", ["Haryana"], [AGR],
++        "Women of Scheduled Castes in Haryana, from families below the poverty line, who want self-employment in the agriculture and allied sector",
++        "An economic empowerment scheme of the Scheduled Castes Finance and Development Corporation, Government of Haryana, run with the National Safai Karamcharis Finance and Development Corporation (NSFDC). It gives loans to eligible women from Scheduled Castes to improve their economic status through self-employment in the agriculture and allied sector. The loan is for projects with a unit cost of up to Rs.50,000, with margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++        "Loan for a project of up to Rs.50,000, plus a subsidy of 50% (max Rs.10,000)",
++        [
++            "elig.common.womenOnly",
++            ("elig.hrsc.permanent", "The applicant must be a permanent resident of Haryana."),
++            ("elig.hrsc.sc", "The applicant must belong to the Scheduled Caste category."),
++            ("elig.hrsc.bpl", "The applicant's family must be below the poverty line (BPL), with an annual family income not above the BPL limit."),
++            ("elig.hrsc.bplList", "The applicant's name must be on the BPL survey list."),
++            ("elig.hrsc.income", "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000."),
++            ("elig.hrsaral.online", "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."),
++        ],
++        ["doc.aadhaar", "doc.address", "doc.caste"],
++        "https://www.myscheme.gov.in/schemes/mkyh",
++    ),
++    (
++        "hr_poultry",
++        "Scheme for Establishment of Backyard Poultry Units, Haryana",
++        # The page's step 01 says 'any unemployed person ... can apply online'; it is not in the eligibility list, so it is
++        # worded as what the application steps say. The chicks come from the Government Hatchery at Hisar; only their age
++        # is entered. The processing timings (three and four working days) and the receipt are left out. Categories are
++        # poultry and agriculture. The Parivar Pehchan Patra ID is read as identity proof; 'any other documents' has no code.
++        "state", ["Haryana"], [PLT, AGR],
++        "Poor families, small farmers and landless agricultural labourers in Haryana who want to keep backyard poultry",
++        "A scheme of the Department of Animal Husbandry and Dairying, Government of Haryana, to improve the income and nutrition of poor families, small farmers, landless agricultural labourers and other weaker sections of society. Each beneficiary family is given 50 chicks, 10 days old and reared at the Government Hatchery, with two feeders and two water drinkers, free of cost at their doorstep. Groups, firms and organisations cannot apply.",
++        "50 chicks with two feeders and two water drinkers, free of cost",
++        [
++            ("elig.hrlivestock.ageState", "The applicant must be between 18 and 55 years of age and a resident of Haryana."),
++            ("elig.hrlivestock.noQual", "No educational qualification or training is required."),
++            ("elig.hrlivestock.noEarlier", "An applicant who has earlier received benefits under any scheme of the Department of Animal Husbandry and Dairying for setting up a livestock unit cannot receive them under this scheme."),
++            ("elig.hrlivestock.individual", "Groups, firms and organisations cannot apply, as the scheme is for individual beneficiaries."),
++            ("elig.hrpoultry.unemployed", "The application steps say that an unemployed person who wants to set up backyard poultry under the scheme can apply online."),
++            ("elig.hrlivestock.ppp", "The online application asks for the applicant's Parivar Pehchan Patra (family ID) number, and a one-time password is sent to the family member chosen as the applicant."),
++            ("elig.hrsaral.online", "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."),
++            ("elig.hrsaral.csc", "The online application can also be made through a Common Service Centre."),
++        ],
++        ["doc.identity", "doc.aadhaar"],
++        "https://www.myscheme.gov.in/schemes/sebpu",
++    ),
++    (
++        "hr_dairy",
++        "Scheme for Establishment of Hi-Tech and Mini Dairy Units, Haryana",
++        # Units of 4 and 10 animals get a 25% subsidy on the cost of the animals; units of 20 and 50 get interest
++        # subvention on a bank loan of 75% of the animals' cost, with 25% margin money. The loan limits (Rs.15 lakh and
++        # Rs.37.50 lakh, or the bank's loan if lower) are in elig.hrdairy.limit. Left out: the payment timing (three months
++        # after purchase or loan, after a vet check), insurance, Note 2 on jurisdiction, margin money for the small units
++        # 'as the bank requires', and the processing timelines. PAN and the photo of the shed have no document code.
++        # Milch animals are written as buffaloes or cows in plain English.
++        "state", ["Haryana"], [DRY, AGR],
++        "Unemployed people in Haryana, aged 18 to 55, who want to set up a dairy unit of 4, 10, 20 or 50 milch animals",
++        "A credit-linked scheme of the Department of Animal Husbandry and Dairying, Government of Haryana, to give unemployed people self-employment through dairy units of 4, 10, 20 or 50 milch animals: buffaloes, crossbred cows, or indigenous cows of the Hariana, Sahiwal, Belahi, Red Sindhi, Tharparkar and Gir breeds only. For units of 4 and 10 animals the subsidy is 25% of the cost of the animals. For units of 20 and 50 animals the help is interest subvention on a bank loan of 75% of the cost of the animals. The Department also gives 11 days of dairy training.",
++        "25% subsidy on the animals (units of 4 or 10) or interest subvention on the bank loan (units of 20 or 50)",
++        [
++            ("elig.hrlivestock.ageState", "The applicant must be between 18 and 55 years of age and a resident of Haryana."),
++            ("elig.hrdairy.unemployed", "The applicant must be unemployed (even a job in the private sector rules the applicant out) and must give a self-declaration of being unemployed and of following the scheme's other conditions."),
++            ("elig.hrlivestock.noQual", "No educational qualification or training is required."),
++            ("elig.hrdairy.shed", "The applicant must have space or a shed for keeping the animals."),
++            ("elig.hrdairy.fodder", "For a unit of 20 animals the applicant must have 2 acres of agricultural land for growing green fodder, and for a unit of 50 animals 5 acres, owned or on a long lease."),
++            ("elig.hrlivestock.noEarlier", "An applicant who has earlier received benefits under any scheme of the Department of Animal Husbandry and Dairying for setting up a livestock unit cannot receive them under this scheme."),
++            ("elig.hrdairy.earlier", "An applicant who earlier received benefits under a Departmental scheme for a dairy unit of fewer than 20 animals can still apply for a unit of 20 or 50 animals."),
++            ("elig.hrdairy.breeds", "The animals must be buffaloes, crossbred cows, or indigenous cows of the Hariana, Sahiwal, Belahi, Red Sindhi, Tharparkar or Gir breeds only."),
++            ("elig.hrdairy.limit", "Interest help applies to a bank loan of up to Rs.15 lakh for a unit of 20 animals and up to Rs.37.50 lakh for a unit of 50 animals, or to the loan the bank gives, whichever is lower."),
++            ("elig.hrlivestock.individual", "Groups, firms and organisations cannot apply, as the scheme is for individual beneficiaries."),
++            ("elig.hrlivestock.ppp", "The online application asks for the applicant's Parivar Pehchan Patra (family ID) number, and a one-time password is sent to the family member chosen as the applicant."),
++            ("elig.hrsaral.online", "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."),
++            ("elig.hrsaral.csc", "The online application can also be made through a Common Service Centre."),
++        ],
++        ["doc.identity", "doc.aadhaar", "doc.bank"],
++        "https://www.myscheme.gov.in/schemes/sehtmdu",
++    ),
++    (
++        "hr_trade",
++        "Trade and Business Sector Scheme (HSFDC), Haryana",
++        # The two poverty-line eligibility bullets ('belong to a BPL family' and 'income not above the BPL limit') are one
++        # line. The repayment table (4% interest and 4% penal interest up to Rs.15,000, penalty after 180 days, recovery
++        # after 360 days, instalments after 180 days) is left out; 'Offline' is listed on the page with no steps. The 4% on
++        # margin money is as the page gives it. Surety details come from the login steps. The BPL card has no document code
++        # and the voter card or valid ID is read as identity proof.
++        "state", ["Haryana"], GENERAL,
++        "Scheduled Caste people from families below the poverty line in Haryana who want to start a small shop or service",
++        "A scheme of the Haryana Scheduled Castes Finance and Development Corporation (HSFDC), run together with banks under its bank tie-up schemes. It gives loans and benefits to individuals from families below the poverty line, in rural and urban areas, for self-employment such as a stationery, kiryana, cloth, tea, auto repair, kabadi or fruit shop, a beauty parlour, a tent house or a band party. For a project costing up to Rs.1,50,000, the Corporation gives a subsidy of 50% of the cost (max Rs.10,000) and margin money of 10% at 4% interest a year, and the bank gives the balance as a loan.",
++        "Subsidy of 50% (max Rs.10,000) and margin money of 10%, with a bank loan for the rest",
++        [
++            "elig.common.residentState",
++            ("elig.hrsc.sc", "The applicant must belong to the Scheduled Caste category."),
++            ("elig.hrsc.bpl", "The applicant's family must be below the poverty line (BPL), with an annual family income not above the BPL limit."),
++            ("elig.hrtrade.income", "The annual family income of the applicant must not be more than Rs.1,80,000, in both rural and urban areas."),
++            ("elig.hrsc.bplList", "The applicant's name must be on the BPL survey list."),
++            "elig.common.bankApproval",
++            ("elig.hrtrade.apply", "Applications are made online on the website of the Haryana Scheduled Castes Finance and Development Corporation, under the Bank Tie-up Scheme section: register (the mobile number is verified by a one-time password), fill in the form, give surety (guarantor) details and upload the documents. Field staff check eligibility before the case goes to the bank."),
++        ],
++        ["doc.aadhaar", "doc.photo", "doc.address", "doc.identity", "doc.caste", "doc.income"],
++        "https://www.myscheme.gov.in/schemes/tbsshsfdc",
++    ),
 +]
 +READ_31_OCT = {spec[0] for spec in SPEC_31_OCT}
 +SPEC = SPEC + SPEC_31_OCT
@@ -1263,15 +1409,15 @@ index 4ea17de..f8c4165 100644
 +# official pages read again on 28 Oct 2026 and carry that date instead.
 +# The schemes in SPEC_31_OCT carry 31 Oct 2026, the day their pages were read.
 +EXISTING_VERIFIED = dict.fromkeys(("pmfme", "pmegp", "pmmy", "standupindia"), "2026-10-28")
-@@ -618,0 +1854 @@ LAST_VERIFIED = "2026-09-07"
+@@ -618,0 +2000 @@ LAST_VERIFIED = "2026-09-07"
 +READ_ON = "2026-10-31"
-@@ -630,0 +1867,5 @@ LOCATION_TYPES = {
+@@ -630,0 +2013,5 @@ LOCATION_TYPES = {
 +    "day_nrlm": ["rural"],  # elig.common.ruralArea
 +    "rkvy_vlstl": ["rural"],  # The lab is a village level lab, meant for rural youth and village-level entrepreneurs.
 +    "uk_nulm": ["semi-urban", "urban"],  # elig.common.urbanArea: the page makes a person eligible under the municipal body area
 +    "gj_jgvy": ["rural"],  # elig.gjjgvy.village: the page requires the project to be in a rural area with a population of not more than 20,000
 +    "mp_pathvendor": ["rural"],  # elig.mppath.rural: the page requires the applicant to be a resident of a rural area
-@@ -634,0 +1876,101 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
+@@ -634,0 +2022,107 @@ KNOWN_LOCATION_TYPES = {"rural", "semi-urban", "urban"}
 +# The eligibility lines a reader should check before the trip, by scheme id. The app
 +# asks for twelve answers and none is an age, a sex, a community, a trade, a
 +# membership or a registration, so it cannot say whether a scheme fits anyone. A
@@ -1371,20 +1517,26 @@ index 4ea17de..f8c4165 100644
 +    "br_mmuy_minority": ["elig.brmmuy.permanent", "elig.brmmuy.minority", "elig.brmmuy.education", "elig.brmmuy.age", "elig.brmmuy.firm"],
 +    "br_mmuy_yuva": ["elig.brmmuy.permanent", "elig.brmmuy.men", "elig.brmmuy.education", "elig.brmmuy.age", "elig.brmmuy.firm"],
 +    "br_minority_loan": ["elig.brminloan.community", "elig.brmmuy.age", "elig.brminloan.govjob", "elig.brminloan.income"],
++    "hr_green": ["elig.hrsc.permanent", "elig.hrsc.sc", "elig.hrsc.age", "elig.hrsc.income"],
++    "hr_laghu": ["elig.hrsc.permanent", "elig.hrsc.sc", "elig.hrsc.age", "elig.hrsc.income"],
++    "hr_mahila_kisan": ["elig.common.womenOnly", "elig.hrsc.permanent", "elig.hrsc.sc", "elig.hrsc.bpl", "elig.hrsc.bplList"],
++    "hr_poultry": ["elig.hrpoultry.unemployed", "elig.hrlivestock.ageState", "elig.hrlivestock.noEarlier", "elig.hrlivestock.individual"],
++    "hr_dairy": ["elig.hrdairy.unemployed", "elig.hrlivestock.ageState", "elig.hrdairy.shed", "elig.hrdairy.fodder", "elig.hrlivestock.noEarlier"],
++    "hr_trade": ["elig.hrsc.sc", "elig.hrsc.bpl", "elig.hrtrade.income", "elig.hrsc.bplList"],
 +}
 +
-@@ -652,0 +1995,4 @@ def build():
+@@ -652,0 +2147,4 @@ def build():
 +    for sid in CHECK_FIRST:
 +        if sid not in ids:
 +            raise SystemExit("CHECK_FIRST names an unknown scheme id: " + sid)
 +
-@@ -663,0 +2010,4 @@ def build():
+@@ -663,0 +2162,4 @@ def build():
 +        check_first = list(CHECK_FIRST.get(sid, []))
 +        if len(set(check_first)) != len(check_first) or not set(check_first) <= set(codes):
 +            raise SystemExit("CHECK_FIRST for %s must name each of its own eligibility codes once" % sid)
 +
-@@ -688 +2038 @@ def build():
+@@ -688 +2190 @@ def build():
 -                "last_verified": EXISTING_VERIFIED.get(sid, LAST_VERIFIED),
 +                "last_verified": EXISTING_VERIFIED.get(sid, READ_ON if sid in READ_31_OCT else LAST_VERIFIED),
-@@ -690,0 +2041 @@ def build():
+@@ -690,0 +2193 @@ def build():
 +                "check_first_codes": check_first,

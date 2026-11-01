@@ -1,5 +1,5 @@
 diff --git a/backend/app/data/schemes.json b/backend/app/data/schemes.json
-index a874e48..608a1d1 100644
+index a874e48..74291c5 100644
 --- a/backend/app/data/schemes.json
 +++ b/backend/app/data/schemes.json
 @@ -22 +22,2 @@
@@ -175,7 +175,7 @@ index a874e48..608a1d1 100644
 +    "check_first_codes": [
 +      "elig.svanidhi.who"
 +    ],
-@@ -1493,0 +1602,3369 @@
+@@ -1493,0 +1602,3729 @@
 +  },
 +  {
 +    "id": "cgtmse",
@@ -3545,3 +3545,363 @@ index a874e48..608a1d1 100644
 +    ],
 +    "description_code": "sdata.br_minority_loan.description",
 +    "support_type_code": "sdata.br_minority_loan.support"
++  },
++  {
++    "id": "hr_green",
++    "name": "Green Business Scheme, Haryana",
++    "description": "A scheme of the Haryana Scheduled Castes Finance and Development Corporation (HSCFDC), run with the National Safai Karamcharis Finance and Development Corporation (NSFDC). It gives loans of up to Rs.2 lakh to Scheduled Caste residents of Haryana for income-generating activities such as e-rickshaws, compressed air vehicles, solar energy gadgets and polyhouses; activities that help reduce the greenhouse effect qualify. The Corporation provides margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++    "target_segment": "Scheduled Caste residents of Haryana, aged 18 to 45, who want to start an income-generating activity that helps reduce the greenhouse effect",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring",
++      "agriculture"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Haryana.",
++      "The applicant must be between 18 and 45 years of age.",
++      "The applicant must belong to the Scheduled Caste category.",
++      "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000.",
++      "The activity must help reduce the greenhouse effect, such as an e-rickshaw, a compressed air vehicle, solar energy gadgets or a polyhouse.",
++      "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number.",
++      "The online application can also be made through a Common Service Centre."
++    ],
++    "support_type": "Loan for a project of up to Rs.2 lakh, plus a subsidy of 50% (max Rs.10,000)",
++    "documents": [
++      "Aadhaar card",
++      "Identity proof",
++      "Address proof",
++      "Caste certificate, where applicable"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.hrsc.permanent",
++      "elig.hrsc.age",
++      "elig.hrsc.sc",
++      "elig.hrsc.income",
++      "elig.hrgreen.activities",
++      "elig.hrsaral.online",
++      "elig.hrsaral.csc"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.identity",
++      "doc.address",
++      "doc.caste"
++    ],
++    "check_first_codes": [
++      "elig.hrsc.permanent",
++      "elig.hrsc.sc",
++      "elig.hrsc.age",
++      "elig.hrsc.income"
++    ],
++    "description_code": "sdata.hr_green.description",
++    "support_type_code": "sdata.hr_green.support"
++  },
++  {
++    "id": "hr_laghu",
++    "name": "Laghu Vyavassay Scheme, Haryana",
++    "description": "An economic empowerment scheme of the Haryana Scheduled Castes Finance and Development Corporation, Government of Haryana. It gives loans to individuals from Scheduled Castes, aged 18 to 45 and permanent residents of Haryana, to improve their economic status through self-employment and income-generating activities. The loan is for projects with a unit cost of up to Rs.2 lakh, with margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++    "target_segment": "Scheduled Caste residents of Haryana, aged 18 to 45, who want to start self-employment or an income-generating activity",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a permanent resident of Haryana.",
++      "The applicant must belong to the Scheduled Caste category.",
++      "The applicant must be between 18 and 45 years of age.",
++      "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000.",
++      "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."
++    ],
++    "support_type": "Loan for a project of up to Rs.2 lakh, plus a subsidy of 50% (max Rs.10,000)",
++    "documents": [
++      "Aadhaar card",
++      "Address proof",
++      "Caste certificate, where applicable"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.hrsc.permanent",
++      "elig.hrsc.sc",
++      "elig.hrsc.age",
++      "elig.hrsc.income",
++      "elig.hrsaral.online"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.address",
++      "doc.caste"
++    ],
++    "check_first_codes": [
++      "elig.hrsc.permanent",
++      "elig.hrsc.sc",
++      "elig.hrsc.age",
++      "elig.hrsc.income"
++    ],
++    "description_code": "sdata.hr_laghu.description",
++    "support_type_code": "sdata.hr_laghu.support"
++  },
++  {
++    "id": "hr_mahila_kisan",
++    "name": "Mahila Kisan Yojana, Haryana",
++    "description": "An economic empowerment scheme of the Scheduled Castes Finance and Development Corporation, Government of Haryana, run with the National Safai Karamcharis Finance and Development Corporation (NSFDC). It gives loans to eligible women from Scheduled Castes to improve their economic status through self-employment in the agriculture and allied sector. The loan is for projects with a unit cost of up to Rs.50,000, with margin money of 10% of the project cost and a subsidy of 50% of the project cost, up to Rs.10,000.",
++    "target_segment": "Women of Scheduled Castes in Haryana, from families below the poverty line, who want self-employment in the agriculture and allied sector",
++    "business_categories": [
++      "agriculture"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "Only women applicants are eligible.",
++      "The applicant must be a permanent resident of Haryana.",
++      "The applicant must belong to the Scheduled Caste category.",
++      "The applicant's family must be below the poverty line (BPL), with an annual family income not above the BPL limit.",
++      "The applicant's name must be on the BPL survey list.",
++      "The annual income of the applicant's family must be within the scheme's ceiling: at least half of the people helped must have a family income of up to Rs.1,50,000, and the rest up to Rs.3,00,000.",
++      "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number."
++    ],
++    "support_type": "Loan for a project of up to Rs.50,000, plus a subsidy of 50% (max Rs.10,000)",
++    "documents": [
++      "Aadhaar card",
++      "Address proof",
++      "Caste certificate, where applicable"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.womenOnly",
++      "elig.hrsc.permanent",
++      "elig.hrsc.sc",
++      "elig.hrsc.bpl",
++      "elig.hrsc.bplList",
++      "elig.hrsc.income",
++      "elig.hrsaral.online"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.address",
++      "doc.caste"
++    ],
++    "check_first_codes": [
++      "elig.common.womenOnly",
++      "elig.hrsc.permanent",
++      "elig.hrsc.sc",
++      "elig.hrsc.bpl",
++      "elig.hrsc.bplList"
++    ],
++    "description_code": "sdata.hr_mahila_kisan.description",
++    "support_type_code": "sdata.hr_mahila_kisan.support"
++  },
++  {
++    "id": "hr_poultry",
++    "name": "Scheme for Establishment of Backyard Poultry Units, Haryana",
++    "description": "A scheme of the Department of Animal Husbandry and Dairying, Government of Haryana, to improve the income and nutrition of poor families, small farmers, landless agricultural labourers and other weaker sections of society. Each beneficiary family is given 50 chicks, 10 days old and reared at the Government Hatchery, with two feeders and two water drinkers, free of cost at their doorstep. Groups, firms and organisations cannot apply.",
++    "target_segment": "Poor families, small farmers and landless agricultural labourers in Haryana who want to keep backyard poultry",
++    "business_categories": [
++      "poultry",
++      "agriculture"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be between 18 and 55 years of age and a resident of Haryana.",
++      "No educational qualification or training is required.",
++      "An applicant who has earlier received benefits under any scheme of the Department of Animal Husbandry and Dairying for setting up a livestock unit cannot receive them under this scheme.",
++      "Groups, firms and organisations cannot apply, as the scheme is for individual beneficiaries.",
++      "The application steps say that an unemployed person who wants to set up backyard poultry under the scheme can apply online.",
++      "The online application asks for the applicant's Parivar Pehchan Patra (family ID) number, and a one-time password is sent to the family member chosen as the applicant.",
++      "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number.",
++      "The online application can also be made through a Common Service Centre."
++    ],
++    "support_type": "50 chicks with two feeders and two water drinkers, free of cost",
++    "documents": [
++      "Identity proof",
++      "Aadhaar card"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.hrlivestock.ageState",
++      "elig.hrlivestock.noQual",
++      "elig.hrlivestock.noEarlier",
++      "elig.hrlivestock.individual",
++      "elig.hrpoultry.unemployed",
++      "elig.hrlivestock.ppp",
++      "elig.hrsaral.online",
++      "elig.hrsaral.csc"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.aadhaar"
++    ],
++    "check_first_codes": [
++      "elig.hrpoultry.unemployed",
++      "elig.hrlivestock.ageState",
++      "elig.hrlivestock.noEarlier",
++      "elig.hrlivestock.individual"
++    ],
++    "description_code": "sdata.hr_poultry.description",
++    "support_type_code": "sdata.hr_poultry.support"
++  },
++  {
++    "id": "hr_dairy",
++    "name": "Scheme for Establishment of Hi-Tech and Mini Dairy Units, Haryana",
++    "description": "A credit-linked scheme of the Department of Animal Husbandry and Dairying, Government of Haryana, to give unemployed people self-employment through dairy units of 4, 10, 20 or 50 milch animals: buffaloes, crossbred cows, or indigenous cows of the Hariana, Sahiwal, Belahi, Red Sindhi, Tharparkar and Gir breeds only. For units of 4 and 10 animals the subsidy is 25% of the cost of the animals. For units of 20 and 50 animals the help is interest subvention on a bank loan of 75% of the cost of the animals. The Department also gives 11 days of dairy training.",
++    "target_segment": "Unemployed people in Haryana, aged 18 to 55, who want to set up a dairy unit of 4, 10, 20 or 50 milch animals",
++    "business_categories": [
++      "dairy",
++      "agriculture"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be between 18 and 55 years of age and a resident of Haryana.",
++      "The applicant must be unemployed (even a job in the private sector rules the applicant out) and must give a self-declaration of being unemployed and of following the scheme's other conditions.",
++      "No educational qualification or training is required.",
++      "The applicant must have space or a shed for keeping the animals.",
++      "For a unit of 20 animals the applicant must have 2 acres of agricultural land for growing green fodder, and for a unit of 50 animals 5 acres, owned or on a long lease.",
++      "An applicant who has earlier received benefits under any scheme of the Department of Animal Husbandry and Dairying for setting up a livestock unit cannot receive them under this scheme.",
++      "An applicant who earlier received benefits under a Departmental scheme for a dairy unit of fewer than 20 animals can still apply for a unit of 20 or 50 animals.",
++      "The animals must be buffaloes, crossbred cows, or indigenous cows of the Hariana, Sahiwal, Belahi, Red Sindhi, Tharparkar or Gir breeds only.",
++      "Interest help applies to a bank loan of up to Rs.15 lakh for a unit of 20 animals and up to Rs.37.50 lakh for a unit of 50 animals, or to the loan the bank gives, whichever is lower.",
++      "Groups, firms and organisations cannot apply, as the scheme is for individual beneficiaries.",
++      "The online application asks for the applicant's Parivar Pehchan Patra (family ID) number, and a one-time password is sent to the family member chosen as the applicant.",
++      "Applications are made online on the Antyodaya-SARAL portal of the Government of Haryana, after registering with an email ID and a mobile number.",
++      "The online application can also be made through a Common Service Centre."
++    ],
++    "support_type": "25% subsidy on the animals (units of 4 or 10) or interest subvention on the bank loan (units of 20 or 50)",
++    "documents": [
++      "Identity proof",
++      "Aadhaar card",
++      "Bank-related documents"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.hrlivestock.ageState",
++      "elig.hrdairy.unemployed",
++      "elig.hrlivestock.noQual",
++      "elig.hrdairy.shed",
++      "elig.hrdairy.fodder",
++      "elig.hrlivestock.noEarlier",
++      "elig.hrdairy.earlier",
++      "elig.hrdairy.breeds",
++      "elig.hrdairy.limit",
++      "elig.hrlivestock.individual",
++      "elig.hrlivestock.ppp",
++      "elig.hrsaral.online",
++      "elig.hrsaral.csc"
++    ],
++    "document_codes": [
++      "doc.identity",
++      "doc.aadhaar",
++      "doc.bank"
++    ],
++    "check_first_codes": [
++      "elig.hrdairy.unemployed",
++      "elig.hrlivestock.ageState",
++      "elig.hrdairy.shed",
++      "elig.hrdairy.fodder",
++      "elig.hrlivestock.noEarlier"
++    ],
++    "description_code": "sdata.hr_dairy.description",
++    "support_type_code": "sdata.hr_dairy.support"
++  },
++  {
++    "id": "hr_trade",
++    "name": "Trade and Business Sector Scheme (HSFDC), Haryana",
++    "description": "A scheme of the Haryana Scheduled Castes Finance and Development Corporation (HSFDC), run together with banks under its bank tie-up schemes. It gives loans and benefits to individuals from families below the poverty line, in rural and urban areas, for self-employment such as a stationery, kiryana, cloth, tea, auto repair, kabadi or fruit shop, a beauty parlour, a tent house or a band party. For a project costing up to Rs.1,50,000, the Corporation gives a subsidy of 50% of the cost (max Rs.10,000) and margin money of 10% at 4% interest a year, and the bank gives the balance as a loan.",
++    "target_segment": "Scheduled Caste people from families below the poverty line in Haryana who want to start a small shop or service",
++    "business_categories": [
++      "manufacturing",
++      "services",
++      "trading",
++      "food processing",
++      "handicrafts",
++      "tailoring"
++    ],
++    "states": [
++      "Haryana"
++    ],
++    "location_types": [
++      "ALL"
++    ],
++    "level": "state",
++    "eligibility_rules": [
++      "The applicant must be a resident of the state.",
++      "The applicant must belong to the Scheduled Caste category.",
++      "The applicant's family must be below the poverty line (BPL), with an annual family income not above the BPL limit.",
++      "The annual family income of the applicant must not be more than Rs.1,80,000, in both rural and urban areas.",
++      "The applicant's name must be on the BPL survey list.",
++      "Final sanction rests with the financing bank.",
++      "Applications are made online on the website of the Haryana Scheduled Castes Finance and Development Corporation, under the Bank Tie-up Scheme section: register (the mobile number is verified by a one-time password), fill in the form, give surety (guarantor) details and upload the documents. Field staff check eligibility before the case goes to the bank."
++    ],
++    "support_type": "Subsidy of 50% (max Rs.10,000) and margin money of 10%, with a bank loan for the rest",
++    "documents": [
++      "Aadhaar card",
++      "Recent passport-size photograph",
++      "Address proof",
++      "Identity proof",
++      "Caste certificate, where applicable",
++      "Income certificate"
++    ],
++    "last_verified": "2026-10-31",
++    "eligibility_codes": [
++      "elig.common.residentState",
++      "elig.hrsc.sc",
++      "elig.hrsc.bpl",
++      "elig.hrtrade.income",
++      "elig.hrsc.bplList",
++      "elig.common.bankApproval",
++      "elig.hrtrade.apply"
++    ],
++    "document_codes": [
++      "doc.aadhaar",
++      "doc.photo",
++      "doc.address",
++      "doc.identity",
++      "doc.caste",
++      "doc.income"
++    ],
++    "check_first_codes": [
++      "elig.hrsc.sc",
++      "elig.hrsc.bpl",
++      "elig.hrtrade.income",
++      "elig.hrsc.bplList"
++    ],
++    "description_code": "sdata.hr_trade.description",
++    "support_type_code": "sdata.hr_trade.support"
