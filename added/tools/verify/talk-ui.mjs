@@ -1,5 +1,6 @@
 // The /talk gate: the "say or type your answers" page, which asks the form's questions
-// one at a time, driven in a real Edge. The Node tests (talk-lib-test, app-state-test, the pytest suite) cover the
+// one at a time, and the voice home (S26-S30) that shares its code, driven in a real Edge.
+// The Node tests (talk-lib-test, app-state-test, the pytest suite) cover the
 // parts that need no browser; this covers what only a browser has: the permission
 // question, the microphone itself, focus, the React state that locks the boxes, and
 // the way AppContext and the form pages show what the helper filled in.
@@ -19,8 +20,8 @@
 //
 //   S0   helper off: no link to /talk anywhere, the form is the landing page's main button,
 //        and /talk is the not-found page
-//   S1   helper on: the links, /talk as the landing page's main button and the form as the
-//        second, the page, the first (open) question, the starting state
+//   S1   helper on: the link to /talk from the form, the page, the first (open) question, the
+//        starting state
 //   S2   consent gate: Find and Record both refuse, say why, focus the box, and send nothing
 //   S2b  age gate (a copy built with VITE_REQUIRE_AGE_CHECK=true)
 //   S3   typed sentence -> 12 answers to review -> nothing applied until the button ->
@@ -59,6 +60,19 @@
 //        voices that comes late, and one the browser announced before the page was listening
 //   S25  360 px phone: the open question, a question under review, no answer found, the end
 //        of the questions
+//   S26  the voice home (the landing page with the helper on): the heading, the open question,
+//        the microphone at rest, no text box, the links to the form and to /talk, nothing
+//        animating at rest, the consent gate on the microphone
+//   S27  the voice home, the spoken way through: one recording to the review of twelve answers,
+//        no step number on the consent and the review, the question left, every question
+//        skipped, and the way on to the form
+//   S28  the voice home, the microphone's states: recording, Cancel, a turned-away recording,
+//        Cancel while it is out, the browser asking / refusing / having none, the link to /talk
+//        starting a new page and cutting a recording off, Malayalam
+//   S29  360 px phone: the voice home at rest and recording in three languages, and the whole
+//        microphone on the first screen of a 360 x 640 phone
+//   S30  the voice home, the question read aloud: a device voice by itself, pressing the
+//        microphone ends it, the recording sent in the page's language, a network voice on a press
 //
 // S16-S22 reach /advisory the way a reader does, by typing the answers into /business,
 // /location and /finance, because the card only exists once there is a result. The plan
@@ -180,11 +194,34 @@
 //   TalkPage.jsx  the question heading gets a min-width of 420 px                     -> S25  [7]
 //   TalkPage.jsx  the "Question n of 12" line at 10 px                                -> S25  [4]
 //   TalkPage.jsx  the language box 20 px high                                         -> S25  [6]
-// S0 and S1, the landing page's buttons, run the same day (App.jsx), all four exit 1:
-//   App.jsx       the /talk button gets variant="secondary"                           -> S1  [1]
-//   App.jsx       the two buttons in the old order, the form first and /talk second   -> S1  [2]
-//   App.jsx       the form button is always secondary, also with the helper off       -> S0  [1]
-//   App.jsx       the form button is always primary, also with the helper on          -> S1  [1]
+// The voice home replaced the landing page with the helper on (2 Nov 2026), and with it the
+// four landing-button rows that stood here (S1). One is left: the form button of the landing
+// page with the helper off, in the last row below.
+// S26-S30, run on 2 Nov 2026: 17 changes, made one at a time, each file put back byte for
+// byte after its run (the hash compared). All 17 fail the gate with exit 1, none exit 2; in
+// brackets, how many checks failed.
+//   App.jsx       drop key="home" from the home route                                 -> S28  [2, the two "new page" checks]
+//                 (the recorder remounts on its own, so the cut-off check still holds)
+//   TalkPage.jsx  the Cancel button of a request that is out is never offered         -> S28  [2]
+//   TalkPage.jsx  the microphone below the question card, off the first screen        -> S29  [2]
+//   index.css     a keyframe animation on the microphone at rest                      -> S26  [1]
+//   TalkPage.jsx  the ring's --level always 0                                         -> S28  [1]
+//   TalkPage.jsx  `return agreed()` becomes `return true` in mayRecord()              -> S26  [5], S30  [1]
+//   TalkPage.jsx  a spoken reply in the open turn waits for Find (`if (question || home)`) -> S27  [1]
+//   TalkPage.jsx  the recording is sent in English whatever the page language         -> S28  [2], S30  [1]
+//   TalkPage.jsx  Skip not disabled while the recording is out                        -> S28  [2]
+//   TalkPage.jsx  the link to /talk leads to /                                        -> S26  [1], S28  [1]
+//   index.css     the step number shown on the home page                              -> S27  [1]
+//   TalkPage.jsx  the microphone also at the end of the questions                     -> S27  [1]
+//   TalkPage.jsx  the heading not hidden on a phone                                   -> S29  [1]
+//   TalkPage.jsx  the microphone never disabled                                       -> S28  [2]
+//   TalkPage.jsx  agreed() (the microphone) no longer stops the voice                 -> S30  [1]
+//   TalkPage.jsx  the cleanup of VoiceRecorder no longer cancels the recording        -> S28  [1]
+//   App.jsx       the form button of the helper-off landing page gets variant="secondary" -> S0  [1]
+// The first runs of S28's "the recording was cut off and the microphone released" failed in 7
+// of 13 runs with the page intact: the tracks were read between the moment React draws /talk
+// and the moment it lets go of the old page. It waits up to 2 s now (settleSnap), 0 failures
+// in 5 runs, and the cleanup refuter above still fails it.
 // The first run of the 35, against the first version of the gate, was not a pass: 6 exited
 // 1, 9 exited 2, 3 survived (the two locks on the review buttons and the navigation after
 // the last answer) and 17 never ran, because the next one started before the ports of the
@@ -345,6 +382,7 @@ const USED_KEYS = [
   'talk.reviewTitle', 'talk.consentRequired', 'talk.errMicDenied', 'talk.errMicNone', 'talk.errUnavailable',
   'talk.errBusy', 'talk.errUnclear', 'talk.errRecording', 'talk.errGeneric', 'talk.langNoSpeech',
   'talk.finding', 'talk.listening', 'talk.recording', 'talk.filledTitle', 'talk.said', 'nf.title',
+  'landing.title', 'greeting.hello', 'talk.sendsTitle', 'talk.sendsText', 'talk.rulesNote', 'talk.consent', 'talk.askDistrict',
   'cat.tailoring', 'cat.retail', 'area.rural', ...Object.values(FIELD_LABEL_KEYS),
   'business.submit', 'location.submit', 'finance.submit', 'ad.title', 'ad.notReady', 'ad.planTitle', 'fo.title', 'res.changedTitle',
   'plan.eyebrow', 'plan.title', 'plan.intro', 'plan.sendsText', 'plan.consent', 'plan.write', 'plan.writing',
@@ -667,13 +705,18 @@ function snapshot() {
   const language = q('#talk-language')
   const area = q('#talk-text')
   const h1 = q('#main h1')
-  const reviewHead = q('#main h2[tabindex="-1"]')
+  // The review's title is the one h2 of a form section that takes focus; on the home page the
+  // question is an h2 as well (/talk has it as an h3).
+  const reviewHead = q('#main h2.ui-formsection-title[tabindex="-1"]')
   const section = reviewHead ? reviewHead.closest('.ui-formsection') : null
   const active = document.activeElement
   const gum = window.__gum
   const each = (selector) => (main ? [...main.querySelectorAll(selector)] : [])
-  const heading = q('#main h3[tabindex="-1"]')
+  const heading = q('#main h3[tabindex="-1"], #main h2[tabindex="-1"]:not(.ui-formsection-title)')
   const above = heading ? heading.previousElementSibling : null
+  // The home page's microphone: its look, and where it stands on the screen.
+  const micEl = q('#main .ui-mic')
+  const micBox = micEl ? micEl.getBoundingClientRect() : null
   return {
     path: location.pathname,
     h1: h1 ? norm(h1.innerText) : '',
@@ -703,6 +746,17 @@ function snapshot() {
       ? { heading: norm(heading.innerText), focused: active === heading, progress: above && above.tagName === 'P' ? norm(above.innerText) : '' }
       : null,
     links: each('a').map((a) => ({ text: norm(a.innerText), href: a.getAttribute('href') })),
+    mic: micEl
+      ? {
+          recording: micEl.hasAttribute('data-recording'),
+          disabled: micEl.disabled,
+          level: parseFloat(micEl.style.getPropertyValue('--level')) || 0,
+          bottom: Math.round(micBox.bottom),
+          viewport: window.innerHeight,
+        }
+      : null,
+    // Keyframe animations running on the page (a transition is not one): the home page has none.
+    animations: document.getAnimations().filter((a) => a instanceof CSSAnimation && a.playState === 'running').length,
     speech: window.__speech ? window.__speech.state() : null,
     focus: active ? (active.id || active.tagName.toLowerCase()) : '',
     tracks: gum ? gum.tracks() : [],
@@ -1257,6 +1311,25 @@ const heroButtons = () => [...document.querySelectorAll('.ui-hero a')].map((a) =
   href: a.getAttribute('href'),
   main: a.className.includes('bg-[var(--color-btn)]'),
 }))
+// The voice home's microphone is pressed by its own class and not by its label: with a speech
+// engine on the page the question's speaker button reads "Stop" as well.
+const pressMic = () => inPage(() => {
+  const b = document.querySelector('#main .ui-mic')
+  if (!b) return 'absent'
+  const disabled = b.disabled
+  b.click()
+  return disabled ? 'disabled' : 'clicked'
+})
+// The highest the microphone's ring got in `ms`: the fake microphone beeps now and then, so a
+// single reading is often a lull.
+async function levelPeak(ms) {
+  let peak = 0
+  for (const end = Date.now() + ms; Date.now() < end; await sleep(80)) {
+    peak = Math.max(peak, await inPage(() => parseFloat(document.querySelector('#main .ui-mic')?.style.getPropertyValue('--level')) || 0))
+  }
+  return peak
+}
+const HOME_PREFIXES = ['talk', 'nav', 'common', 'cat', 'area', 'notice', 'consent', 'errf', 'landing', 'greeting', 'ra']
 
 // --- the scenarios ------------------------------------------------------------
 async function s0() {
@@ -1275,12 +1348,7 @@ async function s0() {
 }
 
 async function s1() {
-  await open(ON, '/')
-  expect('the landing page links to /talk', await has('a[href="/talk"]'))
-  const hero = await inPage(heroButtons)
-  expect('the first button of the landing page leads to /talk, in the main look', hero[0]?.href === '/talk' && hero[0].main === true, hero)
-  expect('the form is the second, in the plain look', hero[1]?.href === '/profile' && hero[1].main === false, hero)
-  await open(ON, '/profile', { keep: true })
+  await open(ON, '/profile')
   expect('the profile page links to /talk', await has('a[href="/talk"]'))
   await open(ON, '/talk', { keep: true })
   const s = await snap()
@@ -1354,7 +1422,7 @@ async function s2b() {
 async function untickLucknowAndApply() {
   const found = await inPage(() => {
     const norm = window.__t.norm
-    const head = document.querySelector('#main h2[tabindex="-1"]')
+    const head = document.querySelector('#main h2.ui-formsection-title[tabindex="-1"]')
     const row = [...head.closest('.ui-formsection').querySelectorAll('ul > li')]
       .find((li) => [...li.querySelectorAll('span.block')].map((el) => norm(el.innerText))[1] === 'Lucknow')
     const box = row && row.querySelector('input[type=checkbox]')
@@ -2448,6 +2516,262 @@ async function s25() {
   }
 }
 
+// --- the voice home: the landing page when the helper is on ---------------------
+// The same TalkPage as /talk with a big microphone in place of the text box. S26-S30 hold the
+// differences; the questions, the review and the consent lock are S2-S25's on the other page.
+async function s26() {
+  await open(ON, '/')
+  let s = await snap()
+  expect('the landing page is the voice home: its heading is the landing title', s.h1 === norm(en('landing.title')), s.h1)
+  expect('it asks the open question, with no number on it', s.question?.heading === norm(en('talk.askOpen')) && s.question.progress === '', s.question)
+  expect('a microphone stands at rest and enabled', s.mic?.recording === false && s.mic.disabled === false, s.mic)
+  expect('and says what it does', Boolean(buttonOf(s, en('talk.record'))), s.buttons)
+  expect('there is no text box, no language box and no Find', s.text === null && s.language === null && !buttonOf(s, en('talk.find')), { text: s.text, language: s.language, buttons: s.buttons })
+  expect('Skip is offered', buttonOf(s, en('talk.skip'))?.disabled === false, s.buttons)
+  expect('"use the form instead" leads to the form', s.links.some((l) => l.text === norm(en('talk.toForm')) && l.href === '/profile'), s.links)
+  expect('the page where the answers can be typed is one link away', s.links.some((l) => l.text === norm(en('talk.title')) && l.href === '/talk'), s.links)
+  expect('what is sent, and to whom, is on the page before the first press', s.mainText.includes(norm(en('talk.sendsText'))), 'talk.sendsText is not on the page')
+  expect('the consent box starts unticked', s.consent?.checked === false, s.consent)
+  expect('there is no age box on this build', s.age === null, s.age)
+  expect('no keyframe animation runs at rest', s.animations === 0, s.animations)
+  const leaks = await inPage(leakScan, HOME_PREFIXES)
+  expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
+
+  // The microphone refuses until the box is ticked, says why, and sends nothing.
+  const pressed = await pressMic()
+  expect('the microphone was pressed', pressed === 'clicked', pressed)
+  s = await settleSnap(4000, (x) => Boolean(alertText(x, 'talk-consent-error')))
+  expect('the error says to tick the box', norm(alertText(s, 'talk-consent-error')) === norm(en('talk.consentRequired')), s.alerts)
+  expect('the box has focus', s.focus === 'talk-consent', s.focus)
+  expect('the box is marked invalid', s.consent.invalid === 'true', s.consent)
+  expect('the microphone was not asked for', s.gumCalls === 0, s.gumCalls)
+  expect('the microphone is still at rest', s.mic.recording === false, s.mic)
+  expect('nothing was sent', (await fake.calls()).length === 0)
+  // A page that let the press through is recording and has locked the box: end that first.
+  if (s.mic.recording) {
+    await tryPress(en('talk.cancel'))
+    await sleep(300)
+  }
+  await tick('#talk-consent')
+  s = await snap()
+  expect('ticking clears the error and the invalid mark', !alertText(s, 'talk-consent-error') && s.consent.invalid === null, { alerts: s.alerts, consent: s.consent })
+}
+
+async function s27() {
+  // One recording says everything. The answers are looked for the moment it ends (there is no
+  // Find), the reader checks them, the page asks what is left, and the reader is taken on.
+  await open(ON, '/')
+  await tick('#talk-consent')
+  await fake.set({ transcript: SENTENCE })
+  await recordFor(1300)
+  let s = await reach('the review of what was said', 15000, (x) => x.review?.rows.length === 12 && !isBusy(x))
+  let calls = await fake.calls()
+  expect('the recording went first, then its words, and the open turn names no question', calls.map((c) => c.call).join() === 'transcribe,extract' && calls[1].asking === null, calls)
+  expect('it was sent in the page language', calls[0].language === 'English', calls[0])
+  expect('the review is titled and has focus', s.review.title === norm(en('talk.reviewTitle')) && s.review.focused, s.review)
+  const nums = await inPage(() => [...document.querySelectorAll('#main .ui-formsection-num')].map((el) => getComputedStyle(el).display))
+  expect('the consent and the review carry no step number on the home page', nums.length === 2 && nums.every((d) => d === 'none'), nums)
+  FIELD_ORDER.forEach((field, i) => {
+    const [value] = ROWS[field]
+    const want = typeof value === 'function' ? value('en') : value
+    expect(`${field}: the answer, ticked`, s.review.rows[i]?.spans[1] === norm(want) && s.review.rows[i].checked === true, s.review.rows[i])
+  })
+  expect('"use these answers" is offered', s.review.buttons.some((b) => b.text === norm(en('talk.apply')) && b.disabled === false), s.review.buttons)
+  const before = await stored()
+  expect('nothing is applied before the button', !before || (before.data.business.initialInvestment === '' && before.data.aiFilled.length === 0), before?.data)
+
+  await untickLucknowAndApply()
+  s = await settleSnap(2000, (x) => x.question?.focused === true)
+  expect('the page stays on the home page', s.path === '/', s.path)
+  expect('and asks the one question left, the district, as the last of the list', s.question.progress === progressOf(QUESTIONS.length) && s.question.focused === true, s.question)
+  expect('the review is gone', s.review === null, s.review)
+  const saved = await stored()
+  expect('aiFilled names exactly what was written', sameSet(saved.data.aiFilled, FILLED_PATHS), saved.data.aiFilled)
+  expect('the unticked district was not written', saved.data.location.district === '', saved.data.location.district)
+
+  // The question left, answered aloud: the model is told which question it is.
+  await fake.set({ transcript: 'Lucknow' })
+  await recordFor(1300)
+  s = await reach('the review of the district', 15000, (x) => x.review?.rows.length === 1 && !isBusy(x))
+  calls = await fake.calls()
+  expect('the recording went first, then its words, and the model was told the question', calls.slice(-2).map((c) => c.call).join() === 'transcribe,extract' && calls.at(-1).asking === 'district', calls.slice(-2))
+  expect('the buttons are "that is right" and "say it again"', canon(s.review.buttons.map((b) => b.text)) === canon([norm(en('talk.right')), norm(en('talk.again'))]), s.review.buttons)
+  await pressOwed(en('talk.right'))
+  await reach('the profile page, taken there for the name', 5000, (x) => x.path === '/profile')
+  expect('the district is on the form', (await stored()).data.location.district === 'Lucknow', (await stored()).data.location)
+
+  // Every question skipped: the open one, then the twelve, to the end. No microphone then,
+  // and the way on is a link; thirteen skips send nothing.
+  await open(ON, '/')
+  await tick('#talk-consent')
+  for (let i = 0; i <= QUESTIONS.length; i++) {
+    await pressOwed(en('talk.skip'))
+    const line = i < QUESTIONS.length ? QUESTIONS[i][1] : 'talk.allDone'
+    await reach(`the line ${line}`, 4000, (x) => x.question?.heading === norm(en(line)))
+  }
+  s = await snap()
+  expect('the end says all the questions are done, with no number, and has focus', s.question.progress === '' && s.question.focused === true, s.question)
+  expect('the microphone and Skip are gone', s.mic === null && !buttonOf(s, en('talk.skip')), { mic: s.mic, buttons: s.buttons })
+  expect('"Continue" leads to the first page with an answer missing: the profile, for the name', s.links.some((l) => l.text === norm(en('common.continue')) && l.href === '/profile'), s.links)
+  expect('thirteen skips sent nothing', (await fake.calls()).length === 0)
+  const leaks = await inPage(leakScan, HOME_PREFIXES)
+  expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
+}
+
+async function s28() {
+  // The microphone through its states, and every way out of them.
+  await open(ON, '/')
+  await tick('#talk-consent')
+  await startRecording()
+  let s = await snap()
+  expect('while recording the microphone is red and says Stop', s.mic?.recording === true && Boolean(buttonOf(s, en('talk.stop'))), s.mic)
+  expect('the status line says to speak and press Stop', s.statuses.includes(norm(en('talk.recording', { stop: en('talk.stop') }))), s.statuses)
+  expect('Cancel is offered', Boolean(buttonOf(s, en('talk.cancel'))), s.buttons)
+  expect('the consent box and Skip are locked', s.consent.disabled === true && buttonOf(s, en('talk.skip'))?.disabled === true, { consent: s.consent, buttons: s.buttons })
+  const peak = await levelPeak(2500)
+  expect('the ring follows the voice: the level rose above 0 while the fake microphone beeped', peak > 0, peak)
+
+  await pressOwed(en('talk.cancel'))
+  s = await reach('the microphone back after Cancel', 5000, (x) => x.mic?.recording === false && x.consent.disabled === false)
+  expect('Cancel: the microphone is released', allEnded(s), s.tracks)
+  expect('Cancel: the microphone is back and enabled', Boolean(buttonOf(s, en('talk.record'))) && s.mic.disabled === false, s.mic)
+  expect('Cancel: Skip is unlocked', buttonOf(s, en('talk.skip'))?.disabled === false, s.buttons)
+  expect('Cancel: nothing was sent', (await fake.calls()).length === 0)
+
+  // A recording the service turns away: the reason, and the microphone back for another try.
+  await fake.set({ fail: 'rate_limited' })
+  await recordFor(1300)
+  s = await reach('the transcription error', 15000, (x) => Boolean(alertText(x)) && x.mic?.recording === false && !isBusy(x))
+  expect('a recording that is turned away says talk.errBusy', norm(alertText(s)) === norm(en('talk.errBusy')), alertText(s))
+  expect('the microphone is back and enabled', s.mic.disabled === false, s.mic)
+  expect('the box and Skip are unlocked', s.consent.disabled === false && buttonOf(s, en('talk.skip'))?.disabled === false, { consent: s.consent, buttons: s.buttons })
+  expect('there is no review', s.review === null, s.review)
+
+  // Cancel while the recording is out: nothing the late answer brings is shown.
+  await fake.reset()
+  await fake.set({ delay: 2.5, transcript: SENTENCE })
+  await recordFor(1300)
+  s = await reach('the busy line', 5000, (x) => isBusy(x))
+  expect('while the recording is out: Cancel is offered, the microphone and the box are locked', Boolean(buttonOf(s, en('talk.cancel'))) && s.mic.disabled === true && s.consent.disabled === true, { buttons: s.buttons, mic: s.mic, consent: s.consent })
+  await pressOwed(en('talk.cancel'))
+  s = await reach('Cancel to take effect', 5000, (x) => !buttonOf(x, en('talk.cancel')) && !isBusy(x))
+  expect('after Cancel: the microphone is back and no error is shown', s.mic.disabled === false && s.alerts.length === 0, { mic: s.mic, alerts: s.alerts })
+  await sleep(3500)
+  s = await snap()
+  expect('and the late answer is dropped: no review and no error', s.review === null && s.alerts.length === 0, { review: s.review, alerts: s.alerts })
+  const late = await fake.calls()
+  expect('(sanity) the backend got the recording, and was never asked to look for answers', late.filter((c) => c.call === 'transcribe').length === 1 && late.filter((c) => c.call === 'extract').length === 0, late)
+  await fake.reset()
+
+  // The browser asks for the microphone, and refuses, or has none.
+  await inPage(() => { window.__gum.mode = 'defer' })
+  await pressOwed(en('talk.record'))
+  await reach('the permission question to be open', 5000, (x) => x.pending === 1)
+  await sleep(250)
+  s = await snap()
+  expect('while the browser asks: the box and Skip are locked, the microphone is off and there is no Stop', s.consent.disabled === true && buttonOf(s, en('talk.skip'))?.disabled === true && s.mic.disabled === true && !buttonOf(s, en('talk.stop')), { consent: s.consent, buttons: s.buttons, mic: s.mic })
+  await inPage(() => window.__gum.refuse('NotAllowedError'))
+  s = await reach('the refusal', 5000, (x) => norm(alertText(x)) === norm(en('talk.errMicDenied')))
+  expect('refused: the box and Skip are unlocked and the microphone is back', s.consent.disabled === false && buttonOf(s, en('talk.skip'))?.disabled === false && s.mic.disabled === false, { consent: s.consent, buttons: s.buttons, mic: s.mic })
+  await inPage(() => { window.__gum.mode = 'none' })
+  await pressOwed(en('talk.record'))
+  s = await reach('the no-microphone error', 5000, (x) => norm(alertText(x)) === norm(en('talk.errMicNone')))
+  expect('no microphone: the box is unlocked and the microphone is back', s.consent.disabled === false && s.mic.disabled === false, { consent: s.consent, mic: s.mic })
+
+  // Leaving for /talk in the middle of a recording: the two pages share one component, so
+  // the lock, the tick and the microphone must not be carried over.
+  await inPage(() => { window.__gum.mode = 'real' })
+  await startRecording()
+  await pressLink(en('talk.title'))
+  s = await reach('/talk', 5000, (x) => x.path === '/talk' && x.h1 === norm(en('talk.title')))
+  expect('/talk starts as a new page: the box is unticked and unlocked', s.consent.checked === false && s.consent.disabled === false, s.consent)
+  expect('and Skip and the microphone are unlocked', buttonOf(s, en('talk.skip'))?.disabled === false && buttonOf(s, en('talk.record'))?.disabled === false, s.buttons)
+  // React lets go of the old page a moment after the new one is drawn, so the tracks get
+  // a short while to end; a recording that is never cut off still fails.
+  s = await settleSnap(2000, allEnded)
+  expect('the recording was cut off and the microphone released', allEnded(s), s.tracks)
+
+  // Malayalam has no speech model: the notice stands where the microphone would.
+  const ml = LANGUAGES.find((l) => l.code === 'ml')
+  await open(ON, '/', { lang: 'ml' })
+  s = await snap()
+  expect('ml: there is no microphone', s.mic === null && !buttonOf(s, T('ml', 'talk.record')), { mic: s.mic, buttons: s.buttons })
+  expect('ml: the page says speaking is not available', s.notices.includes(norm(T('ml', 'talk.langNoSpeech', { language: ml.endonym }))), s.notices)
+  expect('ml: Skip and the way to the form are still there', buttonOf(s, T('ml', 'talk.skip'))?.disabled === false && s.links.some((l) => l.href === '/profile'), { buttons: s.buttons, links: s.links })
+}
+
+async function s29() {
+  await cdp.send('Emulation.setDeviceMetricsOverride', { width: 360, height: 740, deviceScaleFactor: 2, mobile: true })
+  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 })
+  const measure = async (what) => {
+    const probe = await inPage(mobileProbe)
+    expect(`${what}: nothing sticks out past the right edge`, probe.overflow.length === 0 && probe.scrollWidth <= probe.vw + 1, probe)
+    expect(`${what}: every tap target is at least 44 px`, probe.taps.length === 0, probe.taps)
+    expect(`${what}: no text under 12 px`, probe.small.length === 0, probe.small)
+  }
+  try {
+    for (const lang of ['en', 'hi', 'ta']) {
+      await open(ON, '/', { lang })
+      await measure(`${lang}, at rest`)
+      await tick('#talk-consent')
+      const pressed = await pressMic()
+      if (pressed !== 'clicked') throw new Fault(`the microphone was ${pressed}`)
+      await reach(`${lang}: recording to start`, 8000, (x) => x.mic?.recording === true)
+      await measure(`${lang}, recording`)
+      await pressOwed(T(lang, 'talk.cancel'))
+      await reach(`${lang}: the microphone back`, 5000, (x) => x.mic?.recording === false)
+    }
+    // The microphone has to be on the first screen of a small phone, under the app's header.
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 360, height: 640, deviceScaleFactor: 2, mobile: true })
+    for (const lang of ['en', 'hi']) {
+      await open(ON, '/', { lang })
+      const s = await snap()
+      expect(`${lang}: the whole microphone is on the first screen of a 360 x 640 phone`, s.mic !== null && s.mic.bottom <= s.mic.viewport, s.mic)
+    }
+  } finally {
+    await cdp.send('Emulation.clearDeviceMetricsOverride')
+    await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: false })
+  }
+}
+
+async function s30() {
+  const hi = (key) => norm(T('hi', key))
+  // A voice on the device reads the open question by itself once the box is ticked, and
+  // pressing the microphone ends it, so that the microphone does not hear the question.
+  await open(ON, '/', { lang: 'hi', speech: DEVICE_HINDI })
+  let s = await snap()
+  expect('the question has a speaker button, reading Listen in Hindi', Boolean(buttonOf(s, T('hi', 'ra.listen'))), s.buttons)
+  expect('nothing is read before the box is ticked', s.speech.said.length === 0, s.speech)
+  await tick('#talk-consent')
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('ticking the box reads the open question, in Hindi, in the voice on the device', norm(s.speech.said[0].text) === hi('talk.askOpen') && s.speech.said[0].voice === 'Device Hindi', s.speech.said)
+  expect('while it is read the button says Stop', Boolean(buttonOf(s, T('hi', 'ra.stop'))) && s.speech.speaking === true, { buttons: s.buttons, speech: s.speech })
+  const cancelled = s.speech.cancels
+  const pressed = await pressMic()
+  if (pressed !== 'clicked') throw new Fault(`the microphone was ${pressed}`)
+  s = await reach('the recording to start', 8000, (x) => x.mic?.recording === true)
+  expect('pressing the microphone ends the question being read', s.speech.speaking === false && s.speech.cancels > cancelled, s.speech)
+  // The recording is sent in the page's language, not in English (S27's is English).
+  await sleep(1300)
+  await pressMic()
+  let calls = []
+  for (let i = 0; i < 250 && calls.length === 0; i++) { await sleep(60); calls = await fake.calls() }
+  expect('the recording went to Meta in Hindi', calls[0]?.call === 'transcribe' && calls[0].language === 'Hindi', calls.map((c) => `${c.call}:${c.language}`))
+  await settleSnap(15000, (x) => !isBusy(x, 'hi'))
+
+  // A voice over the network reads the question when Listen is pressed and not before.
+  await open(ON, '/', { lang: 'hi', speech: NET_HINDI })
+  await tick('#talk-consent')
+  await sleep(700)
+  s = await snap()
+  expect('an online voice reads nothing by itself', s.speech.said.length === 0 && s.speech.speaking === false, s.speech)
+  await pressOwed(T('hi', 'ra.listen'))
+  s = await reach('the open question to be read', 3000, (x) => x.speech.said.length === 1)
+  expect('Listen reads the open question once, in the online voice', norm(s.speech.said[0].text) === hi('talk.askOpen') && s.speech.said[0].voice === 'Net Hindi', s.speech.said)
+  const leaks = await inPage(leakScan, HOME_PREFIXES)
+  expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
+}
+
 // --- main ---------------------------------------------------------------------
 async function main() {
   for (const [what, port] of [['the debugging port', DEBUG_PORT], ['the fake backend', FAKE_PORT], ['Vite (helper on)', VITES.on], ['Vite (helper off)', VITES.off], ['Vite (age box)', VITES.age]]) {
@@ -2518,6 +2842,11 @@ async function main() {
   await run('S23', 'the questions one at a time', s23)
   await run('S24', 'the question read aloud', s24)
   await run('S25', '360 px phone: the guided questions', s25)
+  await run('S26', 'voice home: the page at rest and the consent gate on the microphone', s26)
+  await run('S27', 'voice home: the spoken way through, to the form', s27)
+  await run('S28', 'voice home: recording, failing, Cancel, no speech, no microphone, the link to /talk', s28)
+  await run('S29', '360 px phone: the voice home', s29)
+  await run('S30', 'voice home: the question read aloud', s30)
 
   cdp.ws.close()
   cleanup()
