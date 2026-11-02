@@ -336,6 +336,7 @@ function TalkPage({ home = false }) {
 
       {/* Always in the page, so the first message is announced. */}
       <div role="status" className={busy ? 'ui-notice font-semibold' : 'sr-only'}>
+        {busy && <span aria-hidden="true" className="mt-[0.2em] size-[1.1em] shrink-0 animate-spin rounded-full border-[0.18em] border-current border-r-transparent" />}
         {busy === 'transcribing' ? t('talk.listening') : busy === 'finding' ? t('talk.finding') : null}
       </div>
     </>

@@ -68,7 +68,9 @@
 //        skipped, and the way on to the form
 //   S28  the voice home, the microphone's states: recording, Cancel, a turned-away recording,
 //        Cancel while it is out, the browser asking / refusing / having none, the link to /talk
-//        starting a new page and cutting a recording off, Malayalam
+//        starting a new page and cutting a recording off, Malayalam; the two loops (the ring
+//        while recording, the spinner while a request is out): which one, what it moves, that
+//        it ends with what began it
 //   S29  360 px phone: the voice home at rest and recording in three languages, and the whole
 //        microphone on the first screen of a 360 x 640 phone
 //   S30  the voice home, the question read aloud: a device voice by itself, pressing the
@@ -218,6 +220,12 @@
 //   TalkPage.jsx  agreed() (the microphone) no longer stops the voice                 -> S30  [1]
 //   TalkPage.jsx  the cleanup of VoiceRecorder no longer cancels the recording        -> S28  [1]
 //   App.jsx       the form button of the helper-off landing page gets variant="secondary" -> S0  [1]
+// The motion, run on 2 Nov 2026: 4 more changes, made the same way, each file put back byte
+// for byte (the hash compared). All 4 fail the gate with exit 1.
+//   index.css     the ring's keyframes also move box-shadow                           -> S28  [1]
+//   index.css     the ring drawn at rest (the selector loses [data-recording])        -> S26  [1], S28  [3]
+//   TalkPage.jsx  the spinner removed                                                 -> S28  [1]
+//   TalkPage.jsx  the spinner drawn at rest (`busy &&` becomes `true &&`)             -> S26  [1], S28  [3]
 // The first runs of S28's "the recording was cut off and the microphone released" failed in 7
 // of 13 runs with the page intact: the tracks were read between the moment React draws /talk
 // and the moment it lets go of the old page. It waits up to 2 s now (settleSnap), 0 failures
@@ -755,8 +763,11 @@ function snapshot() {
           viewport: window.innerHeight,
         }
       : null,
-    // Keyframe animations running on the page (a transition is not one): the home page has none.
-    animations: document.getAnimations().filter((a) => a instanceof CSSAnimation && a.playState === 'running').length,
+    // Keyframe animations running on the page (a transition is not one), each as name:properties it
+    // moves. None at rest; the two the page may run are the ring and the spinner (S28).
+    loops: document.getAnimations()
+      .filter((a) => a instanceof CSSAnimation && a.playState === 'running')
+      .map((a) => `${a.animationName}:${[...new Set(a.effect.getKeyframes().flatMap((k) => Object.keys(k)))].filter((p) => !['offset', 'computedOffset', 'easing', 'composite'].includes(p)).sort()}`),
     speech: window.__speech ? window.__speech.state() : null,
     focus: active ? (active.id || active.tagName.toLowerCase()) : '',
     tracks: gum ? gum.tracks() : [],
@@ -2533,7 +2544,7 @@ async function s26() {
   expect('what is sent, and to whom, is on the page before the first press', s.mainText.includes(norm(en('talk.sendsText'))), 'talk.sendsText is not on the page')
   expect('the consent box starts unticked', s.consent?.checked === false, s.consent)
   expect('there is no age box on this build', s.age === null, s.age)
-  expect('no keyframe animation runs at rest', s.animations === 0, s.animations)
+  expect('no keyframe animation runs at rest', s.loops.length === 0, s.loops)
   const leaks = await inPage(leakScan, HOME_PREFIXES)
   expect('no leaked key, placeholder or stringified nothing', leaks.length === 0, leaks.join(' | '))
 
@@ -2628,6 +2639,7 @@ async function s28() {
   expect('the status line says to speak and press Stop', s.statuses.includes(norm(en('talk.recording', { stop: en('talk.stop') }))), s.statuses)
   expect('Cancel is offered', Boolean(buttonOf(s, en('talk.cancel'))), s.buttons)
   expect('the consent box and Skip are locked', s.consent.disabled === true && buttonOf(s, en('talk.skip'))?.disabled === true, { consent: s.consent, buttons: s.buttons })
+  expect('one loop runs: the ring, which moves opacity and transform and nothing that is painted', s.loops.join() === 'ui-mic-ping:opacity,transform', s.loops)
   const peak = await levelPeak(2500)
   expect('the ring follows the voice: the level rose above 0 while the fake microphone beeped', peak > 0, peak)
 
@@ -2635,6 +2647,7 @@ async function s28() {
   s = await reach('the microphone back after Cancel', 5000, (x) => x.mic?.recording === false && x.consent.disabled === false)
   expect('Cancel: the microphone is released', allEnded(s), s.tracks)
   expect('Cancel: the microphone is back and enabled', Boolean(buttonOf(s, en('talk.record'))) && s.mic.disabled === false, s.mic)
+  expect('Cancel: the ring stops', s.loops.length === 0, s.loops)
   expect('Cancel: Skip is unlocked', buttonOf(s, en('talk.skip'))?.disabled === false, s.buttons)
   expect('Cancel: nothing was sent', (await fake.calls()).length === 0)
 
@@ -2653,9 +2666,11 @@ async function s28() {
   await recordFor(1300)
   s = await reach('the busy line', 5000, (x) => isBusy(x))
   expect('while the recording is out: Cancel is offered, the microphone and the box are locked', Boolean(buttonOf(s, en('talk.cancel'))) && s.mic.disabled === true && s.consent.disabled === true, { buttons: s.buttons, mic: s.mic, consent: s.consent })
+  expect('one loop runs: the spinner, which turns and moves transform only', s.loops.join() === 'spin:transform', s.loops)
   await pressOwed(en('talk.cancel'))
   s = await reach('Cancel to take effect', 5000, (x) => !buttonOf(x, en('talk.cancel')) && !isBusy(x))
   expect('after Cancel: the microphone is back and no error is shown', s.mic.disabled === false && s.alerts.length === 0, { mic: s.mic, alerts: s.alerts })
+  expect('after Cancel: the spinner stops', s.loops.length === 0, s.loops)
   await sleep(3500)
   s = await snap()
   expect('and the late answer is dropped: no review and no error', s.review === null && s.alerts.length === 0, { review: s.review, alerts: s.alerts })
