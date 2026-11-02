@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..699b44f 100644
+index d6ab002..8928e9f 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -10,7 +10,7 @@ index d6ab002..699b44f 100644
 +**Status:** an **individual project**: Aryan Verma builds it alone since 26 Oct 2026, entered in the **Meta Global AI Developer Hackathon, Indie Track**, 26 Oct to 4 Nov 2026. **Submission is due 4 Nov, 9:00 PM ET = 5 Nov, 07:30 IST**: finish by the evening of 3 Nov IST. Until 26 Oct it was a six-person team project for the SIH 2026 college round. It is still a prototype. Work in this order:
 @@ -12 +12 @@
 -Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HACKATHON.md` holds the demo path, the built-before-vs-during note and the submission checklist.
-+**Code freeze: the owner calls it, 3 Nov 2026 noon IST at the latest; not automatic.** Until it is called, "demo path over refactors" applies to new work. The posted rules want the demo to show only what was built during the event, so the video labels each screen new or from before and dwells only on the new. Rules, organisers' replies on prior work, judging stages, submission repository, demo path and checklist: `docs/HACKATHON.md` (§9 to §10).
++**Code freeze: the owner called it on 2 Nov 2026 (evening IST); a code change needs them to lift it.** The posted rules want the demo to show only what was built during the event, so the video labels each screen new or from before and dwells only on the new. Rules, organisers' replies on prior work, judging stages, submission repository, demo path and checklist: `docs/HACKATHON.md` (§9 to §10); the video's script: `docs/VIDEO_SCRIPT.md`.
 @@ -16,5 +16,6 @@ Until 3 Nov IST, "demo path over refactors" applies again to new work. `docs/HAC
 -- **23 Sept 2026. Purpose: a portfolio piece, and mainly a B2B product** for NBFCs, MFIs, SHG federations, CSC operators and similar. **Real people will act on the output**, so correctness, data honesty, DPDP compliance and security are requirements, not polish.
 -- **Ownership: Aryan Verma** owns the project and the scheme data. The repo is proprietary (`LICENSE`). The earlier team's work (Manjeet, Netra and others) needs written permission before the submission and a written assignment before any sale: a legal item, not a code one.
@@ -470,7 +470,7 @@ index d6ab002..699b44f 100644
 -- The lawyer items are listed in §9.3 of the schedule.
 +- **Advice and data:** no eligibility rule is evaluated anywhere (`sc.eligUnchecked` says so on the page), and NECC's permission is an e-mail.
 +- **Translations:** no native speaker has reviewed any non-English wording (`talk.*`, `ra.*`, `amt.*` and `offer.*` included, all machine-written but for the Hindi of the last two, returned by the owner as final on 31 Oct 2026), and **S16 blocks shipping a non-English notice** (the 60 notice keys). The owner reads Hindi and reviews `docs/HINDI_REVIEW.md`: one reader, never "native-speaker reviewed".
-+- **Meta helper:** the key works (27 Oct 2026). **The plan card has met the real model once, in English (1 Nov 2026); `talk-ui` S16–S22 and S26–S30 use the fake one,** and the Listen button and the spoken questions only a fake engine and one real-Edge probe (1 Nov). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
++- **Meta helper:** the key works (27 Oct 2026). **The plan card has met the real model five times, in English and Hindi (1 and 2 Nov 2026); `talk-ui` S16–S22 and S26–S30 use the fake one,** and the Listen button and the spoken questions only a fake engine and one real-Edge probe (1 Nov). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
 +- **Build:** the dependencies have no hashes; the print PDF and the `api.js` timeout have not been clicked through by hand; landscape, the on-screen keyboard, any weak phone and touch beyond the voice home are unverified.
 +- **Legal:** the owner states that Manjeet and Netra agree to the MIT licence and confirmed the Official Rules and the NECC use (29 Oct 2026); nothing is on file.
 +- **DPDP:** no rate, body-size or `Host` check and no HSTS (the proxy's job), no log deletion; uvicorn needs `--no-server-header` and `--no-access-log`; stderr tracebacks are unaudited for answer values.
