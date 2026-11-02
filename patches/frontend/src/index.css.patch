@@ -1,5 +1,5 @@
 diff --git a/frontend/src/index.css b/frontend/src/index.css
-index d73114b..f08485b 100644
+index d73114b..5720617 100644
 --- a/frontend/src/index.css
 +++ b/frontend/src/index.css
 @@ -102,8 +102,10 @@
@@ -161,35 +161,58 @@ index d73114b..f08485b 100644
 -.ui-check > input[type="checkbox"] {
 +.ui-check > input[type="checkbox"],
 +.ui-check > input[type="radio"] {
-@@ -1472,0 +1490,147 @@ summary:focus-visible {
-+/* The traffic light (ResultBand.jsx). The tone is the left rule and the shape's fill;
-+   the glyph colour is the one that reads on that fill in both themes. Yellow is pale
-+   on a white page, so the shape also carries an outline in the text colour. */
+@@ -1472,0 +1490,170 @@ summary:focus-visible {
++/* The traffic light (ResultBand.jsx). The tone is the left rule, the shape's fill and
++   a wash over the whole card, so the light reads from across the room and not only
++   as a small mark; the glyph colour is the one that reads on that fill in both themes.
++   Yellow is pale on a white page, so the shape also carries an outline in the text
++   colour. --band-wash is how much of the tone goes into the card: the most that keeps
++   the note (--color-text-muted) at 4.5:1 or better in both themes (4.8 for yellow in
++   the dark theme, the tightest of the six). The wash is a faded layer behind the
++   words, not a colour-mix() background: the build rewrites a bare colour-mix() into a
++   solid --band-tone fallback, which would put dark text on solid green or red in a
++   browser without colour-mix(). */
 +.ui-band {
++  position: relative;
++  isolation: isolate;
 +  display: flex;
 +  align-items: center;
 +  gap: 14px;
 +  border: 1px solid var(--color-border);
 +  border-left: 6px solid var(--band-tone);
 +  border-radius: 8px;
-+  background: var(--color-surface-soft);
++  background: var(--color-surface);
 +  padding: 14px 16px;
 +  overflow-wrap: anywhere;
++}
++
++.ui-band::before {
++  content: "";
++  position: absolute;
++  inset: 0;
++  z-index: -1;
++  border-radius: inherit;
++  background: var(--band-tone);
++  opacity: var(--band-wash);
++  pointer-events: none;
 +}
 +
 +.ui-band-green {
 +  --band-tone: var(--color-success);
 +  --band-glyph: var(--color-surface);
++  --band-wash: 0.16;
 +}
 +
 +.ui-band-yellow {
 +  --band-tone: var(--color-accent);
 +  --band-glyph: var(--color-on-accent);
++  --band-wash: 0.24;
 +}
 +
 +.ui-band-red {
 +  --band-tone: var(--color-danger);
 +  --band-glyph: var(--color-surface);
++  --band-wash: 0.14;
 +}
 +
 +.ui-band-shape {
@@ -309,21 +332,21 @@ index d73114b..f08485b 100644
 +  display: none;
 +}
 +
-@@ -1506,0 +1671,4 @@ summary:focus-visible {
+@@ -1506,0 +1694,4 @@ summary:focus-visible {
 +/* The label drops under the bars when it would squeeze them below 1.5rem each.
 +   It was `flex: 0 0 auto` in a nowrap row, so a long label (Malayalam, "Step 3 of
 +   4 · Your results", largest text) left the four bars 3 to 0px wide and, at 320px,
 +   stuck out of the page by 17px. */
-@@ -1508,0 +1677 @@ summary:focus-visible {
+@@ -1508,0 +1700 @@ summary:focus-visible {
 +  flex-wrap: wrap;
-@@ -1516 +1685 @@ summary:focus-visible {
+@@ -1516 +1708 @@ summary:focus-visible {
 -  flex: 1;
 +  flex: 1 0 1.5rem;
-@@ -1527 +1696,2 @@ summary:focus-visible {
+@@ -1527 +1719,2 @@ summary:focus-visible {
 -  flex: 0 0 auto;
 +  flex: 0 1 auto;
 +  min-width: 0;
-@@ -1714,0 +1885,14 @@ summary:focus-visible {
+@@ -1714,0 +1908,14 @@ summary:focus-visible {
 +/* The number beside a piece of advice (advisory.amounts): a plain line under the
 +   sentence it belongs to, set off by a rule so it reads as the working and not as
 +   one more piece of advice. rem, so it follows the text-size control. The margin is
@@ -338,19 +361,19 @@ index d73114b..f08485b 100644
 +  overflow-wrap: anywhere;
 +}
 +
-@@ -1955,2 +2139,3 @@ summary:focus-visible {
+@@ -1955,2 +2162,3 @@ summary:focus-visible {
 -  /* The consent and zero-income checkboxes. A 1.35rem box is a 21px target, and
 -     the label around it does not help the audit, which measures the input. */
 +  /* The consent and zero-income checkboxes, and the offer card's radio buttons. A
 +     1.35rem box is a 21px target, and the label around it does not help the audit,
 +     which measures the input. */
-@@ -1961 +2146,2 @@ summary:focus-visible {
+@@ -1961 +2169,2 @@ summary:focus-visible {
 -  .ui-check > input[type="checkbox"] {
 +  .ui-check > input[type="checkbox"],
 +  .ui-check > input[type="radio"] {
-@@ -2199 +2385,2 @@ summary:focus-visible {
+@@ -2199 +2408,2 @@ summary:focus-visible {
 -  .ui-manual-overlay {
 +  .ui-manual-overlay,
 +  .ui-detail {
-@@ -2216,0 +2404 @@ summary:focus-visible {
+@@ -2216,0 +2427 @@ summary:focus-visible {
 +  .ui-band,
