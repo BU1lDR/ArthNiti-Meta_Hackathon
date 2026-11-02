@@ -1,16 +1,60 @@
 diff --git a/backend/app/data/market_data.provenance.json b/backend/app/data/market_data.provenance.json
-index 347d152..2f332dd 100644
+index 347d152..1a0691f 100644
 --- a/backend/app/data/market_data.provenance.json
 +++ b/backend/app/data/market_data.provenance.json
 @@ -2 +2 @@
 -  "fetched_at": "2026-09-24T16:59:11+05:30",
-+  "fetched_at": "2026-10-29T23:02:49+05:30",
++  "fetched_at": "2026-11-02T18:45:09+05:30",
 @@ -4 +4 @@
 -  "crosswalk_version": 1,
 +  "crosswalk_version": 3,
-@@ -10,2 +10,10 @@
--      "state": "Uttar Pradesh",
--      "district": "Lucknow"
+@@ -15,0 +16,116 @@
++    },
++    {
++      "state": "Tamil Nadu",
++      "district": "Coimbatore"
++    },
++    {
++      "state": "Telangana",
++      "district": "Warangal"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore"
++    },
++    {
++      "state": "Bihar",
++      "district": "Gaya"
++    },
++    {
++      "state": "Punjab",
++      "district": "Ludhiana"
++    },
++    {
 +      "state": "Jharkhand",
 +      "district": "Ranchi"
 +    },
@@ -19,23 +63,186 @@ index 347d152..2f332dd 100644
 +      "district": "East Singhbhum"
 +    },
 +    {
++      "state": "Bihar",
++      "district": "Begusarai"
++    },
++    {
++      "state": "Bihar",
++      "district": "Muzaffarpur"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Guna"
++    },
++    {
++      "state": "West Bengal",
++      "district": "North 24 Parganas"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Prayagraj"
++    },
++    {
 +      "state": "West Bengal",
 +      "district": "South 24 Parganas"
-@@ -15 +23,5 @@
--      "district": "Varanasi"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Murshidabad"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Purba Bardhaman"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Paschim Bardhaman"
++    },
++    {
++      "state": "Telangana",
++      "district": "Rangareddy"
++    },
++    {
++      "state": "Gujarat",
++      "district": "Ahmedabad"
++    },
++    {
++      "state": "Uttar Pradesh",
 +      "district": "Kanpur Nagar"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Kanpur Dehat"
 +    },
 +    {
 +      "state": "Assam",
 +      "district": "Dhubri"
-@@ -20,2 +32,2 @@
--      "state": "Uttar Pradesh",
--      "district": "Lucknow",
++    },
++    {
++      "state": "Assam",
++      "district": "Kamrup"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Pratapgarh"
+@@ -37,0 +154,290 @@
++    },
++    {
++      "state": "Tamil Nadu",
++      "district": "Coimbatore",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Tamil Nadu",
++      "district": "Coimbatore",
++      "source": "udyam"
++    },
++    {
++      "state": "Telangana",
++      "district": "Warangal",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Telangana",
++      "district": "Warangal",
++      "source": "udyam"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Andhra Pradesh",
++      "district": "Guntur",
++      "source": "udyam"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Kerala",
++      "district": "Ernakulam",
++      "source": "udyam"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Karnataka",
++      "district": "Mysuru",
++      "source": "udyam"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Maharashtra",
++      "district": "Pune",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Nadia",
++      "source": "udyam"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Rajasthan",
++      "district": "Jaipur",
++      "source": "udyam"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Indore",
++      "source": "udyam"
++    },
++    {
++      "state": "Bihar",
++      "district": "Gaya",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Bihar",
++      "district": "Gaya",
++      "source": "udyam"
++    },
++    {
++      "state": "Punjab",
++      "district": "Ludhiana",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Punjab",
++      "district": "Ludhiana",
++      "source": "udyam"
++    },
++    {
 +      "state": "Jharkhand",
 +      "district": "Ranchi",
-@@ -25,2 +37,22 @@
--      "state": "Uttar Pradesh",
--      "district": "Lucknow",
++      "source": "agmarknet"
++    },
++    {
 +      "state": "Jharkhand",
 +      "district": "Ranchi",
 +      "source": "udyam"
@@ -51,6 +258,56 @@ index 347d152..2f332dd 100644
 +      "source": "udyam"
 +    },
 +    {
++      "state": "Bihar",
++      "district": "Begusarai",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Bihar",
++      "district": "Begusarai",
++      "source": "udyam"
++    },
++    {
++      "state": "Bihar",
++      "district": "Muzaffarpur",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Bihar",
++      "district": "Muzaffarpur",
++      "source": "udyam"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Guna",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Madhya Pradesh",
++      "district": "Guna",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "North 24 Parganas",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "North 24 Parganas",
++      "source": "udyam"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Prayagraj",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Prayagraj",
++      "source": "udyam"
++    },
++    {
 +      "state": "West Bengal",
 +      "district": "South 24 Parganas",
 +      "source": "agmarknet"
@@ -58,12 +315,76 @@ index 347d152..2f332dd 100644
 +    {
 +      "state": "West Bengal",
 +      "district": "South 24 Parganas",
-@@ -31 +63 @@
--      "district": "Varanasi",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Murshidabad",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Murshidabad",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Purba Bardhaman",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Purba Bardhaman",
++      "source": "udyam"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Paschim Bardhaman",
++      "source": "agmarknet"
++    },
++    {
++      "state": "West Bengal",
++      "district": "Paschim Bardhaman",
++      "source": "udyam"
++    },
++    {
++      "state": "Telangana",
++      "district": "Rangareddy",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Telangana",
++      "district": "Rangareddy",
++      "source": "udyam"
++    },
++    {
++      "state": "Gujarat",
++      "district": "Ahmedabad",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Gujarat",
++      "district": "Ahmedabad",
++      "source": "udyam"
++    },
++    {
++      "state": "Uttar Pradesh",
 +      "district": "Kanpur Nagar",
-@@ -36 +68,11 @@
--      "district": "Varanasi",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Uttar Pradesh",
 +      "district": "Kanpur Nagar",
++      "source": "udyam"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Kanpur Dehat",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Kanpur Dehat",
 +      "source": "udyam"
 +    },
 +    {
@@ -74,7 +395,28 @@ index 347d152..2f332dd 100644
 +    {
 +      "state": "Assam",
 +      "district": "Dhubri",
-@@ -42,2 +84,2 @@
++      "source": "udyam"
++    },
++    {
++      "state": "Assam",
++      "district": "Kamrup",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Assam",
++      "district": "Kamrup",
++      "source": "udyam"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Pratapgarh",
++      "source": "agmarknet"
++    },
++    {
++      "state": "Uttar Pradesh",
++      "district": "Pratapgarh",
++      "source": "udyam"
+@@ -42,2 +448,2 @@
 -    "wholesale_price_per_kg": 6,
 -    "registered_units": 14
 +    "wholesale_price_per_kg": 74,

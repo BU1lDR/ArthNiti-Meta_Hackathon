@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..8928e9f 100644
+index d6ab002..b84794f 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -351,7 +351,7 @@ index d6ab002..8928e9f 100644
 +- **No eligibility rule is evaluated anywhere.** The match score (+60 category, +40 the reader's state or +30 nationwide) checks none, so it is never printed as a percentage; cards print `fit_basis`. `drive.mjs` fails on a `90%` or `100%` on a card. The "Check these first" lines (`check_first`) only name a scheme's own conditions: bullets, never ticks, "might not fit", never "not eligible".
 +- **Status and light:** `good` needs profitable, feasible, low risk, no gap and a household check that is not `over_limit`; green is `good`, red is priority `high`, yellow is the rest (the owner's own rule, confirmed 29 Oct 2026).
 +- **Matching:** `if scheme_category in phrase`, so the scheme's word must be a substring of the user's phrase. `CATEGORY_SYNONYMS` bridges wording and must never widen eligibility. The availability gates (`serves_state`, `serves_location`) run before scoring, an empty user value means "do not filter", and the two functions stay separate. A scheme must never claim `livestock` or `other` as a category.
-+- **Market context:** never render a `state` row as local (`match_level`). **Another district's row is never returned**: don't widen the fallback, grow `tools/market-crosswalk.json` and fetch again. `stale` is decided at fetch time, so **refetch before a demo** (an egg price goes stale in 8 days; Lucknow's and Varanasi's mandi prices show no warning until then). The egg-price unit is our reading, unconfirmed.
++- **Market context:** never render a `state` row as local (`match_level`). **Another district's row is never returned**: don't widen the fallback, grow `tools/market-crosswalk.json` and fetch again. `stale` is decided at fetch time and a running server keeps what it loaded, so **refetch before a demo, then restart the backend** (an egg price goes stale in 8 days). The egg-price unit is our reading, unconfirmed.
 +- **The scheme dataset:** edit `SPEC`, `LOCATION_TYPES` or `CHECK_FIRST` in `backend/gen_schemes.py` and run it from `./backend`; a hand edit to `schemes.json` fails `test_gen_schemes.py`. New codes need all 8 `schemeStrings.js` entries by hand (keycheck reports a missing one).
 @@ -316,2 +210,2 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
 -- **The notice text is versioned.** Editing any of the 60 `NOTICE_KEYS` in any language, or reordering `SENT_FIELDS`, fails parity4 check 9. Fix it by bumping `NOTICE_VERSION` and recording the printed hash in `tools/notice-version.json`. Commit `notice.js`, that JSON and the dictionaries together.
