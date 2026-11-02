@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..eae25db 100644
+index d6ab002..699b44f 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -34,7 +34,7 @@ index d6ab002..eae25db 100644
 -- **Do not grow this file back.** Put a dated narrative ("what happened on X, and why") in the history file and keep only the resulting rule here. Keep this file under about 40 KB.
 -- Don't read a source file over about 300 lines in one go. Grep, then read a range. Redirect long command output to a file under `D:/tmp` and read the part you need.
 +- **Never read that file whole.** List its sections with `grep -n "^## \|^### " docs/ENGINEERING_HISTORY.md`, then read one with offset and limit. Where it disagrees with this file, this file wins; its counts are not maintained. A code comment that says "see CLAUDE.md" points at a section of it.
-+- **Do not grow this file back.** A dated narrative goes in the history file and only the resulting rule here; formulas, sources and lists go in the docs below. The aim is under 40 KB (`wc -c CLAUDE.md`; it was 59.3 KB before the trim of 30 Oct 2026, as git stores it).
++- **Do not grow this file back.** A dated narrative goes in the history file and only the resulting rule here; formulas, sources and lists go in the docs below. The aim is under 40 KB (`tr -d '\r' < CLAUDE.md | wc -c`).
 +- Don't read a source file over about 300 lines in one go: grep, then read a range. Redirect long command output to a file under `D:/tmp`.
 @@ -45,7 +43,8 @@ This file loads into every session and every subagent. **The long-form history 
 -| `README.md` | front door: what it is, how to run it, where things live | anyone with a fresh clone |
@@ -400,7 +400,7 @@ index d6ab002..eae25db 100644
 +- **Cascade layers:** unlayered author CSS beats every `@layer`, whatever the specificity. Nearly every `.ui-*` rule is unlayered, so it beats Tailwind utilities, and the `:focus-visible` outline is unlayered on purpose. `@layer components` holds only the default card padding (a rule a call site should be able to override goes there); element resets sit in `@layer base`.
 +- **Tailwind** uses `@import "tailwindcss" source(none)` plus `@source` rules and generates classes from *prose*, so never write a class-shaped literal in a comment under `src/`.
 +- **Print:** `@media print` is at the end of `index.css`. Every card needs to be in the `break-inside: avoid` list, and the token reset covers the *whole* palette.
-+- **Motion:** `--motion-fast`, `--motion`, `--motion-ease`, never a literal duration; name the transitioned properties, never `all`. An undefined token silently deletes the whole declaration. The `prefers-reduced-motion` guard stays in `@layer base` (an unlayered `!important` is the weakest important).
++- **Motion:** `--motion-fast`, `--motion`, `--motion-ease`, `--motion-loop`, never a literal duration; name the transitioned properties, never `all`. An undefined token silently deletes the whole declaration. The `prefers-reduced-motion` guard stays in `@layer base` (an unlayered `!important` is the weakest important).
 +- **Charts** are hand-rolled in `Charts.jsx` and always print the figure as text next to the bar.
 +- **A figure must never wrap mid-number** (cards set `overflow-wrap: anywhere`; `.ui-bar-value` sets `word-break: keep-all`). A tile or hero figure goes in `<Figure>`, which shrinks to fit the nearest `@container`; the /analysis hero is `max-lg:@container`, because containment collapses its `auto` column at lg.
 @@ -365,2 +248,3 @@ Everything lives in **`sessionStorage['sih-application']` as `{v: STORAGE_VERSIO
@@ -423,7 +423,7 @@ index d6ab002..eae25db 100644
 +- Market tests bring their own rows (`tests/market_fixtures.py`) and Meta tests the fake model client (`tests/intake_fixtures.py`). `conftest.py` pins `ARTHNITI_ENV=development`, clears the other `ARTHNITI_*` variables and `MODEL_API_KEY`, and blocks any connection off this machine and any write to the real ledger (sockets only, not asyncio on Windows). Build a production app with `create_app(load_settings({...}))`. Verifiers that submit `/finance` tick the consent box first.
 @@ -385 +267 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, `node --test tools/verify/market-lib-test.mjs` (185 tests).
-+**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (71), `app-state-test.mjs` (41), `necc-lib-test.mjs` (74), `speak-lib-test.mjs` (31), `amount-lib-test.mjs` (17), `offer-lib-test.mjs` (58) and `offer-lines-test.mjs` (48), all in `tools/verify/`. **Backend up:** `node tools/verify/refresh-cases.mjs` regenerates the `case_*.json` fixtures (untracked, they go stale silently): run it after any change to services, schemas or data.
++**No server needed:** `node tools/parity4.mjs`, `node tools/keycheck.mjs`, `node tools/verify/glyph-audit.mjs`, and `node --test` on `market-lib-test.mjs` (185 tests), `talk-lib-test.mjs` (71), `app-state-test.mjs` (41), `necc-lib-test.mjs` (84), `speak-lib-test.mjs` (31), `amount-lib-test.mjs` (17), `offer-lib-test.mjs` (58) and `offer-lines-test.mjs` (48), all in `tools/verify/`. **Backend up:** `node tools/verify/refresh-cases.mjs` regenerates the `case_*.json` fixtures (untracked, they go stale silently): run it after any change to services, schemas or data.
 @@ -387,12 +269 @@ cd backend && ../.venv/Scripts/python.exe -m pytest tests -q      # 867 passed,
 -**Backend up:**
 -
@@ -471,7 +471,7 @@ index d6ab002..eae25db 100644
 +- **Advice and data:** no eligibility rule is evaluated anywhere (`sc.eligUnchecked` says so on the page), and NECC's permission is an e-mail.
 +- **Translations:** no native speaker has reviewed any non-English wording (`talk.*`, `ra.*`, `amt.*` and `offer.*` included, all machine-written but for the Hindi of the last two, returned by the owner as final on 31 Oct 2026), and **S16 blocks shipping a non-English notice** (the 60 notice keys). The owner reads Hindi and reviews `docs/HINDI_REVIEW.md`: one reader, never "native-speaker reviewed".
 +- **Meta helper:** the key works (27 Oct 2026). **The plan card has met the real model once, in English (1 Nov 2026); `talk-ui` S16–S22 and S26–S30 use the fake one,** and the Listen button and the spoken questions only a fake engine and one real-Edge probe (1 Nov). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
-+- **Build:** the dependencies have no hashes; the print PDF and the `api.js` timeout have not been clicked through by hand; phones in landscape, real touch and the on-screen keyboard are unverified.
++- **Build:** the dependencies have no hashes; the print PDF and the `api.js` timeout have not been clicked through by hand; landscape, the on-screen keyboard, any weak phone and touch beyond the voice home are unverified.
 +- **Legal:** the owner states that Manjeet and Netra agree to the MIT licence and confirmed the Official Rules and the NECC use (29 Oct 2026); nothing is on file.
 +- **DPDP:** no rate, body-size or `Host` check and no HSTS (the proxy's job), no log deletion; uvicorn needs `--no-server-header` and `--no-access-log`; stderr tracebacks are unaudited for answer values.
 @@ -433,6 +295,3 @@ Also open, stated where they apply: the household definition, market coverage, d
