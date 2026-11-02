@@ -1,5 +1,5 @@
 diff --git a/DATA_SOURCES.md b/DATA_SOURCES.md
-index 0efe29f..ceb1604 100644
+index 0efe29f..75b17a2 100644
 --- a/DATA_SOURCES.md
 +++ b/DATA_SOURCES.md
 @@ -5 +5 @@ This file records where every dataset and image in अर्थNiti came from, t
@@ -50,7 +50,7 @@ index 0efe29f..ceb1604 100644
 +**UNRESOLVED:**
 +
 +- **The unit is our reading.** NECC prints whole numbers with no unit. We read them as paise per egg, so 640 is ₹6.40 an egg, or ₹640 for 100 eggs. That fits how egg prices are quoted and the range of the file (₹6.10 to ₹7.10 an egg), but NECC has not confirmed it. Ask NECC in writing. Until then the page prints the number as NECC printed it beside our reading of it (`mk.eggReading`).
-+- **The permission is an e-mail.** Whether NECC's fourth sentence asks for more than printing the clarification beside the prices, whether it wants a credit in a set form, and whether the agreement reaches a client who deploys the app or anyone who copies the public repo, are all unasked. The owner wrote on 29 Oct 2026 that the NECC use is confirmed; that message is not on file and what it covered is not recorded, so all three stay marked as unasked.
++- **The permission is an e-mail.** Whether NECC's fourth sentence asks for more than printing the clarification beside the prices, whether it wants a credit in a set form, and whether the agreement reaches a client who deploys the app or anyone who copies the public repo, are all unasked. The owner wrote on 29 Oct 2026 that the NECC use is confirmed; that message is not on file and what it covered is not recorded, so all three stay marked as unasked. On 2 Nov 2026 the owner stated that the reply they hold also allows the use in the demo video; that is not on file either.
 +- **A snapshot goes stale in days.** NECC publishes every day and the file is one fetch. Run `node tools/fetch-necc-prices.mjs --write` just before a demo or a deployment.
 +- **Coverage is 30 centres.** A reader in any other district gets the empty state for poultry.
 +
