@@ -34,6 +34,7 @@
     "backend/tests/test_talk_fake_backend.py",
     "docs/BUSINESS_RULES.md",
     "docs/HINDI_REVIEW.md",
+    "docs/VIDEO_SCRIPT.md",
     "frontend/public/hero-backdrop.svg",
     "frontend/src/audio/record.js",
     "frontend/src/audio/speak.js",
@@ -174,7 +175,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "2a5c7a46cd85bfcea1668e3e0191a5c87a435715",
-    "tree": "6fcdafacad5da84b8fbbf1ffd0b0c9ba903b6144"
+    "devCommit": "c7d4060aea8566273cf40274d3d37e7443f1dd59",
+    "tree": "c9431be74238cdb2cca3cd9d8547561dca0106b4"
   }
 }
