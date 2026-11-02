@@ -1,5 +1,5 @@
 diff --git a/frontend/src/App.jsx b/frontend/src/App.jsx
-index 268d6b7..18823bf 100644
+index 268d6b7..bc2f726 100644
 --- a/frontend/src/App.jsx
 +++ b/frontend/src/App.jsx
 @@ -7,0 +8 @@ import InstructionManual from './components/InstructionManual'
@@ -9,18 +9,15 @@ index 268d6b7..18823bf 100644
 @@ -417 +419 @@ function AppShell({ children }) {
 -const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy' }
 +const CRUMB_FALLBACK = { '/login': 'common.login', '/privacy': 'common.privacy', '/talk': 'talk.title' }
-@@ -598,2 +600,8 @@ function LandingPage() {
+@@ -598 +600,2 @@ function LandingPage() {
 -          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
--            <Button to="/profile" size="lg" className="w-full sm:w-auto">
-+          {/* With the helper on, speaking is the way in and the form is the other way. */}
++          {/* With the helper on this page is not shown: the route gives the voice home instead. */}
 +          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-+            {DEPLOYMENT.aiHelper && (
-+              <Button to="/talk" size="lg" className="w-full sm:w-auto">
-+                <span aria-hidden="true">🎤</span> {t('talk.title')}
-+              </Button>
-+            )}
-+            <Button to="/profile" variant={DEPLOYMENT.aiHelper ? 'secondary' : 'primary'} size="lg" className="w-full sm:w-auto">
-@@ -601,0 +610 @@ function LandingPage() {
+@@ -601,0 +605 @@ function LandingPage() {
 +
-@@ -726,0 +736 @@ function App() {
+@@ -724 +728,2 @@ function App() {
+-        <Route path="/" element={<LandingPage />} />
++        {/* The key keeps / and /talk two pages: React would else reuse one TalkPage across a link between them, and its recording lock with it. */}
++        <Route path="/" element={DEPLOYMENT.aiHelper ? <TalkPage key="home" home /> : <LandingPage />} />
+@@ -726,0 +732 @@ function App() {
 +        {DEPLOYMENT.aiHelper && <Route path="/talk" element={<TalkPage />} />}

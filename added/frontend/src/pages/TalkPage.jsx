@@ -32,7 +32,11 @@ const fieldClass = 'mt-2 w-full rounded-xl border border-[var(--color-border)] b
 // each answer and pressed the button. The result, the schemes and the advice are not
 // touched by it: they are still worked out by fixed rules from the answers. The form
 // itself stays one press away.
-function TalkPage() {
+//
+// With `home` it is the landing page, for a reader who would rather not type at all: the
+// same questions, consent and review, but the reader only speaks (a big microphone, no
+// text box, no language box) and the answers are looked for the moment a recording ends.
+function TalkPage({ home = false }) {
   const { applicationData, fillFromHelper } = useApp()
   const { t, language } = useI18n()
   const tn = useNoticeText()
@@ -49,8 +53,10 @@ function TalkPage() {
   const ageRef = useRef(null)
 
   // The language the reader speaks or types in, which is not the language of the
-  // page and does not change it. It starts as the page's, and stays put after.
-  const [spoken, setSpoken] = useState(language)
+  // page and does not change it. It starts as the page's, and stays put after. The home
+  // page has no language box, so there it is always the page's.
+  const [chosen, setSpoken] = useState(language)
+  const spoken = home ? language : chosen
   const [text, setText] = useState('')
   const [recording, setRecording] = useState(false)
   // '' | 'transcribing' | 'finding': which request is out.
@@ -145,8 +151,9 @@ function TalkPage() {
         setError('talk.errSilence')
         return
       }
-      if (question) {
-        // The reply to one question is looked into at once and replaces what was there.
+      if (question || home) {
+        // The reply to one question is looked into at once and replaces what was there
+        // (on the home page, which has no Find button, the open question's too).
         // The boxes stay locked until the answers are back, as during the recording.
         setText(heard)
         setBusy('finding')
@@ -207,6 +214,232 @@ function TalkPage() {
   // because the answer on its way back belongs to the question that was asked.
   const locked = recording || busy !== ''
 
+  // Laid out twice, by the page and by the home page, so each is written once: what is sent
+  // and the box that agrees to it, the question, the microphone, the messages, the answers found.
+  const Heading = home ? 'h2' : 'h3'
+  const consentSection = (
+    <div className="ui-formsection">
+      <div className="ui-formsection-head">
+        <span className="ui-formsection-num" aria-hidden="true">1</span>
+        <h2 className="ui-formsection-title">{t('talk.sendsTitle')}</h2>
+      </div>
+      <div className="ui-formsection-body space-y-5">
+        <p>{t('talk.sendsText')}</p>
+        <p>{t('talk.rulesNote')}</p>
+
+        <div>
+          <label className="ui-check">
+            <input
+              ref={consentRef}
+              type="checkbox"
+              id="talk-consent"
+              name="talk-consent"
+              checked={consent}
+              disabled={locked}
+              onChange={(event) => {
+                setConsent(event.target.checked)
+                setConsentMissing(false)
+              }}
+              aria-required="true"
+              aria-invalid={consentMissing || undefined}
+              aria-describedby={consentMissing ? 'talk-consent-error' : undefined}
+            />
+            <span>
+              {t('talk.consent')}
+              <span className="ui-required" aria-hidden="true">*</span>
+            </span>
+          </label>
+          {consentMissing && (
+            <p id="talk-consent-error" role="alert" className="ui-notice ui-notice-danger mt-3 font-bold text-[var(--color-danger)]">
+              {t('talk.consentRequired')}
+            </p>
+          )}
+        </div>
+
+        {/* The same age answer /finance asks for, on a copy built with
+            VITE_REQUIRE_AGE_CHECK=true: a voice is sent from here too. */}
+        {DEPLOYMENT.requireAgeCheck && (
+          <div>
+            <label className="ui-check">
+              <input
+                ref={ageRef}
+                type="checkbox"
+                id="talk-age"
+                name="talk-age"
+                checked={age}
+                disabled={locked}
+                onChange={(event) => {
+                  setAge(event.target.checked)
+                  setAgeMissing(false)
+                }}
+                aria-required="true"
+                aria-invalid={ageMissing || undefined}
+                aria-describedby={ageMissing ? 'talk-age-error' : undefined}
+              />
+              <span>
+                {tn('consent.age')}
+                <span className="ui-required" aria-hidden="true">*</span>
+              </span>
+            </label>
+            {ageMissing && (
+              <p id="talk-age-error" role="alert" className="ui-notice ui-notice-danger mt-3 font-bold text-[var(--color-danger)]">
+                {t('talk.consentRequired')}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+
+  const questionCard = (
+    <div className="ui-card-soft space-y-3 p-4">
+      {question && (
+        <p className="text-sm font-semibold text-[var(--color-text-muted)]">
+          {t('talk.progress', { n: QUESTIONS.length - pending.length + 1, total: QUESTIONS.length })}
+        </p>
+      )}
+      <Heading ref={questionRef} tabIndex={-1} className="text-xl font-extrabold leading-snug">
+        {t(lineKey)}
+      </Heading>
+      {voice.available && (
+        <Button variant="secondary" className="gap-2" onClick={voice.toggle}>
+          <SpeakerIcon />
+          {t(voice.speaking ? 'ra.stop' : 'ra.listen')}
+        </Button>
+      )}
+    </div>
+  )
+
+  const recorder = speechSupported && micAvailable() ? (
+    <VoiceRecorder
+      big={home}
+      disabled={busy !== ''}
+      beforeStart={mayRecord}
+      onWav={transcribe}
+      onError={setError}
+      onActiveChange={setRecording}
+    />
+  ) : (
+    <p className="ui-notice">
+      {speechSupported ? t('talk.errMicNone') : t('talk.langNoSpeech', { language: spokenEntry.endonym })}
+    </p>
+  )
+
+  const feedback = (
+    <>
+      {error && (
+        <div role="alert" className="ui-notice ui-notice-danger font-semibold text-[var(--color-danger)]">
+          {t(error)}
+        </div>
+      )}
+
+      {/* Always in the page, so the first message is announced. */}
+      <div role="status" className={busy ? 'ui-notice font-semibold' : 'sr-only'}>
+        {busy === 'transcribing' ? t('talk.listening') : busy === 'finding' ? t('talk.finding') : null}
+      </div>
+    </>
+  )
+
+  const review = found && (
+    <div className="ui-formsection">
+      <div className="ui-formsection-head">
+        <span className="ui-formsection-num" aria-hidden="true">3</span>
+        <h2 ref={reviewRef} tabIndex={-1} className="ui-formsection-title">{t('talk.reviewTitle')}</h2>
+      </div>
+      <div className="ui-formsection-body space-y-5">
+        {usable && <p>{t('talk.reviewHelp')}</p>}
+
+        {found.rows.length > 0 && (
+          <ul className="space-y-3">
+            {found.rows.map((row) => {
+              const body = <Answer row={row} />
+              return (
+                <li key={row.field} className="ui-card-soft p-4">
+                  {row.ok ? (
+                    <label className="ui-check">
+                      <input
+                        type="checkbox"
+                        checked={!dropped[row.field]}
+                        onChange={() => setDropped((before) => ({ ...before, [row.field]: !before[row.field] }))}
+                      />
+                      {body}
+                    </label>
+                  ) : (
+                    body
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        )}
+
+        {found.ignored > 0 && (
+          <p className="text-sm text-[var(--color-text-muted)]">{t('talk.ignored', { n: found.ignored })}</p>
+        )}
+
+        {usable ? (
+          <div className="space-y-4">
+            {!question && <p className="text-sm text-[var(--color-text-muted)]">{t('talk.applyNote')}</p>}
+            <Button size="lg" onClick={apply} disabled={locked} className="w-full">
+              {t(question ? 'talk.right' : 'talk.apply')} <span aria-hidden="true">→</span>
+            </Button>
+            {question && (
+              <Button variant="secondary" size="lg" onClick={nextQuestion} disabled={locked} className="w-full">
+                {t('talk.again')}
+              </Button>
+            )}
+          </div>
+        ) : (
+          <p className="ui-notice ui-notice-warn font-semibold">{t(question ? 'talk.noneHere' : 'talk.noneFound')}</p>
+        )}
+      </div>
+    </div>
+  )
+
+  if (home) {
+    return (
+      <div className="ui-voicehome mx-auto max-w-3xl space-y-6">
+        <section className="ui-hero space-y-6 px-5 py-8 text-center lg:px-10 lg:py-12">
+          <div>
+            <p className="ui-eyebrow">{t('greeting.hello')}</p>
+            <h1 className="ui-page-title max-sm:sr-only">{t('landing.title')}</h1>
+          </div>
+
+          {/* The microphone first, so that a phone shows it without scrolling under the app's header. */}
+          {!finished && recorder}
+          {!finished && feedback}
+          {questionCard}
+
+          {finished ? (
+            <Button size="lg" to={formStep}>
+              {t('common.continue')} <span aria-hidden="true">→</span>
+            </Button>
+          ) : (
+            <div className="flex flex-wrap justify-center gap-3">
+              {busy && (
+                <Button variant="secondary" size="lg" onClick={() => requestRef.current?.abort()}>
+                  {t('talk.cancel')}
+                </Button>
+              )}
+              <Button variant="secondary" size="lg" onClick={skip} disabled={locked}>
+                {t('talk.skip')}
+              </Button>
+            </div>
+          )}
+        </section>
+
+        {consentSection}
+        {review}
+
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button variant="secondary" to={formStep}>{t('talk.toForm')}</Button>
+          <Button variant="secondary" to="/talk">{t('talk.title')}</Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <section className="mx-auto max-w-3xl">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
@@ -227,78 +460,7 @@ function TalkPage() {
       </div>
 
       <div className="space-y-6">
-        <div className="ui-formsection">
-          <div className="ui-formsection-head">
-            <span className="ui-formsection-num" aria-hidden="true">1</span>
-            <h2 className="ui-formsection-title">{t('talk.sendsTitle')}</h2>
-          </div>
-          <div className="ui-formsection-body space-y-5">
-            <p>{t('talk.sendsText')}</p>
-            <p>{t('talk.rulesNote')}</p>
-
-            <div>
-              <label className="ui-check">
-                <input
-                  ref={consentRef}
-                  type="checkbox"
-                  id="talk-consent"
-                  name="talk-consent"
-                  checked={consent}
-                  disabled={locked}
-                  onChange={(event) => {
-                    setConsent(event.target.checked)
-                    setConsentMissing(false)
-                  }}
-                  aria-required="true"
-                  aria-invalid={consentMissing || undefined}
-                  aria-describedby={consentMissing ? 'talk-consent-error' : undefined}
-                />
-                <span>
-                  {t('talk.consent')}
-                  <span className="ui-required" aria-hidden="true">*</span>
-                </span>
-              </label>
-              {consentMissing && (
-                <p id="talk-consent-error" role="alert" className="ui-notice ui-notice-danger mt-3 font-bold text-[var(--color-danger)]">
-                  {t('talk.consentRequired')}
-                </p>
-              )}
-            </div>
-
-            {/* The same age answer /finance asks for, on a copy built with
-                VITE_REQUIRE_AGE_CHECK=true: a voice is sent from here too. */}
-            {DEPLOYMENT.requireAgeCheck && (
-              <div>
-                <label className="ui-check">
-                  <input
-                    ref={ageRef}
-                    type="checkbox"
-                    id="talk-age"
-                    name="talk-age"
-                    checked={age}
-                    disabled={locked}
-                    onChange={(event) => {
-                      setAge(event.target.checked)
-                      setAgeMissing(false)
-                    }}
-                    aria-required="true"
-                    aria-invalid={ageMissing || undefined}
-                    aria-describedby={ageMissing ? 'talk-age-error' : undefined}
-                  />
-                  <span>
-                    {tn('consent.age')}
-                    <span className="ui-required" aria-hidden="true">*</span>
-                  </span>
-                </label>
-                {ageMissing && (
-                  <p id="talk-age-error" role="alert" className="ui-notice ui-notice-danger mt-3 font-bold text-[var(--color-danger)]">
-                    {t('talk.consentRequired')}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        {consentSection}
 
         <div className="ui-formsection">
           <div className="ui-formsection-head">
@@ -306,22 +468,7 @@ function TalkPage() {
             <h2 className="ui-formsection-title">{t('talk.speakTitle')}</h2>
           </div>
           <div className="ui-formsection-body space-y-5">
-            <div className="ui-card-soft space-y-3 p-4">
-              {question && (
-                <p className="text-sm font-semibold text-[var(--color-text-muted)]">
-                  {t('talk.progress', { n: QUESTIONS.length - pending.length + 1, total: QUESTIONS.length })}
-                </p>
-              )}
-              <h3 ref={questionRef} tabIndex={-1} className="text-xl font-extrabold leading-snug">
-                {t(lineKey)}
-              </h3>
-              {voice.available && (
-                <Button variant="secondary" className="gap-2" onClick={voice.toggle}>
-                  <SpeakerIcon />
-                  {t(voice.speaking ? 'ra.stop' : 'ra.listen')}
-                </Button>
-              )}
-            </div>
+            {questionCard}
 
             {finished ? (
               <Button size="lg" to={formStep} className="w-full sm:w-auto">
@@ -349,19 +496,7 @@ function TalkPage() {
                   </select>
                 </div>
 
-                {speechSupported && micAvailable() ? (
-                  <VoiceRecorder
-                    disabled={busy !== ''}
-                    beforeStart={mayRecord}
-                    onWav={transcribe}
-                    onError={setError}
-                    onActiveChange={setRecording}
-                  />
-                ) : (
-                  <p className="ui-notice">
-                    {speechSupported ? t('talk.errMicNone') : t('talk.langNoSpeech', { language: spokenEntry.endonym })}
-                  </p>
-                )}
+                {recorder}
 
                 <div>
                   <label htmlFor="talk-text" className="block font-bold">{t('talk.textLabel')}</label>
@@ -388,16 +523,7 @@ function TalkPage() {
                   )}
                 </div>
 
-                {error && (
-                  <div role="alert" className="ui-notice ui-notice-danger font-semibold text-[var(--color-danger)]">
-                    {t(error)}
-                  </div>
-                )}
-
-                {/* Always in the page, so the first message is announced. */}
-                <div role="status" className={busy ? 'ui-notice font-semibold' : 'sr-only'}>
-                  {busy === 'transcribing' ? t('talk.listening') : busy === 'finding' ? t('talk.finding') : null}
-                </div>
+                {feedback}
 
                 <div className="flex flex-wrap gap-3">
                   <Button
@@ -422,61 +548,7 @@ function TalkPage() {
           </div>
         </div>
 
-        {found && (
-          <div className="ui-formsection">
-            <div className="ui-formsection-head">
-              <span className="ui-formsection-num" aria-hidden="true">3</span>
-              <h2 ref={reviewRef} tabIndex={-1} className="ui-formsection-title">{t('talk.reviewTitle')}</h2>
-            </div>
-            <div className="ui-formsection-body space-y-5">
-              {usable && <p>{t('talk.reviewHelp')}</p>}
-
-              {found.rows.length > 0 && (
-                <ul className="space-y-3">
-                  {found.rows.map((row) => {
-                    const body = <Answer row={row} />
-                    return (
-                      <li key={row.field} className="ui-card-soft p-4">
-                        {row.ok ? (
-                          <label className="ui-check">
-                            <input
-                              type="checkbox"
-                              checked={!dropped[row.field]}
-                              onChange={() => setDropped((before) => ({ ...before, [row.field]: !before[row.field] }))}
-                            />
-                            {body}
-                          </label>
-                        ) : (
-                          body
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-
-              {found.ignored > 0 && (
-                <p className="text-sm text-[var(--color-text-muted)]">{t('talk.ignored', { n: found.ignored })}</p>
-              )}
-
-              {usable ? (
-                <div className="space-y-4">
-                  {!question && <p className="text-sm text-[var(--color-text-muted)]">{t('talk.applyNote')}</p>}
-                  <Button size="lg" onClick={apply} disabled={locked} className="w-full">
-                    {t(question ? 'talk.right' : 'talk.apply')} <span aria-hidden="true">→</span>
-                  </Button>
-                  {question && (
-                    <Button variant="secondary" size="lg" onClick={nextQuestion} disabled={locked} className="w-full">
-                      {t('talk.again')}
-                    </Button>
-                  )}
-                </div>
-              ) : (
-                <p className="ui-notice ui-notice-warn font-semibold">{t(question ? 'talk.noneHere' : 'talk.noneFound')}</p>
-              )}
-            </div>
-          </div>
-        )}
+        {review}
       </div>
     </section>
   )
@@ -529,7 +601,7 @@ function clock(seconds) {
 // The microphone half of the page. It records, and hands the WAV up; what is
 // done with it is the page's business. The microphone is let go on Stop, on
 // Cancel, when the minute is up and when the reader leaves the page.
-function VoiceRecorder({ disabled, beforeStart, onWav, onError, onActiveChange }) {
+function VoiceRecorder({ big, disabled, beforeStart, onWav, onError, onActiveChange }) {
   const { t } = useI18n()
   // Record is off from the press until the recorder runs, and again from Stop
   // until the recording is finished.
@@ -630,6 +702,37 @@ function VoiceRecorder({ disabled, beforeStart, onWav, onError, onActiveChange }
     handleRef.current = null
     setActive(false)
     onActiveChange(false)
+  }
+
+  // The home page's microphone: one round button that starts and stops, with a ring that
+  // follows the voice (--level, the meter below as a size). Red and a square while it records.
+  if (big) {
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <button
+          type="button"
+          className="ui-mic"
+          data-recording={active || undefined}
+          style={{ '--level': active ? level : 0 }}
+          onClick={active ? finish : start}
+          disabled={!active && (disabled || starting)}
+        >
+          {active ? <span className="ui-mic-stop" aria-hidden="true" /> : <span className="text-5xl" aria-hidden="true">🎤</span>}
+          {t(active ? 'talk.stop' : 'talk.record')}
+        </button>
+        {active && <Button variant="secondary" size="lg" onClick={cancel}>{t('talk.cancel')}</Button>}
+
+        {/* Always in the page, so the first message is announced. */}
+        <p role="status" className={active ? 'font-bold' : 'sr-only'}>
+          {active ? t('talk.recording', { stop: t('talk.stop') }) : null}
+        </p>
+        {active && (
+          <span aria-hidden="true" className="tabular-nums text-sm font-bold">
+            {clock(seconds)} / {clock(MAX_SECONDS)}
+          </span>
+        )}
+      </div>
+    )
   }
 
   return (
