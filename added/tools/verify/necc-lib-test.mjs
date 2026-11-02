@@ -5,7 +5,7 @@
 // which centre belongs to which district, how the printed number becomes rupees
 // and when a price counts as stale. This suite is the gate on all of that. No
 // network: the pages are built here in the markup NECC serves (the selected
-// month and year in two <select>s, one header row of 31 day columns, a section
+// month and year in two <select>s, one header row with a column for each day of the month, a section
 // row, then one row per centre with " - " on the days nothing was published).
 // Run from the repo root:
 //
@@ -46,7 +46,7 @@ function monthSelect(selected) {
 }
 
 function yearSelect(selected) {
-  const options = ['2026', '2025', '2024'].map((v) => `<option ${v === selected ? 'selected="selected"' : '  '} value='${v}'>${v}</option>`)
+  const options = ['2028', '2026', '2025', '2024'].map((v) => `<option ${v === selected ? 'selected="selected"' : '  '} value='${v}'>${v}</option>`)
   return `<select name="ddlYear" id="ddlYear" style="width:135px;">\n${options.join('\n')}\n</select>`
 }
 
@@ -56,9 +56,10 @@ const headerRow = (labels) => `<tr align="center">\n<th>Name Of Zone / Day</th>\
 const sectionRow = (text) => `<tr>\n<td align="left" colspan="302 " style="font-weight: bold; ">${text}</td>\n</tr>`
 
 // `values` is the run of prices from day 1; every later day is " - ", which is how
-// NECC marks "nothing published". `cells` replaces the whole run of 31 day cells.
-function centreRow(label, values, { cells, average = '600.00' } = {}) {
-  const days = cells ?? Array.from({ length: 31 }, (_, i) => (i < values.length ? String(values[i]) : ' - '))
+// NECC marks "nothing published". `cells` replaces the whole run of day cells; `days` is
+// how many there are, the days of the month.
+function centreRow(label, values, { cells, average = '600.00', days: n = 31 } = {}) {
+  const days = cells ?? Array.from({ length: n }, (_, i) => (i < values.length ? String(values[i]) : ' - '))
   return `<tr align="center">\n<td align='left'>${label}</td>${days.map((c) => `<td>${c}</td>`).join('')}<td>${average}</td> </tr>`
 }
 
@@ -86,6 +87,10 @@ const GOOD_BODY = [
   centreRow('Luknow (CC)', [...run(27, 600), 640]),
 ]
 const GOOD_PAGE = page({ body: GOOD_BODY })
+
+// A month of `n` days: n header columns and n cells in the one centre's row, 600 then 610.
+const monthPage = (month, year, n) =>
+  page({ month, year, days: DAYS.slice(0, n), body: [sectionRow('Prevailing Prices'), centreRow('Luknow (CC)', [600, 610], { days: n })] })
 
 // ---------------------------------------------------------------- the run
 
@@ -139,10 +144,33 @@ describe('parseEggSheet', () => {
     assert.equal(rows[1].days[0], 610)
   })
 
+  // NECC prints one column for each day of the month, so November has 30 (seen on its page
+  // on 2 Nov 2026). The days of the result stay 31 long, the missing ones null.
+  for (const [month, year, n] of [['11', '2026', 30], ['02', '2026', 28], ['02', '2028', 29], ['10', '2026', 31]]) {
+    test(`reads ${year}-${month}, which has ${n} day columns, into 31 day slots`, () => {
+      const parsed = lib.parseEggSheet(monthPage(month, year, n))
+      assert.equal(parsed.month, `${year}-${month}`)
+      assert.equal(parsed.rows[0].days.length, 31)
+      assert.deepEqual(parsed.rows[0].days.slice(0, 3), [600, 610, null])
+      assert.deepEqual(parsed.rows[0].days.slice(n), Array(31 - n).fill(null))
+    })
+  }
+
+  for (const [month, year, shown, want] of [['11', '2026', 31, 30], ['11', '2026', 29, 30], ['02', '2026', 29, 28], ['02', '2028', 28, 29]]) {
+    test(`refuses ${shown} day columns in ${year}-${month}, which has ${want}`, () => {
+      assert.throws(() => lib.parseEggSheet(monthPage(month, year, shown)), new RegExp(`expected ${want} day columns`))
+    })
+  }
+
   const refuses = [
     ['no selected month', page({ month: null, body: GOOD_BODY }), /month/i],
     ['no selected year', page({ year: null, body: GOOD_BODY }), /year/i],
     ['a header of 30 days', page({ days: DAYS.slice(0, 30), body: GOOD_BODY }), /31 day/i],
+    [
+      'a centre with a day too many for a 30-day month',
+      page({ month: '11', days: DAYS.slice(0, 30), body: [sectionRow('Prevailing Prices'), centreRow('Pune', run(5, 600))] }),
+      /32 cells/i,
+    ],
     ['an unknown section', page({ body: [sectionRow('Something New'), centreRow('Pune', run(5, 600))] }), /section/i],
     ['a centre before any section', page({ body: [centreRow('Pune', run(5, 600))] }), /before/i],
     [
@@ -270,7 +298,7 @@ describe('buildRows', () => {
   })
 
   test('a price more than 30 days old is not shown, and is reported', () => {
-    const old = page({ month: '09', body: [sectionRow('Prevailing Prices'), centreRow('Luknow (CC)', run(20, 600))] })
+    const old = page({ month: '09', days: DAYS.slice(0, 30), body: [sectionRow('Prevailing Prices'), centreRow('Luknow (CC)', run(20, 600), { days: 30 })] })
     const out = build(old)
     assert.equal(out.rows.length, 0)
     assert.deepEqual(out.tooOld.map((x) => x.necc), ['Luknow (CC)'])
@@ -311,9 +339,19 @@ describe('buildRows', () => {
     assert.match(out.bad[0].reason, /after/i)
   })
 
+  // A page cannot show it any more (the reader wants the month's own number of columns), so the
+  // parsed sheet is built by hand.
   test('the 31st of a 30-day month is not a date', () => {
-    const html = page({ month: '09', body: [sectionRow('Prevailing Prices'), centreRow('Luknow (CC)', run(31, 600))] })
-    assert.throws(() => build(html, { today: '2026-10-02' }), /date/i)
+    const parsed = { month: '2026-09', rows: [{ section: 'prevailing', label: 'Luknow (CC)', days: [...run(30, null), 600] }] }
+    assert.throws(() => lib.buildRows(parsed, { ...RUN, today: '2026-10-02' }), /date/i)
+  })
+
+  test('a November sheet gives the Lucknow row dated by its last day', () => {
+    const out = build(monthPage('11', '2026', 30), { today: '2026-11-02' })
+    assert.equal(out.rows.length, 1)
+    assert.equal(out.rows[0].indicative_price, 6.1)
+    assert.equal(out.rows[0].last_reported, '2026-11-02')
+    assert.equal(out.rows[0].provenance.month, '2026-11')
   })
 })
 

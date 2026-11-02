@@ -1,5 +1,5 @@
 diff --git a/DATA_SOURCES.md b/DATA_SOURCES.md
-index 0efe29f..abe7e68 100644
+index 0efe29f..ceb1604 100644
 --- a/DATA_SOURCES.md
 +++ b/DATA_SOURCES.md
 @@ -5 +5 @@ This file records where every dataset and image in अर्थNiti came from, t
@@ -40,7 +40,7 @@ index 0efe29f..abe7e68 100644
 @@ -31,0 +35,34 @@ The software's own licence is in [LICENSE](LICENSE), and the code dependencies a
 +## Egg prices: `backend/app/data/necc_egg_prices.json`
 +
-+- **What it is.** 30 rows, one per NECC price centre, in 16 states: 20 of the prices NECC calls "suggested" and 10 of the ones it lists as "prevailing" (`price_kind` says which). One row (Delhi) is for the whole state and the other 29 are for a district. Fetched on 28 October 2026 by [tools/fetch-necc-prices.mjs](tools/fetch-necc-prices.mjs), with its helpers in [tools/necc-lib.mjs](tools/necc-lib.mjs), from NECC's public daily rate sheet at `https://www.e2necc.com/home/eggprice`. A row holds a price, a centre name and a date, and nothing else from the page.
++- **What it is.** 30 rows, one per NECC price centre, in 16 states: 20 of the prices NECC calls "suggested" and 10 of the ones it lists as "prevailing" (`price_kind` says which). One row (Delhi) is for the whole state and the other 29 are for a district. Fetched on 2 November 2026 by [tools/fetch-necc-prices.mjs](tools/fetch-necc-prices.mjs), with its helpers in [tools/necc-lib.mjs](tools/necc-lib.mjs), from NECC's public daily rate sheet at `https://www.e2necc.com/home/eggprice`. A row holds a price, a centre name and a date, and nothing else from the page.
 +- **What a price is.** The last price NECC printed for the centre in the month shown (October 2026), and `last_reported` is the date of that cell. Nothing is averaged, filled in or carried over. NECC's own "Average" column is never read: for Kolkata it printed 632.59, while the mean of that centre's own daily cells is 634.46. A price more than 8 days old is marked `stale` and one more than 30 days old is dropped, the thresholds of the crop prices above.
 +- **Which district.** [tools/necc-crosswalk.json](tools/necc-crosswalk.json) maps each NECC centre to one state and district and records the basis. 30 of NECC's 34 centres are mapped. Four are skipped on purpose, each with its reason in the file: Barwala (two towns share the name), East Godavari and West Godavari (districts split in 2022, so a price would be a guess) and Mumbai (two districts, and NECC does not say which).
 +- **Terms.** NECC is not under GODL and publishes no licence. NECC agreed to this use by e-mail in October 2026, and each row says so (`provenance.permission`). **That e-mail is the only permission there is.** It is an agreement, not a licence, and it does not say NECC endorses the app. The repo's MIT licence cannot pass it on, so the egg prices are outside that licence. The e-mail is not in the repo, because it carries the owner's contact details.
@@ -49,7 +49,7 @@ index 0efe29f..abe7e68 100644
 +
 +**UNRESOLVED:**
 +
-+- **The unit is our reading.** NECC prints whole numbers with no unit. We read them as paise per egg, so 640 is ₹6.40 an egg, or ₹640 for 100 eggs. That fits how egg prices are quoted and the range of the file (₹5.55 to ₹6.50 an egg), but NECC has not confirmed it. Ask NECC in writing. Until then the page prints the number as NECC printed it beside our reading of it (`mk.eggReading`).
++- **The unit is our reading.** NECC prints whole numbers with no unit. We read them as paise per egg, so 640 is ₹6.40 an egg, or ₹640 for 100 eggs. That fits how egg prices are quoted and the range of the file (₹6.10 to ₹7.10 an egg), but NECC has not confirmed it. Ask NECC in writing. Until then the page prints the number as NECC printed it beside our reading of it (`mk.eggReading`).
 +- **The permission is an e-mail.** Whether NECC's fourth sentence asks for more than printing the clarification beside the prices, whether it wants a credit in a set form, and whether the agreement reaches a client who deploys the app or anyone who copies the public repo, are all unasked. The owner wrote on 29 Oct 2026 that the NECC use is confirmed; that message is not on file and what it covered is not recorded, so all three stay marked as unasked.
 +- **A snapshot goes stale in days.** NECC publishes every day and the file is one fetch. Run `node tools/fetch-necc-prices.mjs --write` just before a demo or a deployment.
 +- **Coverage is 30 centres.** A reader in any other district gets the empty state for poultry.

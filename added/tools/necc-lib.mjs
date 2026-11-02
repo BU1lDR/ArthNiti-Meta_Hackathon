@@ -111,11 +111,14 @@ function selectedOption(html, id) {
 
 const SECTIONS = new Map([['necc suggested egg prices', 'suggested'], ['prevailing prices', 'prevailing']])
 
-function checkHeader(cells) {
+// NECC prints a column for each day of the month: 30 in November (seen on 2 Nov 2026), 28 or 29 in February.
+const daysInMonth = (year, month) => new Date(Date.UTC(Number(year), Number(month), 0)).getUTCDate()
+
+function checkHeader(cells, n) {
   const days = cells.slice(1, -1).map((c) => c.text)
-  const numbered = days.length === DAY_COLUMNS && days.every((d, i) => d === String(i + 1))
+  const numbered = days.length === n && days.every((d, i) => d === String(i + 1))
   if (!numbered || !/^average$/i.test(cells[cells.length - 1].text)) {
-    throw new Error(`expected 31 day columns numbered 1 to 31 and then Average, found ${days.length} day columns`)
+    throw new Error(`expected ${n} day columns numbered 1 to ${n} and then Average, found ${days.length} day columns`)
   }
 }
 
@@ -135,6 +138,7 @@ export function parseEggSheet(html) {
   if (!/^(0[1-9]|1[0-2])$/.test(month ?? '')) throw new Error(`the page has no selected month (ddlMonth gave ${JSON.stringify(month)})`)
   const year = selectedOption(page, 'ddlYear')
   if (!/^\d{4}$/.test(year ?? '')) throw new Error(`the page has no selected year (ddlYear gave ${JSON.stringify(year)})`)
+  const n = daysInMonth(year, month)
 
   const rows = []
   const labels = new Set()
@@ -147,7 +151,7 @@ export function parseEggSheet(html) {
       // The month and year lists sit in rows of their own above the sheet, with
       // <th> labels of their own. The sheet's header is the first row of <th> only.
       if (cells.length > 1 && cells.every((c) => c.tag === 'th')) {
-        checkHeader(cells)
+        checkHeader(cells, n)
         sawHeader = true
       }
       continue
@@ -158,14 +162,15 @@ export function parseEggSheet(html) {
       continue
     }
     const label = cells[0]?.text ?? ''
-    if (cells.length !== DAY_COLUMNS + 2) {
-      throw new Error(`${label ? `"${label}"` : 'a row'} has ${cells.length} cells, expected 33 cells (a name, 31 days and the average)`)
+    if (cells.length !== n + 2) {
+      throw new Error(`${label ? `"${label}"` : 'a row'} has ${cells.length} cells, expected ${n + 2} cells (a name, ${n} days and the average)`)
     }
     if (!label) throw new Error('a row of prices has no centre name')
     if (!section) throw new Error(`"${label}" comes before any section row`)
     if (labels.has(label)) throw new Error(`"${label}" appears twice on the page`)
     labels.add(label)
-    rows.push({ section, label, days: cells.slice(1, DAY_COLUMNS + 1).map((c, i) => priceOf(c.text, label, i + 1)) })
+    const prices = cells.slice(1, n + 1).map((c, i) => priceOf(c.text, label, i + 1))
+    rows.push({ section, label, days: [...prices, ...Array(DAY_COLUMNS - n).fill(null)] })
   }
 
   if (!sawHeader) throw new Error('the page has no header row of day columns')
