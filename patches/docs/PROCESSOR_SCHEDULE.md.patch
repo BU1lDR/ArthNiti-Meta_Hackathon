@@ -1,5 +1,5 @@
 diff --git a/docs/PROCESSOR_SCHEDULE.md b/docs/PROCESSOR_SCHEDULE.md
-index ff0c0ca..11e9c41 100644
+index ff0c0ca..11daa41 100644
 --- a/docs/PROCESSOR_SCHEDULE.md
 +++ b/docs/PROCESSOR_SCHEDULE.md
 @@ -5 +5 @@ This is the technical schedule for an organisation that runs अर्थNiti fo
@@ -10,7 +10,7 @@ index ff0c0ca..11e9c41 100644
 +- **By default the software uses no AI model.** Every figure and every sentence of advice comes from fixed, hand-written rules in `backend/app/services/`, and with the helper off no request is sent to any model, API or third party. The optional helper (§10), off unless the deployer switches it on, sends what a person says or types on one page to Meta's Model API, so that the form can be filled in for the person to check. It never produces a figure or a sentence of advice.
 @@ -40 +40 @@ The journey asks 19 questions over four steps, or 20 when the reader picks "Othe
 -The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. The frontend makes no other network request, and it loads no third-party font, script, stylesheet or CDN asset. Exactly 12 answers are sent:
-+The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. With the helper off, the frontend makes no other network request. With it on, the `/talk` page also calls the backend's two intake routes (§10), still at `VITE_API_BASE_URL`: the browser contacts no other address. The frontend loads no third-party font, script, stylesheet or CDN asset in either case. Exactly 12 answers are sent:
++The answers are sent once, when the reader presses **Check my business** on `/finance` with the consent box ticked. They go as one `POST /api/analysis/run` JSON request to `VITE_API_BASE_URL`. With the helper off, the frontend makes no other network request. With it on, the voice home (`/`) and the `/talk` page also call the backend's two intake routes (§10), still at `VITE_API_BASE_URL`: the browser contacts no other address. The frontend loads no third-party font, script, stylesheet or CDN asset in either case. Exactly 12 answers are sent:
 @@ -58,0 +59,2 @@ The consent record goes with them (§5.3).
 +The result that comes back carries, beside some pieces of advice, a figure the rules work out from these same answers (`advisory.amounts`: a shortfall to close, a payment that would bring the pressure to low, the most a household can pay, a cash reserve). It adds no request field, so the list above, the notice and the payload code are unchanged, and like the rest of the response it is not logged (§4.1).
 +
@@ -25,7 +25,7 @@ index ff0c0ca..11e9c41 100644
 +| Browser `sessionStorage`, key `sih-application` | every answer, the ones never sent included, and the last result, as `{v: 6, data}`. When the helper filled a field, `data` also names that field (`aiFilled`: field names, not words) | until **Start over** is pressed, or the tab is closed. It survives a page refresh. A browser that restores tabs after a restart may restore it too. | anyone using that tab on that device |
 +| Browser `localStorage` | `sih-language`, `sih-dialect`, `sih-theme`, `sih-textsize`, `sih-detail` (Simple or Detailed, written only once a button is pressed) and an inert `sih-contrast` left by older builds. Interface preferences only; no answers | no expiry. Start over does not clear them, and the notice says so (`common.startOverText`) | the next person on the same browser profile |
 @@ -90,0 +97,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
-+| `/talk` page memory (helper on) | the consent and age ticks, the recording until it is sent, the transcript, the answers found and which of them are ticked | until the reader leaves `/talk`. Never written to storage. The answers the reader chooses to use go into the `sessionStorage` copy above, as any other answer | that page |
++| `/talk` and voice-home page memory (helper on) | the consent and age ticks, the recording until it is sent, the transcript, the answers found and which of them are ticked | until the reader leaves the page. Never written to storage. The answers the reader chooses to use go into the `sessionStorage` copy above, as any other answer | that page |
 +| Loan-offer card memory (`/advisory`) | the numbers the reader types about an offer, and which way they chose to tell it | until the reader leaves `/advisory`. Never written to storage, never sent | that page |
 @@ -92 +100,2 @@ The backend still accepts eight more fields for other API callers: `employees`,
 -| Server process memory | the request and the computed response | the length of the request. The app writes nothing to disk and has no database. Its only cache holds the bundled scheme and market files | the server process |
@@ -48,7 +48,7 @@ index ff0c0ca..11e9c41 100644
 @@ -135 +151,2 @@ With consent switched off in production, the server logs one INFO line at startu
 -| `VITE_REQUIRE_AGE_CHECK` | exactly `true` adds the age box and the age paragraph | no age question |
 +| `VITE_REQUIRE_AGE_CHECK` | exactly `true` adds the age box and the age paragraph. On `/talk` it adds its own age box (§10.5) | no age question |
-+| `VITE_AI_HELPER` | exactly `true` shows the `/talk` page, its landing button and its profile card. Set it only when the backend runs with `ARTHNITI_AI_ENABLED=true` (§10) | the page does not exist: `/talk` shows the not-found page |
++| `VITE_AI_HELPER` | exactly `true` shows the `/talk` page and its profile card, and makes `/` the voice home in place of the landing page. Set it only when the backend runs with `ARTHNITI_AI_ENABLED=true` (§10) | the page does not exist: `/talk` shows the not-found page and `/` is the landing page |
 @@ -143 +160 @@ Set `VITE_RECORD_RETENTION_DAYS` only to the period after which the organisation
 -| `--no-access-log` | uvicorn's access log goes to stdout by default, between the processing-log lines, and carries the client IP address and the query string. In production the app logs a startup warning while it is on. Leave it on only if the organisation wants that record, and send it elsewhere with `--log-config` |
 +| `--no-access-log` | uvicorn's access log goes to stdout by default, between the processing-log lines, and carries the client IP address and the query string. In production the app logs a startup warning while it is on. Leave it on only if the organisation wants that record, and send it elsewhere with `--log-config`. With the helper on, the query string holds `?language=` (the language a person said they would speak) on every call to `/api/intake/transcribe` |
@@ -56,7 +56,7 @@ index ff0c0ca..11e9c41 100644
 +- [ ] The AI helper is off (`ARTHNITI_AI_ENABLED` unset, `VITE_AI_HELPER` unset), or every item in §10.8 is done.
 @@ -381 +399 @@ CORS stops other websites from calling the API from a reader's browser. It does
 -| C4 | **Naming processors** (s. 11(1)(b)) | the software calls no third party at runtime. The only other parties are the host, the proxy and any CDN the organisation adds | names the processor and every host and service in its rights responses |
-+| C4 | **Naming processors** (s. 11(1)(b)) | with the helper off, the software calls no third party at runtime, and the only other parties are the host, the proxy and any CDN the organisation adds. With the helper on, Meta also receives what a person says or types on `/talk` (§10.6) | names the processor and every host and service in its rights responses, and Meta if the helper is on |
++| C4 | **Naming processors** (s. 11(1)(b)) | with the helper off, the software calls no third party at runtime, and the only other parties are the host, the proxy and any CDN the organisation adds. With the helper on, Meta also receives what a person says on the voice home, or says or types on `/talk` (§10.6) | names the processor and every host and service in its rights responses, and Meta if the helper is on |
 @@ -399 +417 @@ CORS stops other websites from calling the API from a reader's browser. It does
 -| D4 | **Abuse limits** | none in the app. The 20-second timeout in the browser protects nothing on the server | sets body-size, rate and concurrency limits at the proxy (and `--limit-concurrency`) |
 +| D4 | **Abuse limits** | none on the analysis route. The 20-second timeout in the browser protects nothing on the server. With the helper on, its two routes have an hourly call limit per process and a spend cap (§10.7). Those bound the cost and not the traffic: the routes have no sign-in and no limit per person | sets body-size, rate and concurrency limits at the proxy (and `--limit-concurrency`). With the helper on, limits the intake routes harder, because each call can cost money |
@@ -84,7 +84,7 @@ index ff0c0ca..11e9c41 100644
 +
 +### 10.1 What it is
 +
-+The `/talk` page asks the form's questions one at a time instead of showing the whole form. It begins with one open question, which the person can answer or skip, then asks the twelve form questions in the form's order, each with its number. The person answers by speaking or typing. The page shows what it found in the reply, with the person's own words beside each answer, and asks whether it is right before anything goes into the form; the person can say a reply again or skip a question. A spoken reply makes two calls and a typed one only the second, both through this backend:
++The `/talk` page asks the form's questions one at a time instead of showing the whole form. It begins with one open question, which the person can answer or skip, then asks the twelve form questions in the form's order, each with its number. The person answers by speaking or typing. The page shows what it found in the reply, with the person's own words beside each answer, and asks whether it is right before anything goes into the form; the person can say a reply again or skip a question. A spoken reply makes two calls and a typed one only the second, both through this backend. The voice home (`/`, added 2 Nov 2026) is the same page with one microphone in place of the text box: it takes spoken replies only, in the page's language, and looks for the answers as soon as a recording stops. It makes the same two calls, with the same fields, under the same consent box:
 +
 +1. **Speech to words:** `POST /api/intake/transcribe?language=<code>`. The backend sends the recording to Meta's speech model (`muse-voice-transcribe-1.0` by default) and returns the words.
 +2. **Words to candidate answers:** `POST /api/intake/extract`. The backend sends the words to Meta's language model (`muse-spark-1.3` by default) and asks for the form answers it can find in them.
@@ -109,7 +109,7 @@ index ff0c0ca..11e9c41 100644
 +| Switch | Set in | With it off |
 +|---|---|---|
 +| `ARTHNITI_AI_ENABLED=true` | the backend environment (§3.1) | the intake routes and the plan route are not mounted and answer 404. The page shows `talk.errUnavailable` ("The helper is not available right now…") |
-+| `VITE_AI_HELPER=true` | the frontend build (§3.2) | `/talk`, its landing button and its profile card do not exist, `/talk` shows the not-found page, and `/advisory` has no plan card |
++| `VITE_AI_HELPER=true` | the frontend build (§3.2) | the voice home, `/talk` and its profile card do not exist, `/` is the landing page, `/talk` shows the not-found page, and `/advisory` has no plan card |
 +
 +### 10.2 What is sent to Meta
 +
@@ -131,7 +131,7 @@ index ff0c0ca..11e9c41 100644
 +|---|---|---|
 +| Backend memory | the recording and the words; for a plan, the answers, the description sent to Meta and the reply | one request. None of it is written to disk or to a log |
 +| Spend file, `ARTHNITI_AI_SPEND_FILE` (default `backend/.ai_spend`, git-ignored) | one line per model call: a whole number of millionths of a dollar, the call's worst-case price. No words, no key, no identity | until someone deletes it. The app deletes nothing |
-+| `/talk` page memory | the recording until it is sent, the words (editable), the answers found | until the person leaves the page |
++| `/talk` and voice-home page memory | the recording until it is sent, the words (editable on `/talk` only), the answers found | until the person leaves the page |
 +| Browser `sessionStorage` | the answers the person ticked, as any other answer, and the names of the fields the helper filled (`aiFilled`); beside the result, the answers it was made from (`request`) and the plan, if one was written | as in §2.4. Editing an answer on the business, location or finance page clears the result, the request and the plan |
 +| Meta | Meta decides | Meta decides |
 +
@@ -151,7 +151,7 @@ index ff0c0ca..11e9c41 100644
 +
 +### 10.5 Consent, notice and who may use it
 +
-+- `/talk` has its own consent box, kept in page memory only, and an age box when `VITE_REQUIRE_AGE_CHECK` is set. Pressing **Record** or **Find my answers** with a box unticked sends nothing, says why and moves focus to the box. The buttons are not disabled, so the reason can be seen.
++- `/talk` has its own consent box, kept in page memory only, and an age box when `VITE_REQUIRE_AGE_CHECK` is set. Pressing **Record** or **Find my answers** with a box unticked sends nothing, says why and moves focus to the box. The buttons are not disabled, so the reason can be seen. The voice home has the same box (and the same age box) and the same refusal on its microphone.
 +- The `/talk` wording (`talk.*` in `resultStrings.js`) is **outside the versioned notice** (`NOTICE_KEYS`). Editing it does not change `NOTICE_VERSION`.
 +- **`/privacy` does not mention the helper.** A deployer who switches the helper on has to add that and bump `NOTICE_VERSION` (§5.4).
 +- The plan card on `/advisory` has its own box, kept in page memory only and unticked again after every plan. The plan route refuses (422) a request whose `send_to_meta` is not a real `true`; it cannot tell whether a person ticked a box or a script set the field.

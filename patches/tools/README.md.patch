@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..e32b381 100644
+index b8e7eb3..fb6b04d 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -160,13 +160,27 @@ index b8e7eb3..e32b381 100644
 @@ -479,0 +526,2 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
 +node tools/verify/read-aloud.mjs     # the Listen button against a fake speech engine: 101 page loads, 756 checks; Vite only
 +node tools/verify/offer-ui.mjs       # the loan-offer card on /advisory: 12 scenarios, 74 page loads, 13,400 checks; Vite only, needs 4 case_*.json
-@@ -533 +581 @@ until the 422 check was added.
+@@ -481,0 +530,13 @@ node tools/verify/error-banner.mjs   # /finance submitted 4 ways x 8 languages =
++These run against a Vite with the helper **off**, where `/` is the landing page.
++The voice home (`/` with the helper on) goes through the two width gates by starting
++the Vite with `VITE_AI_HELPER=true` and running `mobile-audit --url=http://localhost:5173
++--out=mobile-helper` and `lang-layout` against it. `mobile-audit` skips a heading drawn
++as a 1 px box (`sr-only`, and `max-sm:sr-only` below 640 px, which the voice home uses
++for its `h1`) by the box it draws and not by its class name: before that it reported
++that heading as a `CLIP` at every phone width, 4 findings in a helper-on run. Two clips
++planted on the voice home (the Skip button cut to 60 px, the `h1` cut to 50 px) each make
++it exit 1 on the planted element. `scroll-audit` against the same Vite exits 2, and it
++will: 37 of its 38 hops and the back button measure, each opening at 0 px, but the
++instruction manual's opener and the `#how-it-works` anchor belong to the landing page, so
++those two report `NO-CONTROL`. A 2 is not a pass; a helper-on run of this gate cannot reach 0.
++
+@@ -533 +594 @@ until the 422 check was added.
 -`drive`'s eighth pass, `cleared`, loads the four result pages in Hindi with the
 +`drive`'s ninth pass, `cleared`, loads the four result pages in Hindi with the
-@@ -550 +598 @@ fields version 4 removed, reloads, and reads back what the app wrote to
+@@ -550 +611 @@ fields version 4 removed, reloads, and reads back what the app wrote to
 -result byte for byte. `/privacy` is one of the 41 loads, in every pass that loads
 +result byte for byte. `/privacy` is one of the 59 loads, in every pass that loads
-@@ -569,0 +618,226 @@ exited 0 with `neutralised` naming both.
+@@ -569,0 +631,226 @@ exited 0 with `neutralised` naming both.
 +**The repayment schedule.** On `/advisory`, every loan card's "you pay back in all"
 +and "interest in all" must print to the paisa (`LOAN TOTAL NOT TO THE PAISA`). On
 +`/report`, for each loan in the response that carries a `schedule`, `drive` picks
@@ -393,7 +407,7 @@ index b8e7eb3..e32b381 100644
 +after; the app's page is never narrower than 320 px, so a probe below that measures the
 +page and not the switch.
 +
-@@ -581,2 +855,6 @@ correct app.
+@@ -581,2 +868,6 @@ correct app.
 -**Seed versions.** `AppContext.jsx` writes version 4 and reads 1, 2, 3 and 4. Any
 -other version, or a payload with no `{v, data}` wrapper, is thrown away: the form
 +**Seed versions.** `AppContext.jsx` writes version 6 and reads 1 to 6. Version 5 added
@@ -402,17 +416,17 @@ index b8e7eb3..e32b381 100644
 +computed from and the written plan for it; a seed without them reads with both null.
 +Any other version, or a payload with no `{v, data}` wrapper, is
 +thrown away: the form
-@@ -594 +872,2 @@ is `FinancePage` local state, never stored.
+@@ -594 +885,2 @@ is `FinancePage` local state, never stored.
 -- Each of those nine declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
 +- `read-aloud` and `offer-ui` seed 6, the current shape: a result and nothing else.
 +- Each of those eleven declares `SEED_VERSION`, reads `READABLE_VERSIONS` out of
-@@ -597 +876 @@ is `FinancePage` local state, never stored.
+@@ -597 +889 @@ is `FinancePage` local state, never stored.
 -- The seven that seed a result read the stored state back on each result route
 +- The nine that seed a result read the stored state back on each result route
-@@ -735 +1014 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
+@@ -735 +1027 @@ Starts **its own Vite** on 5179, so it does not need yours (pass
 -node tools/verify/market-ui.mjs      # market cards + the sources block, 40 loads, 8 languages
 +node tools/verify/market-ui.mjs      # market cards + the sources block, 42 loads, 8 languages
-@@ -745,0 +1025,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
+@@ -745,0 +1038,13 @@ shows `mk.whereSell` and the translated labels of the seeded market types
 +A fourth case, `egg`, seeds three NECC egg rows (Bengaluru Urban 6.15, suggested
 +and fresh; Hyderabad 5.50, prevailing and stale; Delhi 6.40, suggested and
 +state-wide) and two that the page must refuse to draw (Chittoor, which has no
@@ -426,7 +440,7 @@ index b8e7eb3..e32b381 100644
 +on a page of egg rows alone (`EGG-GOVDATA`) and no egg sentence on a page with no
 +egg price (`EGG-STRAY`). `--broken` plants one defect for each.
 +
-@@ -817 +1109,625 @@ is still slow or unbounded" above).
+@@ -817 +1122,669 @@ is still slow or unbounded" above).
 -Helpers, the 6 that are not gates:
 +**The voice-and-text helper (`/talk`)** has two Node test files, one browser gate and
 +a fake backend. None of them reaches Meta, reads a key or costs anything:
@@ -434,7 +448,7 @@ index b8e7eb3..e32b381 100644
 +```bash
 +node --test tools/verify/talk-lib-test.mjs    # wav.js and talkAnswers.js: 71 tests, no server
 +node --test tools/verify/app-state-test.mjs   # AppContext's applyEdit, applyHelperFill, applyResult, applyPlan and storage: 41 tests, no server
-+node tools/verify/talk-ui.mjs                 # the page in a real Edge: 27 scenarios, 711 checks, about 60 s (--only=S3,S5 runs some)
++node tools/verify/talk-ui.mjs                 # the pages in a real Edge: 32 scenarios, 878 checks, about 85 s (--only=S3,S5 runs some)
 +```
 +
 +- `talk-lib-test` also hands a real encoded recording to the backend's own
@@ -446,10 +460,14 @@ index b8e7eb3..e32b381 100644
 +- `talk-ui` starts its own backend (8012), three Vites (5182 helper on, 5183 helper
 +  off, 5184 on with the age box) and its own Edge (9379, with a synthetic microphone),
 +  and kills all of them by PID on every exit path. It needs `.venv`, Edge and
-+  `frontend/node_modules`, and no `case_*.json`. Its scenarios are S0 to S25 plus S2b:
++  `frontend/node_modules`, and no `case_*.json`. Its scenarios are S0 to S30 plus S2b:
 +  S0 to S15 and S23 to S25 drive `/talk` (S23 to S25 the questions it asks one at a
-+  time, aloud, through a fake speech engine), S16 to S22 the plan card on `/advisory`.
-+  S0 and S1 also check which button leads the landing page.
++  time, aloud, through a fake speech engine), S16 to S22 the plan card on `/advisory`,
++  S26 to S30 the voice home (`/` with the helper on, a big microphone in place of the
++  text box: S26 at rest and the consent gate, S27 one recording through the review to
++  the form, S28 the microphone through its states and the link to `/talk`, S29 a 360 px
++  phone, S30 the question read aloud). S0 also checks which button leads the landing
++  page with the helper off.
 +  A wait for something the page owes the reader (the consent error) is a finding when
 +  it never comes; a wait for something the instrument needs is a fault, exit 2.
 +  `waitForRender()` (more than 40 characters in `#main`) cannot tell the page being
@@ -464,10 +482,10 @@ index b8e7eb3..e32b381 100644
 +
 +`talk-ui` has no `--broken` flag. Its refuters were run by hand: change one line, run
 +with `--only=`, restore it, compare the bytes. The thirteen for `/talk` (27 Oct 2026)
-+are in the table below; the twenty for the plan card (28 Oct 2026) and the forty-three
-+for the questions one at a time and the landing page's buttons (30 Oct 2026, the S24
-+rows again on 1 Nov 2026, and one more that day) come further down. All are listed in the script's header. Each
-+made the scenario fail:
++are in the table below; the twenty for the plan card (28 Oct 2026), the thirty-nine
++for the questions one at a time (30 Oct 2026, the S24 rows again on 1 Nov 2026, and one
++more that day) and the seventeen for the voice home (2 Nov 2026) come further down. All
++are listed in the script's header. Each made the scenario fail:
 +
 +| Change | Scenario | Checks that failed |
 +|---|---|---|
@@ -537,15 +555,18 @@ index b8e7eb3..e32b381 100644
 +refuter for the Cancel button, which is only on screen while the request is out; and
 +after a failed request the consent tick stays ticked (observed, not pinned).
 +
-+The thirty-eight for the questions one at a time (S23 to S25) and four for the landing
-+page's buttons (S0, S1) were run the same way on 30 Oct 2026, with a small runner kept
-+outside the repo: it backs the files up byte for byte, makes one change, runs
-+`talk-ui.mjs --only=...`, puts the file back and compares the bytes at the end. The S24
-+rows were run again on 1 Nov 2026, after S24 was rewritten (a voice over the network no
-+longer starts by itself) and three rows were added; a fourth row followed the same day
-+(the voice list announced before the page was listening, below). All 43 exit 1; one more
-+change (below the table) exits 0 and cannot be reached. `TalkPage.jsx` unless a file is named;
-+the header of `talk-ui.mjs` has the same list:
++The thirty-nine for the questions one at a time (S23 to S25) were run the same way on
++30 Oct 2026, with a small runner kept outside the repo: it backs the files up byte for
++byte, makes one change, runs `talk-ui.mjs --only=...`, puts the file back and compares
++the bytes at the end. The S24 rows were run again on 1 Nov 2026, after S24 was rewritten
++(a voice over the network no longer starts by itself) and three rows were added; a
++fourth row followed the same day (the voice list announced before the page was
++listening, below). All 39 exit 1; one more change (below the table) exits 0 and cannot
++be reached. Four more rows, for the landing page's buttons (S0, S1), were run on 30 Oct
++and are not in the table: on 2 Nov 2026 the landing page that has two buttons was
++replaced by the voice home when the helper is on, so the lines they changed are gone
++(the voice home's rows are further down). `TalkPage.jsx` unless a file is named; the
++header of `talk-ui.mjs` has the same list:
 +
 +| Change | Scenario | Checks that failed |
 +|---|---|---|
@@ -588,10 +609,6 @@ index b8e7eb3..e32b381 100644
 +| the question heading gets a `min-width` of 420 px | S25 | 7 |
 +| the "Question n of 12" line at 10 px | S25 | 4 |
 +| the language box 20 px high | S25 | 6 |
-+| `App.jsx`: the /talk button gets `variant="secondary"` | S1 | 1 |
-+| `App.jsx`: the two buttons in the old order, the form first | S1 | 2 |
-+| `App.jsx`: the form button is always secondary, also with the helper off | S0 | 1 |
-+| `App.jsx`: the form button is always primary, also with the helper on | S1 | 1 |
 +
 +The first run of the 35 was not a pass: 6 exited 1, 9 exited 2, 3 survived and 17 never
 +ran, because the next one started before the ports of the last were free (the runner now
@@ -637,6 +654,47 @@ index b8e7eb3..e32b381 100644
 +cannot show, but nobody has judged how any of it sounds. Nothing here asks the real model with
 +`asking` set either; that waits for the owner's rehearsal with a key (`docs/HACKATHON.md`
 +§10.1).
++
++The seventeen for the voice home (S26 to S30) were run the same way on 2 Nov 2026, with the
++same runner (named one-line changes to `TalkPage.jsx`, `App.jsx` and `index.css`, then
++`--only=S26,S27,S28,S29,S30`, then the three files put back and their hashes compared). All 17
++exit 1 and none exit 2. `TalkPage.jsx` unless a file is named:
++
++| Change | Scenario | Checks that failed |
++|---|---|---|
++| `App.jsx`: no `key="home"` on the home route | S28 | 2 |
++| Cancel is never offered while a request is out | S28 | 2 |
++| the microphone drawn below the question card, off the first screen of a 360 x 640 phone | S29 | 2 |
++| `index.css`: a keyframe animation on the microphone at rest | S26 | 1 |
++| the ring's `--level` is always 0 | S28 | 1 |
++| `mayRecord()` returns `true` (the box is not checked) | S26, S30 | 5, 1 |
++| a spoken reply in the open turn waits for Find (`if (question || home)` becomes `if (question)`) | S27 | 1 |
++| the recording is sent in English whatever the page's language | S28, S30 | 2, 1 |
++| Skip is not disabled while the recording is out | S28 | 2 |
++| the link to `/talk` leads to `/` | S26, S28 | 1, 1 |
++| `index.css`: the step number shown on the home page | S27 | 1 |
++| the microphone also drawn at the end of the questions | S27 | 1 |
++| the heading not hidden on a phone | S29 | 1 |
++| the microphone never disabled | S28 | 2 |
++| `agreed()` no longer stops the voice (pressing the microphone does not end the question being read) | S30 | 1 |
++| the cleanup of `VoiceRecorder` no longer cancels a recording in progress | S28 | 1 |
++| `App.jsx`: the form button of the landing page with the helper off gets `variant="secondary"` | S0 | 1 |
++
++Two of these taught something. Dropping `key="home"` does not fail the check that the recording
++is cut off: `VoiceRecorder` remounts on its own, so its cleanup runs anyway. What it breaks is
++the page's own state, a ticked consent box and a locked Skip carried from `/` to `/talk`, and
++S28 fails those two. And S28's "the recording was cut off and the microphone released" failed
++in 7 of 13 runs with the page intact: it read the microphone's tracks in the moment between
++React drawing `/talk` and React letting go of the old page. It waits up to 2 s now
++(`settleSnap(2000, allEnded)`) and failed in none of 5 runs after that, while the cleanup
++refuter still fails it.
++
++Not covered: the voice home has met a fake model, a synthetic microphone, a fake speech
++engine and a laptop Edge, and nothing else. A phone, a real touch screen, the on-screen
++keyboard, the real model on this page and a real microphone have not been tried (the owner's
++Android test is the first). There is no scenario for `prefers-reduced-motion` and no numeric
++check of the page's contrast; the ring is the only thing that moves, and S26 checks that no
++keyframe animation runs at rest.
 +
 +**The Listen button.** `/analysis` and `/advisory` draw a `ReadAloud` block
 +(`components/ReadAloud.jsx`, `audio/speak.js`): a button that reads out the light's word, its
@@ -1053,11 +1111,11 @@ index b8e7eb3..e32b381 100644
 +fresh clone can re-run. The ten arms can be re-run with `--broken` (one arm, or all ten).
 +
 +Helpers, the 8 that are not gates:
-@@ -823,0 +1740 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
+@@ -823,0 +1797 @@ node tools/svgcheck.mjs              # asset tool: every SVG loads and paints; e
 +node tools/make-hero-backdrop.mjs    # asset tool: draws frontend/public/hero-backdrop.svg; --check writes nothing and exits 1 when the file differs
-@@ -825,0 +1743 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
+@@ -825,0 +1800 @@ node tools/fetch-market-data.mjs     # data fetch: refreshes market_data.json fr
 +node tools/fetch-necc-prices.mjs     # data fetch: refreshes necc_egg_prices.json from NECC's rate sheet (see below)
-@@ -854,0 +1773,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
+@@ -854,0 +1830,9 @@ both refused. Measured on 26 Oct 2026 in throwaway repositories, 0 to 2 s a run:
 +`make-hero-backdrop.mjs` draws `frontend/public/hero-backdrop.svg`, the landing
 +page's backdrop, from code (no image, font or dependency comes in). The file is its
 +output, not a source: a hand edit of the SVG is lost on the next run, and
@@ -1067,7 +1125,7 @@ index b8e7eb3..e32b381 100644
 +file) and `hero-art` (the hero copy must still pass AA over it); `hero-geom` and
 +`hero-vibrance` report on the same art.
 +
-@@ -860,3 +1787,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
+@@ -860,3 +1844,14 @@ sample key, never reads `.env` and never writes. The usual refresh is
 -the gates. It is the only script here that goes to the internet, and
 -`market-lib.mjs` beside it is the library it and `market-lib-test.mjs` share, not
 -a script to run.
@@ -1085,26 +1143,26 @@ index b8e7eb3..e32b381 100644
 +`necc-lib-test.mjs` share. Their SHA-256 is recorded in every row
 +(`provenance.script_sha256`) and `.gitattributes` keeps both in LF, so editing
 +either without fetching again makes that record false.
-@@ -866,2 +1804,2 @@ a script to run.
+@@ -866,2 +1861,2 @@ a script to run.
 -**Run `refresh-cases.mjs` after any backend change.** Eight scripts, `drive.mjs`
 -among them, seed `sessionStorage` from the three captured `case_*.json` responses. Those go stale **silently** —
 +**Run `refresh-cases.mjs` after any backend change.** Ten scripts, `drive.mjs`
 +among them, seed `sessionStorage` from the captured `case_*.json` responses. Those go stale **silently** —
-@@ -898,2 +1836,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
+@@ -898,2 +1893,2 @@ taskkill //F //T //PID <pid>     # doubled slashes under Git Bash
 -`figure-audit`, `mobile-audit` and `market-ui` find their own Edge by its profile
 -path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
 +`figure-audit`, `mobile-audit`, `market-ui`, `talk-ui`, `read-aloud` and `offer-ui` find their own Edge by its
 +profile path and kill it by PID. The other fifteen (`assetgen`, `svgcheck`, `brand-mark`, `error-banner`,
-@@ -914 +1852 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
+@@ -914 +1909 @@ can run at once: `drive` 9222, `mobile-audit` 9333, `hero-art` 9337, `brand-mark
 -`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375 — plus `assetgen` 9377
 +`motion-audit` 9365, `scroll-audit` 9367, `text-align` 9371, `market-ui` 9373, `figure-audit` 9375, `talk-ui` 9379, `read-aloud` 9381, `offer-ui` 9383 — plus `assetgen` 9377
-@@ -933 +1871 @@ working one.
+@@ -933 +1928 @@ working one.
 -Six scripts have that refuter built in as a flag, and each **must exit 1** with it:
 +Eight scripts have that refuter built in as a flag, and each **must exit 1** with it:
-@@ -941 +1879 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
+@@ -941 +1936 @@ node tools/verify/text-align.mjs   --broken   # the stacked footer reported on a
 -node tools/verify/market-ui.mjs    --broken   # 532 planted defects across 40 loads, all caught (676 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
 +node tools/verify/market-ui.mjs    --broken   # 832 planted defects across 42 loads, all caught (1040 findings); exit 2 means one defect went uncaught, or a real `DICT-EN` finding (nothing is planted in the dictionary check, so a 1 would hide it)
-@@ -944,0 +1883,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
+@@ -944,0 +1940,15 @@ node tools/verify/figure-audit.mjs --broken=tiny   # forced to 9px: TINY on all
 +node tools/verify/read-aloud.mjs   --broken=cancel # the fake's cancel() does nothing: NOT-STOPPED, 6 findings across 101 loads
 +node tools/verify/read-aloud.mjs   --broken=local  # every voice reports itself on the device: 53 findings (REMOTE-VOICE-USED 24, WRONG-VOICE 24, BUTTON-WITHOUT-VOICE 3, NOT-STOPPED 1, WRONG-LINES 1)
 +node tools/verify/read-aloud.mjs   --broken=digits # a digit added to every spoken line: 89 findings (WRONG-LINES 57, DIGIT-SPOKEN 32)
@@ -1120,7 +1178,7 @@ index b8e7eb3..e32b381 100644
 +node tools/verify/offer-ui.mjs     --broken=live     # the sentences carried by a copy of the result area: 188 findings (LIVE-REGION 177, CAPTION 11)
 +node tools/verify/offer-ui.mjs     --broken=leak     # "{total}" left on the first line: 264 findings (WRONG-FIGURE 132, LEAK 132)
 +node tools/verify/offer-ui.mjs     --broken          # all ten: 900 findings in 17 kinds; exit 2 names an arm whose own kind did not appear
-@@ -948 +1901,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
+@@ -948 +1958,5 @@ Those figures were measured on 29 Sept 2026, and again, unchanged, on 30 Sept an
 -on 26 Oct 2026, after the exit-code fixes.
 +on 26 Oct 2026, after the exit-code fixes. The exceptions are `market-ui`'s, measured
 +again on 28 Oct 2026 after the egg cases were added, and `read-aloud`'s and
