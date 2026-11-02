@@ -110,8 +110,9 @@ jobs:
         working-directory: app
         run: node --test tools/verify/necc-lib-test.mjs
 
-      # One test in talk-lib-test hands a recording to the backend through the
-      # Windows virtual environment, so it is skipped here.
+      # The six below need no server and no key. One test in talk-lib-test
+      # hands a recording to the backend through the Windows virtual
+      # environment, so it is skipped here.
       - name: /talk recording and answer logic
         working-directory: app
         run: node --test tools/verify/talk-lib-test.mjs
@@ -123,6 +124,18 @@ jobs:
       - name: read-aloud voice choice and speech queue (no network)
         working-directory: app
         run: node --test tools/verify/speak-lib-test.mjs
+
+      - name: the amount beside a piece of advice (no network)
+        working-directory: app
+        run: node --test tools/verify/amount-lib-test.mjs
+
+      - name: the yearly cost of a loan offer (no network)
+        working-directory: app
+        run: node --test tools/verify/offer-lib-test.mjs
+
+      - name: the words of the loan-offer card (no network)
+        working-directory: app
+        run: node --test tools/verify/offer-lines-test.mjs
 
       # Informational: it prints its hits and exits 0 whenever it ran, so only
       # a crash (exit 2) fails this step.
