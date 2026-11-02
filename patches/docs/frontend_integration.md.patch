@@ -1,5 +1,5 @@
 diff --git a/docs/frontend_integration.md b/docs/frontend_integration.md
-index 2463c76..bd992db 100644
+index 2463c76..b447354 100644
 --- a/docs/frontend_integration.md
 +++ b/docs/frontend_integration.md
 @@ -3 +3 @@
@@ -10,6 +10,9 @@ index 2463c76..bd992db 100644
 -| production | `ARTHNITI_ENV=production` | the deployer's own https origin | `GET /health` and `POST /api/analysis/run` only. Everything else, the docs included, is a 404 |
 +| development | `ARTHNITI_ENV` unset or `development` | `http://127.0.0.1:8000` | all 8 routers (10 with the AI helper on); Swagger at `/docs`, plus `/redoc` and `/openapi.json` |
 +| production | `ARTHNITI_ENV=production` | the deployer's own https origin | `GET /health` and `POST /api/analysis/run` only, plus the two intake routes and the plan route when the AI helper is on. Everything else, the docs included, is a 404 |
+@@ -46 +46 @@ They are not part of this contract. `/api/advisory/recommend` does not price the
+-    "notice_version": "2026-09-27.1",
++    "notice_version": "2026-11-02.1",
 @@ -62 +62 @@ All rupee amounts are numbers between 0 and 1,000,000,000 (₹100 crore). Infini
 -| `business_category` | string | yes | | 2–100 characters. The UI sends one of `retail`, `food processing`, `handicrafts`, `tailoring`, `agriculture`, `dairy`, `services` or `manufacturing`, or the reader's own words for "Other". It is matched against scheme categories by substring, so keep the values in English |
 +| `business_category` | string | yes | | 2–100 characters. The UI sends one of `retail`, `food processing`, `handicrafts`, `tailoring`, `agriculture`, `dairy`, `poultry`, `services` or `manufacturing`, or the reader's own words for "Other". It is matched against scheme categories by substring, so keep the values in English |

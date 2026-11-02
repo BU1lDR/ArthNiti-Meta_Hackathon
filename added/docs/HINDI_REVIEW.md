@@ -1,6 +1,18 @@
 # Hindi wording to read
 
-**Status: two rows read, the rest not yet read.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. On 31 Oct 2026 the author read rows 230 and 231 and left them as they are; no other row has been reported as read. Row 9 was reworded on 1 Nov 2026, when `/login` became a name entry (it read “Log in”, “लॉग इन”), and is not among the rows read. Once the whole sheet has been read, this line will say who read it and when. That will mean “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other seven languages have not been read by anyone.
+**Status: read by one Hindi reader on 2 Nov 2026; the changes they returned are applied.** Written 29 Oct 2026 for the author, who reads Hindi, to check the Hindi on the screens the video shows. On 2 Nov 2026 the author reported having read rows 1 to 231 and S1 to S36, and returned 31 rewordings and five spelling rules; what was done with them is under “What the 2 Nov 2026 reading changed”. Rows 230 and 231 had been read on 31 Oct 2026; row 231 was reworded on 2 Nov. Row 9 was reworded on 1 Nov 2026, when `/login` became a name entry (it read “Log in”, “लॉग इन”), and the 2 Nov reading covers it as it now stands. That is “read by one Hindi reader”, not “reviewed by a native speaker of Hindi”, and it must not be described as more than that. The other Hindi strings (those on screens the video does not show) have not been reported as read, apart from the `amt.*` and `offer.*` lines the author returned as final on 31 Oct 2026. The other seven languages have not been read by anyone.
+
+## What the 2 Nov 2026 reading changed
+
+All of it is in the dictionary since 2 Nov 2026. The **Hindi** column below is the text as it was read, so it still shows the old wording; the **Fix** column holds the wording that replaced it. Nothing in another language changed.
+
+- **31 rows reworded**, the ones with a Fix cell. Rows 121 and 138 were given different wording, so they no longer print the same words, although the sheet marked them “same Hindi as” each other.
+- **Kept as they were:** 103, 120 and 163 (the buttons that ask for the information are clear), and 108 and 205 (the English “team running this demonstration” stays). The state names, S1 to S36, came back unchanged.
+- **Five spelling rules**, applied to every Hindi string in the dictionary and not only to the rows here: (1) ज़, फ़ and ख़ keep the dot in loanwords (ज़िला, ज़रूरी, फ़ॉर्म, ख़ाली), but क is written plain; (2) कौन-सी, with the hyphen; (3) आँकड़े, with the chandrabindu; (4) ढूँढ़, with the dotted ढ़; (5) कर्ज़, with no dot under the क, which is rule 1 for that word.
+- **Latin names in Devanagari:** AI became एआई, Meta became मेटा and EMI became ईएमआई, in the rows here and in the six `plan.*` strings of the plan card, which are not on this sheet.
+- **Left for the author:** one “कौन-कौन सी” (`sdata.dic.description`), which the hyphen rule did not touch because the word is repeated. Row 231 came back with a doubled nasal mark in “जाँच”; it is written with one.
+- **Measured against the commit before:** 132 Hindi strings changed (20 in `strings.js`, 106 in `resultStrings.js`, 1 in `backendStrings.js`, 5 in `schemeStrings.js`). Of them 93 had a dotted क, so words such as किस्त, रकम, इलाका and तरीका lost the dot too; 11 had आंक…; 3 had कौन सी; 3 had ढूँढ without the dot; 9 had “AI”, 4 “Meta” and 4 “EMI” in Latin letters.
+- **The notice version moved.** Four of the changed strings are among the 60 notice keys (`errf.revenue`, `errf.emi`, `errf.debt`, `notice.demo`), so `NOTICE_VERSION` went from `2026-09-27.1` to `2026-11-02.1` and `tools/notice-version.json` holds the new hash. The shipping of a non-English notice is still blocked (S16, `docs/PROCESSOR_SCHEDULE.md` §9.1).
 
 ## What is here
 
@@ -18,24 +30,24 @@
 
 ## Look at these first
 
-What stood out on a first read. These are suspicions, not corrections: the reader decides, and the rest of the sheet is still to be read.
+What stood out on a first read, and what the author decided on 2 Nov 2026 (last column). These were suspicions, not corrections.
 
-| Rows | What stood out |
-|---|---|
-| 6 | “गहरा रंग” (deep colour) for “Dark mode” reads as a colour name, not as the setting. |
-| 42 | “गहरी जानकारी” (deep information) for “Advanced information”. |
-| 121, 138 | “उम्मीद की कमाई” is awkward for “expected income”. “अनुमानित कमाई” is one option. |
-| 107 | “मन से बनाए हुए आँकड़े” (figures made up from the mind) is an odd way to say “made-up figures”. “काल्पनिक आँकड़े” is another option. |
-| 60 | Says “नतीजा” for the result; every other page says “परिणाम”. The end, “जैसे तब जब आप जवाब खुद लिखते हैं”, is clumsy. |
-| 59, 60, 61, 189, 190, 199, 202 | “Meta”, “AI” and “EMI” are in Latin letters, while ब्लॉक, फ़ॉर्म and ब्राउज़र are in Devanagari. Keep it so, or write मेटा, एआई, ईएमआई? Also, “Meta की चलाई एक AI सेवा” is clumsy. |
-| 181, 182 | The formal words “नियोजित निवेश” (planned investment) and “कुल ज़रूरी निवेश”, while step 2 asks “आपको कितने पैसों की ज़रूरत है?”. Plainer words may suit people who read little. |
-| 103, 120, 163 | The English buttons say “Continue to my business / my area / finance”. The Hindi ones tell the person to give the information about their work, area and money. Intended? |
-| 214, 215 | The note puts the button name into the sentence: “…सब देखने के लिए विस्तार से दबाएँ।” It reads like “press in detail”. |
-| 38, 46, 50, 66, 67, 99, 113, 118, 148 | Spelling is not uniform. Dotted letters appear in ज़िला, ज़रूरी, फ़ॉर्म, क़र्ज़, ख़ाली and आख़िरी, but not in खर्च, खुद, गलत, खरीदते and सफर. “कौन सी” (profile.language, landing.schemes.text) and “कौन-सी” (landing.f3.text, business.subtitle) both appear. So do आंकड़े (landing.f1.text) and आँकड़े (seven other rows), and ढूँढ (location.subtitle) and ढूँढ़ (talk.find and four more). The loan word is क़र्ज़ in the nine rows here that use it, but कर्ज़ in 69 strings on pages this sheet does not cover. One rule for each can be applied everywhere. |
-| 218 | “कुछ भी कहीं नहीं भेजता” (sends nothing anywhere) stacks negatives. “कुछ भी बाहर नहीं भेजता” is a plainer option. Does “इस डिवाइस की अपनी आवाज़” say that the voice lives on the device? |
-| 220, 223, 224 | “सवाल {n} / {total}” reads like a fraction rather than “Question 1 of 12”. “नहीं, फिर से बोलना है” literally says “no, (I) have to speak again”. “फ़ॉर्म से भरें” says “fill it from the form” for “Use the form instead”. |
-| 108, 205 | Not a Hindi question. The English says “the team running this demonstration”, and one person runs it. This is part of the versioned notice, so a change bumps the version. |
-| 231 | “लागू न हो” (does not apply) for “is not true for you” is a formal word. “आपके लिए सही न हो” is a plainer option. |
+| Rows | What stood out | Decision, 2 Nov 2026 |
+|---|---|---|
+| 6 | “गहरा रंग” (deep colour) for “Dark mode” reads as a colour name, not as the setting. | Changed. |
+| 42 | “गहरी जानकारी” (deep information) for “Advanced information”. | Changed. |
+| 121, 138 | “उम्मीद की कमाई” is awkward for “expected income”. “अनुमानित कमाई” is one option. | Changed, each with its own wording. |
+| 107 | “मन से बनाए हुए आँकड़े” (figures made up from the mind) is an odd way to say “made-up figures”. “काल्पनिक आँकड़े” is another option. | Changed. |
+| 60 | Says “नतीजा” for the result; every other page says “परिणाम”. The end, “जैसे तब जब आप जवाब खुद लिखते हैं”, is clumsy. | Changed: “परिणाम”, and a smoother ending. |
+| 59, 60, 61, 189, 190, 199, 202 | “Meta”, “AI” and “EMI” are in Latin letters, while ब्लॉक, फ़ॉर्म and ब्राउज़र are in Devanagari. Keep it so, or write मेटा, एआई, ईएमआई? Also, “Meta की चलाई एक AI सेवा” is clumsy. | Changed: एआई, मेटा and ईएमआई in Devanagari, also in the six `plan.*` strings, which are not on this sheet. |
+| 181, 182 | The formal words “नियोजित निवेश” (planned investment) and “कुल ज़रूरी निवेश”, while step 2 asks “आपको कितने पैसों की ज़रूरत है?”. Plainer words may suit people who read little. | Changed to plainer words. |
+| 103, 120, 163 | The English buttons say “Continue to my business / my area / finance”. The Hindi ones tell the person to give the information about their work, area and money. Intended? | Kept: the Hindi buttons are clear. |
+| 214, 215 | The note puts the button name into the sentence: “…सब देखने के लिए विस्तार से दबाएँ।” It reads like “press in detail”. | Changed. |
+| 38, 46, 50, 66, 67, 99, 113, 118, 148 | Spelling is not uniform. Dotted letters appear in ज़िला, ज़रूरी, फ़ॉर्म, क़र्ज़, ख़ाली and आख़िरी, but not in खर्च, खुद, गलत, खरीदते and सफर. “कौन सी” (profile.language, landing.schemes.text) and “कौन-सी” (landing.f3.text, business.subtitle) both appear. So do आंकड़े (landing.f1.text) and आँकड़े (seven other rows), and ढूँढ (location.subtitle) and ढूँढ़ (talk.find and four more). The loan word is क़र्ज़ in the nine rows here that use it, but कर्ज़ in 69 strings on pages this sheet does not cover. One rule for each can be applied everywhere. | The five spelling rules below, applied everywhere. |
+| 218 | “कुछ भी कहीं नहीं भेजता” (sends nothing anywhere) stacks negatives. “कुछ भी बाहर नहीं भेजता” is a plainer option. Does “इस डिवाइस की अपनी आवाज़” say that the voice lives on the device? | Changed. |
+| 220, 223, 224 | “सवाल {n} / {total}” reads like a fraction rather than “Question 1 of 12”. “नहीं, फिर से बोलना है” literally says “no, (I) have to speak again”. “फ़ॉर्म से भरें” says “fill it from the form” for “Use the form instead”. | Changed. |
+| 108, 205 | Not a Hindi question. The English says “the team running this demonstration”, and one person runs it. This is part of the versioned notice, so a change bumps the version. | Kept: the English “team running this demonstration” stays. |
+| 231 | “लागू न हो” (does not apply) for “is not true for you” is a formal word. “आपके लिए सही न हो” is a plainer option. | Changed. |
 
 ## Found while collecting (not a wording question)
 
@@ -52,7 +64,7 @@ Around every page in every shot: the language, text-size and theme controls, the
 | 3 | common.helpTitle | Where to get help | मदद कहाँ मिलेगी | |
 | 4 | common.helpText | Your District Industries Centre or block office can tell you which schemes are open to you and how to apply. | आपका ज़िला उद्योग केंद्र या ब्लॉक दफ़्तर बता सकता है कि आप किन योजनाओं के लिए आवेदन कर सकते हैं और आवेदन कैसे करें। | |
 | 5 | common.schemesChecked | Scheme rules were checked between {from} and {to}. | योजनाओं के नियम {from} से {to} के बीच जाँचे गए। | |
-| 6 | common.darkMode | Dark mode | गहरा रंग | |
+| 6 | common.darkMode | Dark mode | गहरा रंग | डार्क मोड |
 | 7 | common.skipToMain | Skip to main content | मुख्य सामग्री पर जाएँ | |
 | 8 | common.dialect | Dialect | बोली | |
 | 9 | common.login | Enter your name | अपना नाम लिखें | |
@@ -91,15 +103,15 @@ Shot 1 (HACKATHON.md section 10.3): the first page, before the language is chang
 | 35 | landing.miniTitle | Know what to do next. | जानिए आगे क्या करना है। | |
 | 36 | landing.money.text | See profit, funding need and repayment process. | मुनाफ़ा, ज़रूरी पैसा और क़र्ज़ चुकाने की प्रक्रिया देखें। | |
 | 37 | landing.schemes.title | Useful schemes | काम की योजनाएँ | |
-| 38 | landing.schemes.text | See which government schemes cover your kind of work and your state. | देखें कि कौन सी सरकारी योजनाएँ आपके काम और आपके राज्य के लिए हैं। | |
+| 38 | landing.schemes.text | See which government schemes cover your kind of work and your state. | देखें कि कौन सी सरकारी योजनाएँ आपके काम और आपके राज्य के लिए हैं। | देखें कि कौन-सी सरकारी योजनाएँ आपके काम और आपके राज्य के लिए हैं। |
 | 39 | landing.next.title | Your next steps | आपके अगले कदम | |
 | 40 | landing.next.text | Get practical advice based on your situation. | अपनी स्थिति के हिसाब से व्यावहारिक सलाह पाएँ। | |
 | 41 | landing.detailTitle | Need more detail? | और जानकारी चाहिए? | |
-| 42 | landing.detailText | Advanced information stays available whenever you want it. | गहरी जानकारी जब चाहें तब उपलब्ध रहती है। | |
+| 42 | landing.detailText | Advanced information stays available whenever you want it. | गहरी जानकारी जब चाहें तब उपलब्ध रहती है। | विस्तृत जानकारी जब चाहें तब उपलब्ध रहती है। |
 | 43 | landing.offerEyebrow | What we offer | हम क्या देते हैं | |
 | 44 | landing.offerTitle | From idea to action. | सोच से काम तक। | |
 | 45 | landing.f1.title | Hyper local insights | आपके इलाके की जानकारी | |
-| 46 | landing.f1.text | Government figures for your district where we have them: wholesale mandi prices, and how many businesses have registered work like yours. | जहाँ हमारे पास हैं, वहाँ आपके ज़िले के सरकारी आंकड़े: मंडी के थोक दाम, और आपके जैसा काम कितने कारोबारों ने दर्ज कराया है। | |
+| 46 | landing.f1.text | Government figures for your district where we have them: wholesale mandi prices, and how many businesses have registered work like yours. | जहाँ हमारे पास हैं, वहाँ आपके ज़िले के सरकारी आंकड़े: मंडी के थोक दाम, और आपके जैसा काम कितने कारोबारों ने दर्ज कराया है। | जहाँ हमारे पास हैं, वहाँ आपके ज़िले के सरकारी आँकड़े: मंडी के थोक दाम, और आपके जैसा काम कितने कारोबारों ने दर्ज कराया है। |
 | 47 | landing.f2.title | Financial clarity | पैसों की साफ़ तस्वीर | |
 | 48 | landing.f2.text | Understand whether the business looks sustainable and where money is going. | समझें कि काम टिकाऊ लगता है या नहीं और पैसा कहाँ जा रहा है। | |
 | 49 | landing.f3.title | Government support | सरकारी सहायता | |
@@ -118,9 +130,9 @@ Shot 2: the page where the person speaks or types. The microphone and the model 
 |---|---|---|---|---|
 | 57 | talk.subtitle | Tell us in a few sentences what your business is, how much money you need and where you live. We find your answers in what you said, and you check each one before it goes into the form. | कुछ वाक्यों में बताइए कि आपका काम क्या है, आपको कितने पैसे चाहिए और आप कहाँ रहते हैं। हम आपकी बात से जवाब ढूँढ़ते हैं, और फ़ॉर्म में जाने से पहले हर जवाब आप खुद जाँचते हैं। | |
 | 58 | talk.sendsTitle | Before you start | शुरू करने से पहले | |
-| 59 | talk.sendsText | Your voice and your words are sent to an AI service run by Meta. It writes your words down and finds your answers in them. We do not save them. Meta handles them under its own rules. If this service is running on free credits, Meta may also use them to improve its products. Please do not say your name, phone number or bank details. | आपकी आवाज़ और आपके शब्द Meta की चलाई एक AI सेवा को भेजे जाते हैं। वह आपके शब्द लिखती है और उनमें से आपके जवाब ढूँढ़ती है। हम इन्हें सहेजकर नहीं रखते। Meta इन्हें अपने नियमों के अनुसार संभालती है। अगर यह सेवा मुफ़्त क्रेडिट पर चल रही है, तो Meta इन्हें अपने उत्पाद बेहतर बनाने में भी इस्तेमाल कर सकती है। कृपया अपना नाम, फ़ोन नंबर या बैंक की जानकारी न बोलें। | |
-| 60 | talk.rulesNote | The AI only listens and finds your answers. The result, the schemes and the advice are still worked out by fixed rules, the same as when you type your answers. | AI सिर्फ़ सुनती है और आपके जवाब ढूँढ़ती है। नतीजा, योजनाएँ और सलाह पहले की तरह तय नियमों से ही निकलते हैं, जैसे तब जब आप जवाब खुद लिखते हैं। | |
-| 61 | talk.consent | I agree that what I say or type on this page is sent to an AI service run by Meta. | मैं सहमत हूँ कि इस पन्ने पर मैं जो बोलूँ या लिखूँ, वह Meta की चलाई AI सेवा को भेजा जाए। | |
+| 59 | talk.sendsText | Your voice and your words are sent to an AI service run by Meta. It writes your words down and finds your answers in them. We do not save them. Meta handles them under its own rules. If this service is running on free credits, Meta may also use them to improve its products. Please do not say your name, phone number or bank details. | आपकी आवाज़ और आपके शब्द Meta की चलाई एक AI सेवा को भेजे जाते हैं। वह आपके शब्द लिखती है और उनमें से आपके जवाब ढूँढ़ती है। हम इन्हें सहेजकर नहीं रखते। Meta इन्हें अपने नियमों के अनुसार संभालती है। अगर यह सेवा मुफ़्त क्रेडिट पर चल रही है, तो Meta इन्हें अपने उत्पाद बेहतर बनाने में भी इस्तेमाल कर सकती है। कृपया अपना नाम, फ़ोन नंबर या बैंक की जानकारी न बोलें। | आपकी आवाज़ और आपके शब्द मेटा की एआई सेवा को भेजे जाते हैं। वह आपके शब्दों को लिखती है और उनमें से आपके जवाब ढूँढ़ती है। हम इन्हें सहेजकर नहीं रखते। मेटा इन्हें अपने नियमों के अनुसार संभालती है। अगर यह सेवा मुफ़्त क्रेडिट पर चल रही है, तो मेटा इन्हें अपने उत्पाद बेहतर बनाने में भी इस्तेमाल कर सकती है। कृपया अपना नाम, फ़ोन नंबर या बैंक की जानकारी न बोलें। |
+| 60 | talk.rulesNote | The AI only listens and finds your answers. The result, the schemes and the advice are still worked out by fixed rules, the same as when you type your answers. | AI सिर्फ़ सुनती है और आपके जवाब ढूँढ़ती है। नतीजा, योजनाएँ और सलाह पहले की तरह तय नियमों से ही निकलते हैं, जैसे तब जब आप जवाब खुद लिखते हैं। | एआई सिर्फ़ सुनती है और आपके जवाब ढूँढ़ती है। परिणाम, योजनाएँ और सलाह तय नियमों से ही तय होते हैं, ठीक वैसे ही जैसे आपके खुद जवाब लिखने पर। |
+| 61 | talk.consent | I agree that what I say or type on this page is sent to an AI service run by Meta. | मैं सहमत हूँ कि इस पन्ने पर मैं जो बोलूँ या लिखूँ, वह Meta की चलाई AI सेवा को भेजा जाए। | मैं सहमत हूँ कि इस पन्ने पर मैं जो बोलूँ या लिखूँ, वह मेटा द्वारा संचालित एआई सेवा को भेजा जाए। |
 | 62 | talk.speakTitle | Say it or type it | बोलिए या लिखिए | |
 | 63 | talk.langLabel | Which language will you use? | आप किस भाषा में बताएँगे? | |
 | 64 | talk.record | Start speaking | बोलना शुरू करें | |
@@ -135,7 +147,7 @@ Shot 3, and the rest of that page: the recording buttons, the list of answers to
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
 | 68 | talk.consentRequired | Please tick the box to agree before you continue. | आगे बढ़ने से पहले कृपया सहमति वाले बॉक्स पर निशान लगाएँ। | |
-| 69 | talk.langNoSpeech | Speaking is not available in {language} yet. You can type instead. | {language} में बोलना अभी उपलब्ध नहीं है। आप इसकी जगह लिख सकते हैं। | |
+| 69 | talk.langNoSpeech | Speaking is not available in {language} yet. You can type instead. | {language} में बोलना अभी उपलब्ध नहीं है। आप इसकी जगह लिख सकते हैं। | {language} में बोलना अभी उपलब्ध नहीं है। आप इसके बजाय लिख सकते हैं। |
 | 70 | talk.stop | Stop | रोकें | |
 | 71 | talk.cancel | Cancel | रद्द करें | |
 | 72 | talk.recording | Recording. Speak now, then press {stop}. | रिकॉर्डिंग चल रही है। अब बोलिए, फिर {stop} दबाइए। | |
@@ -172,7 +184,7 @@ Shot 4: step 1 of 4, with the short privacy note. (19 strings)
 | 96 | profile.subtitle | Tell us your name and the language you want to read in. | अपना नाम और वह भाषा बताइए जिसमें आप पढ़ना चाहते हैं। | |
 | 97 | profile.name | What is your name? | आपका नाम क्या है? | |
 | 98 | profile.namePh | Your name | आपका नाम | |
-| 99 | profile.language | Which language should we use? | हम कौन सी भाषा इस्तेमाल करें? | |
+| 99 | profile.language | Which language should we use? | हम कौन सी भाषा इस्तेमाल करें? | हम कौन-सी भाषा इस्तेमाल करें? |
 | 100 | profile.languageHint | You can change this any time from the bar at the top. | इसे आप ऊपर की पट्टी से कभी भी बदल सकते हैं। | |
 | 101 | profile.dialect | Which way of speaking is closest to yours? | आपके बोलने का तरीका किससे मिलता है? | |
 | 102 | profile.dialectHint | This is optional. It helps us greet you the way people do in your area. | यह ज़रूरी नहीं है। इससे हम आपके इलाके के तरीके से आपका स्वागत कर पाते हैं। | |
@@ -180,7 +192,7 @@ Shot 4: step 1 of 4, with the short privacy note. (19 strings)
 | 104 | finance.submit **(notice)** | Check my business | मेरा काम जाँचें | |
 | 105 | notice.sent **(notice)** | When you press {button} on the last step, some of your answers are sent to {fiduciary} to work out your result: your kind of work, your money figures, your state and district, and whether your business is in a village or a city. | आख़िरी चरण पर {button} बटन दबाने पर, आपका परिणाम निकालने के लिए आपके कुछ जवाब {fiduciary} को भेजे जाते हैं: आपके काम की किस्म, आपके पैसों के आँकड़े, आपका राज्य और ज़िला, और यह कि आपका काम गाँव में है या शहर में। | |
 | 106 | notice.local **(notice)** | Your name, your business name, your village or town, where you sell and who your customers are stay in this browser tab. They are never sent, and they are printed on your report. | आपका नाम, आपके काम का नाम, आपका गाँव या कस्बा, आप कहाँ बेचते हैं और आपके ग्राहक कौन हैं, ये सब इसी ब्राउज़र टैब में रहते हैं। ये कभी नहीं भेजे जाते, और आपकी रिपोर्ट में छपते हैं। | |
-| 107 | notice.demo **(notice)** | This is only a demonstration. Use made-up figures, not your real ones. | यह सिर्फ़ दिखाने के लिए बना नमूना है। अपने असली आँकड़े न डालें, मन से बनाए हुए आँकड़े डालें। | |
+| 107 | notice.demo **(notice)** | This is only a demonstration. Use made-up figures, not your real ones. | यह सिर्फ़ दिखाने के लिए बना नमूना है। अपने असली आँकड़े न डालें, मन से बनाए हुए आँकड़े डालें। | यह सिर्फ़ दिखाने के लिए बना नमूना है। अपने असली आँकड़े न डालें, काल्पनिक आँकड़े डालें। |
 | 108 | notice.demoOperator **(notice)** | the team running this demonstration | इस नमूने को चलाने वाली टीम | |
 | 109 | notice.readFull **(notice)** | Read the full privacy notice | पूरी गोपनीयता सूचना पढ़ें | |
 | 110 | talk.entryText | Rather talk than type? Say it in your own language and we will fill in the form for you to check. | लिखने की जगह बोलना चाहते हैं? अपनी भाषा में बताइए, हम फ़ॉर्म भर देंगे और आप उसे जाँच लीजिए। | |
@@ -201,12 +213,12 @@ Shot 4: step 2 of 4, with the banner that says which answers came from the helpe
 | 118 | business.opex | How much will the business itself cost each month? | हर महीने काम पर कितना खर्च होगा? | |
 | 119 | business.opexHint | Only business costs — stock, rent, transport, electricity. Not your home costs. | सिर्फ़ काम का खर्च — माल, किराया, ढुलाई, बिजली। घर का खर्च नहीं। | |
 | 120 | business.submit | Continue to my area | अपने इलाके की जानकारी दें | |
-| 121 | finance.expectedIncome<br>same Hindi as 138 | Expected monthly income | हर महीने की उम्मीद की कमाई | |
+| 121 | finance.expectedIncome<br>read as the same Hindi as 138 | Expected monthly income | हर महीने की उम्मीद की कमाई | अनुमानित मासिक कमाई |
 | 122 | business.tapOne | Tap one option. | एक विकल्प चुनें। | |
 | 123 | business.numbersTitle | Your business numbers | आपके काम के आँकड़े | |
 | 124 | business.numbersHint | Rough estimates are okay. You can change them later. | मोटा अंदाज़ा भी ठीक है। बाद में बदल सकते हैं। | |
 | 125 | business.moreDetails | More business details | काम की और जानकारी | |
-| 126 | business.debt | Existing business debt | पहले से चल रहा क़र्ज़ | |
+| 126 | business.debt | Existing business debt | पहले से चल रहा क़र्ज़ | पहले से चल रहा कर्ज़ |
 | 127 | cat.retail | Retail / Shop | दुकान / खुदरा | |
 | 128 | cat.food | Food / Food Processing | खाना / खाद्य प्रसंस्करण | |
 | 129 | cat.handicrafts | Handicrafts | हस्तशिल्प | |
@@ -218,10 +230,10 @@ Shot 4: step 2 of 4, with the banner that says which answers came from the helpe
 | 135 | cat.manufacturing | Manufacturing | निर्माण | |
 | 136 | cat.other | Other | अन्य | |
 | 137 | errf.category **(notice)** | the kind of work you do | आपके काम की किस्म | |
-| 138 | errf.revenue **(notice)**<br>same Hindi as 121 | the money you expect to earn each month | हर महीने की उम्मीद की कमाई | |
+| 138 | errf.revenue **(notice)**<br>read as the same Hindi as 121 | the money you expect to earn each month | हर महीने की उम्मीद की कमाई | हर महीने की अनुमानित कमाई |
 | 139 | errf.investment **(notice)** | how much money you require | शुरू करने के लिए ज़रूरी पैसे | |
 | 140 | errf.opExpenses **(notice)** | how much the business itself will cost each month | हर महीने काम पर होने वाले खर्च | |
-| 141 | errf.debt **(notice)** | your existing business debt | आपके पहले से चल रहे क़र्ज़ | |
+| 141 | errf.debt **(notice)** | your existing business debt | आपके पहले से चल रहे क़र्ज़ | आपके पहले से चल रहे कर्ज़ |
 | 142 | form.localOnly **(notice)** | This is never sent. It stays in this tab, is printed on your report, and does not change your result. | यह कभी नहीं भेजा जाता। यह इसी टैब में रहता है, आपकी रिपोर्ट में छपता है, और आपके परिणाम को नहीं बदलता। | |
 | 143 | talk.filledTitle | Filled in from what you said | आपकी बात से भरे गए | |
 | 144 | talk.filledText | Please check these answers and change any that are wrong: | कृपया इन जवाबों को जाँचें और जो गलत हों उन्हें बदलें: | |
@@ -235,7 +247,7 @@ Shot 4: step 3 of 4. (30 strings)
 |---|---|---|---|---|
 | 146 | business.categoryHint<br>same Hindi as 157 | Choose the closest option. | सबसे नज़दीक वाला चुनें। | |
 | 147 | location.title | Where does your business operate? | आपका काम कहाँ चलता है? | |
-| 148 | location.subtitle | Your location helps us find the schemes open where you work, and local market figures where we have them. | आपकी जगह से हम वे योजनाएँ ढूँढ पाते हैं जो आपके इलाके में मिलती हैं, और जहाँ हमारे पास हों, वहाँ के स्थानीय बाज़ार के आँकड़े। | |
+| 148 | location.subtitle | Your location helps us find the schemes open where you work, and local market figures where we have them. | आपकी जगह से हम वे योजनाएँ ढूँढ पाते हैं जो आपके इलाके में मिलती हैं, और जहाँ हमारे पास हों, वहाँ के स्थानीय बाज़ार के आँकड़े। | आपकी जगह से हम वे योजनाएँ ढूँढ़ पाते हैं जो आपके इलाके में मिलती हैं, और जहाँ हमारे पास हों, वहाँ के स्थानीय बाज़ार के आँकड़े। |
 | 149 | location.state<br>same Hindi as 171 | Your state | आपका राज्य | |
 | 150 | location.stateHint | Choose from the list. | सूची से चुनें। | |
 | 151 | location.district<br>same Hindi as 172, 174 | Your district | आपका ज़िला | |
@@ -275,28 +287,28 @@ Shot 4: step 4 of 4, with the privacy note next to the consent box. (32 strings)
 | 178 | finance.title | Let us understand your finances | आइए आपके पैसों को समझें | |
 | 179 | finance.subtitle | You do not need exact numbers. Simple estimates are enough for us to check funding needs and monthly business health. | सही-सही आँकड़े ज़रूरी नहीं। मोटा अंदाज़ा भी काफ़ी है, जिससे हम ज़रूरी पैसा और महीने की सेहत देख सकें। | |
 | 180 | finance.startHeading<br>same Hindi as 207 | Money needed to start | शुरू करने के लिए ज़रूरी पैसा | |
-| 181 | finance.startHint | We already have your planned investment from the previous step. | आपका नियोजित निवेश पिछले चरण से ले लिया गया है। | |
-| 182 | finance.investNeeded | Total investment needed | कुल ज़रूरी निवेश | |
+| 181 | finance.startHint | We already have your planned investment from the previous step. | आपका नियोजित निवेश पिछले चरण से ले लिया गया है। | आपकी तय लागत पिछले चरण से ले ली गई है। |
+| 182 | finance.investNeeded | Total investment needed | कुल ज़रूरी निवेश | कुल ज़रूरी लागत |
 | 183 | finance.capital | How much money do you already have? | आपके पास पहले से कितना पैसा है? | |
 | 184 | finance.flowHeading | Money coming in and going out | आने वाला और जाने वाला पैसा | |
 | 185 | finance.flowHint | Think about an average month. | एक आम महीने के बारे में सोचें। | |
 | 186 | finance.fromBusiness | Taken from your business details. | आपके काम की जानकारी से लिया गया। | |
 | 187 | finance.expenses | How much do you spend each month? | आप हर महीने कितना खर्च करते हैं? | |
 | 188 | finance.expensesHint | Everything you spend in a month, including your home and family costs. | महीने का पूरा खर्च, घर और परिवार का खर्च भी शामिल। | |
-| 189 | finance.emiSummary | Do you or your family repay any loan or EMI? | क्या आप या आपका परिवार कोई क़र्ज़ या EMI चुका रहा है? | |
-| 190 | finance.emi | Monthly EMI / loan payment | हर महीने की EMI / क़र्ज़ की किस्त | |
+| 189 | finance.emiSummary | Do you or your family repay any loan or EMI? | क्या आप या आपका परिवार कोई क़र्ज़ या EMI चुका रहा है? | क्या आप या आपका परिवार कोई कर्ज़ या ईएमआई चुका रहा है? |
+| 190 | finance.emi | Monthly EMI / loan payment | हर महीने की EMI / क़र्ज़ की किस्त | हर महीने की ईएमआई / कर्ज़ की किस्त |
 | 191 | finance.emiPh | 0 if none | न हो तो 0 | |
-| 192 | finance.emiHint | Add up the monthly repayment of every loan that you, your husband or wife, or your unmarried children are paying. If you are not married, add up the loans of your parents and of their unmarried children instead, yours included. | आप, आपके पति या पत्नी, या आपके अविवाहित बच्चे जितने भी क़र्ज़ चुका रहे हैं, उन सबकी हर महीने की किस्त जोड़कर लिखें। अगर आपकी शादी नहीं हुई है, तो इसकी जगह अपने माता-पिता और उनके अविवाहित बच्चों के सारे क़र्ज़ों की किस्तें जोड़ें, अपनी भी। | |
+| 192 | finance.emiHint | Add up the monthly repayment of every loan that you, your husband or wife, or your unmarried children are paying. If you are not married, add up the loans of your parents and of their unmarried children instead, yours included. | आप, आपके पति या पत्नी, या आपके अविवाहित बच्चे जितने भी क़र्ज़ चुका रहे हैं, उन सबकी हर महीने की किस्त जोड़कर लिखें। अगर आपकी शादी नहीं हुई है, तो इसकी जगह अपने माता-पिता और उनके अविवाहित बच्चों के सारे क़र्ज़ों की किस्तें जोड़ें, अपनी भी। | आप, आपके पति या पत्नी, या आपके अविवाहित बच्चे जितने भी कर्ज़ चुका रहे हैं, उन सबकी हर महीने की किस्त जोड़कर लिखें। अगर आपकी शादी नहीं हुई है, तो इसकी जगह अपने माता-पिता और उनके अविवाहित बच्चों के सारे कर्ज़ों की किस्तें जोड़ें, अपनी भी। |
 | 193 | finance.householdIncome | How much does your household earn in a month? | आपका परिवार महीने में कितना कमाता है? | |
 | 194 | finance.householdIncomeHint | Your household is you, your husband or wife, and your unmarried children. If you are not married, your household is your parents and their unmarried children, you included. Add what all of them earn from all their work, including any business already running. A rough monthly average over the past year is enough. Do not count what the new plan is expected to earn. You can leave this blank. | परिवार यानी आप, आपके पति या पत्नी, और आपके अविवाहित बच्चे। अगर आपकी शादी नहीं हुई है, तो परिवार यानी आपके माता-पिता और उनके सभी अविवाहित बच्चे, जिनमें आप भी हैं। इन सबकी हर काम से होने वाली कमाई जोड़ें, पहले से चल रहे किसी काम-धंधे की कमाई भी। पिछले एक साल में हर महीने लगभग जितना आया, उतना लिखें। नए काम से जितनी कमाई की उम्मीद है, वह न जोड़ें। चाहें तो इसे ख़ाली छोड़ दें। | |
 | 195 | finance.privacyNote **(notice)** | This tab keeps a copy of your answers, even if you refresh the page. Closing the tab usually removes it. If other people also use this phone or computer, press {button} at the top when you finish. | यह टैब आपके जवाबों की एक कॉपी रखता है, पेज रिफ़्रेश करने पर भी। टैब बंद करने पर वह आम तौर पर मिट जाती है। अगर इस फ़ोन या कंप्यूटर को दूसरे लोग भी इस्तेमाल करते हैं, तो काम पूरा होने पर ऊपर {button} बटन दबाएँ। | |
-| 196 | money.leftAfterEmi | Money left after the loan payment | क़र्ज़ की किस्त चुकाने के बाद बचने वाला पैसा | |
+| 196 | money.leftAfterEmi | Money left after the loan payment | क़र्ज़ की किस्त चुकाने के बाद बचने वाला पैसा | कर्ज़ की किस्त चुकाने के बाद बचने वाला पैसा |
 | 197 | money.needed | Money still needed | अभी और चाहिए | |
 | 198 | money.needArrange | This is the amount you may need to arrange. | इतना पैसा आपको जुटाना पड़ सकता है। | |
-| 199 | money.afterExpenses | Estimated after expenses and EMI. | खर्च और EMI के बाद का अंदाज़ा। | |
+| 199 | money.afterExpenses | Estimated after expenses and EMI. | खर्च और EMI के बाद का अंदाज़ा। | खर्च और ईएमआई के बाद का अंदाज़ा। |
 | 200 | errf.capital **(notice)** | the money you already have | आपके पास पहले से मौजूद पैसे | |
 | 201 | errf.expenses **(notice)** | how much you spend each month | आपके हर महीने के खर्च | |
-| 202 | errf.emi **(notice)** | your monthly EMI or loan payment | हर महीने की EMI या क़र्ज़ की किस्त | |
+| 202 | errf.emi **(notice)** | your monthly EMI or loan payment | हर महीने की EMI या क़र्ज़ की किस्त | आपकी हर महीने की ईएमआई या कर्ज़ की किस्त |
 | 203 | errf.householdIncome **(notice)** | how much your household earns in a month | आपके परिवार की महीने की कमाई | |
 | 204 | consent.title **(notice)** | Before we check your business | आपका काम जाँचने से पहले | |
 | 205 | consent.agree **(notice)** | I have read the note above. I agree to send these answers to {fiduciary} to work out my result. | मैंने ऊपर लिखी बात पढ़ ली है। मैं सहमत हूँ कि मेरा परिणाम निकालने के लिए ये जवाब {fiduciary} को भेजे जाएँ। | |
@@ -315,11 +327,11 @@ Not in the Hindi part of the video (the language is switched to English on the l
 | 211 | band.basis | This light only reads the figures you gave. It is not a decision about a loan or a scheme. | यह बत्ती सिर्फ़ आपके बताए आँकड़े पढ़ती है। यह किसी क़र्ज़ या योजना का फ़ैसला नहीं है। | |
 | 212 | detail.label | How much to show | कितना दिखाना है | |
 | 213 | detail.simple | Simple | सरल | |
-| 214 | detail.detailed | Detailed | विस्तार से | |
-| 215 | detail.simpleNote | This is the short version. To see everything we worked out, press {detailed}. | यह छोटा रूप है। हमने जो कुछ निकाला है वह सब देखने के लिए {detailed} दबाएँ। | |
+| 214 | detail.detailed | Detailed | विस्तार से | विस्तृत जानकारी |
+| 215 | detail.simpleNote | This is the short version. To see everything we worked out, press {detailed}. | यह छोटा रूप है। हमने जो कुछ निकाला है वह सब देखने के लिए {detailed} दबाएँ। | यह संक्षिप्त रूप है। हमारा पूरा विश्लेषण देखने के लिए {detailed} बटन दबाएँ। |
 | 216 | ra.listen | Listen | सुनें | |
 | 217 | ra.stop | Stop | रोकें | |
-| 218 | ra.note | A voice on this device reads out the light and the main sentences. It does not read the figures. This app sends nothing to do it. | इस डिवाइस की अपनी आवाज़ बत्ती और मुख्य वाक्य पढ़कर सुनाती है। आँकड़े नहीं पढ़े जाते। इसके लिए यह ऐप कुछ भी कहीं नहीं भेजता। | |
+| 218 | ra.note | A voice on this device reads out the light and the main sentences. It does not read the figures. This app sends nothing to do it. | इस डिवाइस की अपनी आवाज़ बत्ती और मुख्य वाक्य पढ़कर सुनाती है। आँकड़े नहीं पढ़े जाते। इसके लिए यह ऐप कुछ भी कहीं नहीं भेजता। | इस डिवाइस की अपनी आवाज़ बत्ती और मुख्य वाक्य पढ़कर सुनाती है। आँकड़े नहीं पढ़े जाते। इसके लिए यह ऐप कोई भी जानकारी बाहर नहीं भेजता। |
 
 ## The questions the helper page asks one at a time (new this week)
 
@@ -328,14 +340,14 @@ The helper page now asks the form's questions one at a time, in the order of the
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
 | 219 | talk.askOpen | Tell me about your business: what work you do, where you are, and how much money you have and need. | अपने काम के बारे में बताइए: आप क्या काम करते हैं, कहाँ रहते हैं, और आपके पास कितना पैसा है और कितना चाहिए। | |
-| 220 | talk.progress | Question {n} of {total} | सवाल {n} / {total} | |
+| 220 | talk.progress | Question {n} of {total} | सवाल {n} / {total} | सवाल {n} (कुल {total}) |
 | 221 | talk.skip | Skip this question | यह सवाल छोड़ें | |
 | 222 | talk.right | Yes, that is right | हाँ, यह सही है | |
-| 223 | talk.again | No, I will say it again | नहीं, फिर से बोलना है | |
-| 224 | talk.toForm | Use the form instead | फ़ॉर्म से भरें | |
+| 223 | talk.again | No, I will say it again | नहीं, फिर से बोलना है | नहीं, मैं फिर से बोलूँगा |
+| 224 | talk.toForm | Use the form instead | फ़ॉर्म से भरें | इसके बजाय फ़ॉर्म का इस्तेमाल करें |
 | 225 | talk.allDone | All the questions are done. Go to the form to check your answers. | सारे सवाल हो गए। अपने जवाब जाँचने के लिए फ़ॉर्म पर जाइए। | |
 | 226 | talk.noneHere | We could not find an answer to this question in what you said. Say it again, type it, or skip this question. | आपकी बात में हमें इस सवाल का जवाब नहीं मिला। फिर से बोलिए, लिखिए, या यह सवाल छोड़ दीजिए। | |
-| 227 | talk.askDebt | Does this business already owe any money? If yes, how much? | क्या इस काम पर पहले से कोई क़र्ज़ है? अगर हाँ, तो कितना? | |
+| 227 | talk.askDebt | Does this business already owe any money? If yes, how much? | क्या इस काम पर पहले से कोई क़र्ज़ है? अगर हाँ, तो कितना? | क्या इस काम पर पहले से कोई कर्ज़ है? अगर हाँ, तो कितना? |
 | 228 | talk.askState | Which state is your business in? | आपका काम किस राज्य में है? | |
 | 229 | talk.askDistrict | Which district is your business in? | आपका काम किस ज़िले में है? | |
 
@@ -346,7 +358,7 @@ Each scheme on the scheme page and on the printout now opens with the few of its
 | # | Key | English | Hindi | Fix |
 |---|---|---|---|---|
 | 230 | sc.checkFirst | Check these first | पहले ये जाँच लें | |
-| 231 | sc.checkFirstText | This scheme might not fit you if one of these is not true for you. We cannot check them for you. | इनमें से कोई बात आप पर लागू न हो, तो हो सकता है यह योजना आपके लिए न हो। इन्हें हम आपके लिए नहीं जाँच सकते। | |
+| 231 | sc.checkFirstText | This scheme might not fit you if one of these is not true for you. We cannot check them for you. | इनमें से कोई बात आप पर लागू न हो, तो हो सकता है यह योजना आपके लिए न हो। इन्हें हम आपके लिए नहीं जाँच सकते। | अगर इनमें से कोई बात आपके लिए सही न हो, तो हो सकता है यह योजना आपके काम की न हो। इन्हें हम आपकी तरफ़ से नहीं जाँच सकते। |
 
 ## State and union territory names in the menu
 

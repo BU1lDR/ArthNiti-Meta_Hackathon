@@ -1,5 +1,5 @@
 diff --git a/CLAUDE.md b/CLAUDE.md
-index d6ab002..b84794f 100644
+index d6ab002..b9e69f5 100644
 --- a/CLAUDE.md
 +++ b/CLAUDE.md
 @@ -3 +3 @@
@@ -469,7 +469,7 @@ index d6ab002..b84794f 100644
 -- `tools/notice-version.json` is untracked; commit it with `notice.js`.
 -- The lawyer items are listed in §9.3 of the schedule.
 +- **Advice and data:** no eligibility rule is evaluated anywhere (`sc.eligUnchecked` says so on the page), and NECC's permission is an e-mail.
-+- **Translations:** no native speaker has reviewed any non-English wording (`talk.*`, `ra.*`, `amt.*` and `offer.*` included, all machine-written but for the Hindi of the last two, returned by the owner as final on 31 Oct 2026), and **S16 blocks shipping a non-English notice** (the 60 notice keys). The owner reads Hindi and reviews `docs/HINDI_REVIEW.md`: one reader, never "native-speaker reviewed".
++- **Translations:** no native speaker has reviewed any non-English wording (`talk.*`, `ra.*`, `amt.*` and `offer.*` included, all machine-written but for the Hindi of the last two), and **S16 blocks shipping a non-English notice** (the 60 notice keys). The owner read the Hindi on the video's screens (`docs/HINDI_REVIEW.md`) on 2 Nov 2026, the rest not: one reader, never "native-speaker reviewed".
 +- **Meta helper:** the key works (27 Oct 2026). **The plan card has met the real model five times, in English and Hindi (1 and 2 Nov 2026); `talk-ui` S16–S22 and S26–S30 use the fake one,** and the Listen button and the spoken questions only a fake engine and one real-Edge probe (1 Nov). The helper routes have no authentication, no per-user limit and no consent record (the ledger and the hourly limit are the only brakes), and `/privacy` says nothing about the helper (`PROCESSOR_SCHEDULE.md` §10.5). No `safety_identifier` is sent and zero data retention is not requested. Malayalam has no speech model (typing works).
 +- **Build:** the dependencies have no hashes; the print PDF and the `api.js` timeout have not been clicked through by hand; landscape, the on-screen keyboard, any weak phone and touch beyond the voice home are unverified.
 +- **Legal:** the owner states that Manjeet and Netra agree to the MIT licence and confirmed the Official Rules and the NECC use (29 Oct 2026); nothing is on file.

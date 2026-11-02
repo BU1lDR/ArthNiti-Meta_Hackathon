@@ -60,7 +60,7 @@ Each time is the budget for the finished cut (10.3), waits taken out. `[3 s]` in
 **Screen:** the same page, then the page working.
 
 **Do**
-1. Scroll down to "शुरू करने से पहले" ("Before you start"). Tick "मैं सहमत हूँ कि इस पन्ने पर मैं जो बोलूँ या लिखूँ, वह Meta की चलाई AI सेवा को भेजा जाए।" (If the box is already in view, do not scroll.) Cut the scroll in the edit.
+1. Scroll down to "शुरू करने से पहले" ("Before you start"). Tick "मैं सहमत हूँ कि इस पन्ने पर मैं जो बोलूँ या लिखूँ, वह मेटा द्वारा संचालित एआई सेवा को भेजा जाए।" (If the box is already in view, do not scroll.) Cut the scroll in the edit.
 2. Scroll back up so the microphone and the question are in view.
 3. Click the microphone, "बोलना शुरू करें" ("Start speaking"). The ring around it moves with your voice and a clock runs. [1 s]
 4. Say the Hindi sentence of section 1, live. This is the one stretch with no voice-over. It is not sped up.

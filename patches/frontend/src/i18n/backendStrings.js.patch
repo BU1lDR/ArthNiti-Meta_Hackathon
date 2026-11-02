@@ -1,11 +1,14 @@
 diff --git a/frontend/src/i18n/backendStrings.js b/frontend/src/i18n/backendStrings.js
-index 6d108cc..6372bf3 100644
+index 6d108cc..796665f 100644
 --- a/frontend/src/i18n/backendStrings.js
 +++ b/frontend/src/i18n/backendStrings.js
 @@ -106,0 +107 @@ const en = {
 +  'src.necc': 'Daily egg prices published by the National Egg Co-ordination Committee (NECC)',
 @@ -186,0 +188 @@ const hi = {
 +  'src.necc': 'राष्ट्रीय अंडा समन्वय समिति (NECC) द्वारा प्रकाशित अंडों के रोज़ के दाम',
+@@ -188 +190 @@ const hi = {
+-  'mknote.ourGrouping': 'इस आंकड़े में दर्ज कामों में से किन-किन तरह के कामों को गिनना है, यह हमने तय किया है।',
++  'mknote.ourGrouping': 'इस आँकड़े में दर्ज कामों में से किन-किन तरह के कामों को गिनना है, यह हमने तय किया है।',
 @@ -260,0 +263 @@ const ta = {
 +  'src.necc': 'தேசிய முட்டை ஒருங்கிணைப்புக் குழு (NECC) வெளியிட்ட முட்டையின் தினசரி விலைகள்',
 @@ -334,0 +338 @@ const te = {

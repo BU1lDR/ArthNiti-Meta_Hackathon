@@ -1,0 +1,9 @@
+diff --git a/tools/notice-version.json b/tools/notice-version.json
+index 04fc0d0..9c9c059 100644
+--- a/tools/notice-version.json
++++ b/tools/notice-version.json
+@@ -2,2 +2,2 @@
+-  "version": "2026-09-27.1",
+-  "sha256": "a2f50d71e7c175be4109768d112e20542ccf86218bdd380e203b9368225f204b"
++  "version": "2026-11-02.1",
++  "sha256": "8b1c2b8f2293f48805821ddc9010171927502265f8d58d22b2fc523c7c9e4ab8"

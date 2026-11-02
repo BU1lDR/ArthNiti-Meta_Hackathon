@@ -132,6 +132,7 @@
     "frontend/src/App.jsx",
     "frontend/src/assets/README.md",
     "frontend/src/config/deployment.js",
+    "frontend/src/config/notice.js",
     "frontend/src/context/AppContext.jsx",
     "frontend/src/data/reviewDates.js",
     "frontend/src/i18n/backendStrings.js",
@@ -154,6 +155,7 @@
     "tools/README.md",
     "tools/keycheck.mjs",
     "tools/market-crosswalk.json",
+    "tools/notice-version.json",
     "tools/parity4.mjs",
     "tools/third-party-notices.mjs",
     "tools/verify/drive.mjs",
@@ -175,7 +177,7 @@
     "frontend/src/assets/hero-backdrop.jpeg"
   ],
   "result": {
-    "devCommit": "cd7ac32523007331429bc4b709d1771307c9a73e",
-    "tree": "9da3d42ffe55838a79d57bb5c1a40d2d7fe7db6b"
+    "devCommit": "e9029d422b18895ce5aa966b3879910c08afd0be",
+    "tree": "170d972e72319e9b737a0b65b3ba6e7107d7b9a9"
   }
 }

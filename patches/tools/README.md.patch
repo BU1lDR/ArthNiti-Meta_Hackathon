@@ -1,5 +1,5 @@
 diff --git a/tools/README.md b/tools/README.md
-index b8e7eb3..c121ef4 100644
+index b8e7eb3..ba15fa0 100644
 --- a/tools/README.md
 +++ b/tools/README.md
 @@ -3 +3,2 @@
@@ -122,6 +122,9 @@ index b8e7eb3..c121ef4 100644
 +node --test tools/verify/amount-lib-test.mjs   # the amount printed beside a piece of advice (adviceAmount.js): 17 tests, no network
 +node --test tools/verify/offer-lib-test.mjs    # the yearly cost of a loan offer (loanOffer.js): 58 tests, no network
 +node --test tools/verify/offer-lines-test.mjs  # the words of the loan-offer card (offerLines.js) and the banned-word list: 48 tests, no network
+@@ -402 +437 @@ keys, 5,856 strings** (222 + 263 + 59 + 188 keys in `strings`, `resultStrings`,
+-| 9. notice text vs recorded version | the 60 `NOTICE_KEYS` values in 8 languages, `NOTICE_VERSION` `2026-09-27.1`, sha256 `a2f50d71…` | 0 | none: there is no allowlist |
++| 9. notice text vs recorded version | the 60 `NOTICE_KEYS` values in 8 languages, `NOTICE_VERSION` `2026-11-02.1`, sha256 `8b1c2b8f…` | 0 | none: there is no allowlist |
 @@ -411,0 +447,8 @@ record a new version, so it has to be caught in review.
 +Measured again on 1 Nov 2026, after the scheme batches and the `/login` relabel
 +(which removed 3 keys), over **1,299 keys, 10,392 strings** (223 + 476 + 60 + 540
